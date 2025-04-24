@@ -1,0 +1,1014 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: 90%;
+    max-width: 1100px;
+    font-family: Roboto, sans-serif;
+    font-size: 15px;
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+    background-color: black;
+    margin: auto;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+h2, h3 {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* JUSTIFY ONLY P */
+p {
+    text-align: justify;
+}
+
+/* ABOUT US SECTION */
+#about-us p {
+    color: white;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0.9;
+    text-align: justify;
+}
+
+#about-us p strong {
+    font-weight: 700 !important;
+}
+
+.wrapped-image {
+    float: left;
+    width: 580px;
+    margin-right: 15px;
+    height: auto;
+    display: block;
+}
+
+.container::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* IMAGE STYLING */
+.img {
+    width: 100%;
+    max-width: 350px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* WELCOME SECTION */
+#welcome-section {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: linear-gradient(45deg, #000000, #222222);
+    text-align: center;
+}
+
+#welcome-section h1 {
+    font-size: 42px;
+    color: #39FF14;
+    text-shadow: 0 0 10px #39FF14;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+#welcome-section p {
+    font-size: 18px;
+    color: white;
+    max-width: 800px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.slogan {
+  font-family: "Yellowtail", cursive;
+  font-weight: 400;
+}
+
+/* Banner Image */
+.banner {
+    width: 100%;
+    max-width: 100%;
+    height: 350px;
+    object-fit: contain;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+    background-color: transparent;
+}
+
+/* Navbar Styling */
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    padding: 5px 20px;
+    background-color: #121212;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+/* Logo Section */
+#navbar .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#navbar .logo img {
+    height: 30px;
+    width: 30px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+#navbar .logo a {
+    color: #39FF14;
+    text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
+}
+
+.short-title {
+  display: none;
+}
+
+/* Centered Navigation List */
+#navbar .nav-list {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#navbar .nav-list li {
+    display: inline-block;
+}
+
+#navbar .nav-list a {
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+    padding: 8px 10px;
+    transition: color 0.3s ease;
+}
+
+#navbar .nav-list a:hover {
+    color: green;
+}
+
+/* Services */
+.pricing-container {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: nowrap;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Individual Product Block */
+.product {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    width: 80%;
+    max-width: 320px;
+    min-height: 350px;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Title Bar */
+.product .level {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 15px 0;
+    width: 100%;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-radius: 10px 10px 0 0;
+}
+
+/* List */
+.product ol {
+    margin: 10px 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.product ol li {
+    padding: 5px 0;
+    color: white;
+    opacity: 0.9;
+    text-align: center;
+}
+
+/* Buttons */
+.product button {
+    border: 0;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.product button:hover {
+    background: green;
+    transform: scale(1.05);
+}
+
+/* Reviews Section */
+#Reviews {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.testimonial {
+    width: 90%;
+    padding: 15px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    max-width: 700px;
+}
+
+.testimonial h3 {
+    color: #222;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.testimonial p {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.star-rating {
+    font-size: 20px;
+    color: #FFCC00;
+}
+
+.counter-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: black;
+}
+
+.counter-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  width: 90%;
+  flex-wrap: nowrap;
+}
+
+.counter-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  text-align: center;
+  flex: 1;
+  max-width: 200px;
+}
+
+.counter {
+  font-family: "Silkscreen", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 40px;
+  color: #39FF14;
+  text-shadow: 0 0 10px #39FF14;
+  margin-bottom: 10px;
+}
+
+.label {
+  font-size: 14px;
+  color: white;
+  opacity: 0.8;
+  margin-top: 10px;
+}
+
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.contact-btn {
+    background-color: #121212; /* dark background */
+    border: 2px solid white;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+    background-color: #00ff00; /* green glow on hover */
+    color: black;
+    transform: scale(1.1);
+}
+
+.contact-buttons a {
+    text-decoration: none; /* Remove underline */
+}
+
+.contact-buttons a:visited {
+    color: inherit; /* Prevent purple visited color */
+}
+
+.contact-buttons a {
+    color: inherit; /* Inherit color from the button */
+}
+
+/* Footer */
+footer {  
+position: relative;
+background: #000;
+color: #fff; 
+text-align: center;
+padding: 10px;
+position: fixed;
+bottom: 0;
+width: 100%;
+font-family: 'Courier New', monospace; 
+font-size: 12px;
+right: 5px;
+}
+
+footer span {
+color: #00ff00;
+text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
+}
+
+/* Title Styling (Logout / Dashboard) */
+.modal-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: green; /* Makes "Login" and "Signup" text green */
+    text-align: center;
+}
+
+/* Form Styling */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Label and Input Side by Side */
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    width: 30%;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.form-group input {
+    width: 65%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Button Styling */
+.form-container button {
+    background: green;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+
+.form-container button:hover {
+    background-color: #00ff00;
+    color: black;
+}
+
+
+/* LOGOUT AND DASHBOARD BUTTONS */
+.auth-buttons {
+    display: flex;
+    gap: 15px;
+    position: absolute;
+    right: 60px;
+}
+
+.auth-buttons button {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.logout-btn {
+    background-color: #D5D537;
+    color: black;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+}
+
+.logout-btn:hover {
+    background: #E74C3C;
+    color: white;
+    transform: scale(1.05);
+}
+
+.dashboard-btn {
+    background-color: green;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+}
+
+.dashboard-btn:hover {
+    background-color: #00ff00;
+    color: black;
+    transform: scale(1.05);
+}
+
+.dashboard-btn:active {
+    transform: scale(0.95);
+}
+
+/* LOGIN/SIGNUP PAGE */
+.login-form .container, .signup-form .container {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    max-width: 900px;
+    justify-content: space-between;
+    }
+
+.login-form .left h1, .signup-form .left h1 {
+    font-size: 40px;
+    color: #1877f2;
+    }
+        
+.login-form .right, .signup-form .right {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    text-align: center;
+    }
+
+.login-form input,
+.signup-form input,
+.login-form select,
+.signup-form select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    }
+
+.login-form button, .signup-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #1877f2;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    }
+    
+.login-form button:hover, .signup-form button:hover {
+    background: #155dbd;
+    }
+
+.login-form .forgot-password, .signup-form .forgot-password {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #1877f2;
+    cursor: pointer;
+    }
+        
+.login-form .forgot-password:hover, .signup-form .forgot-password:hover {
+    text-decoration: underline;
+    }
+
+.login-form .small-text, .signup-form .small-text {
+    font-size: 12px;
+    color: #666;
+    }
+
+
+/* CETIFICATE VERIFICATION PAGE */
+.verification-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  max-width: 900px;
+  margin: 0 auto; 
+  gap: 20px;
+  overflow: visible;
+}
+
+.verification-description {
+  flex: 1; 
+  font-size: 16px;
+  line-height: 1.5;
+  color: white;
+}
+
+.certificate-img {
+  width: 450px;  
+  height: auto; 
+  border-radius: 8px; 
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#certificateID {
+    width: 200px; 
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    outline: none; 
+}
+
+#certificateID:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 10px;
+    overflow: visible;
+}
+
+.gallery img {
+    width: 100%;
+    max-width: 300px;
+    object-fit: cover;
+    border-radius: 10px; 
+    border: 4px solid #333;  
+    transition: transform 0.2s, border 0.2s, border-radius 0.2s; 
+}
+
+.zoomable {
+    width: 300px;
+    transition: transform 0.2s, border 0.2s, border-radius 0.2s; 
+    cursor: zoom-in;
+    max-width: 350px;
+    max-height: 350px;
+    display: block;
+}
+
+.zoomable:hover {
+    transform: scale(2);
+    cursor: zoom-out;
+    border: none; 
+    border-radius: 0;
+    width: auto;
+    height: auto;
+    max-width: 350px;
+    max-height: 350px;
+    object-fit: cover;
+}
+
+/* HIDDEN */
+    .responsive-slogan,
+    .responsive-banner,
+    .responsive-description {
+        display: none;
+    }
+
+/* PREMIUM COURSES PAGE */
+.complimentary-courses-container, 
+.premium-courses-container,
+.ddvcs-container
+{
+    max-width: 1100px; 
+    width: 90%;
+    margin: auto; 
+    padding: 20px;
+}
+
+.online-class, .ddvcs-image, .awa-image, .pws-image {
+    width: 100%;
+    max-width: 90%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+}
+
+.languages-image {
+    width: 90%;
+    max-width: 350px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: block;
+    margin: 20px auto;
+} 
+
+/* NGBS PRODUCTS AND SERVICES */
+.complimentary-courses-products, .premium-courses-products, .language-courses, .ddvcs-products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* DDVCS */
+.product-card-ddvcs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px; 
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    text-align: center;
+    width: calc(50% - 20px);
+    min-width: 250px;
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.product-card-ddvcs:hover {
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) { 
+    .product-card-ddvcs {
+        width: calc(33.33% - 20px); 
+    }
+}
+
+@media (max-width: 768px) {
+    .product-card-ddvcs {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .product-card-ddvcs {
+        width: 100%; 
+    }
+}
+/* END */
+
+
+/* WRITING SERVICES */
+.writing-service-container, .language-courses-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 20px;
+    max-width: 1100px; 
+    margin: auto; 
+}
+
+.writing-service-card, .language-product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+    text-align: center;
+    width: calc((100% - 40px) / 3); 
+    min-width: 220px;
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.writing-service-card:hover, .language-product-card:hover {
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .writing-service-card, .language-product-card {
+        width: calc((100% - 20px) / 2); 
+    }
+}
+
+@media (max-width: 768px) {
+    .writing-service-card, .language-product-card {
+        width: calc((100% - 20px) / 2); 
+    }
+}
+
+@media (max-width: 480px) {
+    .writing-service-card, .language-product-card {
+        width: 100%; 
+    }
+}
+/* END */
+
+.complimentary-courses-description, .premium-courses-description, .language-mastery-description, .ddvcs-description {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: justify;
+    max-width: 90%;
+    margin: auto;
+    padding: 10px;
+}
+
+/* Individual Course Card */
+.product.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px; 
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    text-align: center;
+    width: 30%; 
+    max-width: 350px;
+    min-width: 200px;
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    text-align: center;
+    width: 33%; 
+    min-width: 400px;
+    height: 50%; 
+    max-height: 150px;
+    transition: transform 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.product.card:hover {
+    transform: scale(1.05);
+}
+
+/* Course Images */
+.product.card img, .product-card-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Course Title */
+.product-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #39FF14;
+    text-shadow: 0 0 8px #39FF14;
+    margin-top: 10px;
+}
+
+/* Course Description */
+.product-description {
+    font-size: 14px;
+    color: white;
+    opacity: 0.9;
+    margin-top: 5px;
+    text-align: justify;
+}
+
+.teacher {
+    font-size: 14px;
+    color: white;
+    opacity: 0.9;
+    margin-top: 5px;
+}
+
+/* Enroll Button */
+.cta-button {
+    background: #39FF14;
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease-in-out;
+}
+
+.cta-button:hover {
+    background: #2ecc71;
+}
+
+@media (max-width: 1120px) {
+    #products_and_services article, #services article {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .product {
+        width: 90%; 
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 1024px) { 
+    .product.card, .product-card-ddvcs {
+        width: 30%; 
+    }
+
+    .complimentary-courses-description, .premium-courses-description, .language-mastery-description, .ddvcs-description {
+        font-size: 18px; 
+        padding: 15px;
+        text-align: justify;
+    	max-width: 90%;
+    	margin: auto;
+    }
+}
+
+@media (max-width: 900px) {
+    .complimentary-courses-products, .premium-courses-products, .language-courses, .ddvcs-products {
+        gap: 15px;
+    }
+
+    .product.card, .product-card-ddvcs {
+        width: 45%;
+        padding: 15px;
+    }
+
+    .product-title {
+        font-size: 16px;
+    }
+
+    .product-description, .teacher {
+        font-size: 12px;
+    }
+
+    .cta-button {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .complimentary-courses-description, .premium-courses-description, .language-mastery-description, .ddvcs-description {
+        font-size: 14px; 
+        padding: 10px;
+        max-width: 90%;
+        margin: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .complimentary-courses-products, .premium-courses-products, .language-courses, .ddvcs-products {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product.card, .product-card-ddvcs {
+        width: 90%;
+        max-width: 300px;
+    }
+   
+    .complimentary-courses-description, .premium-courses-description, .language-mastery-description, .ddvcs-descriptiion {
+    	font-size: 12px;
+    	line-height: 1.6;
+    	text-align: justify;
+    	max-width: 90%;
+    	margin: auto;
+   	padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .complimentary-courses-description, .premium-courses-description, .language-mastery-description, .ddvcs-description {
+        font-size: 10px;
+        padding: 8px;
+    	max-width: 90%;
+    	margin: auto;
+    }
+}

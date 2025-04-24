@@ -1,0 +1,448 @@
+
+/* =================== RESPONSIVE DESIGN =================== */
+@media (max-width: 1030px) {
+    /* NAVBAR ADJUSTMENTS */
+    #navbar {
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Show Hamburger Menu */
+    .hamburger-menu {
+        display: flex; /* Ensure it appears */
+        flex-direction: column;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        right: 15px;
+	transform: translateY(-50%) scale(0.7);
+        z-index: 1000;
+    }
+
+    .hamburger-menu .bar {
+        background-color: white;
+        height: 2px;
+        width: 20px;
+        margin: 3px 0;
+        transition: 0.3s;
+    }
+
+    /* HIDE NAVIGATION LINKS BY DEFAULT */
+    .nav-list {
+        display: flex; /* Keep structure */
+        flex-direction: column;
+        background: #333;
+        width: 100%;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        text-align: center;
+        padding: 10px 0;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        visibility: hidden; 
+    }
+
+    /* SHOW MENU WHEN ACTIVE */
+    .nav-list.active {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+    }
+
+    .nav-list li {
+        margin: 10px 0;
+    }
+
+    /* HAMBURGER ANIMATION */
+    .hamburger-menu.open .bar:nth-child(1) {
+        transform: rotate(-45deg) translate(-4px, 5px);
+    }
+
+    .hamburger-menu.open .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger-menu.open .bar:nth-child(3) {
+        transform: rotate(45deg) translate(-4px, -5px);
+    }
+
+    .auth-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        position: absolute;
+        top: 50%;
+        right: 60px;
+	transform: translateY(-50%);
+    }
+
+    .auth-buttons button, .auth-buttons .dashboard-btn {
+        padding: 3px 7px;
+        font-size: 9px;
+        border-radius: 2.5px;
+        min-width: 65px; 
+        height: 20px;
+	line-height: 1; 
+    }
+
+    .wrapped-image, .certificate-img {
+        max-width: 95%;
+    }
+
+    .counter-section {
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+  	padding: 20px;
+  	background-color: black;
+    }
+
+    .counter-container {
+  	display: flex;
+  	justify-content: center;
+  	align-items: center;
+  	gap: 10px;
+  	width: 100%;
+  	flex-wrap: wrap;
+  	max-width: 800px;
+    }
+
+    .counter-item {
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	justify-content: center;
+  	background: rgba(255, 255, 255, 0.1);
+ 	padding: 10px;
+  	border-radius: 8px;
+  	box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+  	backdrop-filter: blur(5px);
+  	text-align: center;
+  	flex: 1;
+  	min-width: 120px; 
+  	max-width: 150px;
+  	height: 100px;
+    }
+
+    .counter {
+  	font-family: "Silkscreen", sans-serif;
+  	font-size: 30px;
+  	color: #39FF14;
+  	text-shadow: 0 0 8px #39FF14;
+  	margin-bottom: 5px;
+    }
+
+    .label {
+  	font-size: 12px;
+  	color: white;
+  	opacity: 0.8;
+    }
+
+    #welcome-section {
+    	padding: 18px;
+    }
+
+    .slogan {
+    	font-size: 1.1rem;
+    }
+
+    #main-doc {
+  	font-size: 0.7rem;
+    }
+
+    footer {
+	font-size: 8px;
+    }
+}
+
+@media (min-width: 836px) { 
+    .verification-container {
+    	display: flex;
+    	flex-direction: row;
+    	align-items: center;
+    	text-align: left;
+    	justify-content: center;
+    }
+  
+    .verification-description {
+    	width: 50%;
+    	padding-right: 20px;
+    }
+
+    .certificate-img {
+    	width: 50%;
+    	max-width: 450px; 
+    	height: auto;
+    	margin-top: 0;
+    }
+}
+
+@media (max-width: 835px) {
+    .verification-container {
+    	display: flex;
+    	flex-direction: column; 
+    	align-items: center;
+    	text-align: center;
+    }
+
+    .certificate-img {
+    	max-width: 90%; 
+    	height: auto;
+    	margin-top: 10px;
+    }
+}
+
+@media (max-width: 700px) {
+    #welcome-section {
+        display: none !important;
+    }
+
+   .responsive-slogan {
+       display: flex;
+       font-size: 18px;
+       color: #39FF14;
+       text-shadow: 0 0 10px #39FF14;
+       margin-bottom: 20px;
+       margin-top: 5px;
+       font-family: "Yellowtail", cursive;
+       font-weight: 400;
+       text-align: center;
+   }
+
+   .responsive-banner {
+       display: flex;
+       width: 100%;
+   }
+
+   .responsive-description {
+       display: flex;
+       font-size: 14px;
+       color: white;
+       max-width: 800px;
+       line-height: 1.6;
+       opacity: 0.9;
+       text-align: center;
+   }
+}
+
+@media (max-width: 500px) {
+   .logo-title {
+        display: none;
+   }
+
+  .short-title {
+    	display: block;
+    	color: #39FF14;
+    	text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+    	font-size: 16px;
+    	font-weight: bold;
+    	text-decoration: none;
+    	font-family: 'Courier New', monospace;
+   }
+
+   .e-certificate-container {
+        padding: 10px;
+        max-width: 90%; 
+        margin: auto;
+        text-align: center;
+   }
+
+   .verification-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+   }
+
+   .verification-description {
+        font-size: 14px;
+        text-align: justify;
+        line-height: 1.5;
+        max-width: 95%;
+   }
+
+   .certificate-img {
+        max-width: 90%;
+        height: auto;
+        margin-top: 10px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+   }
+
+    /* FORM ADJUSTMENTS */
+    #verifyForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .certificate-id-label {
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        width: 100%;
+    }
+
+    #certificateID {
+        width: 90%;
+        padding: 8px;
+        font-size: 14px;
+        border-radius: 4px;
+    }
+
+    button {
+        width: 90%;
+        padding: 10px;
+        font-size: 14px;
+        background: #39FF14;
+        color: black;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #2ecc71;
+    }
+
+    /* VERIFICATION STYLING RESULT */
+    #verificationResult, #certificateOwner, #courseDetails {
+        font-size: 14px;
+        padding: 5px;
+        text-align: center;
+    }
+
+    /* GALLERY ADJUSTMENTS */
+    .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .gallery img {
+        max-width: 90%;
+        height: auto;
+        border-radius: 5px;
+    }
+}
+
+
+@media (max-width: 480px) {
+    #welcome-section {
+    	padding: 5px 0; 
+    	display: flex;
+    	flex-direction: column;
+    	align-items: center;
+    	justify-content: center;
+    	gap: 0px; 
+    }
+
+    .slogan {
+    	font-size: 1rem;
+    	margin-bottom: 5px; 
+    }
+
+    .banner {
+    	max-width: 80%; 
+    	margin-bottom: 5px;
+    }
+
+    #main-doc {
+    	font-size: 0.65rem;
+    	margin-top: 0px;
+    }
+
+    /* Navbar Adjustments */
+    #navbar {
+        padding: 8px 13px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo-title {
+        display none;
+    }
+
+    .short-title {
+    	display: block;
+    	color: #39FF14;
+    	text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+    	font-size: 16px;
+    	font-weight: bold;
+    	text-decoration: none;
+	font-family: 'Courier New', monospace;
+     }
+
+    /* Show Hamburger Menu */
+    .hamburger-menu {
+        display: flex; /* Ensure it appears */
+        flex-direction: column;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+	transform: translateY(-50%) scale(0.7);
+        z-index: 1000;
+    }
+
+    .hamburger-menu .bar {
+        background-color: white;
+        height: 2px;
+        width: 18px;
+        margin: 3px 0;
+        transition: 0.3s;
+    }
+
+    .auth-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        position: absolute;
+        top: 50%;
+        right: 30px;
+	transform: translateY(-50%);
+    }
+
+    .auth-buttons button, .auth-buttons .dashboard-btn {
+        padding: 3px 7px;
+        font-size: 9px;
+        border-radius: 2.5px;
+        min-width: 65px; 
+        height: 20px;
+	line-height: 1; 
+    }
+
+    .wrapped-image {
+        max-width: 100%;
+    }
+  
+    .counter-container {
+    	gap: 5px;
+    }
+  
+    .counter-item {
+    	min-width: 100px;
+    	max-width: 120px;
+    	height: 80px;
+    	padding: 8px;
+    }
+
+    .counter {
+    	font-size: 24px;
+    }
+
+    .label {
+    	font-size: 10px;
+    }
+
+}
