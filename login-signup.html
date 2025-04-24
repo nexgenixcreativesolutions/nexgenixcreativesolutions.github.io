@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nex Genix Creative Solutions</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a202c;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 64rem;
+            width: 100%;
+            background-color: #2d3748;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+            }
+        }
+
+        .section {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .login-title,
+        .signup-title {
+            font-size: 2.25rem;
+            font-weight: bold;
+            color: #48bb78;
+        }
+
+        .description {
+            color: #d1d5db;
+            margin-top: 0.5rem;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .input {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #4a5568;
+            border: 1px solid #2d3748;
+            border-radius: 0.5rem;
+            color: white;
+            outline: none;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        .input:focus {
+            border-color: #48bb78;
+            box-shadow: 0 0 0 2px #48bb78;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #48bb78;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .toggle-password:hover {
+            color: #38a169;
+        }
+
+        .button {
+            width: 100%;
+            background-color: #48bb78;
+            color: white;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #38a169;
+        }
+
+        .link {
+            text-align: center;
+            color: #48bb78;
+            margin-top: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            border-left: 1px solid #4a5568;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #2d3748;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal input {
+            margin-top: 1rem;
+        }
+
+        .modal button {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="section md:w-1/2">
+            <h1 class="login-title">Nex Genix Creative Solutions</h1>
+            <p class="description">Your Vision, Beautifully Engineered.</p>
+            <form class="mt-6">
+                <input type="text" placeholder="Email or phone number" class="input">
+                
+                <div class="input-container mt-4">
+                    <input type="password" id="login-password" placeholder="Password" class="input">
+                    <span class="toggle-password" onclick="togglePassword('login-password')">👁️</span>
+                </div>
+
+                <button class="button" id="login-button">Log In</button>
+            </form>
+            <p class="link" onclick="openForgotPassword()">Forgotten password?</p>
+        </div>
+        
+        <div class="section md:w-1/2 divider">
+            <h2 class="signup-title">Create an account</h2>
+            <p class="description text-sm">It's quick and easy.</p>
+            <form class="mt-4 grid grid-cols-2 gap-3">
+                <input type="text" placeholder="First name" class="input">
+                <input type="text" placeholder="Last name" class="input">
+                <input type="email" placeholder="Email" class="input col-span-2">
+                <input type="text" placeholder="Phone number" class="input col-span-2">
+                
+                <div class="input-container col-span-2">
+                    <input type="password" id="signup-password" placeholder="New password" class="input">
+                    <span class="toggle-password" onclick="togglePassword('signup-password')">👁️</span>
+                </div>
+
+                <div class="input-container col-span-2">
+                    <input type="password" id="confirm-password" placeholder="Confirm password" class="input">
+                    <span class="toggle-password" onclick="togglePassword('confirm-password')">👁️</span>
+                </div>
+
+                <label for="birthdate" class="col-span-2 text-gray-400 text-sm">Birthdate</label>
+                <input type="date" id="birthdate" class="input col-span-2">
+                <button class="button col-span-2">Sign Up</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div id="forgot-password-modal" class="modal">
+        <h2 class="text-lg font-bold text-green-400">Reset Password</h2>
+        <p class="text-gray-300 text-sm mt-2">Enter your phone number to receive a reset link.</p>
+        <input type="text" id="reset-phone" placeholder="Phone number" class="input">
+        <button class="button" onclick="sendResetLink()">Send Link</button>
+        <p class="link mt-2" onclick="closeForgotPassword()">Cancel</p>
+    </div>
+
+    <script>
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            input.type = input.type === "password" ? "text" : "password";
+        }
+
+        function openForgotPassword() {
+            document.getElementById('forgot-password-modal').classList.add('active');
+        }
+
+        function closeForgotPassword() {
+            document.getElementById('forgot-password-modal').classList.remove('active');
+        }
+
+        function sendResetLink() {
+            const phone = document.getElementById('reset-phone').value;
+            if (phone) {
+                alert(`A password reset link has been sent to ${phone}`);
+                closeForgotPassword();
+            } else {
+                alert("Please enter your phone number.");
+            }
+        }
+
+        document.getElementById('login-button').addEventListener('click', function(event) {
+            event.preventDefault();  // Prevent form submission
+            window.location.href = 'https://nexgenixcreativesolutions.github.io/dashboard/';
+        });
+    </script>
+
+</body>
+</html>
