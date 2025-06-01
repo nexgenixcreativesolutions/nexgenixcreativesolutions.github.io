@@ -9,120 +9,169 @@
   <link rel="stylesheet" href="responsive.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
-      background-color: #C2BBF6;
-      color: black;
-      font-family: sans-serif;
-    }
+  body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: sans-serif;
+  }
 
-    .sidebar {
-      background-color: transparent;
-      border: 2px solid #ADBCC8;
-      color: black;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
+  .sidebar {
+    background-color: #121212;
+    border: 2px solid #38a169;
+    color: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
 
-    .content-box {
-      background-color: transparent;
-      border: 2px solid #ADBCC8;
-      padding: 1.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
+  .content-box {
+    background-color: #1a1a1a;
+    border: 2px solid #38a169;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  }
 
-    .input {
-      width: 100%;
-      padding: 0.75rem;
-      background-color: transparent;
-      border: 1px solid black;
-      border-radius: 0.5rem;
-      color: black;
-    }
+  .input {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: transparent;
+    border: 1px solid #444;
+    border-radius: 0.5rem;
+    color: #ffffff;
+  }
 
-    .input:focus {
-      border-color: #48bb78;
-      box-shadow: 0 0 0 2px #48bb78;
-    }
+  .input:focus {
+    border-color: #38a169;
+    box-shadow: 0 0 0 2px #38a169;
+    outline: none;
+  }
 
-    .button {
-      background-color: #48bb78;
-      color: white;
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      font-weight: 600;
-    }
+  .button {
+    background-color: #38a169;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
 
-    .button:hover {
-      background-color: #38a169;
-    }
+  .button:hover {
+    background-color: #2f855a;
+  }
 
-    .dropdown:hover .dropdown-menu {
-      display: block;
-    }
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
 
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      background-color: #2d3748;
-      border-radius: 0.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      min-width: 160px;
-      z-index: 10;
-    }
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #1f1f1f;
+    border: 1px solid #ffdb58;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.05);
+    min-width: 160px;
+    z-index: 10;
+  }
 
-    .dropdown-menu a {
-      padding: 0.75rem;
-      color: white;
-      text-decoration: none;
-      display: block;
-    }
+  .dropdown-menu a {
+    padding: 0.75rem;
+    color: white;
+    text-decoration: none;
+    display: block;
+  }
 
-    .dropdown-menu a:hover {
-      background-color: #38a169;
-    }
+  .dropdown-menu a:hover {
+    background-color: #ffdb58;
+    color: black;
+  }
 
-    .button-container {
-      display: flex;
-      gap: 1rem;
-    }
+  .button-container {
+    display: flex;
+    gap: 1rem;
+  }
 
-    .profile-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+  .profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    .profile-info {
-      margin-left: 1rem;
-    }
+  .profile-info {
+    margin-left: 1rem;
+  }
 
-    .profile-pic-wrapper {
-      background-color: transparent;
-      border-radius: 50%;
-      overflow: hidden;
-      width: 80px;
-      height: 80px;
-    }
+  .profile-pic-wrapper {
+    background-color: transparent;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+  }
 
-    .profile-pic-wrapper img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 50%;
-    }
+  .profile-pic-wrapper img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
 
-    .icon-button {
-      background-color: transparent;
-      border: none;
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      transition: background-color 0.2s;
-    }
+  .icon-button {
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
 
-    .icon-button:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-  </style>
+  .icon-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .text-black-300 {
+    color: #cccccc;
+  }
+
+  .text-black-400 {
+    color: #e0e0e0;
+  }
+
+  .text-green-400 {
+    color: #38a169;
+  }
+
+  .text-yellow-400 {
+    color: #ffdb58;
+  }
+
+  .text-red-400 {
+    color: #ff4c4c;
+  }
+
+  hr {
+    border-color: #2d2d2d;
+  }
+
+  select {
+    background-color: #2a2a2a;
+    border: 1px solid #38a169;
+  }
+
+  option {
+    background-color: #1a1a1a;
+    color: white;
+  }
+
+  .hover\:text-green-400:hover {
+    color: #38a169;
+  }
+
+  .hover\:bg-gray-200:hover {
+    background-color: #ffdb58 !important;
+    color: #000 !important;
+  }
+
+</style>
+
 </head>
 
 <body class="flex min-h-screen">
