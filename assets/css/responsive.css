@@ -576,3 +576,21 @@
 		font-size: 14px;
 	}
 }
+
+/* ================= PRODUCT CARD SPACING (HOMEPAGE) ================= */
+
+@media (max-width: 768px) {
+    .product {
+        margin-bottom: 24px; /* breathing room between cards */
+    }
+
+    .product:last-child {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .product {
+        margin-bottom: 28px; /* slightly more space on very small screens */
+    }
+}
