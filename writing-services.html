@@ -154,18 +154,38 @@
 
 <!-- JavaScript -->
 <script>
-    function toggleMenu() {
-        document.querySelector('.nav-list').classList.toggle('active');
-        document.querySelector('.hamburger-menu').classList.toggle('open');
-    }
+/* ================================
+   MOBILE MENU TOGGLE
+================================ */
+function toggleMenu() {
+    const navList = document.querySelector('.nav-list');
+    const hamburger = document.querySelector('.hamburger-menu');
 
+    if (navList && hamburger) {
+        navList.classList.toggle('active');
+        hamburger.classList.toggle('open');
+    }
+}
+
+/* ================================
+   MESSENGER REDIRECT + MESSAGE COPY
+================================ */
+(function () {
     const messengerPage = "https://m.me/269318226255764";
 
-    document.querySelectorAll(".writing-service-card").forEach(card => {
+    const cards = document.querySelectorAll(".writing-service-card");
+
+    if (!cards.length) return;
+
+    cards.forEach(card => {
         const button = card.querySelector(".cta-button");
-        const title = card.querySelector(".product-title").innerText;
+        const titleEl = card.querySelector(".product-title");
+
+        if (!button || !titleEl) return;
 
         button.addEventListener("click", () => {
+            const title = titleEl.innerText.trim();
+
             const message =
 `Hi! I’m interested in your ${title} service.
 
@@ -179,13 +199,26 @@ Here are my details for your reference:
 
 Looking forward to your response. Thank you!`;
 
-            window.open(
-                `${messengerPage}?ref=${encodeURIComponent(message)}`,
-                "_blank"
-            );
+            // Try to copy message to clipboard
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(message)
+                    .then(() => {
+                        alert("Message copied! Paste it into Messenger to continue.");
+                        window.open(messengerPage, "_blank");
+                    })
+                    .catch(() => {
+                        // Clipboard failed – fallback
+                        alert("Messenger will open. Please copy and send this message manually:\n\n" + message);
+                        window.open(messengerPage, "_blank");
+                    });
+            } else {
+                // Clipboard API not supported
+                alert("Messenger will open. Please copy and send this message manually:\n\n" + message);
+                window.open(messengerPage, "_blank");
+            }
         });
     });
+})();
 </script>
-
 </body>
 </html>
