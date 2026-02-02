@@ -577,6 +577,7 @@
 	}
 }
 
+
 /* ================= PRODUCT CARD SPACING (HOMEPAGE) ================= */
 
 @media (max-width: 768px) {
@@ -592,5 +593,25 @@
 @media (max-width: 480px) {
     .product {
         margin-bottom: 28px; /* slightly more space on very small screens */
+    }
+}
+
+/* ================= DDVCS RESPONSIVE FIXES ================= */
+
+@media (max-width: 768px) {
+    .ddvcs-container .ddvcs-image {
+        margin: 15px auto;
+    }
+
+    .ddvcs-description {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ddvcs-description {
+        font-size: 12px;
+        padding: 8px;
     }
 }
