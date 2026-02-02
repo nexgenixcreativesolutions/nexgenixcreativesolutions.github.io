@@ -754,22 +754,45 @@ text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
 /* Responsive Design */
 @media (max-width: 1024px) { 
     .product-card-ddvcs {
-        width: calc(33.33% - 20px); 
+        width: calc(50% - 20px); 
     }
 }
 
 @media (max-width: 768px) {
     .product-card-ddvcs {
-        width: calc(50% - 20px);
-    }
-}
-
-@media (max-width: 480px) {
-    .product-card-ddvcs {
-        width: 100%; 
+        width: 100%;
     }
 }
 /* END */
+
+/* ================= DDVCS FIXES (IMAGE WIDTH + SEAMLESS DESCRIPTION) ================= */
+
+/* Widen DDVCS images cleanly */
+.ddvcs-container .ddvcs-image {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 20px auto 10px;
+}
+
+/* Make DDVCS description seamless */
+.ddvcs-description {
+    font-size: 18px;
+    line-height: 1.7;
+    text-align: justify;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 5px 10px 20px;
+}
+
+/* Improve section flow */
+.ddvcs-container h1 {
+    margin-bottom: 15px;
+}
+
+.ddvcs-container {
+    padding-bottom: 10px;
+}
 
 
 /* WRITING SERVICES */
@@ -1012,3 +1035,4 @@ text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
     	margin: auto;
     }
 }
+
