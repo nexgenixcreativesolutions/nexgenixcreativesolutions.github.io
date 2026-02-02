@@ -1036,3 +1036,36 @@ text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
     }
 }
 
+/* ================= UNIFORM BUTTON ALIGNMENT FOR ALL SERVICE CARDS ================= */
+
+/* Make all cards flex containers with buttons at the bottom */
+.product-card-ddvcs,
+.writing-service-card,
+.product.card,
+.language-product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* push button to bottom */
+    align-items: center;
+    height: 100%; /* ensures full-height flex works */
+}
+
+/* Make all CTA buttons uniform */
+.cta-button,
+.product-card-ddvcs .cta-button,
+.writing-service-card .cta-button {
+    width: 80%;       /* same width for all buttons */
+    max-width: 200px; /* optional max width for uniformity */
+    margin-top: auto; /* push button to bottom if card height allows */
+}
+
+/* Optional: uniform minimum height for desktop to align buttons horizontally */
+@media (min-width: 1025px) {
+    .product-card-ddvcs,
+    .writing-service-card,
+    .product.card,
+    .language-product-card {
+        min-height: 450px; /* adjust to fit your tallest card */
+    }
+}
+
