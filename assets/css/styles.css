@@ -1036,26 +1036,18 @@ text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
     }
 }
 
-/* ================= ALIGN CTA BUTTONS WITH PROPER SPACING ================= */
+/* ================= CTA BUTTON SPACING FIX ================= */
 
-/* Make cards flex columns */
-.product-card-ddvcs,
-.writing-service-card,
-.product.card,
-.language-product-card {
-    display: flex;
-    flex-direction: column;
+/* Add consistent spacing between product description and button */
+.product-card-ddvcs .cta-button,
+.writing-service-card .cta-button {
+    margin-top: 15px;  /* space between description and button */
 }
 
-/* Push buttons to bottom and add spacing from description */
-.product-card-ddvcs .cta-button,
-.writing-service-card .cta-button,
-.product.card .cta-button,
-.language-product-card .cta-button {
-    margin-top: 15px; /* small gap from description */
-    margin-bottom: 10px; /* optional: some space at bottom of card */
-    width: 80%;       /* unify width */
-    max-width: 200px; /* optional max width */
-    align-self: center; /* center button horizontally */
-    padding: 10px 15px; /* ensures buttons are consistent in size */
+/* Optional: keep buttons aligned but not stretching cards */
+.product-card-ddvcs,
+.writing-service-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* keep content centered */
 }
