@@ -125,22 +125,23 @@
 
   <!-- JavaScript for Toggle Menu -->
   <script>
-      function toggleMenu() {
-          document.querySelector('.nav-list').classList.toggle('active');
-          document.querySelector('.hamburger-menu').classList.toggle('open');
-      }
-
-      // Messenger redirect for service selection
-      const serviceButtons = document.querySelectorAll('.cta-button');
-      serviceButtons.forEach(button => {
-          button.addEventListener('click', () => {
-              const serviceName = button.closest('.product-card-ddvcs').querySelector('.product-title').innerText;
-              const messengerLink = `https://m.me/269318226255764?ref=${encodeURIComponent(
+    const serviceButtons = document.querySelectorAll('.cta-button');
+    serviceButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const serviceName = button.closest('.product-card-ddvcs').querySelector('.product-title').innerText;
+            // Correct Messenger link with prefilled message
+            const messengerLink = `https://m.me/269318226255764?text=${encodeURIComponent(
                 `Hi, I am interested in your ${serviceName} service.`
-              )}`;
-              window.open(messengerLink, '_blank');
-          });
-      });
-  </script>
+            )}`;
+            window.open(messengerLink, '_blank');
+        });
+    });
+
+    // Hamburger toggle
+    function toggleMenu() {
+        document.querySelector('.nav-list').classList.toggle('active');
+        document.querySelector('.hamburger-menu').classList.toggle('open');
+    }
+</script>
 </body>
 </html>
