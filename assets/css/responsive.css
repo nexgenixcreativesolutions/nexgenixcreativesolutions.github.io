@@ -615,3 +615,19 @@
         padding: 8px;
     }
 }
+
+/* ================= DDVCS MOBILE FULL-WIDTH FIX ================= */
+
+@media (max-width: 768px) {
+    .product-card-ddvcs {
+        width: 100% !important;
+        padding: 15px;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    .ddvcs-container {
+        width: 100%;
+        padding: 0;
+    }
+}
