@@ -1036,9 +1036,9 @@ text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
     }
 }
 
-/* ================= ALIGN CTA BUTTONS ACROSS CARDS ================= */
+/* ================= ALIGN CTA BUTTONS WITH PROPER SPACING ================= */
 
-/* Make card a flex column so button can be pushed to bottom */
+/* Make cards flex columns */
 .product-card-ddvcs,
 .writing-service-card,
 .product.card,
@@ -1047,12 +1047,15 @@ text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
     flex-direction: column;
 }
 
-/* Push buttons to bottom within each card */
+/* Push buttons to bottom and add spacing from description */
 .product-card-ddvcs .cta-button,
 .writing-service-card .cta-button,
 .product.card .cta-button,
 .language-product-card .cta-button {
-    margin-top: auto; /* ensures button goes to bottom */
-    width: 80%;       /* optional: unify width */
-    max-width: 200px; /* optional: cap width */
+    margin-top: 15px; /* small gap from description */
+    margin-bottom: 10px; /* optional: some space at bottom of card */
+    width: 80%;       /* unify width */
+    max-width: 200px; /* optional max width */
+    align-self: center; /* center button horizontally */
+    padding: 10px 15px; /* ensures buttons are consistent in size */
 }
