@@ -4,9 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nex Genix Dashboard Integration</title>
+  <title>Nex Genix Dashboard</title>
   <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-  <link rel="stylesheet" href="responsive.css">
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -15,12 +14,14 @@
       color: #fff;
       font-family: sans-serif;
     }
+
     .sidebar {
       background-color: #C2EABD;
       border: 2px solid #38a169;
       color: black;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
+
     .content-box {
       background-color: #1a1a1a;
       border: 2px solid #38a169;
@@ -28,6 +29,7 @@
       border-radius: 1rem;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     }
+
     .input {
       width: 100%;
       padding: 0.75rem;
@@ -36,17 +38,41 @@
       border-radius: 0.5rem;
       color: #fff;
     }
-    .input:focus {
-      border-color: #38a169;
-      box-shadow: 0 0 0 2px #38a169;
-      outline: none;
-    }
+
     .button {
       background-color: #38a169;
       color: white;
       padding: 0.75rem;
       border-radius: 0.5rem;
       font-weight: 600;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      margin-top: 0.5rem;
+      background-color: #111;
+      border: 1px solid #FFDB58;
+      border-radius: 0.5rem;
+      min-width: 200px;
+      z-index: 50;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 0.75rem;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #FFDB58;
+      color: #000;
     }
   </style>
 </head>
@@ -58,83 +84,97 @@
   <div>
     <img src="assets/images/dashboard-logo-no-bg.png" class="w-32 mb-6">
     <ul class="space-y-4">
-      <li onclick="showSection('dashboard')" class="cursor-pointer hover:text-green-400">Dashboard</li>
-      <li onclick="showSection('services')" class="cursor-pointer hover:text-green-400">Subscribed Services</li>
-      <li onclick="showSection('courses')" class="cursor-pointer hover:text-green-400">Enrolled Courses</li>
-      <li onclick="showSection('certificates')" class="cursor-pointer hover:text-green-400">Certificates</li>
-      <li onclick="showSection('settings')" class="cursor-pointer hover:text-green-400">Settings</li>
+      <li onclick="showSection('dashboard')" class="cursor-pointer hover:text-green-700">Dashboard</li>
+      <li onclick="showSection('services')" class="cursor-pointer hover:text-green-700">Subscribed Services</li>
+      <li onclick="showSection('courses')" class="cursor-pointer hover:text-green-700">Enrolled Courses</li>
+      <li onclick="showSection('certificates')" class="cursor-pointer hover:text-green-700">Certificates</li>
+      <li onclick="showSection('settings')" class="cursor-pointer hover:text-green-700">Settings</li>
     </ul>
   </div>
-  <p class="text-xs text-gray-500">&copy; 2025 Nex Genix Creative Solutions</p>
+  <p class="text-xs text-gray-600">&copy; 2025 Nex Genix Creative Solutions</p>
 </div>
 
-<!-- Main -->
+<!-- Main Content -->
 <div class="flex-1 ml-64 p-6">
 
-<!-- Dashboard -->
+<!-- Top Navigation -->
+<nav class="flex justify-between items-center mb-6 p-4 rounded-lg"
+     style="border: 2px solid #FFDB58; box-shadow: 0 10px 25px rgba(0,0,0,.3);">
+
+  <!-- Clock -->
+  <div id="datetime" class="text-sm text-gray-300"></div>
+
+  <div class="flex items-center gap-4">
+
+    <!-- Home Dropdown -->
+    <div class="dropdown relative">
+      <button class="p-2 border border-yellow-400 rounded-lg hover:bg-yellow-400 hover:text-black transition">
+        🏠
+      </button>
+      <div class="dropdown-menu">
+        <a href="https://nexgenixbusinesschool.github.io" target="_blank">Nex Genix Business School</a>
+        <a href="https://nexgenixcreativesolutions.github.io" target="_blank">Nex Genix Creative Solutions</a>
+      </div>
+    </div>
+
+    <!-- Logout -->
+    <button onclick="logout()"
+      class="p-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-black transition">
+      ⎋ Logout
+    </button>
+  </div>
+</nav>
+
+<!-- DASHBOARD -->
 <div id="dashboard">
 
-<h1 id="welcome-message" class="text-2xl font-bold mb-4">Welcome, Nex Genix!</h1>
+  <h1 id="welcome-message" class="text-2xl font-bold mb-4">
+    Welcome, Nex Genix!
+  </h1>
 
-<div class="grid md:grid-cols-3 gap-6 mb-6">
-  <div class="content-box">
-    <h3 class="text-lg font-semibold">Courses Enrolled</h3>
-    <p class="text-3xl font-bold text-green-400">3</p>
+  <div class="grid md:grid-cols-3 gap-6 mb-6">
+    <div class="content-box">
+      <h3 class="text-lg">Courses Enrolled</h3>
+      <p class="text-3xl font-bold text-green-400">3</p>
+    </div>
+    <div class="content-box">
+      <h3 class="text-lg">Available Programs</h3>
+      <p class="text-3xl font-bold text-yellow-400">12</p>
+    </div>
+    <div class="content-box">
+      <h3 class="text-lg">Certificates Earned</h3>
+      <p class="text-3xl font-bold text-red-400">1</p>
+    </div>
   </div>
+
   <div class="content-box">
-    <h3 class="text-lg font-semibold">Available Programs</h3>
-    <p class="text-3xl font-bold">12</p>
+    <h2 class="text-lg font-semibold text-green-400 mb-2">Recommended for You</h2>
+    <p class="text-gray-300">Continue <strong>Language Mastery – Module 2</strong></p>
+    <button class="button mt-4">Continue Learning</button>
   </div>
-  <div class="content-box">
-    <h3 class="text-lg font-semibold">Certificates Earned</h3>
-    <p class="text-3xl font-bold">1</p>
-  </div>
+
 </div>
 
-<!-- Recommended -->
-<div class="content-box mb-6">
-  <h2 class="text-lg font-semibold text-green-400 mb-2">Recommended for You</h2>
-  <p class="text-sm text-gray-300">Continue your progress in <strong>Language Mastery – Module 2</strong></p>
-  <button class="button mt-4">Continue Learning</button>
-</div>
-
-</div>
-
-<!-- Courses -->
+<!-- COURSES -->
 <div id="courses" class="hidden content-box mt-6">
-  <h2 class="text-xl font-bold mb-4 text-green-400">Your Enrolled Courses</h2>
-
-  <div class="space-y-4">
-    <div>
-      <p class="font-semibold">Language Mastery</p>
-      <div class="w-full bg-gray-700 rounded-full h-2">
-        <div class="bg-green-400 h-2 rounded-full w-2/3"></div>
-      </div>
-    </div>
-
-    <div>
-      <p class="font-semibold">Creative Writing</p>
-      <div class="w-full bg-gray-700 rounded-full h-2">
-        <div class="bg-green-400 h-2 rounded-full w-1/3"></div>
-      </div>
-    </div>
-  </div>
+  <h2 class="text-xl font-bold mb-4 text-green-400">Your Courses</h2>
+  <p>Language Mastery — 66% complete</p>
 </div>
 
-<!-- Certificates -->
+<!-- CERTIFICATES -->
 <div id="certificates" class="hidden content-box mt-6">
   <h2 class="text-xl font-bold mb-2 text-green-400">Certificates</h2>
-  <p class="text-gray-400">No certificates yet. Complete a course to earn your first one.</p>
+  <p class="text-gray-400">Complete a course to earn certificates.</p>
 </div>
 
-<!-- Services -->
+<!-- SERVICES -->
 <div id="services" class="hidden content-box mt-6">
-  <h2 class="text-xl font-bold text-green-400 mb-4">Subscribed Services</h2>
-  <p class="text-gray-300">You currently have access to creative and educational services.</p>
+  <h2 class="text-xl font-bold text-green-400">Subscribed Services</h2>
+  <p class="text-gray-300">Creative & Educational Services Active</p>
 </div>
 
-<!-- Settings (UNCHANGED) -->
-<div id="settings" class="hidden mt-6 content-box">
+<!-- SETTINGS -->
+<div id="settings" class="hidden content-box mt-6">
   <h2 class="text-xl font-bold mb-4">Settings</h2>
   <input class="input mb-3" placeholder="Full Name">
   <input class="input mb-3" placeholder="Email">
@@ -144,11 +184,25 @@
 </div>
 
 <script>
-function showSection(id){
+function showSection(id) {
   document.querySelectorAll('#dashboard, #services, #courses, #certificates, #settings')
     .forEach(sec => sec.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 }
+
+function updateClock() {
+  const now = new Date();
+  document.getElementById("datetime").textContent =
+    now.toLocaleTimeString() + " | " + now.toDateString();
+}
+
+function logout() {
+  alert("Logged out successfully.");
+  window.location.href = "index.html";
+}
+
+setInterval(updateClock, 1000);
+updateClock();
 showSection('dashboard');
 </script>
 
