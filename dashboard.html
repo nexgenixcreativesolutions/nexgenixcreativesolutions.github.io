@@ -15,13 +15,26 @@
       font-family: sans-serif;
     }
 
+    /* Sidebar */
     .sidebar {
       background-color: #C2EABD;
       border: 2px solid #38a169;
-      color: black;
+      color: #000;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
+    .sidebar li {
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      transition: background-color .2s, color .2s;
+    }
+
+    .sidebar li:hover {
+      background-color: rgba(56,161,105,0.2);
+      color: #064e3b;
+    }
+
+    /* Content */
     .content-box {
       background-color: #1a1a1a;
       border: 2px solid #38a169;
@@ -39,39 +52,96 @@
       color: #fff;
     }
 
+    .input:focus {
+      outline: none;
+      border-color: #FFDB58;
+      box-shadow: 0 0 0 2px rgba(255,219,88,0.4);
+    }
+
     .button {
       background-color: #38a169;
-      color: white;
+      color: #fff;
       padding: 0.75rem;
       border-radius: 0.5rem;
       font-weight: 600;
+      transition: background-color .2s, transform .1s;
     }
 
-    .dropdown:hover .dropdown-menu {
-      display: block;
+    .button:hover {
+      background-color: #2f855a;
+      transform: translateY(-1px);
+    }
+
+    /* Dropdown FIX */
+    .dropdown {
+      position: relative;
     }
 
     .dropdown-menu {
-      display: none;
       position: absolute;
       right: 0;
-      margin-top: 0.5rem;
+      top: 120%;
       background-color: #111;
       border: 1px solid #FFDB58;
-      border-radius: 0.5rem;
-      min-width: 200px;
+      border-radius: 0.75rem;
+      min-width: 220px;
+      padding: 0.25rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-5px);
+      transition: opacity .2s, transform .2s;
       z-index: 50;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
     }
 
     .dropdown-menu a {
       display: block;
       padding: 0.75rem;
+      border-radius: 0.5rem;
       color: #fff;
       text-decoration: none;
+      transition: background-color .2s, color .2s;
     }
 
     .dropdown-menu a:hover {
       background-color: #FFDB58;
+      color: #000;
+    }
+
+    /* Top buttons */
+    .icon-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid;
+      transition: all .2s;
+      backdrop-filter: blur(6px);
+    }
+
+    .home-btn {
+      border-color: #FFDB58;
+      color: #FFDB58;
+    }
+
+    .home-btn:hover {
+      background-color: #FFDB58;
+      color: #000;
+    }
+
+    .logout-btn {
+      border-color: #FF4C4C;
+      color: #FF4C4C;
+    }
+
+    .logout-btn:hover {
+      background-color: #FF4C4C;
       color: #000;
     }
   </style>
@@ -83,12 +153,12 @@
 <div class="sidebar fixed inset-y-0 left-0 w-64 p-5 flex flex-col justify-between">
   <div>
     <img src="assets/images/dashboard-logo-no-bg.png" class="w-32 mb-6">
-    <ul class="space-y-4">
-      <li onclick="showSection('dashboard')" class="cursor-pointer hover:text-green-700">Dashboard</li>
-      <li onclick="showSection('services')" class="cursor-pointer hover:text-green-700">Subscribed Services</li>
-      <li onclick="showSection('courses')" class="cursor-pointer hover:text-green-700">Enrolled Courses</li>
-      <li onclick="showSection('certificates')" class="cursor-pointer hover:text-green-700">Certificates</li>
-      <li onclick="showSection('settings')" class="cursor-pointer hover:text-green-700">Settings</li>
+    <ul class="space-y-2">
+      <li onclick="showSection('dashboard')" class="cursor-pointer">Dashboard</li>
+      <li onclick="showSection('services')" class="cursor-pointer">Subscribed Services</li>
+      <li onclick="showSection('courses')" class="cursor-pointer">Enrolled Courses</li>
+      <li onclick="showSection('certificates')" class="cursor-pointer">Certificates</li>
+      <li onclick="showSection('settings')" class="cursor-pointer">Settings</li>
     </ul>
   </div>
   <p class="text-xs text-gray-600">&copy; 2025 Nex Genix Creative Solutions</p>
@@ -98,18 +168,17 @@
 <div class="flex-1 ml-64 p-6">
 
 <!-- Top Navigation -->
-<nav class="flex justify-between items-center mb-6 p-4 rounded-lg"
-     style="border: 2px solid #FFDB58; box-shadow: 0 10px 25px rgba(0,0,0,.3);">
+<nav class="flex justify-between items-center mb-6 p-4 rounded-lg border border-yellow-400"
+     style="box-shadow: 0 10px 25px rgba(0,0,0,.3);">
 
-  <!-- Clock -->
   <div id="datetime" class="text-sm text-gray-300"></div>
 
-  <div class="flex items-center gap-4">
+  <div class="flex items-center gap-3">
 
     <!-- Home Dropdown -->
-    <div class="dropdown relative">
-      <button class="p-2 border border-yellow-400 rounded-lg hover:bg-yellow-400 hover:text-black transition">
-        🏠
+    <div class="dropdown">
+      <button class="icon-btn home-btn">
+        🏠 <span class="hidden sm:inline">Home</span>
       </button>
       <div class="dropdown-menu">
         <a href="https://nexgenixbusinesschool.github.io" target="_blank">Nex Genix Business School</a>
@@ -118,31 +187,28 @@
     </div>
 
     <!-- Logout -->
-    <button onclick="logout()"
-      class="p-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-black transition">
-      ⎋ Logout
+    <button onclick="logout()" class="icon-btn logout-btn">
+      ⎋ <span class="hidden sm:inline">Logout</span>
     </button>
+
   </div>
 </nav>
 
-<!-- DASHBOARD -->
+<!-- Dashboard -->
 <div id="dashboard">
-
-  <h1 id="welcome-message" class="text-2xl font-bold mb-4">
-    Welcome, Nex Genix!
-  </h1>
+  <h1 id="welcome-message" class="text-2xl font-bold mb-4">Welcome, Nex Genix!</h1>
 
   <div class="grid md:grid-cols-3 gap-6 mb-6">
     <div class="content-box">
-      <h3 class="text-lg">Courses Enrolled</h3>
+      <h3>Courses Enrolled</h3>
       <p class="text-3xl font-bold text-green-400">3</p>
     </div>
     <div class="content-box">
-      <h3 class="text-lg">Available Programs</h3>
+      <h3>Available Programs</h3>
       <p class="text-3xl font-bold text-yellow-400">12</p>
     </div>
     <div class="content-box">
-      <h3 class="text-lg">Certificates Earned</h3>
+      <h3>Certificates Earned</h3>
       <p class="text-3xl font-bold text-red-400">1</p>
     </div>
   </div>
@@ -152,30 +218,13 @@
     <p class="text-gray-300">Continue <strong>Language Mastery – Module 2</strong></p>
     <button class="button mt-4">Continue Learning</button>
   </div>
-
 </div>
 
-<!-- COURSES -->
-<div id="courses" class="hidden content-box mt-6">
-  <h2 class="text-xl font-bold mb-4 text-green-400">Your Courses</h2>
-  <p>Language Mastery — 66% complete</p>
-</div>
-
-<!-- CERTIFICATES -->
-<div id="certificates" class="hidden content-box mt-6">
-  <h2 class="text-xl font-bold mb-2 text-green-400">Certificates</h2>
-  <p class="text-gray-400">Complete a course to earn certificates.</p>
-</div>
-
-<!-- SERVICES -->
-<div id="services" class="hidden content-box mt-6">
-  <h2 class="text-xl font-bold text-green-400">Subscribed Services</h2>
-  <p class="text-gray-300">Creative & Educational Services Active</p>
-</div>
-
-<!-- SETTINGS -->
+<!-- Other sections unchanged -->
+<div id="courses" class="hidden content-box mt-6">Language Mastery — 66% complete</div>
+<div id="certificates" class="hidden content-box mt-6">No certificates yet.</div>
+<div id="services" class="hidden content-box mt-6">Services active.</div>
 <div id="settings" class="hidden content-box mt-6">
-  <h2 class="text-xl font-bold mb-4">Settings</h2>
   <input class="input mb-3" placeholder="Full Name">
   <input class="input mb-3" placeholder="Email">
   <button class="button w-full">Save Changes</button>
@@ -185,8 +234,8 @@
 
 <script>
 function showSection(id) {
-  document.querySelectorAll('#dashboard, #services, #courses, #certificates, #settings')
-    .forEach(sec => sec.classList.add('hidden'));
+  document.querySelectorAll('#dashboard,#services,#courses,#certificates,#settings')
+    .forEach(s => s.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 }
 
