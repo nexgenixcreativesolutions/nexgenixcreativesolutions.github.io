@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: nexgenix-backend
+    env: python
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      python init_db.py
+    startCommand: python app.py
