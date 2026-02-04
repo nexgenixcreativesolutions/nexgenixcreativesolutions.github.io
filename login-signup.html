@@ -6,6 +6,7 @@
     <title>Nex Genix Creative Solutions</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         body {
             display: flex;
@@ -89,12 +90,18 @@
         }
     </style>
 </head>
+
 <body>
+
+<!-- Supabase SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const supabase = supabase.createClient(
-    "https://rranivozhrsldhapzwqc.supabase.co",
-    "sb_publishable_bdfuminbwIZn_S1DPfB7bg_ogP5mUVi"
+  const SUPABASE_URL = "https://rranivozhrsldhapzwqc.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_bdfuminbwIZn_S1DPfB7bg_ogP5mUVi";
+
+  const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
   );
 </script>
 
@@ -105,8 +112,8 @@
         <img src="assets/images/banner.png" alt="Banner">
         <p class="description">Your Vision, Beautifully Engineered.</p>
 
-        <form class="mt-6" method="POST" action="https://nexgenix-backend.onrender.com/login">
-            <input type="text" name="email" placeholder="Email or phone number" class="input">
+        <form id="loginForm" class="mt-6">
+            <input type="email" name="email" placeholder="Email" class="input">
 
             <div class="input-container mt-4">
                 <input type="password" name="password" placeholder="Password" class="input">
@@ -120,7 +127,7 @@
     <div class="section md:w-1/2">
         <h2 class="signup-title">Create an account</h2>
 
-        <form class="mt-4 grid grid-cols-2 gap-3" method="POST" action="https://nexgenix-backend.onrender.com/signup">
+        <form id="signupForm" class="mt-4 grid grid-cols-2 gap-3">
             <input type="text" name="first_name" placeholder="First name" class="input">
             <input type="text" name="last_name" placeholder="Last name" class="input">
             <input type="email" name="email" placeholder="Email" class="input col-span-2">
@@ -131,6 +138,68 @@
     </div>
 
 </div>
+
+<!-- AUTH LOGIC -->
+<script>
+  // LOGIN
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      alert(error.message);
+    } else {
+      alert("Login successful!");
+      // window.location.href = "dashboard.html";
+    }
+  });
+
+  // SIGNUP + TABLE INSERT
+  document.getElementById("signupForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const first_name = e.target.first_name.value;
+    const last_name = e.target.last_name.value;
+    const email = e.target.email.value;
+    const phone = e.target.phone.value;
+    const password = e.target.password.value;
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password
+    });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    const { error: insertError } = await supabase
+      .from("users") // ⚠️ change if your table name is different
+      .insert({
+        id: data.user.id,
+        first_name,
+        last_name,
+        email,
+        phone
+      });
+
+    if (insertError) {
+      alert(insertError.message);
+      return;
+    }
+
+    alert("Signup successful! Check your email.");
+    e.target.reset();
+  });
+</script>
 
 </body>
 </html>
