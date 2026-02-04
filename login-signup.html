@@ -59,7 +59,6 @@
    🔐 SUPABASE SETUP
 ========================= */
 
-// 🔴 REPLACE THESE WITH YOUR REAL VALUES
 const SUPABASE_URL = "https://rranivozhrsldhapzwqc.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_bdfuminbwIZn_S1DPfB7bg_ogP5mUVi";
 
@@ -106,30 +105,45 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
   msg.textContent = "";
 
   try {
+    /* ---------- SIGN UP ---------- */
     if (isSignup) {
       console.log("Signing up user…");
 
       const { data, error } = await supabaseClient.auth.signUp({
         email,
-        password
+        password,
+        options: {
+          emailRedirectTo: "http://localhost:3000/dashboard"
+        }
       });
 
       if (error) throw error;
 
-      console.log("Auth user created:", data.user.id);
+      // If email confirmation is required, user may be null
+      if (!data.user) {
+        msg.textContent = "Check your email to confirm your account.";
+        return;
+      }
 
-      // Create profile row
+      // Split full name into first & last
+      const nameParts = fullName.split(" ");
+      const first_name = nameParts.shift() || "";
+      const last_name = nameParts.join(" ") || "";
+
+      console.log("Creating profile for:", data.user.id);
+
       const { error: profileError } = await supabaseClient
         .from("profiles")
         .insert({
           id: data.user.id,
           email,
-          full_name: fullName
+          first_name,
+          last_name
         });
 
       if (profileError) throw profileError;
 
-      msg.textContent = "Account created! You can now sign in.";
+      msg.textContent = "Account created! Check your email to confirm.";
       isSignup = false;
       fullnameInput.classList.add("hidden");
       title.textContent = "Sign In";
@@ -137,6 +151,7 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
       return;
     }
 
+    /* ---------- SIGN IN ---------- */
     console.log("Signing in user…");
 
     const { error } = await supabaseClient.auth.signInWithPassword({
@@ -167,9 +182,14 @@ document.getElementById("forgotBtn").addEventListener("click", async () => {
     return;
   }
 
-  await supabaseClient.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.href
+  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+    redirectTo: "http://localhost:3000"
   });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
 
   alert("Password reset email sent.");
 });
