@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Nex Genix Creative Solutions | Business School</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Nex Genix | Login & Signup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.tailwindcss.com"></script>
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-black text-white flex items-center justify-center min-h-screen">
 
-<div class="bg-zinc-900 border border-green-500 rounded-xl p-6 w-full max-w-md">
+<div class="bg-zinc-900 border border-green-500 rounded-xl p-6 w-full max-w-md shadow-xl">
 
-  <!-- LOGO / BANNER -->
+  <!-- LOGO -->
   <div class="flex justify-center mb-4">
-    <img src="assets/images/dashboard-logo-no-bg.png"
-         alt="Nex Genix"
-         class="w-32">
+    <img src="assets/images/dashboard-logo-no-bg.png" alt="Nex Genix" class="h-10">
   </div>
 
   <h2 id="title" class="text-xl font-bold text-center mb-4">Sign In</h2>
 
   <form id="authForm" class="space-y-3">
     <input id="email" type="email" placeholder="Email"
-           class="w-full p-2 bg-transparent border rounded" required>
+      class="w-full p-2 bg-transparent border rounded" required>
 
     <input id="password" type="password" placeholder="Password"
-           class="w-full p-2 bg-transparent border rounded" required>
+      class="w-full p-2 bg-transparent border rounded" required>
 
     <input id="fullname" type="text" placeholder="Full Name (for signup)"
-           class="w-full p-2 bg-transparent border rounded hidden">
+      class="w-full p-2 bg-transparent border rounded hidden">
 
     <button type="submit"
-            class="w-full bg-green-600 p-2 rounded font-semibold">
+      class="w-full bg-green-600 p-2 rounded font-semibold hover:bg-green-700 transition">
       Continue
     </button>
   </form>
@@ -42,17 +43,11 @@
 
   <div class="text-center mt-4 text-sm">
     <span id="toggleText">New here?</span>
-    <button type="button"
-            onclick="toggleMode()"
-            class="text-yellow-400 ml-1">
-      Create account
-    </button>
+    <button id="toggleBtn" class="text-yellow-400 ml-1">Create account</button>
   </div>
 
   <div class="text-center mt-2 text-sm">
-    <button type="button"
-            onclick="forgotPassword()"
-            class="text-gray-400 underline">
+    <button id="forgotBtn" class="text-gray-400 underline">
       Forgot password?
     </button>
   </div>
@@ -60,83 +55,111 @@
 </div>
 
 <script>
-/* 🔑 SUPABASE CLIENT */
+/* =========================
+   🔐 SUPABASE SETUP
+========================= */
+
+// 🔴 REPLACE THESE WITH YOUR REAL VALUES
+const SUPABASE_URL = "https://rranivozhrsldhapzwqc.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_bdfuminbwIZn_S1DPfB7bg_ogP5mUVi";
+
 const supabaseClient = supabase.createClient(
-  "https://YOUR_PROJECT_ID.supabase.co",
-  "YOUR_PUBLIC_ANON_KEY"
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
 );
+
+console.log("Supabase initialized");
+
+/* =========================
+   🔁 MODE TOGGLE
+========================= */
 
 let isSignup = false;
 
-/* TOGGLE LOGIN / SIGNUP */
-function toggleMode() {
+const title = document.getElementById("title");
+const fullnameInput = document.getElementById("fullname");
+const toggleText = document.getElementById("toggleText");
+const toggleBtn = document.getElementById("toggleBtn");
+const msg = document.getElementById("msg");
+
+toggleBtn.addEventListener("click", () => {
   isSignup = !isSignup;
-  document.getElementById("fullname").classList.toggle("hidden");
-  document.getElementById("title").textContent =
-    isSignup ? "Sign Up" : "Sign In";
-  document.getElementById("toggleText").textContent =
-    isSignup ? "Already have an account?" : "New here?";
-  document.getElementById("msg").textContent = "";
-}
+  fullnameInput.classList.toggle("hidden");
+  title.textContent = isSignup ? "Sign Up" : "Sign In";
+  toggleText.textContent = isSignup
+    ? "Already have an account?"
+    : "New here?";
+  msg.textContent = "";
+});
 
-/* FORM HANDLER */
-document.getElementById("authForm").addEventListener("submit", handleAuth);
+/* =========================
+   🔐 AUTH HANDLER
+========================= */
 
-async function handleAuth(e) {
+document.getElementById("authForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const emailEl = document.getElementById("email");
-  const passwordEl = document.getElementById("password");
-  const fullnameEl = document.getElementById("fullname");
-  const msg = document.getElementById("msg");
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const fullName = fullnameInput.value.trim();
 
   msg.textContent = "";
 
-  const email = emailEl.value.trim();
-  const password = passwordEl.value.trim();
+  try {
+    if (isSignup) {
+      console.log("Signing up user…");
 
-  if (isSignup) {
-    const fullName = fullnameEl.value.trim();
-
-    const { data, error } =
-      await supabaseClient.auth.signUp({
+      const { data, error } = await supabaseClient.auth.signUp({
         email,
         password
       });
 
-    if (error) {
-      msg.textContent = error.message;
+      if (error) throw error;
+
+      console.log("Auth user created:", data.user.id);
+
+      // Create profile row
+      const { error: profileError } = await supabaseClient
+        .from("profiles")
+        .insert({
+          id: data.user.id,
+          email,
+          full_name: fullName
+        });
+
+      if (profileError) throw profileError;
+
+      msg.textContent = "Account created! You can now sign in.";
+      isSignup = false;
+      fullnameInput.classList.add("hidden");
+      title.textContent = "Sign In";
+      toggleText.textContent = "New here?";
       return;
     }
 
-    await supabaseClient.from("profiles").insert({
-      id: data.user.id,
-      email,
-      full_name: fullName
-    });
+    console.log("Signing in user…");
 
-    msg.textContent = "Account created! Please sign in.";
-    toggleMode();
-    return;
-  }
-
-  const { error } =
-    await supabaseClient.auth.signInWithPassword({
+    const { error } = await supabaseClient.auth.signInWithPassword({
       email,
       password
     });
 
-  if (error) {
-    msg.textContent = error.message;
-    return;
+    if (error) throw error;
+
+    console.log("Login success — redirecting");
+    window.location.href = "/dashboard/";
+
+  } catch (err) {
+    console.error(err);
+    msg.textContent = err.message || "Something went wrong";
   }
+});
 
-  window.location.href =
-    "https://nexgenixcreativesolutions.github.io/dashboard";
-}
+/* =========================
+   🔑 FORGOT PASSWORD
+========================= */
 
-/* FORGOT PASSWORD */
-async function forgotPassword() {
+document.getElementById("forgotBtn").addEventListener("click", async () => {
   const email = document.getElementById("email").value.trim();
 
   if (!email) {
@@ -145,12 +168,11 @@ async function forgotPassword() {
   }
 
   await supabaseClient.auth.resetPasswordForEmail(email, {
-    redirectTo:
-      "https://nexgenixcreativesolutions.github.io/login-signup.html"
+    redirectTo: window.location.href
   });
 
   alert("Password reset email sent.");
-}
+});
 </script>
 
 </body>
