@@ -1,225 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nex Genix Creative Solutions</title>
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nex Genix CS | BS</title>
 
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: black;
-            color: white;
-        }
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            max-width: 64rem;
-            width: 100%;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                flex-direction: row;
-            }
-        }
-
-        .section {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            flex: 1;
-        }
-
-        .login-title,
-        .signup-title {
-            font-size: 2.25rem;
-            font-weight: bold;
-            color: #48bb78;
-        }
-
-        .description {
-            color: #d1d5db;
-            margin-top: 0.5rem;
-        }
-
-        .input-container {
-            position: relative;
-            width: 100%;
-        }
-
-        .input {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #4a5568;
-            border: 1px solid #2d3748;
-            border-radius: 0.5rem;
-            color: white;
-            outline: none;
-        }
-
-        .button {
-            width: 100%;
-            background-color: #48bb78;
-            color: white;
-            padding: 0.75rem;
-            margin-top: 1rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-        }
-
-        .link {
-            text-align: center;
-            color: #48bb78;
-            margin-top: 1rem;
-            cursor: pointer;
-        }
-    </style>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: sans-serif;
+    }
+    .box {
+      background-color: #111;
+      border: 2px solid #38a169;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+    }
+    .input {
+      width: 100%;
+      padding: 0.75rem;
+      background: transparent;
+      border: 1px solid #444;
+      border-radius: 0.5rem;
+      color: #fff;
+    }
+    .input:focus {
+      outline: none;
+      border-color: #FFDB58;
+      box-shadow: 0 0 0 2px rgba(255,219,88,0.4);
+    }
+    .btn {
+      background-color: #38a169;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: all .2s;
+    }
+    .btn:hover {
+      background-color: #2f855a;
+    }
+  </style>
 </head>
 
-<body>
+<body class="flex items-center justify-center min-h-screen">
 
-<!-- Supabase SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <div class="box w-full max-w-md">
+    <img src="assets/images/dashboard-logo-no-bg.png" class="w-32 mx-auto mb-6">
+
+    <h1 class="text-xl font-bold text-center mb-4">Sign in to your account</h1>
+
+    <form onsubmit="login(event)" class="space-y-4">
+      <input id="email" type="email" placeholder="Email" class="input" required />
+      <input id="password" type="password" placeholder="Password" class="input" required />
+
+      <button type="submit" class="btn w-full">Sign In</button>
+    </form>
+
+    <p id="message" class="text-sm text-center mt-4 text-red-400"></p>
+  </div>
+
 <script>
-  const SUPABASE_URL = "https://rranivozhrsldhapzwqc.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_bdfuminbwIZn_S1DPfB7bg_ogP5mUVi";
+/* ============================
+   SUPABASE CONFIG
+============================ */
+const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR_PUBLIC_ANON_KEY";
 
-  const { createClient } = supabase;
-  const supabaseClient = createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
-</script>
+const supabase = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 
-<div class="container">
+/* ============================
+   DEBUG HELPER
+============================ */
+function debug(label, data) {
+  console.log(`🟢 [AUTH DEBUG] ${label}`, data);
+}
 
-    <!-- LOGIN -->
-    <div class="section md:w-1/2">
-        <img src="assets/images/banner.png" alt="Banner">
-        <p class="description">Your Vision, Beautifully Engineered.</p>
+/* ============================
+   CHECK EXISTING SESSION
+============================ */
+async function checkSession() {
+  const { data } = await supabase.auth.getUser();
+  if (data?.user) {
+    debug("Session exists, redirecting", data.user);
+    window.location.href = "/dashboard";
+  }
+}
+checkSession();
 
-        <form id="loginForm" class="mt-6">
-            <input type="email" name="email" placeholder="Email" class="input">
+/* ============================
+   LOGIN (PASSWORD BASED)
+============================ */
+async function login(e) {
+  e.preventDefault();
 
-            <div class="input-container mt-4">
-                <input type="password" name="password" placeholder="Password" class="input">
-            </div>
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const msg = document.getElementById("message");
 
-            <button type="submit" class="button">Log In</button>
-        </form>
-    </div>
+  msg.textContent = "";
+  debug("Attempting login", { email });
 
-    <!-- SIGNUP -->
-    <div class="section md:w-1/2">
-        <h2 class="signup-title">Create an account</h2>
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
 
-        <form id="signupForm" class="mt-4 grid grid-cols-2 gap-3">
-            <input type="text" name="first_name" placeholder="First name" class="input">
-            <input type="text" name="last_name" placeholder="Last name" class="input">
-            <input type="email" name="email" placeholder="Email" class="input col-span-2">
-            <input type="text" name="phone" placeholder="Phone number" class="input col-span-2">
-            <input type="password" name="password" placeholder="New password" class="input col-span-2">
-            <button type="submit" class="button col-span-2">Sign Up</button>
-        </form>
-    </div>
-
-</div>
-
-<!-- AUTH LOGIC -->
-<script>
-  // =========================
-  // LOGIN
-  // =========================
-  const loginForm = document.getElementById("loginForm");
-
-  if (loginForm) {
-    loginForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const email = e.target.email.value.trim();
-      const password = e.target.password.value;
-
-      const { error } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
-
-      if (error) {
-        alert(error.message);
-        return;
-      }
-
-      // ✅ redirect after successful login
-      window.location.href = "dashboard.html";
-    });
+  if (error) {
+    console.error("🔴 Login error:", error);
+    msg.textContent = error.message;
+    return;
   }
 
-  // =========================
-  // SIGNUP + TABLE INSERT
-  // =========================
-  const signupForm = document.getElementById("signupForm");
-
-  if (signupForm) {
-    signupForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const first_name = e.target.first_name.value.trim();
-      const last_name  = e.target.last_name.value.trim();
-      const email      = e.target.email.value.trim();
-      const phone      = e.target.phone.value.trim();
-      const password   = e.target.password.value;
-
-      // 1️⃣ Create auth user
-      const { data, error } = await supabaseClient.auth.signUp({
-        email,
-        password
-      });
-
-      if (error) {
-        alert(error.message);
-        return;
-      }
-
-      if (!data.user) {
-        alert("Signup failed. Please try again.");
-        return;
-      }
-
-      // 2️⃣ Insert profile row
-      const { error: insertError } = await supabaseClient
-        .from("users") // 🔁 change if table name differs
-        .insert({
-          id: data.user.id,
-          first_name,
-          last_name,
-          email,
-          phone
-        });
-
-      if (insertError) {
-        alert(insertError.message);
-        return;
-      }
-
-      // ✅ redirect after successful signup
-      window.location.href = "dashboard.html";
-    });
-  }
+  debug("Login success", data.user);
+  window.location.href = "/dashboard";
+}
 </script>
 
 </body>
