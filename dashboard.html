@@ -245,27 +245,47 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-function showSection(id) {
-  document.querySelectorAll('#dashboard,#services,#courses,#certificates,#settings')
-    .forEach(s => s.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-}
+const supabase = supabase.createClient(
+  "https://YOUR_PROJECT_ID.supabase.co",
+  "YOUR_PUBLIC_ANON_KEY"
+);
 
-function updateClock() {
-  const now = new Date();
-  document.getElementById("datetime").textContent =
-    now.toLocaleTimeString() + " | " + now.toDateString();
+async function initDashboard() {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    window.location.href = "login-signup.html";
+    return;
+  }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  document.getElementById("welcome-message").textContent =
+    `Welcome, ${profile.full_name || profile.email}`;
+
+  document.querySelector(".text-green-400").textContent =
+    profile.courses_enrolled;
+
+  document.querySelector(".text-red-400").textContent =
+    profile.certificates_earned;
+
+  if (profile.role !== "admin") {
+    document.querySelector("[onclick=\"showSection('settings')\"]").style.display = "none";
+  }
 }
 
 function logout() {
-  alert("Logged out successfully.");
-  window.location.href = "index.html";
+  supabase.auth.signOut();
+  window.location.href = "login-signup.html";
 }
 
-setInterval(updateClock, 1000);
-updateClock();
-showSection('dashboard');
+initDashboard();
 </script>
 
 </body>
