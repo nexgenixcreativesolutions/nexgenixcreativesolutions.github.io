@@ -99,7 +99,8 @@
   const SUPABASE_URL = "https://rranivozhrsldhapzwqc.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_bdfuminbwIZn_S1DPfB7bg_ogP5mUVi";
 
-  const supabase = window.supabase.createClient(
+  const { createClient } = supabase;
+  const supabaseClient = createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
   );
@@ -141,64 +142,84 @@
 
 <!-- AUTH LOGIC -->
 <script>
+  // =========================
   // LOGIN
-  document.getElementById("loginForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+  // =========================
+  const loginForm = document.getElementById("loginForm");
 
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
+      const email = e.target.email.value.trim();
+      const password = e.target.password.value;
 
-    if (error) {
-      alert(error.message);
-    } else {
-      alert("Login successful!");
-      // window.location.href = "dashboard.html";
-    }
-  });
-
-  // SIGNUP + TABLE INSERT
-  document.getElementById("signupForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const first_name = e.target.first_name.value;
-    const last_name = e.target.last_name.value;
-    const email = e.target.email.value;
-    const phone = e.target.phone.value;
-    const password = e.target.password.value;
-
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password
-    });
-
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    const { error: insertError } = await supabase
-      .from("users") // ⚠️ change if your table name is different
-      .insert({
-        id: data.user.id,
-        first_name,
-        last_name,
+      const { error } = await supabaseClient.auth.signInWithPassword({
         email,
-        phone
+        password
       });
 
-    if (insertError) {
-      alert(insertError.message);
-      return;
-    }
+      if (error) {
+        alert(error.message);
+        return;
+      }
 
-    alert("Signup successful! Check your email.");
-    e.target.reset();
-  });
+      // ✅ redirect after successful login
+      window.location.href = "dashboard.html";
+    });
+  }
+
+  // =========================
+  // SIGNUP + TABLE INSERT
+  // =========================
+  const signupForm = document.getElementById("signupForm");
+
+  if (signupForm) {
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const first_name = e.target.first_name.value.trim();
+      const last_name  = e.target.last_name.value.trim();
+      const email      = e.target.email.value.trim();
+      const phone      = e.target.phone.value.trim();
+      const password   = e.target.password.value;
+
+      // 1️⃣ Create auth user
+      const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password
+      });
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      if (!data.user) {
+        alert("Signup failed. Please try again.");
+        return;
+      }
+
+      // 2️⃣ Insert profile row
+      const { error: insertError } = await supabaseClient
+        .from("users") // 🔁 change if table name differs
+        .insert({
+          id: data.user.id,
+          first_name,
+          last_name,
+          email,
+          phone
+        });
+
+      if (insertError) {
+        alert(insertError.message);
+        return;
+      }
+
+      // ✅ redirect after successful signup
+      window.location.href = "dashboard.html";
+    });
+  }
 </script>
 
 </body>
