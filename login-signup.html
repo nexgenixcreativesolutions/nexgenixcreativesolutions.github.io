@@ -57,7 +57,7 @@
       class="w-full p-2 bg-transparent border rounded" required>
 
     <input id="fullname" type="text" placeholder="Full Name (for signup)"
-      class="w-full p-2 bg-transparent border rounded hidden">
+      class="w-full p-2 bg-transparent border rounded animate-field hidden-field">
 
     <button type="submit"
       class="w-full bg-green-600 p-2 rounded font-semibold hover:bg-green-700 transition">
@@ -110,7 +110,9 @@ const msg = document.getElementById("msg");
 
 toggleBtn.addEventListener("click", () => {
   isSignup = !isSignup;
-  fullnameInput.classList.toggle("hidden");
+  fullnameInput.classList.toggle("hidden-field");
+  fullnameInput.classList.toggle("visible-field");
+
 
   if (isSignup) {
     title.textContent = "Sign Up";
