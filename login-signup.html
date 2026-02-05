@@ -113,7 +113,7 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
         email,
         password,
         options: {
-          emailRedirectTo: "http://localhost:3000/dashboard"
+          emailRedirectTo: "https://nexgenixcreativesolutions.github.io/dashboard"
         }
       });
 
@@ -131,17 +131,6 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
       const last_name = nameParts.join(" ") || "";
 
       console.log("Creating profile for:", data.user.id);
-
-      const { error: profileError } = await supabaseClient
-        .from("profiles")
-        .insert({
-          id: data.user.id,
-          email,
-          first_name,
-          last_name
-        });
-
-      if (profileError) throw profileError;
 
       msg.textContent = "Account created! Check your email to confirm.";
       isSignup = false;
