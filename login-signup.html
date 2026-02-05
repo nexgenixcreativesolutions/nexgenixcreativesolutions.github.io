@@ -59,9 +59,9 @@
     <input id="fullname" type="text" placeholder="Full Name (for signup)"
       class="w-full p-2 bg-transparent border rounded animate-field hidden-field">
 
-    <button type="submit"
-      class="w-full bg-green-600 p-2 rounded font-semibold hover:bg-green-700 transition">
-      Continue
+    <button id="submitBtn" type="submit"
+      class="w-full bg-green-600 p-2 rounded font-semibold hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
+    Continue
     </button>
   </form>
 
@@ -82,6 +82,16 @@
 </div>
 
 <script>
+ /* =========================
+   CONTINUE BUTTON
+========================= */ 
+const submitBtn = document.getElementById("submitBtn");
+
+function setLoading(isLoading) {
+  submitBtn.disabled = isLoading;
+  submitBtn.textContent = isLoading ? "Please wait…" : "Continue";
+}
+
 /* =========================
    🔐 SUPABASE SETUP
 ========================= */
@@ -139,6 +149,7 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
   const fullName = fullnameInput.value.trim();
 
   msg.textContent = "";
+  setLoading(true);
 
   try {
     /* ---------- SIGN UP ---------- */
@@ -174,6 +185,7 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
       fullnameInput.classList.add("hidden");
       title.textContent = "Sign In";
       toggleText.textContent = "New here?";
+      setLoading(false);
       return;
     }
 
@@ -188,13 +200,14 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
     if (error) throw error;
 
     console.log("Login success — redirecting");
+    setLoading(false);
     window.location.href = "/dashboard";
 
   } catch (err) {
     console.error(err);
     msg.textContent = err.message || "Something went wrong";
     msg.className = "text-center text-sm mt-3 text-red-400";
-
+    setLoading(false);
   }
 });
 
