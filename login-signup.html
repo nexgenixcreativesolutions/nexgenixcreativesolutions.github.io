@@ -172,7 +172,7 @@ document.getElementById("forgotBtn").addEventListener("click", async () => {
   }
 
   const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-    redirectTo: "http://localhost:3000"
+    redirectTo: "https://nexgenixcreativesolutions.github.io"
   });
 
   if (error) {
