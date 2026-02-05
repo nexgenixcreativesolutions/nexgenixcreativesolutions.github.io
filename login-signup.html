@@ -85,10 +85,17 @@ const msg = document.getElementById("msg");
 toggleBtn.addEventListener("click", () => {
   isSignup = !isSignup;
   fullnameInput.classList.toggle("hidden");
-  title.textContent = isSignup ? "Sign Up" : "Sign In";
-  toggleText.textContent = isSignup
-    ? "Already have an account?"
-    : "New here?";
+
+  if (isSignup) {
+    title.textContent = "Sign Up";
+    toggleText.textContent = "Already have an account?";
+    toggleBtn.textContent = "Sign in";
+  } else {
+    title.textContent = "Sign In";
+    toggleText.textContent = "New here?";
+    toggleBtn.textContent = "Create account";
+  }
+
   msg.textContent = "";
 });
 
