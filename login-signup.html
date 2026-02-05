@@ -11,6 +11,31 @@
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Style -->
+  <style>
+  /* Smooth reveal for signup-only field */
+  .animate-field {
+    transition: 
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      filter 0.25s ease;
+  }
+
+  .hidden-field {
+    opacity: 0;
+    transform: translateY(-6px);
+    filter: blur(2px);
+    pointer-events: none;
+  }
+
+  .visible-field {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    pointer-events: auto;
+  }
+</style>
 </head>
 
 <body class="bg-black text-white flex items-center justify-center min-h-screen">
@@ -40,7 +65,8 @@
     </button>
   </form>
 
-  <p id="msg" class="text-center text-sm mt-3 text-red-400"></p>
+  <p id="msg" class="text-center text-sm mt-3"></p>
+
 
   <div class="text-center mt-4 text-sm">
     <span id="toggleText">New here?</span>
@@ -141,6 +167,7 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
       console.log("Creating profile for:", data.user.id);
 
       msg.textContent = "Account created! Check your email to confirm.";
+      msg.className = "text-center text-sm mt-3 text-green-400";
       isSignup = false;
       fullnameInput.classList.add("hidden");
       title.textContent = "Sign In";
@@ -164,6 +191,8 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
   } catch (err) {
     console.error(err);
     msg.textContent = err.message || "Something went wrong";
+    msg.className = "text-center text-sm mt-3 text-red-400";
+
   }
 });
 
