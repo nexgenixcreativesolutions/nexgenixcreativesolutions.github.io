@@ -1,144 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nex Genix Creative Solutions</title>
+  <meta charset="UTF-8">
+  <title>Nex Genix | Login & Signup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- FAVICON -->
-  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
     body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: black;
-      color: white;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      max-width: 64rem;
-      width: 100%;
-      padding: 1.5rem;
-      border-radius: 1rem;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    @media (min-width: 768px) {
-      .container {
-        flex-direction: row;
-      }
-    }
-
-    .section {
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      flex: 1;
-    }
-
-    .title {
-      font-size: 2.25rem;
-      font-weight: bold;
-      color: #48bb78;
-    }
-
-    .description {
-      color: #d1d5db;
-      margin-top: 0.5rem;
-    }
-
-    .input {
-      width: 100%;
-      padding: 0.75rem;
-      background-color: #4a5568;
-      border: 1px solid #2d3748;
-      border-radius: 0.5rem;
-      color: white;
-      outline: none;
-    }
-
-    .button {
-      width: 100%;
-      background-color: #48bb78;
-      color: white;
-      padding: 0.75rem;
-      margin-top: 1rem;
-      border-radius: 0.5rem;
-      font-weight: 600;
-    }
-
-    .link {
-      text-align: center;
-      color: #48bb78;
-      margin-top: 1rem;
-      cursor: pointer;
+      background: radial-gradient(circle at top, #0f172a, #000);
     }
   </style>
 </head>
 
-<body>
+<body class="text-white flex items-center justify-center min-h-screen px-4">
 
-<div class="container">
+<div class="
+  w-full max-w-sm
+  bg-white/5 backdrop-blur-lg
+  border border-green-500/40
+  rounded-2xl
+  p-6
+  shadow-[0_20px_40px_rgba(0,0,0,0.6)]
+">
 
-  <!-- AUTH -->
-  <div class="section">
-    <img src="/assets/images/banner.png" alt="Nex Genix Banner" class="mb-4">
+  <!-- LOGO -->
+  <div class="flex justify-center mb-3">
+    <img src="assets/images/dashboard-logo-no-bg.png" alt="Nex Genix" class="h-10">
+  </div>
 
-    <p class="description mb-6">
-      Your Vision, Beautifully Engineered.
-    </p>
+  <h2 id="title" class="text-lg font-bold text-center mb-4">
+    Sign In
+  </h2>
 
-    <h2 id="title" class="title mb-4">Sign In</h2>
+  <form id="authForm" class="space-y-3">
+    <input
+      id="email"
+      type="email"
+      placeholder="Email"
+      class="w-full px-3 py-2 bg-transparent border border-white/20 rounded-md focus:outline-none focus:border-green-500"
+      required
+    >
 
-    <form id="authForm" class="space-y-4">
-      <input id="email" type="email" placeholder="Email" class="input" required>
-      <input id="password" type="password" placeholder="Password" class="input" required>
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+      class="w-full px-3 py-2 bg-transparent border border-white/20 rounded-md focus:outline-none focus:border-green-500"
+      required
+    >
 
-      <input
-        id="fullname"
-        type="text"
-        placeholder="Full Name (for signup)"
-        class="input hidden"
-      >
+    <input
+      id="fullname"
+      type="text"
+      placeholder="Full Name (for signup)"
+      class="w-full px-3 py-2 bg-transparent border border-white/20 rounded-md focus:outline-none focus:border-green-500 hidden"
+    >
 
-      <button type="submit" class="button">Continue</button>
-    </form>
+    <button
+      type="submit"
+      class="w-full bg-green-600 py-2 rounded-md font-semibold hover:bg-green-700 transition"
+    >
+      Continue
+    </button>
+  </form>
 
-    <p id="msg" class="text-center text-sm mt-3 text-red-400"></p>
+  <p id="msg" class="text-center text-sm mt-3 text-red-400"></p>
 
-    <p class="link">
-      <span id="toggleText">Don’t have an account?</span>
-      <span id="toggleBtn" class="ml-1 underline cursor-pointer">
-        Create an account
-      </span>
-    </p>
+  <!-- TOGGLE -->
+  <div class="text-center mt-4 text-sm text-gray-300">
+    <span id="toggleText">New here?</span>
+    <button id="toggleBtn" class="text-green-400 hover:underline ml-1">
+      Create account
+    </button>
+  </div>
 
-    <p class="link text-gray-400 underline" id="forgotBtn">
+  <!-- FORGOT -->
+  <div class="text-center mt-2 text-sm">
+    <button id="forgotBtn" class="text-gray-400 hover:text-gray-200 underline">
       Forgot password?
-    </p>
+    </button>
   </div>
 
 </div>
 
 <script>
 /* =========================
-   SUPABASE SETUP
+   🔐 SUPABASE SETUP
 ========================= */
 
 const SUPABASE_URL = "https://rranivozhrsldhapzwqc.supabase.co";
@@ -149,8 +102,10 @@ const supabaseClient = supabase.createClient(
   SUPABASE_ANON_KEY
 );
 
+console.log("Supabase initialized");
+
 /* =========================
-   STATE & ELEMENTS
+   🔁 MODE TOGGLE
 ========================= */
 
 let isSignup = false;
@@ -161,29 +116,23 @@ const toggleText = document.getElementById("toggleText");
 const toggleBtn = document.getElementById("toggleBtn");
 const msg = document.getElementById("msg");
 
-/* =========================
-   MODE TOGGLE
-========================= */
-
 toggleBtn.addEventListener("click", () => {
   isSignup = !isSignup;
-  fullnameInput.classList.toggle("hidden");
 
-  if (isSignup) {
-    title.textContent = "Sign Up";
-    toggleText.textContent = "Already have an account?";
-    toggleBtn.textContent = "Log in";
-  } else {
-    title.textContent = "Sign In";
-    toggleText.textContent = "Don’t have an account?";
-    toggleBtn.textContent = "Create an account";
-  }
+  fullnameInput.classList.toggle("hidden");
+  title.textContent = isSignup ? "Sign Up" : "Sign In";
+  toggleText.textContent = isSignup
+    ? "Already have an account?"
+    : "New here?";
+  toggleBtn.textContent = isSignup
+    ? "Log in"
+    : "Create account";
 
   msg.textContent = "";
 });
 
 /* =========================
-   AUTH HANDLER
+   🔐 AUTH HANDLER
 ========================= */
 
 document.getElementById("authForm").addEventListener("submit", async (e) => {
@@ -196,21 +145,43 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
   msg.textContent = "";
 
   try {
+    /* ---------- SIGN UP ---------- */
     if (isSignup) {
-      const { error } = await supabaseClient.auth.signUp({
+      console.log("Signing up user…");
+
+      const { data, error } = await supabaseClient.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo:
-            "https://nexgenixcreativesolutions.github.io/dashboard"
+          emailRedirectTo: "https://nexgenixcreativesolutions.github.io/dashboard"
         }
       });
 
       if (error) throw error;
 
-      msg.textContent = "Check your email to confirm your account.";
+      if (!data.user) {
+        msg.textContent = "Check your email to confirm your account.";
+        return;
+      }
+
+      const nameParts = fullName.split(" ");
+      const first_name = nameParts.shift() || "";
+      const last_name = nameParts.join(" ") || "";
+
+      console.log("Profile ready:", first_name, last_name);
+
+      msg.textContent = "Account created! Check your email to confirm.";
+
+      isSignup = false;
+      fullnameInput.classList.add("hidden");
+      title.textContent = "Sign In";
+      toggleText.textContent = "New here?";
+      toggleBtn.textContent = "Create account";
       return;
     }
+
+    /* ---------- SIGN IN ---------- */
+    console.log("Signing in user…");
 
     const { error } = await supabaseClient.auth.signInWithPassword({
       email,
@@ -219,15 +190,17 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
 
     if (error) throw error;
 
+    console.log("Login success — redirecting");
     window.location.href = "/dashboard";
 
   } catch (err) {
+    console.error(err);
     msg.textContent = err.message || "Something went wrong";
   }
 });
 
 /* =========================
-   FORGOT PASSWORD
+   🔑 FORGOT PASSWORD
 ========================= */
 
 document.getElementById("forgotBtn").addEventListener("click", async () => {
@@ -239,7 +212,7 @@ document.getElementById("forgotBtn").addEventListener("click", async () => {
   }
 
   const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-    redirectTo: "https://nexgenixcreativesolutions.github.io"
+    redirectTo: "http://localhost:3000"
   });
 
   if (error) {
