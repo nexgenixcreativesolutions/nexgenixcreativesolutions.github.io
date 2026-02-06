@@ -238,51 +238,105 @@
 <div id="certificates" class="hidden content-box mt-6">No certificates yet.</div>
 <div id="services" class="hidden content-box mt-6">Services active.</div>
 <div id="settings" class="hidden content-box mt-6">
-  <input class="input mb-3" placeholder="Full Name">
-  <input class="input mb-3" placeholder="Email">
-  <button class="button w-full">Save Changes</button>
+  <input id="fullNameInput" class="input mb-3" placeholder="Full Name">
+  <input id="emailInput" class="input mb-3" placeholder="Email" disabled>
+  <button class="button w-full" onclick="saveProfile()">Save Changes</button>
 </div>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const supabase = supabase.createClient(
-  "https://YOUR_PROJECT_ID.supabase.co",
-  "YOUR_PUBLIC_ANON_KEY"
+/* =========================
+   SUPABASE CONFIG
+========================= */
+const SUPABASE_URL = "https://rranivozhrsldhapzwqc.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_bdfuminbwIZn_S1DPfB7bg_ogP5mUVi";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
 );
 
+/* =========================
+   INIT DASHBOARD
+========================= */
 async function initDashboard() {
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { user } } = await supabaseClient.auth.getUser();
 
   if (!user) {
-    window.location.href = "login-signup.html";
+    window.location.href =
+      "https://nexgenixcreativesolutions.github.io/login-signup";
     return;
   }
 
-  const { data: profile } = await supabase
+  let { data: profile } = await supabaseClient
     .from("profiles")
     .select("*")
     .eq("id", user.id)
     .single();
 
+  // Create profile if first login
+  if (!profile) {
+    const { data: newProfile } = await supabaseClient
+      .from("profiles")
+      .insert({
+        id: user.id,
+        email: user.email,
+        full_name: user.user_metadata?.full_name || ""
+      })
+      .select()
+      .single();
+
+    profile = newProfile;
+  }
+
+  // Render dashboard
   document.getElementById("welcome-message").textContent =
     `Welcome, ${profile.full_name || profile.email}`;
 
   document.querySelector(".text-green-400").textContent =
-    profile.courses_enrolled;
+    profile.courses_enrolled ?? 0;
 
   document.querySelector(".text-red-400").textContent =
-    profile.certificates_earned;
+    profile.certificates_earned ?? 0;
 
-  if (profile.role !== "admin") {
-    document.querySelector("[onclick=\"showSection('settings')\"]").style.display = "none";
-  }
+  // Fill settings form
+  document.getElementById("fullNameInput").value =
+    profile.full_name || "";
+
+  document.getElementById("emailInput").value =
+    profile.email || "";
 }
 
-function logout() {
-  supabase.auth.signOut();
-  window.location.href = "login-signup.html";
+/* =========================
+   SAVE PROFILE
+========================= */
+async function saveProfile() {
+  const fullName = document.getElementById("fullNameInput").value;
+
+  const { data: { user } } = await supabaseClient.auth.getUser();
+  if (!user) return;
+
+  await supabaseClient
+    .from("profiles")
+    .update({
+      full_name: fullName,
+      updated_at: new Date()
+    })
+    .eq("id", user.id);
+
+  alert("Profile updated successfully!");
+  initDashboard();
+}
+
+/* =========================
+   LOGOUT
+========================= */
+async function logout() {
+  await supabaseClient.auth.signOut();
+  window.location.href =
+    "https://nexgenixcreativesolutions.github.io/login-signup";
 }
 
 initDashboard();
