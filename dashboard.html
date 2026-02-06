@@ -237,11 +237,22 @@
 <div id="courses" class="hidden content-box mt-6">Language Mastery — 66% complete</div>
 <div id="certificates" class="hidden content-box mt-6">No certificates yet.</div>
 <div id="services" class="hidden content-box mt-6">Services active.</div>
-<div id="settings" class="hidden content-box mt-6">
-  <input id="fullNameInput" class="input mb-3" placeholder="Full Name">
-  <input id="emailInput" class="input mb-3" placeholder="Email" disabled>
-  <button class="button w-full" onclick="saveProfile()">Save Changes</button>
+<div id="settings" class="hidden content-box mt-6 space-y-3">
+
+  <input id="displayNameInput" class="input" placeholder="Display Name">
+  <input id="usernameInput" class="input" placeholder="Username">
+  <input id="phoneInput" class="input" placeholder="Phone Number">
+
+  <input id="emailInput" class="input" placeholder="Email" disabled>
+
+  <hr class="border-gray-700 my-3">
+
+  <input id="passwordInput" class="input" type="password" placeholder="New Password">
+  <button class="button w-full" onclick="updatePassword()">Update Password</button>
+
+  <button class="button w-full mt-2" onclick="saveProfile()">Save Profile</button>
 </div>
+
 
 </div>
 
@@ -295,11 +306,18 @@ async function initDashboard() {
   document.getElementById("welcome-message").textContent =
     `Welcome, ${profile.full_name || profile.email}`;
 
-  document.querySelector(".text-green-400").textContent =
-    profile.courses_enrolled ?? 0;
+  document.getElementById("displayNameInput").value =
+  profile.display_name || "";
 
-  document.querySelector(".text-red-400").textContent =
-    profile.certificates_earned ?? 0;
+  document.getElementById("usernameInput").value =
+  profile.username || "";
+
+  document.getElementById("phoneInput").value =
+  profile.phone || "";
+
+  document.getElementById("emailInput").value =
+  profile.email || "";
+
 
   // Fill settings form
   document.getElementById("fullNameInput").value =
@@ -313,21 +331,52 @@ async function initDashboard() {
    SAVE PROFILE
 ========================= */
 async function saveProfile() {
-  const fullName = document.getElementById("fullNameInput").value;
+  const displayName = document.getElementById("displayNameInput").value;
+  const username = document.getElementById("usernameInput").value;
+  const phone = document.getElementById("phoneInput").value;
 
   const { data: { user } } = await supabaseClient.auth.getUser();
   if (!user) return;
 
-  await supabaseClient
+  const { error } = await supabaseClient
     .from("profiles")
     .update({
-      full_name: fullName,
+      display_name: displayName,
+      username: username,
+      phone: phone,
       updated_at: new Date()
     })
     .eq("id", user.id);
 
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
   alert("Profile updated successfully!");
   initDashboard();
+}
+
+/* =========================
+   UPDATE PASSWORD
+========================= */
+async function updatePassword() {
+  const newPassword = document.getElementById("passwordInput").value;
+  if (!newPassword || newPassword.length < 6) {
+    alert("Password must be at least 6 characters.");
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.updateUser({
+    password: newPassword
+  });
+
+  if (error) {
+    alert(error.message);
+  } else {
+    alert("Password updated successfully!");
+    document.getElementById("passwordInput").value = "";
+  }
 }
 
 /* =========================
