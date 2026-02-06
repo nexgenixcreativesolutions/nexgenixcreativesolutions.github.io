@@ -389,6 +389,30 @@ async function logout() {
 }
 
 initDashboard();
+
+/* =========================
+   ENROLLED COURSES
+========================= */
+  const { data: enrolledCourses } = await supabaseClient
+  .from("user_courses")
+  .select("courses(title, category)")
+  .eq("user_id", user.id);
+
+const coursesDiv = document.getElementById("courses");
+coursesDiv.innerHTML = enrolledCourses.length
+  ? enrolledCourses.map(c =>
+      `<p>${c.courses.title} (${c.courses.category})</p>`
+    ).join("")
+  : "No enrolled courses yet.";
+
+  /* =========================
+   SUBSCRIBED SERVICES
+========================= */
+  const { data: services } = await supabaseClient
+  .from("user_services")
+  .select("services(name)")
+  .eq("user_id", user.id);
+
 </script>
 
 </body>
