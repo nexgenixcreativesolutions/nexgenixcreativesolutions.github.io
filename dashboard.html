@@ -270,6 +270,22 @@ const supabaseClient = supabase.createClient(
 );
 
 /* =========================
+   SHOW/HIDE SECTIONS
+========================= */
+function showSection(sectionId) {
+  // Hide all sections
+  const sections = ['dashboard', 'courses', 'certificates', 'services', 'settings'];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.classList.add('hidden');
+  });
+
+  // Show the clicked section
+  const section = document.getElementById(sectionId);
+  if(section) section.classList.remove('hidden');
+}
+
+/* =========================
    INIT DASHBOARD
 ========================= */
 async function initDashboard() {
@@ -281,6 +297,7 @@ async function initDashboard() {
     return;
   }
 
+  // Fetch profile
   let { data: profile } = await supabaseClient
     .from("profiles")
     .select("*")
@@ -302,29 +319,50 @@ async function initDashboard() {
     profile = newProfile;
   }
 
-  // Render dashboard
+  // Render dashboard welcome message
   document.getElementById("welcome-message").textContent =
     `Welcome, ${profile.full_name || profile.email}`;
 
-  document.getElementById("displayNameInput").value =
-  profile.display_name || "";
+  document.getElementById("displayNameInput").value = profile.display_name || "";
+  document.getElementById("usernameInput").value = profile.username || "";
+  document.getElementById("phoneInput").value = profile.phone || "";
+  document.getElementById("emailInput").value = profile.email || "";
 
-  document.getElementById("usernameInput").value =
-  profile.username || "";
+  // Optional: Fill settings form (fullNameInput may not exist in HTML)
+  const fullNameInput = document.getElementById("fullNameInput");
+  if(fullNameInput) fullNameInput.value = profile.full_name || "";
 
-  document.getElementById("phoneInput").value =
-  profile.phone || "";
+  /* =========================
+     ENROLLED COURSES
+  ========================== */
+  const { data: enrolledCourses } = await supabaseClient
+    .from("user_courses")
+    .select("courses(title, category)")
+    .eq("user_id", user.id);
 
-  document.getElementById("emailInput").value =
-  profile.email || "";
+  const coursesDiv = document.getElementById("courses");
+  if(coursesDiv) {
+    coursesDiv.innerHTML = enrolledCourses && enrolledCourses.length
+      ? enrolledCourses.map(c =>
+          `<p>${c.courses.title} (${c.courses.category})</p>`
+        ).join("")
+      : "No enrolled courses yet.";
+  }
 
+  /* =========================
+     SUBSCRIBED SERVICES
+  ========================== */
+  const { data: services } = await supabaseClient
+    .from("user_services")
+    .select("services(name)")
+    .eq("user_id", user.id);
 
-  // Fill settings form
-  document.getElementById("fullNameInput").value =
-    profile.full_name || "";
-
-  document.getElementById("emailInput").value =
-    profile.email || "";
+  const servicesDiv = document.getElementById("services");
+  if(servicesDiv) {
+    servicesDiv.innerHTML = services && services.length
+      ? services.map(s => `<p>${s.services.name}</p>`).join("")
+      : "No active services yet.";
+  }
 }
 
 /* =========================
@@ -388,30 +426,10 @@ async function logout() {
     "https://nexgenixcreativesolutions.github.io/login-signup";
 }
 
-initDashboard();
-
 /* =========================
-   ENROLLED COURSES
+   INITIALIZE
 ========================= */
-  const { data: enrolledCourses } = await supabaseClient
-  .from("user_courses")
-  .select("courses(title, category)")
-  .eq("user_id", user.id);
-
-const coursesDiv = document.getElementById("courses");
-coursesDiv.innerHTML = enrolledCourses.length
-  ? enrolledCourses.map(c =>
-      `<p>${c.courses.title} (${c.courses.category})</p>`
-    ).join("")
-  : "No enrolled courses yet.";
-
-  /* =========================
-   SUBSCRIBED SERVICES
-========================= */
-  const { data: services } = await supabaseClient
-  .from("user_services")
-  .select("services(name)")
-  .eq("user_id", user.id);
+initDashboard();
 
 </script>
 
