@@ -50,17 +50,13 @@
   <h2 id="title" class="text-xl font-bold text-center mb-4">Sign In</h2>
 
   <form id="authForm" class="space-y-3">
-    <input id="email" type="email" placeholder="Email"
-      class="w-full p-2 bg-transparent border rounded" required>
+    <input id="email" type="email" placeholder="Email" class="w-full p-2 bg-transparent border rounded" required>
 
-    <input id="password" type="password" placeholder="Password"
-      class="w-full p-2 bg-transparent border rounded" required>
+    <input id="password" type="password" placeholder="Password" class="w-full p-2 bg-transparent border rounded" required>
 
-    <input id="fullname" type="text" placeholder="Full Name (for signup)"
-      class="w-full p-2 bg-transparent border rounded animate-field hidden-field">
+    <input id="fullname" type="text" placeholder="Full Name (for signup)" class="w-full p-2 bg-transparent border rounded animate-field hidden-field">
 
-    <button id="submitBtn" type="submit"
-      class="w-full bg-green-600 p-2 rounded font-semibold hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
+    <button id="submitBtn" type="submit" class="w-full bg-green-600 p-2 rounded font-semibold hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
     Continue
     </button>
   </form>
@@ -96,8 +92,8 @@ function setLoading(isLoading) {
    🔐 SUPABASE SETUP
 ========================= */
 
-const SUPABASE_URL = "https://rranivozhrsldhapzwqc.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_bdfuminbwIZn_S1DPfB7bg_ogP5mUVi";
+const SUPABASE_URL = "https://uvybxjmdkuhrepgyqdre.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_2QqmbTFE2Cuu-q2JbsqE7g_bX7aok09";
 
 const supabaseClient = supabase.createClient(
   SUPABASE_URL,
@@ -178,6 +174,19 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
       const last_name = nameParts.join(" ") || "";
 
       console.log("Creating profile for:", data.user.id);
+
+      // Update the profile with first and last name
+      const { error: profileError } = await supabaseClient
+      .from('profiles')
+      .update({ 
+      first_name: first_name, 
+      last_name: last_name 
+      })
+      .eq('id', data.user.id);
+
+      if (profileError) {
+      console.error("Profile update error:", profileError);
+      }
 
       msg.textContent = "Account created! Check your email to confirm.";
       msg.className = "text-center text-sm mt-3 text-green-400";
