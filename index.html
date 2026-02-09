@@ -56,6 +56,207 @@
     font-size: 16px;
   }
 }
+
+/* Testimonials Section */
+.testimonials-section {
+    position: relative;
+    padding: 8rem 1rem;
+    background: transparent;
+}
+
+.testimonials-container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* Header */
+.testimonials-header {
+    text-align: center;
+    margin-bottom: 5rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.testimonials-tag {
+    color: #39FF14;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.testimonials-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.gradient-text {
+    background: linear-gradient(to right, #f5d400, #39FF14);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.testimonials-subtitle {
+    color: #9ca3af;
+    max-width: 42rem;
+    margin: 0 auto;
+    font-size: 1.125rem;
+}
+
+/* Grid */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+/* Testimonial Card */
+.testimonial-card {
+    position: relative;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.3s ease;
+}
+
+.testimonial-card.visible {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.testimonial-card-inner {
+    position: relative;
+    height: 100%;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid #1f2937;
+    background: linear-gradient(to bottom, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.5));
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover .testimonial-card-inner {
+    border-color: #39FF14;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(57, 255, 20, 0.1);
+}
+
+/* Quote Icon */
+.quote-icon {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: rgba(57, 255, 20, 0.1);
+    transition: color 0.3s ease;
+}
+
+.testimonial-card:hover .quote-icon {
+    color: rgba(57, 255, 20, 0.2);
+}
+
+/* Rating Stars */
+.rating-stars {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.star {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #f5d400;
+    fill: #f5d400;
+}
+
+/* Content */
+.testimonial-content {
+    color: #d1d5db;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+}
+
+/* Author */
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.author-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: linear-gradient(to bottom right, #39FF14, #00f0ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.author-initial {
+    color: black;
+    font-weight: bold;
+    font-size: 1.125rem;
+}
+
+.author-info {
+    flex: 1;
+}
+
+.author-name {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.author-role {
+    color: #39FF14;
+    font-size: 0.875rem;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .testimonials-title {
+        font-size: 3.5rem;
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .testimonial-content {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .testimonials-title {
+        font-size: 4rem;
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 	</style>
   <body>
 <!-- Navigation Bar -->
@@ -135,43 +336,25 @@
         </section>
 
 <!-- Reviews Section -->
-<section class="main-section" id="reviews">
-    <article>
-        <h2>Reviews</h2>
-               <div class="testimonial">
-                    <h3>Digital Design Client</h3>
-                    <p>"As someone new to the business world, I knew how important it was for my website to make a great first impression. This team made the entire process so easy and stress-free! They really listened to my ideas and delivered a design that looks professional, modern, and exactly how I imagined. The visuals are clean, appealing, and truly reflect my brand. I'm so happy with the result and feel confident launching my business now. Highly recommend!"</p>
-                    <p>- Jude Trellier</p>
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                </div>
-                <div class="testimonial">
-                    <h3>Business Writing Client</h3>  
-                    <p>"I hired Miss Arriane to write a business proposal, and she exceeded my expectations. She was professional, detail-oriented, and took the time to understand my goals. The final proposal was clear, compelling, and well-structured. Thanks to her expertise, I felt confident presenting it. Highly recommend!"</p>
-                    <p>- Dyanne Tan</p>
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span>
-                </div>
-                <div class="testimonial">
-                    <h3>Learner</h3>
-                    <p>"I recently enrolled in International Business Course and received my certification, and it was an excellent experience. The course was well-structured, informative, and provided valuable insights relevant to my field. Earning this certificate has significantly strengthened my credentials, making me more competitive when applying for business roles. Highly recommend to anyone looking to advance their career!"</p>
-                    <p>- Gioia Pavan</p>
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                    <span class="star-rating" style="color: #FFCC00;">&#9733;</span> 
-                </div>
-            
-    </article>
+<section class="main-section testimonials-section" id="reviews">
+    <div class="testimonials-container">
+        <!-- Section header -->
+        <div class="testimonials-header">
+            <span class="testimonials-tag">Testimonials</span>
+            <h2 class="testimonials-title">
+                Client <span class="gradient-text">Reviews</span>
+            </h2>
+            <p class="testimonials-subtitle">
+                Hear what our valued clients have to say about their experience
+            </p>
+        </div>
+        
+        <!-- Testimonials grid -->
+        <div class="testimonials-grid" id="testimonials-grid">
+            <!-- Cards will be inserted here by JavaScript -->
+        </div>
+    </div>
 </section>
-
 <section class="counter-section">
     <div class="counter-container">
         <div class="counter-item">
@@ -335,6 +518,150 @@
     document.addEventListener('DOMContentLoaded', createFloatingCodeBackground);
   } else {
     createFloatingCodeBackground();
+  }
+</script>
+<script>
+  // Testimonials Data and Animation
+  const testimonials = [
+    {
+      name: 'Jude Trellier',
+      role: 'Digital Design Client',
+      content: "As someone new to the business world, I knew how important it was for my website to make a great first impression. This team made the entire process so easy and stress-free! They really listened to my ideas and delivered a design that looks professional, modern, and exactly how I imagined.",
+      rating: 5
+    },
+    {
+      name: 'Dyanne Tan',
+      role: 'Business Writing Client',
+      content: "I hired Miss Arriane to write a business proposal, and she exceeded my expectations. She was professional, detail-oriented, and took the time to understand my goals. The final proposal was clear, compelling, and well-structured.",
+      rating: 5
+    },
+    {
+      name: 'Gioia Pavan',
+      role: 'Learner',
+      content: "I recently enrolled in International Business Course and received my certification, and it was an excellent experience. The course was well-structured, informative, and provided valuable insights relevant to my field.",
+      rating: 5
+    }
+  ];
+
+  function createStarIcon() {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'star');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'currentColor');
+    
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z');
+    
+    svg.appendChild(path);
+    return svg;
+  }
+
+  function createQuoteIcon() {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'quote-icon');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2');
+    
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z');
+    
+    const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path2.setAttribute('d', 'M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z');
+    
+    svg.appendChild(path);
+    svg.appendChild(path2);
+    return svg;
+  }
+
+  function createTestimonialCard(testimonial, index) {
+    const card = document.createElement('div');
+    card.className = 'testimonial-card';
+    card.style.animationDelay = `${index * 0.2}s`;
+    
+    const cardInner = document.createElement('div');
+    cardInner.className = 'testimonial-card-inner';
+    
+    // Quote icon
+    cardInner.appendChild(createQuoteIcon());
+    
+    // Rating stars
+    const ratingDiv = document.createElement('div');
+    ratingDiv.className = 'rating-stars';
+    for (let i = 0; i < testimonial.rating; i++) {
+      ratingDiv.appendChild(createStarIcon());
+    }
+    cardInner.appendChild(ratingDiv);
+    
+    // Content
+    const content = document.createElement('p');
+    content.className = 'testimonial-content';
+    content.textContent = `"${testimonial.content}"`;
+    cardInner.appendChild(content);
+    
+    // Author section
+    const authorDiv = document.createElement('div');
+    authorDiv.className = 'testimonial-author';
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'author-avatar';
+    
+    const initial = document.createElement('span');
+    initial.className = 'author-initial';
+    initial.textContent = testimonial.name.charAt(0);
+    avatar.appendChild(initial);
+    
+    const info = document.createElement('div');
+    info.className = 'author-info';
+    
+    const name = document.createElement('h4');
+    name.className = 'author-name';
+    name.textContent = testimonial.name;
+    
+    const role = document.createElement('p');
+    role.className = 'author-role';
+    role.textContent = testimonial.role;
+    
+    info.appendChild(name);
+    info.appendChild(role);
+    
+    authorDiv.appendChild(avatar);
+    authorDiv.appendChild(info);
+    cardInner.appendChild(authorDiv);
+    
+    card.appendChild(cardInner);
+    return card;
+  }
+
+  function initTestimonials() {
+    const grid = document.getElementById('testimonials-grid');
+    if (!grid) return;
+    
+    testimonials.forEach((testimonial, index) => {
+      const card = createTestimonialCard(testimonial, index);
+      grid.appendChild(card);
+    });
+    
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.testimonial-card').forEach(card => {
+      observer.observe(card);
+    });
+  }
+
+  // Initialize when DOM is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTestimonials);
+  } else {
+    initTestimonials();
   }
 </script>
   </body>
