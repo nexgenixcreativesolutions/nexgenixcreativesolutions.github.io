@@ -92,6 +92,13 @@
     font-family: 'Montserrat Alternates', sans-serif;
 }
 
+.gradient-text {
+    background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 .testimonials-subtitle,
 .services-subtitle {
     color: #9ca3af;
@@ -103,12 +110,141 @@
     text-align: center;
 }
 
-/* Services Grid */
+/* Grid */
+.testimonials-grid,
 .services-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
     padding: 0 0.5rem;
+}
+
+/* Testimonial Card */
+.testimonial-card {
+    position: relative;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonial-card.visible {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.testimonial-card-inner {
+    position: relative;
+    height: 100%;
+    padding: 1.75rem;
+    border-radius: 1rem;
+    border: 1px solid #1f2937;
+    background: linear-gradient(to bottom, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.5));
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonial-card:hover .testimonial-card-inner {
+    border-color: #39FF14;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(57, 255, 20, 0.1);
+}
+
+/* Quote Icon */
+.quote-icon {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+    color: rgba(57, 255, 20, 0.1);
+    transition: color 0.3s ease;
+}
+
+.testimonial-card:hover .quote-icon {
+    color: rgba(57, 255, 20, 0.2);
+}
+
+/* Rating Stars */
+.rating-stars {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.star {
+    width: 1.15rem;
+    height: 1.15rem;
+    color: #f5d400;
+    fill: #f5d400;
+}
+
+/* Content */
+.testimonial-content {
+    color: #d1d5db;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    text-align: justify;
+    flex: 1;
+}
+
+/* Author - Perfect alignment */
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin-top: auto;
+}
+
+.author-avatar {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff0000, #ffff00, #39FF14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.author-initial {
+    color: black;
+    font-weight: bold;
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.author-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.author-name {
+    color: white;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    font-size: 0.95rem;
+    text-align: left;
+    display: block;
+}
+
+.author-role {
+    color: #39FF14;
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    text-align: left;
+    display: block;
 }
 
 /* Service Card */
@@ -303,10 +439,46 @@
         font-size: 1.125rem;
     }
     
+    .testimonials-grid,
     .services-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
         padding: 0;
+    }
+    
+    .testimonial-card-inner {
+        padding: 2rem;
+    }
+    
+    .testimonial-content {
+        font-size: 0.95rem;
+    }
+    
+    .author-avatar {
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .author-initial {
+        font-size: 1.125rem;
+    }
+    
+    .author-name {
+        font-size: 1rem;
+    }
+    
+    .author-role {
+        font-size: 0.875rem;
+    }
+    
+    .quote-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    
+    .star {
+        width: 1.25rem;
+        height: 1.25rem;
     }
     
     .service-title {
@@ -330,9 +502,14 @@
         font-size: 3.75rem;
     }
     
+    .testimonials-grid,
     .services-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
+    }
+    
+    .testimonial-content {
+        font-size: 1rem;
     }
     
     .service-title {
@@ -361,6 +538,44 @@
         font-size: 0.9rem;
     }
     
+    .testimonial-card-inner {
+        padding: 1.5rem;
+    }
+    
+    .testimonial-content {
+        font-size: 0.85rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .author-avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    
+    .author-initial {
+        font-size: 1rem;
+    }
+    
+    .author-name {
+        font-size: 0.9rem;
+    }
+    
+    .author-role {
+        font-size: 0.75rem;
+    }
+    
+    .quote-icon {
+        width: 1.75rem;
+        height: 1.75rem;
+        top: 1.25rem;
+        right: 1.25rem;
+    }
+    
+    .star {
+        width: 1rem;
+        height: 1rem;
+    }
+    
     .service-card-inner {
         padding: 1.5rem;
     }
@@ -383,6 +598,18 @@
         font-size: 0.85rem;
     }
 }
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 </style>
   <body>
 <!-- Navigation Bar -->
@@ -390,7 +617,7 @@
     <div class="logo">
         <img src="assets/images/logo.png" alt="logo" class="logo">
         <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
-	<p class="short-title"><a href="https://nexgenixcreativesolutions.github.io"">NGCS</a></p>
+	<p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
     </div>
 
         <!-- Hamburger Menu Icon -->
@@ -401,7 +628,7 @@
         </div>
 
     <ul class="nav-list">
-        <li><a href="https://nexgenixcreativesolutions.github.io"">Home</a></li>
+        <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
         <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#reviews">Reviews</a></li>
@@ -519,6 +746,7 @@
         </div>
     </div>
 </section>
+
 <!-- Reviews Section -->
 <section class="main-section testimonials-section" id="reviews">
     <div class="testimonials-container">
@@ -538,6 +766,7 @@
         </div>
     </div>
 </section>
+
 <section class="counter-section">
     <div class="counter-container">
         <div class="counter-item">
@@ -599,6 +828,8 @@
     </a>
 
 </div>
+</article>
+</section>
 
 <!-- Footer Section -->
 <footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
