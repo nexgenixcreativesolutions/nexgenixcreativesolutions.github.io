@@ -13,8 +13,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
   </head>
-	<style>
-		/* Floating Code Background */
+<style>
+/* Floating Code Background */
 .floating-code-container {
   position: fixed;
   inset: 0;
@@ -69,7 +69,7 @@
     margin: 0 auto;
 }
 
-/* Header */
+/* Header - adjusted spacing */
 .testimonials-header {
     text-align: center;
     margin-bottom: 5rem;
@@ -78,15 +78,7 @@
     animation: fadeInUp 0.8s ease forwards;
 }
 
-.testimonials-tag {
-    color: #39FF14;
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 1rem;
-}
+/* Removed testimonials-tag since we're not using it */
 
 .testimonials-title {
     font-size: 3rem;
@@ -182,7 +174,7 @@
     font-size: 0.875rem;
 }
 
-/* Author */
+/* Author - improved alignment */
 .testimonial-author {
     display: flex;
     align-items: center;
@@ -208,17 +200,27 @@
 
 .author-info {
     flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 }
 
 .author-name {
     color: white;
     font-weight: 600;
-    margin-bottom: 0.25rem;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    font-size: 1rem;
 }
 
 .author-role {
     color: #39FF14;
     font-size: 0.875rem;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
 }
 
 /* Responsive Design */
@@ -246,6 +248,26 @@
     }
 }
 
+/* Ensure proper alignment on small screens */
+@media (max-width: 767px) {
+    .author-name {
+        font-size: 0.95rem;
+    }
+    
+    .author-role {
+        font-size: 0.8rem;
+    }
+    
+    .author-avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    
+    .author-initial {
+        font-size: 1rem;
+    }
+}
+
 /* Animations */
 @keyframes fadeInUp {
     from {
@@ -257,7 +279,7 @@
         transform: translateY(0);
     }
 }
-	</style>
+</style>
   <body>
 <!-- Navigation Bar -->
 <nav id="navbar">
@@ -340,7 +362,6 @@
     <div class="testimonials-container">
         <!-- Section header -->
         <div class="testimonials-header">
-            <span class="testimonials-tag">Testimonials</span>
             <h2 class="testimonials-title">
                 Client <span class="gradient-text">Reviews</span>
             </h2>
