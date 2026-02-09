@@ -85,6 +85,7 @@
     margin: 0 0 1.5rem 0;
     padding: 0;
     line-height: 1.2;
+    font-family: 'Montserrat Alternates', sans-serif;
 }
 
 .gradient-text {
@@ -101,7 +102,7 @@
     padding: 0 1rem;
     font-size: 1rem;
     line-height: 1.6;
-	text-align: center;
+    text-align: center;
 }
 
 /* Grid */
@@ -118,6 +119,8 @@
     opacity: 0;
     transform: translateY(50px);
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .testimonial-card.visible {
@@ -133,6 +136,8 @@
     background: linear-gradient(to bottom, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.5));
     backdrop-filter: blur(8px);
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .testimonial-card:hover .testimonial-card-inner {
@@ -177,6 +182,7 @@
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
     text-align: justify;
+    flex: 1;
 }
 
 /* Author - Perfect alignment */
@@ -184,6 +190,7 @@
     display: flex;
     align-items: center;
     gap: 0.875rem;
+    margin-top: auto;
 }
 
 .author-avatar {
@@ -210,7 +217,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 0.125rem;
+    gap: 0.25rem;
 }
 
 .author-name {
@@ -218,9 +225,10 @@
     font-weight: 600;
     margin: 0;
     padding: 0;
-    line-height: 1.3;
+    line-height: 1.2;
     font-size: 0.95rem;
-	text-align: left;
+    text-align: left;
+    display: block;
 }
 
 .author-role {
@@ -228,8 +236,9 @@
     font-size: 0.8rem;
     margin: 0;
     padding: 0;
-    line-height: 1.3;
-	text-align: left;
+    line-height: 1.2;
+    text-align: left;
+    display: block;
 }
 
 /* Responsive Design - Tablet */
@@ -260,60 +269,22 @@
         font-size: 0.95rem;
     }
     
-   /* Author - Perfect alignment */
-.testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 0.875rem;
-}
-
-.author-avatar {
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ff0000, #ffff00, #39FF14);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.author-initial {
-    color: black;
-    font-weight: bold;
-    font-size: 1.1rem;
-    line-height: 1;
-}
-
-.author-info {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.25rem; /* Changed from 0.125rem to 0.25rem for better spacing */
-}
-
-.author-name {
-    color: white;
-    font-weight: 600;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2; /* Changed from 1.3 to 1.2 */
-    font-size: 0.95rem;
-    text-align: left;
-    display: block; /* Added */
-}
-
-.author-role {
-    color: #39FF14;
-    font-size: 0.8rem;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2; /* Changed from 1.3 to 1.2 */
-    text-align: left;
-    display: block; /* Added */
-}
+    .author-avatar {
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .author-initial {
+        font-size: 1.125rem;
+    }
+    
+    .author-name {
+        font-size: 1rem;
+    }
+    
+    .author-role {
+        font-size: 0.875rem;
+    }
     
     .quote-icon {
         width: 2.5rem;
