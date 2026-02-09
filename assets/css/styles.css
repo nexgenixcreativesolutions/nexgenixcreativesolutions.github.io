@@ -255,42 +255,6 @@ p {
     transform: scale(1.05);
 }
 
-/* Reviews Section */
-#Reviews {
-    padding: 50px 20px;
-    text-align: center;
-}
-
-.testimonial {
-    width: 90%;
-    padding: 15px;
-    background-color: #f0f0f0;
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    max-width: 700px;
-}
-
-.testimonial h3 {
-    color: #222;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.testimonial p {
-    color: #555;
-    font-size: 16px;
-    line-height: 1.6;
-    text-align: justify;
-}
-
-.star-rating {
-    font-size: 20px;
-    color: #FFCC00;
-}
-
 .counter-section {
   display: flex;
   justify-content: center;
@@ -1067,3 +1031,4 @@ text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
     width: 80%;
     max-width: 200px;
 }
+
