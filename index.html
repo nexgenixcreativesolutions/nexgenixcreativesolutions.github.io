@@ -13,6 +13,50 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
   </head>
+	<style>
+		/* Floating Code Background */
+.floating-code-container {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.code-line {
+  position: absolute;
+  white-space: nowrap;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: rgba(57, 255, 20, 0.4);
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+  animation: floatCode linear infinite;
+  opacity: 0;
+}
+
+@keyframes floatCode {
+  0% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .code-line {
+    font-size: 16px;
+  }
+}
+	</style>
   <body>
 <!-- Navigation Bar -->
 <nav id="navbar">
@@ -234,5 +278,64 @@
             document.querySelector('.hamburger-menu').classList.toggle('open');
         }
     </script>
+		<script>
+  // Floating Code Background
+  const codeSnippets = [
+    'const nexgenix = () => {',
+    'function createSolution() {',
+    'import { Innovation } from "future"',
+    '<div className="digital">',
+    'async function buildDreams() {',
+    'export default Excellence;',
+    'return <Success />;',
+    'const vision = await design();',
+    'npm install creativity',
+    'git commit -m "launch"',
+    'SELECT * FROM solutions;',
+    'CREATE TABLE success;',
+    '{ transform: "ideas" }',
+    '.future { display: flex; }',
+    'onClick={() => innovate()}',
+    'useState(creativity);',
+    'useEffect(() => grow());',
+    'class Digital extends Tech {',
+    'interface Vision { }',
+    'type Success = Promise<Growth>;',
+  ];
+
+  function createFloatingCodeBackground() {
+    const container = document.createElement('div');
+    container.className = 'floating-code-container';
+    
+    // Create 15 floating code lines
+    for (let i = 0; i < 15; i++) {
+      const codeLine = document.createElement('div');
+      codeLine.className = 'code-line';
+      
+      const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+      codeLine.textContent = randomSnippet;
+      
+      const yPosition = 5 + (i * 6);
+      const duration = 15 + Math.random() * 10;
+      const delay = Math.random() * 20;
+      
+      codeLine.style.top = `${yPosition}%`;
+      codeLine.style.animationDuration = `${duration}s`;
+      codeLine.style.animationDelay = `${delay}s`;
+      
+      container.appendChild(codeLine);
+    }
+    
+    // Insert at the beginning of body so it's behind everything
+    document.body.insertBefore(container, document.body.firstChild);
+  }
+
+  // Initialize when DOM is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', createFloatingCodeBackground);
+  } else {
+    createFloatingCodeBackground();
+  }
+</script>
   </body>
 </html>
