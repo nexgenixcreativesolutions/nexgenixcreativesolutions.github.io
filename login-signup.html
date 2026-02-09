@@ -50,13 +50,17 @@
   <h2 id="title" class="text-xl font-bold text-center mb-4">Sign In</h2>
 
   <form id="authForm" class="space-y-3">
-    <input id="email" type="email" placeholder="Email" class="w-full p-2 bg-transparent border rounded" required>
+    <input id="email" type="email" placeholder="Email"
+      class="w-full p-2 bg-transparent border rounded" required>
 
-    <input id="password" type="password" placeholder="Password" class="w-full p-2 bg-transparent border rounded" required>
+    <input id="password" type="password" placeholder="Password"
+      class="w-full p-2 bg-transparent border rounded" required>
 
-    <input id="fullname" type="text" placeholder="Full Name (for signup)" class="w-full p-2 bg-transparent border rounded animate-field hidden-field">
+    <input id="fullname" type="text" placeholder="Full Name (for signup)"
+      class="w-full p-2 bg-transparent border rounded animate-field hidden-field">
 
-    <button id="submitBtn" type="submit" class="w-full bg-green-600 p-2 rounded font-semibold hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
+    <button id="submitBtn" type="submit"
+      class="w-full bg-green-600 p-2 rounded font-semibold hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
     Continue
     </button>
   </form>
@@ -92,8 +96,8 @@ function setLoading(isLoading) {
    🔐 SUPABASE SETUP
 ========================= */
 
-const SUPABASE_URL = "https://uvybxjmdkuhrepgyqdre.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_2QqmbTFE2Cuu-q2JbsqE7g_bX7aok09";
+const SUPABASE_URL = "https://rranivozhrsldhapzwqc.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_bdfuminbwIZn_S1DPfB7bg_ogP5mUVi";
 
 const supabaseClient = supabase.createClient(
   SUPABASE_URL,
@@ -165,6 +169,7 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
       // If email confirmation is required, user may be null
       if (!data.user) {
         msg.textContent = "Check your email to confirm your account.";
+        setLoading(false);
         return;
       }
 
@@ -174,26 +179,38 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
       const last_name = nameParts.join(" ") || "";
 
       console.log("Creating profile for:", data.user.id);
+      console.log("First name:", first_name);
+      console.log("Last name:", last_name);
 
-      // Update the profile with first and last name
+      // Insert the profile data into your profiles table
       const { error: profileError } = await supabaseClient
-      .from('profiles')
-      .update({ 
-      first_name: first_name, 
-      last_name: last_name 
-      })
-      .eq('id', data.user.id);
+        .from('profiles')
+        .insert({
+          id: data.user.id,
+          email: email,
+          first_name: first_name,
+          last_name: last_name
+        });
 
       if (profileError) {
-      console.error("Profile update error:", profileError);
+        console.error("Profile creation error:", profileError);
+        // Don't throw - account is created, profile insert failed
+        msg.textContent = "Account created! Profile setup pending. Check your email to confirm.";
+        msg.className = "text-center text-sm mt-3 text-yellow-400";
+      } else {
+        console.log("Profile created successfully");
+        msg.textContent = "Account created! Check your email to confirm.";
+        msg.className = "text-center text-sm mt-3 text-green-400";
       }
 
-      msg.textContent = "Account created! Check your email to confirm.";
-      msg.className = "text-center text-sm mt-3 text-green-400";
+      // Reset form to sign-in mode
       isSignup = false;
-      fullnameInput.classList.add("hidden");
+      fullnameInput.classList.add("hidden-field");
+      fullnameInput.classList.remove("visible-field");
       title.textContent = "Sign In";
       toggleText.textContent = "New here?";
+      toggleBtn.textContent = "Create account";
+      
       setLoading(false);
       return;
     }
