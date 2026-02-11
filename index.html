@@ -22,7 +22,6 @@
   pointer-events: none;
   z-index: 0;
 }
-
 .code-line {
   position: absolute;
   white-space: nowrap;
@@ -33,7 +32,6 @@
   animation: floatCode linear infinite;
   opacity: 0;
 }
-
 @keyframes floatCode {
   0% {
     transform: translateX(100vw);
@@ -50,13 +48,11 @@
     opacity: 0;
   }
 }
-
 @media (min-width: 768px) {
   .code-line {
     font-size: 16px;
   }
 }
-
 /* Combined Testimonials and Services Section Styles */
 .testimonials-section,
 .services-section {
@@ -64,13 +60,11 @@
     padding: 6rem 1rem;
     background: transparent;
 }
-
 .testimonials-container,
 .services-container {
     max-width: 1280px;
     margin: 0 auto;
 }
-
 /* Combined Headers */
 .testimonials-header,
 .services-header {
@@ -80,7 +74,6 @@
     transform: translateY(30px);
     animation: fadeInUp 0.8s ease forwards;
 }
-
 .testimonials-title,
 .services-title {
     font-size: 2.5rem;
@@ -91,14 +84,12 @@
     line-height: 1.2;
     font-family: 'Montserrat Alternates', sans-serif;
 }
-
 .gradient-text {
     background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
-
 .testimonials-subtitle,
 .services-subtitle {
     color: #9ca3af;
@@ -109,7 +100,6 @@
     line-height: 1.6;
     text-align: center;
 }
-
 /* Grid */
 .testimonials-grid,
 .services-grid {
@@ -118,7 +108,6 @@
     gap: 2rem;
     padding: 0 0.5rem;
 }
-
 /* Testimonial Card */
 .testimonial-card {
     position: relative;
@@ -128,11 +117,9 @@
     display: flex;
     flex-direction: column;
 }
-
 .testimonial-card.visible {
     animation: fadeInUp 0.6s ease forwards;
 }
-
 .testimonial-card-inner {
     position: relative;
     height: 100%;
@@ -145,13 +132,11 @@
     display: flex;
     flex-direction: column;
 }
-
 .testimonial-card:hover .testimonial-card-inner {
     border-color: #39FF14;
     transform: translateY(-5px);
     box-shadow: 0 10px 40px rgba(57, 255, 20, 0.1);
 }
-
 /* Quote Icon */
 .quote-icon {
     position: absolute;
@@ -162,25 +147,21 @@
     color: rgba(57, 255, 20, 0.1);
     transition: color 0.3s ease;
 }
-
 .testimonial-card:hover .quote-icon {
     color: rgba(57, 255, 20, 0.2);
 }
-
 /* Rating Stars */
 .rating-stars {
     display: flex;
     gap: 0.25rem;
     margin-bottom: 1.25rem;
 }
-
 .star {
     width: 1.15rem;
     height: 1.15rem;
     color: #f5d400;
     fill: #f5d400;
 }
-
 /* Content */
 .testimonial-content {
     color: #d1d5db;
@@ -190,7 +171,6 @@
     text-align: justify;
     flex: 1;
 }
-
 /* Author - Perfect alignment */
 .testimonial-author {
     display: flex;
@@ -198,7 +178,6 @@
     gap: 0.875rem;
     margin-top: auto;
 }
-
 .author-avatar {
     width: 2.75rem;
     height: 2.75rem;
@@ -209,14 +188,12 @@
     justify-content: center;
     flex-shrink: 0;
 }
-
 .author-initial {
     color: black;
     font-weight: bold;
     font-size: 1.1rem;
     line-height: 1;
 }
-
 .author-info {
     flex: 1;
     min-width: 0;
@@ -225,7 +202,6 @@
     justify-content: center;
     gap: 0.25rem;
 }
-
 .author-name {
     color: white;
     font-weight: 600;
@@ -236,7 +212,6 @@
     text-align: left;
     display: block;
 }
-
 .author-role {
     color: #39FF14;
     font-size: 0.8rem;
@@ -246,7 +221,6 @@
     text-align: left;
     display: block;
 }
-
 /* Service Card */
 .service-card {
     position: relative;
@@ -254,11 +228,9 @@
     transform: translateY(50px);
     transition: all 0.3s ease;
 }
-
 .service-card.visible {
     animation: fadeInUp 0.6s ease forwards;
 }
-
 .service-card-inner {
     position: relative;
     height: 100%;
@@ -271,26 +243,22 @@
     display: flex;
     flex-direction: column;
 }
-
 /* Color-specific hover effects */
 .service-card[data-color="red"]:hover .service-card-inner {
     border-color: #ff0000;
     box-shadow: 0 10px 40px rgba(255, 0, 0, 0.2);
     transform: translateY(-5px);
 }
-
 .service-card[data-color="yellow"]:hover .service-card-inner {
     border-color: #ffff00;
     box-shadow: 0 10px 40px rgba(255, 255, 0, 0.2);
     transform: translateY(-5px);
 }
-
 .service-card[data-color="green"]:hover .service-card-inner {
     border-color: #39FF14;
     box-shadow: 0 10px 40px rgba(57, 255, 20, 0.2);
     transform: translateY(-5px);
 }
-
 /* Service Icon */
 .service-icon-wrapper {
     width: 3.5rem;
@@ -302,40 +270,31 @@
     margin-bottom: 1rem;
     transition: all 0.3s ease;
 }
-
 .service-card[data-color="red"] .service-icon-wrapper {
     background: rgba(255, 0, 0, 0.1);
 }
-
 .service-card[data-color="yellow"] .service-icon-wrapper {
     background: rgba(255, 255, 0, 0.1);
 }
-
 .service-card[data-color="green"] .service-icon-wrapper {
     background: rgba(57, 255, 20, 0.1);
 }
-
 .service-icon {
     width: 1.75rem;
     height: 1.75rem;
 }
-
 .service-card[data-color="red"] .service-icon {
     color: #ff0000;
 }
-
 .service-card[data-color="yellow"] .service-icon {
     color: #ffff00;
 }
-
 .service-card[data-color="green"] .service-icon {
     color: #39FF14;
 }
-
 .service-card:hover .service-icon-wrapper {
     transform: scale(1.1);
 }
-
 /* Service Title */
 .service-title {
     font-size: 1.25rem;
@@ -344,7 +303,6 @@
     margin: 0 0 1rem 0;
     line-height: 1.3;
 }
-
 /* Service Features - NO BULLETS */
 .service-features {
     list-style: none;
@@ -352,7 +310,6 @@
     margin: 0 0 1.5rem 0;
     flex: 1;
 }
-
 .service-features li {
     color: #d1d5db;
     font-size: 0.9rem;
@@ -361,12 +318,10 @@
     position: relative;
     margin-bottom: 0.5rem;
 }
-
 /* Remove the bullet points */
 .service-features li:before {
     display: none;
 }
-
 /* Service Button */
 .service-btn {
     display: inline-flex;
@@ -378,29 +333,23 @@
     transition: all 0.3s ease;
     margin-top: auto;
 }
-
 .service-card[data-color="red"] .service-btn {
     color: #ff0000;
 }
-
 .service-card[data-color="yellow"] .service-btn {
     color: #ffff00;
 }
-
 .service-card[data-color="green"] .service-btn {
     color: #39FF14;
 }
-
 .service-btn:hover {
     transform: translateX(5px);
 }
-
 .arrow-icon {
     width: 1rem;
     height: 1rem;
     transition: transform 0.3s ease;
 }
-
 .service-btn:hover .arrow-icon {
     transform: translateX(3px);
 }
@@ -410,177 +359,141 @@
     .services-section {
         padding: 7rem 2rem;
     }
-
     .testimonials-title,
     .services-title {
         font-size: 3.25rem;
     }
-    
     .testimonials-subtitle,
     .services-subtitle {
         font-size: 1.125rem;
     }
-    
     .testimonials-grid,
     .services-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
         padding: 0;
     }
-    
     .testimonial-card-inner {
         padding: 2rem;
     }
-    
     .testimonial-content {
         font-size: 0.95rem;
     }
-    
     .author-avatar {
         width: 3rem;
         height: 3rem;
     }
-    
     .author-initial {
         font-size: 1.125rem;
     }
-    
     .author-name {
         font-size: 1rem;
     }
-    
     .author-role {
         font-size: 0.875rem;
     }
-    
     .quote-icon {
         width: 2.5rem;
         height: 2.5rem;
     }
-    
     .star {
         width: 1.25rem;
         height: 1.25rem;
     }
-    
     .service-title {
         font-size: 1.375rem;
     }
-    
     .service-features li {
         font-size: 0.95rem;
     }
 }
-
 /* Responsive Design - Desktop */
 @media (min-width: 1024px) {
     .testimonials-section,
     .services-section {
         padding: 8rem 2rem;
     }
-
     .testimonials-title,
     .services-title {
         font-size: 3.75rem;
     }
-    
     .testimonials-grid,
     .services-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
     }
-    
     .testimonial-content {
         font-size: 1rem;
     }
-    
     .service-title {
         font-size: 1.25rem;
     }
-    
     .service-features li {
         font-size: 1rem;
     }
 }
-
 /* Extra small screens - Mobile optimization */
 @media (max-width: 480px) {
     .testimonials-section,
     .services-section {
         padding: 4rem 0.75rem;
     }
-
     .testimonials-title,
     .services-title {
         font-size: 2rem;
     }
-    
     .testimonials-subtitle,
     .services-subtitle {
         font-size: 0.9rem;
     }
-    
     .testimonial-card-inner {
         padding: 1.5rem;
     }
-    
     .testimonial-content {
         font-size: 0.85rem;
         margin-bottom: 1.25rem;
     }
-    
     .author-avatar {
         width: 2.5rem;
         height: 2.5rem;
     }
-    
     .author-initial {
         font-size: 1rem;
     }
-    
     .author-name {
         font-size: 0.9rem;
     }
-    
     .author-role {
         font-size: 0.75rem;
     }
-    
     .quote-icon {
         width: 1.75rem;
         height: 1.75rem;
         top: 1.25rem;
         right: 1.25rem;
     }
-    
     .star {
         width: 1rem;
         height: 1rem;
     }
-    
     .service-card-inner {
         padding: 1.5rem;
     }
-    
     .service-icon-wrapper {
         width: 3rem;
         height: 3rem;
     }
-    
     .service-icon {
         width: 1.5rem;
         height: 1.5rem;
     }
-    
     .service-title {
         font-size: 1.1rem;
     }
-    
     .service-features li {
         font-size: 0.85rem;
     }
 }
-
 /* Animations */
 @keyframes fadeInUp {
     from {
@@ -599,41 +512,37 @@
     <div class="logo">
         <img src="assets/images/logo.png" alt="logo" class="logo">
         <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
-	<p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
+        <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
     </div>
-
         <!-- Hamburger Menu Icon -->
         <div class="hamburger-menu" onclick="toggleMenu()">
             <div class="bar"></div>
             <div class="bar"></div>
             <div class="bar"></div>
         </div>
-
     <ul class="nav-list">
         <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
         <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#reviews">Reviews</a></li>
-	      <li><a href="#careers">Careers</a></li>
+        <li><a href="#careers">Careers</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
 <div class="auth-buttons" id="auth-buttons">
     <button onclick="handleLogout()" class="logout-btn">Logout</button>
     <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
 </div>
-
 </nav>
-	  
+
 <!-- Welcome Section -->
 <section id="welcome-section">
     <h1 class="slogan">Your Vision, Beautifully Engineered.</h1>
     <img src="assets/images/banner.png" alt="banner" class="banner">
     <main id="main-doc">
         <p>App Design | Web Design | Web Development | UI/UX Design</p>
-        <!-- Buttons for DESKTOP view only -->
+        <!-- ONLY Get Started button for DESKTOP view -->
         <div class="hero-buttons">
             <a href="#contact" class="btn-get-started">Get Started</a>
-            <a href="#services" class="btn-view-work">View Our Work</a>
         </div>
     </main>
 </section>
@@ -642,10 +551,9 @@
 <h2 class="responsive-slogan">Your Vision, Beautifully Engineered.</h2>
 <img src="assets/images/banner-mobile.png" alt="banner" class="responsive-banner">
 <h5 class="responsive-description">App Design | Web Design | Web Development | UI/UX Design</h5>
-<!-- Buttons for MOBILE view -->
+<!-- ONLY Get Started button for MOBILE view -->
 <div class="hero-buttons-mobile">
     <a href="#contact" class="btn-get-started">Get Started</a>
-    <a href="#services" class="btn-view-work">View Our Work</a>
 </div>
 
 <!-- Products and Services Section -->
@@ -686,7 +594,6 @@
                     </a>
                 </div>
             </div>
-
             <!-- Writing Services Card -->
             <div class="service-card" data-color="yellow">
                 <div class="service-card-inner">
@@ -712,7 +619,6 @@
                     </a>
                 </div>
             </div>
-
             <!-- Education and Training Card -->
             <div class="service-card" data-color="green">
                 <div class="service-card-inner">
@@ -740,7 +646,6 @@
         </div>
     </div>
 </section>
-
 <!-- Reviews Section -->
 <section class="main-section testimonials-section" id="reviews">
     <div class="testimonials-container">
@@ -760,77 +665,64 @@
         </div>
     </div>
 </section>
-
 <section class="counter-section">
     <div class="counter-container">
         <div class="counter-item">
             <div class="counter" data-target="48200">0</div>
             <div class="label">Projects Completed</div>
         </div>
-
         <div class="counter-item">
             <div class="counter" data-target="13800">0</div>
             <div class="label">Clients Served</div>
         </div>
-
         <div class="counter-item">
             <div class="counter" data-target="22500">0</div>
             <div class="label">Certificates Granted</div>
         </div>
-
         <div class="counter-item">
             <div class="counter" data-target="9100">0</div>
             <div class="label">Books Sold</div>
         </div>
     </div>
-<div class="hero-buttons">
-            <a href="nexgenixcreativesolutions.github.io/our-work" class="btn-view-work">View Our Work</a>
-        </div>
+    <!-- View Our Work Button - ONLY HERE, after counter -->
+    <div class="view-work-container">
+        <a href="https://nexgenixcreativesolutions.github.io/our-work" class="btn-view-work">View Our Work</a>
+    </div>
 </section>
 
 <div data-tf-live="01JJ9DB004BWA8C98Q5JX89BA0"></div>
 <script src="https://embed.typeform.com/next/embed.js"></script>
-
 <script src="script.js"></script>
-
 <!-- Contact Section -->
 <section class="main-section" id="contact">
     <article>
         <h2>Contact</h2>
         <div class="contact-buttons">
-
     <!-- Facebook -->
     <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
         <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
     </a>
-
     <!-- Instagram -->
     <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
         <button class="contact-btn"><i class="fab fa-instagram"></i></button>
     </a>
-
     <!-- Reddit -->
     <a href="https://www.reddit.com/user/nexgenix" target="_blank">
         <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
     </a>
-
     <!-- Gmail -->
     <a href="mailto:nexgenixcreativesolutions@gmail.com">
         <button class="contact-btn"><i class="fas fa-envelope"></i></button>
     </a>
-
     <!-- WhatsApp -->
     <a href="https://wa.me/+639171063504" target="_blank">
         <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
     </a>
-
 </div>
 </article>
 </section>
-
 <!-- Footer Section -->
 <footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
-
     <script>
         const counters = document.querySelectorAll('.counter');
         const speed = 200; // Adjust speed of counting
@@ -864,7 +756,6 @@
         
         observer.observe(document.querySelector('.counter-container'));
     </script>
-
     <!-- JavaScript for Toggle -->
     <script>
         function toggleMenu() {
@@ -896,7 +787,6 @@
     'interface Vision { }',
     'type Success = Promise<Growth>;',
   ];
-
   function createFloatingCodeBackground() {
     const container = document.createElement('div');
     container.className = 'floating-code-container';
@@ -923,7 +813,6 @@
     // Insert at the beginning of body so it's behind everything
     document.body.insertBefore(container, document.body.firstChild);
   }
-
   // Initialize when DOM is loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', createFloatingCodeBackground);
@@ -946,7 +835,6 @@
       observer.observe(card);
     });
   }
-
   // Initialize when DOM is loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initServices);
@@ -976,7 +864,6 @@
       rating: 5
     }
   ];
-
   function createStarIcon() {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('class', 'star');
@@ -989,7 +876,6 @@
     svg.appendChild(path);
     return svg;
   }
-
   function createQuoteIcon() {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('class', 'quote-icon');
@@ -1008,7 +894,6 @@
     svg.appendChild(path2);
     return svg;
   }
-
   function createTestimonialCard(testimonial, index) {
     const card = document.createElement('div');
     card.className = 'testimonial-card';
@@ -1067,7 +952,6 @@
     card.appendChild(cardInner);
     return card;
   }
-
   function initTestimonials() {
     const grid = document.getElementById('testimonials-grid');
     if (!grid) return;
@@ -1090,7 +974,6 @@
       observer.observe(card);
     });
   }
-
   // Initialize when DOM is loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initTestimonials);
