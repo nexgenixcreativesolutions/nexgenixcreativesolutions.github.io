@@ -1,190 +1,685 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nex Genix Creative Services</title>
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">    
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writing Services | Nex Genix Creative Solutions</title>
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* =================== GLOBAL RESET & BASE =================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Montserrat Alternates', sans-serif;
+      background-color: #000;
+      color: white;
+      position: relative;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    /* =================== FLOATING CODE BACKGROUND =================== */
+    .floating-code-container {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .code-line {
+      position: absolute;
+      white-space: nowrap;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: rgba(57, 255, 20, 0.4);
+      text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+      animation: floatCode linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes floatCode {
+      0% {
+        transform: translateX(100vw);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+    }
+
+    /* =================== NAVBAR =================== */
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      padding: 5px 20px;
+      background-color: #121212;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+
+    #navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #navbar .logo img {
+      height: 30px;
+      width: 30px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .logo-title a,
+    .short-title a {
+      color: #39FF14;
+      text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      font-family: 'Courier New', monospace;
+    }
+
+    .short-title {
+      display: none;
+    }
+
+    #navbar .nav-list {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    #navbar .nav-list li {
+      display: inline-block;
+    }
+
+    #navbar .nav-list a {
+      text-decoration: none;
+      color: white;
+      font-size: 12px;
+      padding: 8px 10px;
+      transition: color 0.3s ease;
+    }
+
+    #navbar .nav-list a:hover {
+      color: #39FF14;
+    }
+
+    .hamburger-menu {
+      display: none;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+      position: absolute;
+      right: 60px;
+    }
+
+    .auth-buttons button,
+    .auth-buttons a {
+      padding: 8px 16px;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .logout-btn {
+      background: #ff0000;
+      color: white;
+    }
+
+    .logout-btn:hover {
+      background: #cc0000;
+    }
+
+    .dashboard-btn {
+      background: #39FF14;
+      color: black;
+      font-weight: bold;
+    }
+
+    .dashboard-btn:hover {
+      background: #2ecc71;
+    }
+
+    /* =================== HERO SECTION =================== */
+    .hero-section {
+      position: relative;
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 20px 60px;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        transform: translateY(30px);
+      }
+    }
+
+    /* =================== CATEGORY SECTION =================== */
+    .category-section {
+      position: relative;
+      padding: 4rem 1rem;
+      background: transparent;
+    }
+
+    .category-container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .category-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .category-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .category-image {
+      max-width: 500px;
+      width: 100%;
+      margin: 2rem auto;
+      border-radius: 1rem;
+      display: block;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .service-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.7));
+      border: 1px solid #1f2937;
+      border-radius: 1rem;
+      padding: 2rem;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    .service-card.visible {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      border-color: #39FF14;
+      box-shadow: 0 20px 60px rgba(57, 255, 20, 0.15);
+    }
+
+    .service-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .service-description {
+      color: #9ca3af;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      text-align: justify;
+    }
+
+    .cta-button {
+      width: 100%;
+      padding: 0.875rem 1.5rem;
+      background: transparent;
+      color: #39FF14;
+      border: 1px solid #39FF14;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      font-family: 'Montserrat Alternates', sans-serif;
+    }
+
+    .cta-button:hover {
+      background: #39FF14;
+      color: #000;
+      transform: scale(1.02);
+    }
+
+    /* =================== FOOTER =================== */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      border-top: 1px solid #1f2937;
+      z-index: 999;
+    }
+
+    footer span {
+      color: #39FF14;
+      text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+    }
+
+    /* =================== RESPONSIVE DESIGN =================== */
+    @media (max-width: 1030px) {
+      .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%) scale(0.7);
+        z-index: 1000;
+      }
+
+      .hamburger-menu .bar {
+        background-color: white;
+        height: 2px;
+        width: 20px;
+        margin: 3px 0;
+        transition: 0.3s;
+      }
+
+      .nav-list {
+        display: flex;
+        flex-direction: column;
+        background: #333;
+        width: 100%;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        text-align: center;
+        padding: 10px 0;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        visibility: hidden;
+      }
+
+      .nav-list.active {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+      }
+
+      .nav-list li {
+        margin: 10px 0;
+      }
+
+      .hamburger-menu.open .bar:nth-child(1) {
+        transform: rotate(-45deg) translate(-4px, 5px);
+      }
+
+      .hamburger-menu.open .bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger-menu.open .bar:nth-child(3) {
+        transform: rotate(45deg) translate(-4px, -5px);
+      }
+
+      .auth-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        position: absolute;
+        top: 50%;
+        right: 60px;
+        transform: translateY(-50%);
+      }
+
+      .auth-buttons button,
+      .auth-buttons .dashboard-btn {
+        padding: 3px 7px;
+        font-size: 9px;
+        border-radius: 2.5px;
+        min-width: 65px;
+        height: 20px;
+        line-height: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .category-title {
+        font-size: 2rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .logo-title {
+        display: none;
+      }
+
+      .short-title {
+        display: block;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .category-title {
+        font-size: 1.5rem;
+      }
+
+      .auth-buttons {
+        right: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <!-- Floating Code Background -->
+  <div class="floating-code-container" id="floatingCodeContainer"></div>
 
-<!-- Navigation Bar -->
-<nav id="navbar">
+  <!-- Navigation Bar -->
+  <nav id="navbar">
     <div class="logo">
-        <img src="assets/images/logo.png" alt="logo" class="logo">
-        <p class="logo-title"><a href="#">NEX GENIX CREATIVE SOLUTIONS</a></p>
-        <p class="short-title"><a href="#">NGCS</a></p>
+      <img src="assets/images/logo.png" alt="logo">
+      <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
+      <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
     </div>
 
     <div class="hamburger-menu" onclick="toggleMenu()">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
     </div>
 
     <ul class="nav-list">
-        <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/#about_us">About Us</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/#services">Services</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/#reviews">Reviews</a></li>
-        <li><a href="#careers">Careers</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/#contact">Contact</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io/#about_us">About Us</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io/#services">Services</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io/#reviews">Reviews</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io/#contact">Contact</a></li>
     </ul>
 
     <div class="auth-buttons" id="auth-buttons">
-        <button onclick="handleLogout()" class="logout-btn">Logout</button>
-        <a href="https://nexgenixcreativesolutions.github.io/dashboard.html" class="dashboard-btn">Dashboard</a>
+      <button onclick="handleLogout()" class="logout-btn">Logout</button>
+      <a href="https://nexgenixcreativesolutions.github.io/dashboard.html" class="dashboard-btn">Dashboard</a>
     </div>
-</nav>
+  </nav>
 
-<!-- WRITING SERVICES -->
-<h1>WRITING SERVICES</h1>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Professional <span class="gradient-text">Writing Services</span>
+      </h1>
+    </div>
+  </section>
 
-<h2>Academic Writing Assistance</h2>
-<img src="assets/images/academic-writing-assistance.gif" alt="academic writing assistance gif" class="awa-image">
+  <!-- Academic Writing Section -->
+  <section class="category-section">
+    <div class="category-container">
+      <div class="category-header">
+        <h2 class="category-title">Academic Writing <span class="gradient-text">Assistance</span></h2>
+        <img src="assets/images/academic-writing-assistance.gif" alt="Academic Writing" class="category-image">
+      </div>
 
-<div class="writing-service-container">
-
-    <div class="writing-service-card">
-        <div class="product-title">Essay Writing Help</div>
-        <div class="product-description">
-            Our team of experienced professionals is here to assist you every step of the way. Whether you need help organizing your 
-            thoughts, strengthening your thesis statement, or enhancing the flow of your writing, we are dedicated to helping you achieve your academic goals. By working closely 
-            with you, we can provide guidance on structuring your essays effectively, crafting compelling arguments, and refining your writing style to ensure that your ideas 
-            shine through clearly and cohesively. Let us help you unlock your full potential and elevate your writing to the next level.
+      <div class="services-grid">
+        <div class="service-card">
+          <h3 class="service-title">Essay Writing Help</h3>
+          <p class="service-description">
+            Our team of experienced professionals is here to assist you every step of the way. Whether you need help organizing your thoughts, strengthening your thesis statement, or enhancing the flow of your writing, we are dedicated to helping you achieve your academic goals. By working closely with you, we can provide guidance on structuring your essays effectively, crafting compelling arguments, and refining your writing style to ensure that your ideas shine through clearly and cohesively. Let us help you unlock your full potential and elevate your writing to the next level.
+          </p>
+          <button class="cta-button">Select Service</button>
         </div>
-        <button class="cta-button">Select</button>
-    </div>
 
-    <div class="writing-service-card">
-        <div class="product-title">Thesis and Dissertation Support</div>
-        <div class="product-description">
-            Our goal is to provide students with the support and guidance they need to excel in their academic pursuits. From 
-            brainstorming potential topics to diving deep into research, we are here every step of the way. Our dedicated team is committed to helping students organize their 
-            thoughts and ideas into well-structured and compelling papers. With our assistance, students can feel confident in their work and achieve the success they 
-            deserve.
+        <div class="service-card">
+          <h3 class="service-title">Thesis and Dissertation Support</h3>
+          <p class="service-description">
+            Our goal is to provide students with the support and guidance they need to excel in their academic pursuits. From brainstorming potential topics to diving deep into research, we are here every step of the way. Our dedicated team is committed to helping students organize their thoughts and ideas into well-structured and compelling papers. With our assistance, students can feel confident in their work and achieve the success they deserve.
+          </p>
+          <button class="cta-button">Select Service</button>
         </div>
-        <button class="cta-button">Select</button>
-    </div>
 
-    <div class="writing-service-card">
-        <div class="product-title">Research Paper Assistance</div>
-        <div class="product-description">
-            Our expertise goes beyond mere assistance; we strive to empower you with the tools and knowledge needed to craft a 
-            compelling and well-structured thesis. From refining your thesis statement to mapping out a comprehensive research methodology, we are here to support you every step 
-            of the way. Our focus on developing a strong literature review and ensuring a coherent overall structure will help you present your ideas with clarity and confidence. 
-            With our guidance, you can navigate the complexities of academic writing with ease and produce a thesis that stands out for its depth and coherence.
+        <div class="service-card">
+          <h3 class="service-title">Research Paper Assistance</h3>
+          <p class="service-description">
+            Our expertise goes beyond mere assistance; we strive to empower you with the tools and knowledge needed to craft a compelling and well-structured thesis. From refining your thesis statement to mapping out a comprehensive research methodology, we are here to support you every step of the way. Our focus on developing a strong literature review and ensuring a coherent overall structure will help you present your ideas with clarity and confidence. With our guidance, you can navigate the complexities of academic writing with ease and produce a thesis that stands out for its depth and coherence.
+          </p>
+          <button class="cta-button">Select Service</button>
         </div>
-        <button class="cta-button">Select</button>
+      </div>
     </div>
+  </section>
 
-</div>
+  <!-- Professional Writing Section -->
+  <section class="category-section" style="background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);">
+    <div class="category-container">
+      <div class="category-header">
+        <h2 class="category-title">Professional Writing <span class="gradient-text">Services</span></h2>
+        <img src="assets/images/professional-writing-services.gif" alt="Professional Writing" class="category-image">
+      </div>
 
-<h2>Professional Writing Services</h2>
-<img src="assets/images/professional-writing-services.gif" alt="professional writing services gif" class="pws-image">
-
-<div class="writing-service-container">
-
-    <div class="writing-service-card">
-        <div class="product-title">Blog Post</div>
-        <div class="product-description">
-            Our team of skilled writers is dedicated to creating engaging blog content that not only educates but also captivates 
-            readers. With a keen eye for detail and a passion for storytelling, we craft articles that are not only informative but also visually appealing. From attention-
-            grabbing headlines to well-researched content, we ensure that each blog post is a blend of creativity and information. Let us help bring your ideas to life and engage 
-            your audience with our professional blog writing services.
+      <div class="services-grid">
+        <div class="service-card">
+          <h3 class="service-title">Blog Post</h3>
+          <p class="service-description">
+            Our team of skilled writers is dedicated to creating engaging blog content that not only educates but also captivates readers. With a keen eye for detail and a passion for storytelling, we craft articles that are not only informative but also visually appealing. From attention-grabbing headlines to well-researched content, we ensure that each blog post is a blend of creativity and information. Let us help bring your ideas to life and engage your audience with our professional blog writing services.
+          </p>
+          <button class="cta-button">Select Service</button>
         </div>
-        <button class="cta-button">Select</button>
-    </div>
 
-    <div class="writing-service-card">
-        <div class="product-title">Business Proposal</div>
-        <div class="product-description">
-            Our team of expert professionals is dedicated to guiding entrepreneurs through the process of creating detailed and 
-            effective business proposals. By utilizing a proven format, we aim to help our clients present their ideas in a clear and compelling manner, ultimately increasing 
-            their chances of success. With our support, entrepreneurs can feel confident in the quality and accuracy of their proposals, setting them on the path towards achieving 
-            their business goals.
+        <div class="service-card">
+          <h3 class="service-title">Business Proposal</h3>
+          <p class="service-description">
+            Our team of expert professionals is dedicated to guiding entrepreneurs through the process of creating detailed and effective business proposals. By utilizing a proven format, we aim to help our clients present their ideas in a clear and compelling manner, ultimately increasing their chances of success. With our support, entrepreneurs can feel confident in the quality and accuracy of their proposals, setting them on the path towards achieving their business goals.
+          </p>
+          <button class="cta-button">Select Service</button>
         </div>
-        <button class="cta-button">Select</button>
-    </div>
 
-    <div class="writing-service-card">
-        <div class="product-title">Business Report</div>
-        <div class="product-description">
-            Our reports are designed to provide you with a deep understanding of market trends, consumer behavior, and industry 
-            insights. By leveraging our expertise and cutting-edge analytical tools, we ensure that you receive valuable information that can drive your business forward. Whether 
-            you are looking to expand into new markets, improve existing processes, or stay ahead of the competition, our reports offer the strategic guidance you need to succeed. 
-            Let us empower you with the knowledge and insights to unlock your full potential and achieve your business goals.
+        <div class="service-card">
+          <h3 class="service-title">Business Report</h3>
+          <p class="service-description">
+            Our reports are designed to provide you with a deep understanding of market trends, consumer behavior, and industry insights. By leveraging our expertise and cutting-edge analytical tools, we ensure that you receive valuable information that can drive your business forward. Whether you are looking to expand into new markets, improve existing processes, or stay ahead of the competition, our reports offer the strategic guidance you need to succeed. Let us empower you with the knowledge and insights to unlock your full potential and achieve your business goals.
+          </p>
+          <button class="cta-button">Select Service</button>
         </div>
-        <button class="cta-button">Select</button>
-    </div>
 
-    <div class="writing-service-card">
-        <div class="product-title">Copy Editing</div>
-        <div class="product-description">
-            We provide thorough editing services aimed at enhancing the clarity, coherence, and conciseness of our clients' written 
-            materials. Our editing services are designed to elevate the quality of your written work by improving clarity, ensuring coherence throughout the text, and streamlining 
-            the content to be concise yet impactful. Whether you need help with a research paper, a business proposal, a creative writing piece, or any other written material, our 
-            team is dedicated to enhancing your message and ensuring your ideas shine through effectively. Let us help you polish your writing to make it the best it can be.
+        <div class="service-card">
+          <h3 class="service-title">Copy Editing</h3>
+          <p class="service-description">
+            We provide thorough editing services aimed at enhancing the clarity, coherence, and conciseness of our clients' written materials. Our editing services are designed to elevate the quality of your written work by improving clarity, ensuring coherence throughout the text, and streamlining the content to be concise yet impactful. Whether you need help with a research paper, a business proposal, a creative writing piece, or any other written material, our team is dedicated to enhancing your message and ensuring your ideas shine through effectively. Let us help you polish your writing to make it the best it can be.
+          </p>
+          <button class="cta-button">Select Service</button>
         </div>
-        <button class="cta-button">Select</button>
-    </div>
 
-    <div class="writing-service-card">
-        <div class="product-title">Resume and Cover Letter Building</div>
-        <div class="product-description">
-            Our team understands the importance of standing out in a competitive job market. By tailoring each resume and cover letter 
-            to highlight your unique skills and experiences, we aim to help you make a lasting impression on potential employers. Whether you're seeking an internship or applying 
-            for your dream job, our personalized approach will showcase your qualifications and set you apart from the crowd. Let us help you take the next step towards achieving 
-            your career goals.
+        <div class="service-card">
+          <h3 class="service-title">Resume and Cover Letter Building</h3>
+          <p class="service-description">
+            Our team understands the importance of standing out in a competitive job market. By tailoring each resume and cover letter to highlight your unique skills and experiences, we aim to help you make a lasting impression on potential employers. Whether you're seeking an internship or applying for your dream job, our personalized approach will showcase your qualifications and set you apart from the crowd. Let us help you take the next step towards achieving your career goals.
+          </p>
+          <button class="cta-button">Select Service</button>
         </div>
-        <button class="cta-button">Select</button>
+      </div>
     </div>
+  </section>
 
-</div>
+  <!-- Footer -->
+  <footer>© 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
 
-<footer>© 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
+  <!-- JavaScript -->
+  <script>
+    // Floating Code Background
+    const codeSnippets = [
+      'const nexgenix = () => {',
+      'function createSolution() {',
+      'import { Innovation } from "future"',
+      '<div className="digital">',
+      'async function buildDreams() {',
+      'export default Excellence;',
+      'return <Success />;',
+      'const vision = await design();',
+      'npm install creativity',
+      'git commit -m "launch"',
+      'SELECT * FROM solutions;',
+      'CREATE TABLE success;',
+      '{ transform: "ideas" }',
+      '.future { display: flex; }',
+      'onClick={() => innovate()}',
+      'useState(creativity);',
+      'useEffect(() => grow());',
+      'class Digital extends Tech {',
+      'interface Vision { }',
+      'type Success = Promise<Growth>;'
+    ];
 
-<!-- JavaScript -->
-<script>
-/* ================================
-   MOBILE MENU TOGGLE
-================================ */
-function toggleMenu() {
-    const navList = document.querySelector('.nav-list');
-    const hamburger = document.querySelector('.hamburger-menu');
-
-    if (navList && hamburger) {
-        navList.classList.toggle('active');
-        hamburger.classList.toggle('open');
+    function createFloatingCodeBackground() {
+      const container = document.getElementById('floatingCodeContainer');
+      
+      for (let i = 0; i < 15; i++) {
+        const codeLine = document.createElement('div');
+        codeLine.className = 'code-line';
+        
+        const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+        codeLine.textContent = randomSnippet;
+        
+        const yPosition = 5 + (i * 6);
+        const duration = 15 + Math.random() * 10;
+        const delay = Math.random() * 20;
+        
+        codeLine.style.top = `${yPosition}%`;
+        codeLine.style.animationDuration = `${duration}s`;
+        codeLine.style.animationDelay = `${delay}s`;
+        
+        container.appendChild(codeLine);
+      }
     }
-}
 
-/* ================================
-   SERVICE BUTTON → MESSENGER
-================================ */
-const serviceButtons = document.querySelectorAll('.cta-button');
+    // Intersection Observer for scroll animations
+    function initScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
 
-serviceButtons.forEach(button => {
-    button.addEventListener('click', () => {
+      document.querySelectorAll('.service-card').forEach(card => {
+        observer.observe(card);
+      });
+    }
 
-        const serviceCard = button.closest('.writing-service-card');
+    // Service Button Click Handler
+    const serviceButtons = document.querySelectorAll('.cta-button');
+
+    serviceButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const serviceCard = button.closest('.service-card');
         if (!serviceCard) return;
 
-        const titleElement = serviceCard.querySelector('.product-title');
+        const titleElement = serviceCard.querySelector('.service-title');
         if (!titleElement) return;
 
         const serviceName = titleElement.innerText;
 
         const messengerLink = `https://m.me/269318226255764?text=${encodeURIComponent(
-`Hi! I’m interested in your ${serviceName} service.
+`Hi! I'm interested in your ${serviceName} service.
 
 Here are my details for your reference:
 • Name:
@@ -198,9 +693,31 @@ Looking forward to your response. Thank you!`
         )}`;
 
         window.open(messengerLink, '_blank');
+      });
     });
-});
-</script>
 
+    // Toggle Menu
+    function toggleMenu() {
+      const navList = document.querySelector('.nav-list');
+      const hamburger = document.querySelector('.hamburger-menu');
+
+      if (navList && hamburger) {
+        navList.classList.toggle('active');
+        hamburger.classList.toggle('open');
+      }
+    }
+
+    // Logout Handler
+    function handleLogout() {
+      alert('Logging out...');
+      window.location.href = 'https://nexgenixcreativesolutions.github.io/login-signup';
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      createFloatingCodeBackground();
+      initScrollAnimations();
+    });
+  </script>
 </body>
 </html>
