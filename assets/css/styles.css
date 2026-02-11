@@ -98,8 +98,11 @@ p {
 }
 
 .slogan {
-  font-family: "Yellowtail", cursive;
+  font-family: 'Montserrat Alternates', sans-serif !important;
   font-weight: 400;
+  text-shadow: 0 0 20px rgba(57, 255, 20, 0.8),
+               0 0 40px rgba(57, 255, 20, 0.6),
+               0 0 60px rgba(57, 255, 20, 0.4);
 }
 
 /* Banner Image */
@@ -113,6 +116,20 @@ p {
     margin: 0 auto;
     background-color: transparent;
 }
+
+.responsive-slogan {
+    font-family: 'Montserrat Alternates', sans-serif !important;
+    text-shadow: 0 0 20px rgba(57, 255, 20, 0.8),
+                 0 0 40px rgba(57, 255, 20, 0.6),
+                 0 0 60px rgba(57, 255, 20, 0.4);
+}
+
+/* HIDDEN */
+    .responsive-slogan,
+    .responsive-banner,
+    .responsive-description {
+        display: none;
+    }
 
 /* Navbar Styling */
 #navbar {
@@ -572,13 +589,6 @@ text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
     object-fit: cover;
 }
 
-/* HIDDEN */
-    .responsive-slogan,
-    .responsive-banner,
-    .responsive-description {
-        display: none;
-    }
-
 /* PREMIUM COURSES PAGE */
 .complimentary-courses-container, 
 .premium-courses-container,
@@ -940,24 +950,23 @@ text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
     align-items: stretch;    /* make cards in a row same height */
 }
 
-/* Make cards flex columns so button stays at bottom */
 .product-card-ddvcs,
 .writing-service-card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* pushes button to bottom */
+    justify-content: space-between; 
     align-items: center;
     padding: 20px;
-    background: #111; /* keep current background */
+    background: #111; 
     border-radius: 10px;
 }
 
-/* Add small spacing between description and button */
 .product-card-ddvcs .cta-button,
 .writing-service-card .cta-button {
-    margin-top: 10px;  /* spacing below text */
+    margin-top: 10px;  
     width: 80%;
     max-width: 200px;
 }
+
 
 
