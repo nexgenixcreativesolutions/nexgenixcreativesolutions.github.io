@@ -968,5 +968,90 @@ text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
     max-width: 200px;
 }
 
+/* ================= HERO BUTTONS ================= */
 
+/* Hero Buttons Container */
+.hero-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
 
+/* Get Started Button - Neon Green */
+.btn-get-started {
+    padding: 1rem 2.5rem;
+    background: #39FF14;
+    color: #000;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat Alternates', sans-serif;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-get-started:hover {
+    background: #2ee80f;
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(57, 255, 20, 0.8),
+                0 5px 20px rgba(57, 255, 20, 0.4);
+}
+
+/* NEW STYLES FOR NEW BUTTONS ( VIEW OUR WORK AND GET STARTED ) */
+/* View Our Work Button - Outlined */
+.btn-view-work {
+    padding: 1rem 2.5rem;
+    background: transparent;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat Alternates', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-view-work:hover {
+    background: #fff;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive adjustments for buttons */
+@media (max-width: 768px) {
+    .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+    
+    .btn-get-started,
+    .btn-view-work {
+        padding: 0.875rem 2rem;
+        font-size: 0.9rem;
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-get-started,
+    .btn-view-work {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.85rem;
+    }
+}
