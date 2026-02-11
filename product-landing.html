@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Products | Nex Genix Creative Solutions</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+      /* =================== GLOBAL RESET & BASE =================== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'Montserrat Alternates', sans-serif;
+        background-color: #000;
+        color: white;
+        position: relative;
+        min-height: 100vh;
+      }
+
+      /* =================== FLOATING CODE BACKGROUND =================== */
+      .floating-code-container {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .code-line {
+        position: absolute;
+        white-space: nowrap;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        color: rgba(57, 255, 20, 0.4);
+        text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+        animation: floatCode linear infinite;
+        opacity: 0;
+      }
+
+      @keyframes floatCode {
+        0% {
+          transform: translateX(100vw);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+      }
+
+      /* =================== NAVBAR =================== */
+      #navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        padding: 5px 20px;
+        background-color: #121212;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 1000;
+      }
+
+      #navbar .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      #navbar .logo img {
+        height: 30px;
+        width: 30px;
+        border-radius: 8px;
+        object-fit: cover;
+      }
+
+      #navbar .logo a {
+        color: #39FF14;
+        text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        font-family: 'Courier New', monospace;
+      }
+
+      .short-title {
+        display: none;
+      }
+
+      #navbar .nav-list {
+        list-style: none;
+        display: flex;
+        gap: 10px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      #navbar .nav-list li {
+        display: inline-block;
+      }
+
+      #navbar .nav-list a {
+        text-decoration: none;
+        color: white;
+        font-size: 12px;
+        padding: 8px 10px;
+        transition: color 0.3s ease;
+      }
+
+      #navbar .nav-list a:hover {
+        color: #39FF14;
+      }
+
+      .hamburger-menu {
+        display: none;
+      }
+
+
+
+      /* =================== HERO SECTION =================== */
+      .hero-section {
+        position: relative;
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 100px 20px 60px;
+        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        overflow: hidden;
+      }
+
+      .hero-content {
+        max-width: 1200px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-eyebrow {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.9rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #39FF14;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+      }
+
+      .hero-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeInUp 0.8s ease 0.2s forwards;
+      }
+
+      .gradient-text {
+        background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-subtitle {
+        font-size: 1.2rem;
+        color: #9ca3af;
+        max-width: 700px;
+        margin: 0 auto 2.5rem;
+        line-height: 1.7;
+        opacity: 0;
+        animation: fadeInUp 0.8s ease 0.4s forwards;
+      }
+
+      .hero-cta {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeInUp 0.8s ease 0.6s forwards;
+      }
+
+      .btn-primary {
+        padding: 1rem 2.5rem;
+        background: #39FF14;
+        color: #000;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat Alternates', sans-serif;
+        box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .btn-primary:hover {
+        background: #2ee80f;
+        transform: translateY(-2px);
+        box-shadow: 0 0 30px rgba(57, 255, 20, 0.8), 0 5px 20px rgba(57, 255, 20, 0.4);
+      }
+
+      .btn-secondary {
+        padding: 1rem 2.5rem;
+        background: transparent;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        border: 2px solid #fff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat Alternates', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .btn-secondary:hover {
+        background: #fff;
+        color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+      }
+
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        from {
+          transform: translateY(30px);
+        }
+      }
+
+      /* =================== CATEGORIES SECTION =================== */
+      .categories-section {
+        position: relative;
+        padding: 6rem 1rem;
+        background: transparent;
+      }
+
+      .categories-container {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+      }
+
+      .section-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 1rem;
+      }
+
+      .section-subtitle {
+        color: #9ca3af;
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-bottom: 4rem;
+      }
+
+      .category-card {
+        position: relative;
+        background: linear-gradient(135deg, rgba(17, 24, 39, 0.6), rgba(0, 0, 0, 0.8));
+        border: 1px solid #1f2937;
+        border-radius: 1rem;
+        padding: 2.5rem;
+        transition: all 0.4s ease;
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .category-card.visible {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      .category-card:hover {
+        transform: translateY(-10px);
+        border-color: #39FF14;
+        box-shadow: 0 15px 50px rgba(57, 255, 20, 0.2);
+      }
+
+      .category-icon {
+        width: 4rem;
+        height: 4rem;
+        background: rgba(57, 255, 20, 0.1);
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .category-card:hover .category-icon {
+        background: rgba(57, 255, 20, 0.2);
+        transform: scale(1.1);
+      }
+
+      .category-icon i {
+        font-size: 2rem;
+        color: #39FF14;
+      }
+
+      .category-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 1rem;
+      }
+
+      .category-description {
+        color: #9ca3af;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+      }
+
+      .category-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #39FF14;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .category-link:hover {
+        gap: 1rem;
+      }
+
+      .category-link i {
+        transition: transform 0.3s ease;
+      }
+
+      .category-link:hover i {
+        transform: translateX(5px);
+      }
+
+      /* =================== PRODUCTS SECTION =================== */
+      .products-section {
+        position: relative;
+        padding: 6rem 1rem;
+        background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
+      }
+
+      .products-container {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2.5rem;
+      }
+
+      .product-card {
+        position: relative;
+        background: linear-gradient(135deg, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.7));
+        border: 1px solid #1f2937;
+        border-radius: 1rem;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .product-card.visible {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      .product-card:hover {
+        transform: translateY(-10px);
+        border-color: #39FF14;
+        box-shadow: 0 20px 60px rgba(57, 255, 20, 0.15);
+      }
+
+      .product-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #1f2937;
+      }
+
+      .product-image i {
+        font-size: 4rem;
+        color: #39FF14;
+        opacity: 0.3;
+      }
+
+      .product-content {
+        padding: 2rem;
+      }
+
+      .product-category {
+        font-size: 0.75rem;
+        color: #39FF14;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .product-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.75rem;
+      }
+
+      .product-description {
+        color: #9ca3af;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .product-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid #1f2937;
+        padding-top: 1.5rem;
+      }
+
+      .product-price {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #39FF14;
+      }
+
+      .product-price.free {
+        color: #ffff00;
+      }
+
+      .btn-product {
+        padding: 0.75rem 1.5rem;
+        background: transparent;
+        color: #39FF14;
+        border: 1px solid #39FF14;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+
+      .btn-product:hover {
+        background: #39FF14;
+        color: #000;
+        transform: scale(1.05);
+      }
+
+      /* =================== FEATURES SECTION =================== */
+      .features-section {
+        position: relative;
+        padding: 6rem 1rem;
+        background: transparent;
+      }
+
+      .features-container {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .feature-item {
+        text-align: center;
+        padding: 2rem;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .feature-item.visible {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      .feature-icon {
+        width: 4rem;
+        height: 4rem;
+        background: rgba(57, 255, 20, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .feature-item:hover .feature-icon {
+        background: rgba(57, 255, 20, 0.2);
+        transform: scale(1.1) rotate(10deg);
+      }
+
+      .feature-icon i {
+        font-size: 1.8rem;
+        color: #39FF14;
+      }
+
+      .feature-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.75rem;
+      }
+
+      .feature-description {
+        color: #9ca3af;
+        line-height: 1.6;
+        font-size: 0.9rem;
+      }
+
+      /* =================== CTA SECTION =================== */
+      .cta-section {
+        position: relative;
+        padding: 6rem 1rem;
+        background: linear-gradient(135deg, rgba(57, 255, 20, 0.05), rgba(0, 0, 0, 0.5));
+        text-align: center;
+      }
+
+      .cta-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .cta-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+      }
+
+      .cta-description {
+        font-size: 1.2rem;
+        color: #9ca3af;
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+      }
+
+      /* =================== FOOTER =================== */
+      footer {
+        position: relative;
+        background: #000;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        border-top: 1px solid #1f2937;
+      }
+
+      footer span {
+        color: #39FF14;
+        text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+      }
+
+      /* =================== RESPONSIVE DESIGN =================== */
+      @media (max-width: 1030px) {
+        .hamburger-menu {
+          display: flex;
+          flex-direction: column;
+          cursor: pointer;
+          position: absolute;
+          top: 50%;
+          right: 15px;
+          transform: translateY(-50%) scale(0.7);
+          z-index: 1000;
+        }
+
+        .hamburger-menu .bar {
+          background-color: white;
+          height: 2px;
+          width: 20px;
+          margin: 3px 0;
+          transition: 0.3s;
+        }
+
+        .nav-list {
+          display: flex;
+          flex-direction: column;
+          background: #333;
+          width: 100%;
+          position: absolute;
+          top: 50px;
+          left: 0;
+          text-align: center;
+          padding: 10px 0;
+          transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+          z-index: 999;
+          opacity: 0;
+          transform: translateY(-10px);
+          visibility: hidden;
+        }
+
+        .nav-list.active {
+          opacity: 1;
+          transform: translateY(0);
+          visibility: visible;
+        }
+
+        .nav-list li {
+          margin: 10px 0;
+        }
+
+        .hamburger-menu.open .bar:nth-child(1) {
+          transform: rotate(-45deg) translate(-4px, 5px);
+        }
+
+        .hamburger-menu.open .bar:nth-child(2) {
+          opacity: 0;
+        }
+
+        .hamburger-menu.open .bar:nth-child(3) {
+          transform: rotate(45deg) translate(-4px, -5px);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 2.5rem;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .categories-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .products-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-cta {
+          flex-direction: column;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+          width: 100%;
+          max-width: 300px;
+        }
+      }
+
+      @media (max-width: 500px) {
+        .logo-title {
+          display: none;
+        }
+
+        .short-title {
+          display: block;
+          color: #39FF14;
+          text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+          font-size: 16px;
+          font-weight: bold;
+          text-decoration: none;
+          font-family: 'Courier New', monospace;
+        }
+
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .section-title {
+          font-size: 1.75rem;
+        }
+
+        .auth-buttons {
+          right: 30px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero-title {
+          font-size: 1.75rem;
+        }
+
+        .cta-title {
+          font-size: 1.75rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Floating Code Background -->
+    <div class="floating-code-container" id="floatingCodeContainer"></div>
+
+    <!-- Navigation Bar -->
+    <nav id="navbar">
+      <div class="logo">
+        <img src="assets/images/logo.png" alt="Logo" />
+        <a href="index.html" class="logo-title">Nex Genix Creative Solutions</a>
+        <a href="index.html" class="short-title">NGCS</a>
+      </div>
+
+      <!-- Hamburger Menu (Mobile) -->
+      <div class="hamburger-menu" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+
+      <!-- Navigation Links -->
+      <ul class="nav-list">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="#products">PRODUCTS</a></li>
+        <li><a href="index.html#services">SERVICES</a></li>
+        <li><a href="index.html#about-us">ABOUT</a></li>
+        <li><a href="index.html#testimonials">TESTIMONIALS</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Innovative Digital Solutions</p>
+        <h1 class="hero-title">
+          Explore Our <span class="gradient-text">Premium Products</span>
+        </h1>
+        <p class="hero-subtitle">
+          From cutting-edge courses to professional services, discover everything you need to elevate your digital presence and master new skills.
+        </p>
+        <div class="hero-cta">
+          <a href="#products" class="btn-primary">Browse Products</a>
+          <a href="login-signup.html" class="btn-secondary">Get Started Free</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+      <div class="categories-container">
+        <div class="section-header">
+          <h2 class="section-title">Product <span class="gradient-text">Categories</span></h2>
+          <p class="section-subtitle">
+            Explore our comprehensive range of digital products and services designed to help you succeed
+          </p>
+        </div>
+
+        <div class="categories-grid">
+          <div class="category-card">
+            <div class="category-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3 class="category-title">Online Courses</h3>
+            <p class="category-description">
+              Master new skills with our expertly crafted courses in business, language, and technology. Both free and premium options available.
+            </p>
+            <a href="#courses" class="category-link">
+              Explore Courses <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <div class="category-card">
+            <div class="category-icon">
+              <i class="fas fa-pen-fancy"></i>
+            </div>
+            <h3 class="category-title">Writing Services</h3>
+            <p class="category-description">
+              Professional business writing, content creation, and editing services to help you communicate effectively.
+            </p>
+            <a href="#writing" class="category-link">
+              View Services <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <div class="category-card">
+            <div class="category-icon">
+              <i class="fas fa-palette"></i>
+            </div>
+            <h3 class="category-title">Design Solutions</h3>
+            <p class="category-description">
+              Custom digital design, web development, and branding services to make your business stand out online.
+            </p>
+            <a href="#design" class="category-link">
+              Explore Design <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+      <div class="products-container">
+        <div class="section-header">
+          <h2 class="section-title">Featured <span class="gradient-text">Products</span></h2>
+          <p class="section-subtitle">
+            Discover our most popular courses and services
+          </p>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+          <!-- Products will be dynamically loaded here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+      <div class="features-container">
+        <div class="section-header">
+          <h2 class="section-title">Why Choose <span class="gradient-text">Nex Genix</span></h2>
+          <p class="section-subtitle">
+            We deliver excellence in every product and service
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-certificate"></i>
+            </div>
+            <h3 class="feature-title">Certified Quality</h3>
+            <p class="feature-description">
+              All our courses include professional certificates upon completion
+            </p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-headset"></i>
+            </div>
+            <h3 class="feature-title">Expert Support</h3>
+            <p class="feature-description">
+              Get personalized assistance from industry professionals
+            </p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <h3 class="feature-title">Lifetime Access</h3>
+            <p class="feature-description">
+              Purchase once and access your content forever
+            </p>
+          </div>
+
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="feature-title">Secure Payment</h3>
+            <p class="feature-description">
+              Safe and encrypted transactions for your peace of mind
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="cta-container">
+        <h2 class="cta-title">Ready to Get <span class="gradient-text">Started?</span></h2>
+        <p class="cta-description">
+          Join thousands of satisfied customers and take your skills to the next level with our premium products and services.
+        </p>
+        <div class="hero-cta">
+          <a href="login-signup.html" class="btn-primary">Create Account</a>
+          <a href="index.html#about-us" class="btn-secondary">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
+
+    <!-- JavaScript -->
+    <script>
+      // Product Data
+      const products = [
+        {
+          id: 1,
+          category: 'Course',
+          title: 'International Business Fundamentals',
+          description: 'Master the essentials of global commerce, cross-border trade, and international market strategies.',
+          price: 'Free',
+          isFree: true,
+          icon: 'fas fa-globe'
+        },
+        {
+          id: 2,
+          category: 'Course',
+          title: 'Digital Marketing Mastery',
+          description: 'Learn modern marketing techniques, social media strategies, and analytics for business growth.',
+          price: 'Free',
+          isFree: true,
+          icon: 'fas fa-chart-line'
+        },
+        {
+          id: 3,
+          category: 'Course',
+          title: 'Mandarin Chinese Level 1',
+          description: 'Start your journey to fluency with comprehensive lessons in speaking, reading, and writing.',
+          price: '$49',
+          isFree: false,
+          icon: 'fas fa-language'
+        },
+        {
+          id: 4,
+          category: 'Course',
+          title: 'Japanese Language Basics',
+          description: 'Introduction to Japanese grammar, vocabulary, and cultural context for beginners.',
+          price: '$49',
+          isFree: false,
+          icon: 'fas fa-yen-sign'
+        },
+        {
+          id: 5,
+          category: 'Service',
+          title: 'Business Proposal Writing',
+          description: 'Professional writing service for compelling proposals that win clients and secure funding.',
+          price: '$199',
+          isFree: false,
+          icon: 'fas fa-file-alt'
+        },
+        {
+          id: 6,
+          category: 'Service',
+          title: 'Custom Website Design',
+          description: 'Bespoke web design and development tailored to your brand and business objectives.',
+          price: '$499',
+          isFree: false,
+          icon: 'fas fa-laptop-code'
+        },
+        {
+          id: 7,
+          category: 'Service',
+          title: 'Content Writing Package',
+          description: 'SEO-optimized blog posts, articles, and web content to boost your online presence.',
+          price: '$149',
+          isFree: false,
+          icon: 'fas fa-pencil-alt'
+        },
+        {
+          id: 8,
+          category: 'Service',
+          title: 'Brand Identity Design',
+          description: 'Complete branding package including logo, color palette, and brand guidelines.',
+          price: '$299',
+          isFree: false,
+          icon: 'fas fa-paint-brush'
+        },
+        {
+          id: 9,
+          category: 'Course',
+          title: 'E-Commerce Essentials',
+          description: 'Build and grow your online store with proven strategies and practical techniques.',
+          price: 'Free',
+          isFree: true,
+          icon: 'fas fa-shopping-cart'
+        }
+      ];
+
+      // Render Products
+      function renderProducts() {
+        const grid = document.getElementById('productsGrid');
+        
+        products.forEach((product, index) => {
+          const card = document.createElement('div');
+          card.className = 'product-card';
+          card.style.animationDelay = `${index * 0.1}s`;
+          
+          card.innerHTML = `
+            <div class="product-image">
+              <i class="${product.icon}"></i>
+            </div>
+            <div class="product-content">
+              <p class="product-category">${product.category}</p>
+              <h3 class="product-title">${product.title}</h3>
+              <p class="product-description">${product.description}</p>
+              <div class="product-footer">
+                <span class="product-price ${product.isFree ? 'free' : ''}">${product.price}</span>
+                <a href="${product.isFree ? 'login-signup.html' : '#'}" class="btn-product">
+                  ${product.isFree ? 'Enroll Now' : 'Learn More'}
+                </a>
+              </div>
+            </div>
+          `;
+          
+          grid.appendChild(card);
+        });
+      }
+
+      // Floating Code Background
+      const codeSnippets = [
+        'const nexgenix = () => {',
+        'function createSolution() {',
+        'import { Innovation } from "future"',
+        '<div className="digital">',
+        'async function buildDreams() {',
+        'export default Excellence;',
+        'return <Success />;',
+        'const vision = await design();',
+        'npm install creativity',
+        'git commit -m "launch"',
+        'SELECT * FROM solutions;',
+        'CREATE TABLE success;',
+        '{ transform: "ideas" }',
+        '.future { display: flex; }',
+        'onClick={() => innovate()}',
+        'useState(creativity);',
+        'useEffect(() => grow());',
+        'class Digital extends Tech {',
+        'interface Vision { }',
+        'type Success = Promise<Growth>;'
+      ];
+
+      function createFloatingCodeBackground() {
+        const container = document.getElementById('floatingCodeContainer');
+        
+        for (let i = 0; i < 15; i++) {
+          const codeLine = document.createElement('div');
+          codeLine.className = 'code-line';
+          
+          const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+          codeLine.textContent = randomSnippet;
+          
+          const yPosition = 5 + (i * 6);
+          const duration = 15 + Math.random() * 10;
+          const delay = Math.random() * 20;
+          
+          codeLine.style.top = `${yPosition}%`;
+          codeLine.style.animationDuration = `${duration}s`;
+          codeLine.style.animationDelay = `${delay}s`;
+          
+          container.appendChild(codeLine);
+        }
+      }
+
+      // Intersection Observer for scroll animations
+      function initScrollAnimations() {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.category-card, .product-card, .feature-item').forEach(card => {
+          observer.observe(card);
+        });
+      }
+
+      // Toggle Mobile Menu
+      function toggleMenu() {
+        document.querySelector('.nav-list').classList.toggle('active');
+        document.querySelector('.hamburger-menu').classList.toggle('open');
+      }
+
+      // Initialize on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        createFloatingCodeBackground();
+        renderProducts();
+        initScrollAnimations();
+      });
+    </script>
+  </body>
+</html>
