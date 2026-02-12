@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
+
   <style>
     /* =================== GLOBAL RESET & BASE =================== */
     * {
@@ -298,9 +298,51 @@
     .service-description {
       color: #9ca3af;
       line-height: 1.7;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       font-size: 0.95rem;
+    }
+
+    .description-preview {
       text-align: justify;
+    }
+
+    .description-full {
+      text-align: justify;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .description-full.expanded {
+      max-height: 500px;
+    }
+
+    .read-more-btn {
+      background: none;
+      border: none;
+      color: #39FF14;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat Alternates', sans-serif;
+      margin-bottom: 1rem;
+    }
+
+    .read-more-btn:hover {
+      color: #2ecc71;
+    }
+
+    .read-more-btn i {
+      transition: transform 0.3s ease;
+    }
+
+    .read-more-btn.expanded i {
+      transform: rotate(180deg);
     }
 
     .cta-button {
@@ -522,25 +564,49 @@
       <div class="services-grid">
         <div class="service-card">
           <h3 class="service-title">Essay Writing Help</h3>
-          <p class="service-description">
-            Our team of experienced professionals is here to assist you every step of the way. Whether you need help organizing your thoughts, strengthening your thesis statement, or enhancing the flow of your writing, we are dedicated to helping you achieve your academic goals. By working closely with you, we can provide guidance on structuring your essays effectively, crafting compelling arguments, and refining your writing style to ensure that your ideas shine through clearly and cohesively. Let us help you unlock your full potential and elevate your writing to the next level.
-          </p>
+          <div class="service-description">
+            <p class="description-preview">
+              Get expert assistance with organizing your thoughts, strengthening your thesis statement, and enhancing the flow of your writing.
+            </p>
+            <div class="description-full">
+              Our team of experienced professionals is here to assist you every step of the way. By working closely with you, we can provide guidance on structuring your essays effectively, crafting compelling arguments, and refining your writing style to ensure that your ideas shine through clearly and cohesively. Let us help you unlock your full potential and elevate your writing to the next level.
+            </div>
+          </div>
+          <button class="read-more-btn" onclick="toggleDescription(this)">
+            Read More <i class="fas fa-chevron-down"></i>
+          </button>
           <button class="cta-button">Select Service</button>
         </div>
 
         <div class="service-card">
           <h3 class="service-title">Thesis and Dissertation Support</h3>
-          <p class="service-description">
-            Our goal is to provide students with the support and guidance they need to excel in their academic pursuits. From brainstorming potential topics to diving deep into research, we are here every step of the way. Our dedicated team is committed to helping students organize their thoughts and ideas into well-structured and compelling papers. With our assistance, students can feel confident in their work and achieve the success they deserve.
-          </p>
+          <div class="service-description">
+            <p class="description-preview">
+              Comprehensive support from topic selection to final submission, helping you organize your research into well-structured academic papers.
+            </p>
+            <div class="description-full">
+              Our goal is to provide students with the support and guidance they need to excel in their academic pursuits. From brainstorming potential topics to diving deep into research, we are here every step of the way. Our dedicated team is committed to helping students organize their thoughts and ideas into well-structured and compelling papers. With our assistance, students can feel confident in their work and achieve the success they deserve.
+            </div>
+          </div>
+          <button class="read-more-btn" onclick="toggleDescription(this)">
+            Read More <i class="fas fa-chevron-down"></i>
+          </button>
           <button class="cta-button">Select Service</button>
         </div>
 
         <div class="service-card">
           <h3 class="service-title">Research Paper Assistance</h3>
-          <p class="service-description">
-            Our expertise goes beyond mere assistance; we strive to empower you with the tools and knowledge needed to craft a compelling and well-structured thesis. From refining your thesis statement to mapping out a comprehensive research methodology, we are here to support you every step of the way. Our focus on developing a strong literature review and ensuring a coherent overall structure will help you present your ideas with clarity and confidence. With our guidance, you can navigate the complexities of academic writing with ease and produce a thesis that stands out for its depth and coherence.
-          </p>
+          <div class="service-description">
+            <p class="description-preview">
+              Expert guidance in developing strong research methodologies, literature reviews, and coherent academic structures.
+            </p>
+            <div class="description-full">
+              Our expertise goes beyond mere assistance; we strive to empower you with the tools and knowledge needed to craft a compelling and well-structured thesis. From refining your thesis statement to mapping out a comprehensive research methodology, we are here to support you every step of the way. Our focus on developing a strong literature review and ensuring a coherent overall structure will help you present your ideas with clarity and confidence. With our guidance, you can navigate the complexities of academic writing with ease and produce a thesis that stands out for its depth and coherence.
+            </div>
+          </div>
+          <button class="read-more-btn" onclick="toggleDescription(this)">
+            Read More <i class="fas fa-chevron-down"></i>
+          </button>
           <button class="cta-button">Select Service</button>
         </div>
       </div>
@@ -558,41 +624,81 @@
       <div class="services-grid">
         <div class="service-card">
           <h3 class="service-title">Blog Post</h3>
-          <p class="service-description">
-            Our team of skilled writers is dedicated to creating engaging blog content that not only educates but also captivates readers. With a keen eye for detail and a passion for storytelling, we craft articles that are not only informative but also visually appealing. From attention-grabbing headlines to well-researched content, we ensure that each blog post is a blend of creativity and information. Let us help bring your ideas to life and engage your audience with our professional blog writing services.
-          </p>
+          <div class="service-description">
+            <p class="description-preview">
+              Engaging, well-researched blog content that educates and captivates your audience with compelling storytelling.
+            </p>
+            <div class="description-full">
+              Our team of skilled writers is dedicated to creating engaging blog content that not only educates but also captivates readers. With a keen eye for detail and a passion for storytelling, we craft articles that are not only informative but also visually appealing. From attention-grabbing headlines to well-researched content, we ensure that each blog post is a blend of creativity and information. Let us help bring your ideas to life and engage your audience with our professional blog writing services.
+            </div>
+          </div>
+          <button class="read-more-btn" onclick="toggleDescription(this)">
+            Read More <i class="fas fa-chevron-down"></i>
+          </button>
           <button class="cta-button">Select Service</button>
         </div>
 
         <div class="service-card">
           <h3 class="service-title">Business Proposal</h3>
-          <p class="service-description">
-            Our team of expert professionals is dedicated to guiding entrepreneurs through the process of creating detailed and effective business proposals. By utilizing a proven format, we aim to help our clients present their ideas in a clear and compelling manner, ultimately increasing their chances of success. With our support, entrepreneurs can feel confident in the quality and accuracy of their proposals, setting them on the path towards achieving their business goals.
-          </p>
+          <div class="service-description">
+            <p class="description-preview">
+              Professional business proposals that present your ideas clearly and compellingly to maximize your chances of success.
+            </p>
+            <div class="description-full">
+              Our team of expert professionals is dedicated to guiding entrepreneurs through the process of creating detailed and effective business proposals. By utilizing a proven format, we aim to help our clients present their ideas in a clear and compelling manner, ultimately increasing their chances of success. With our support, entrepreneurs can feel confident in the quality and accuracy of their proposals, setting them on the path towards achieving their business goals.
+            </div>
+          </div>
+          <button class="read-more-btn" onclick="toggleDescription(this)">
+            Read More <i class="fas fa-chevron-down"></i>
+          </button>
           <button class="cta-button">Select Service</button>
         </div>
 
         <div class="service-card">
           <h3 class="service-title">Business Report</h3>
-          <p class="service-description">
-            Our reports are designed to provide you with a deep understanding of market trends, consumer behavior, and industry insights. By leveraging our expertise and cutting-edge analytical tools, we ensure that you receive valuable information that can drive your business forward. Whether you are looking to expand into new markets, improve existing processes, or stay ahead of the competition, our reports offer the strategic guidance you need to succeed. Let us empower you with the knowledge and insights to unlock your full potential and achieve your business goals.
-          </p>
+          <div class="service-description">
+            <p class="description-preview">
+              In-depth market analysis and industry insights to drive strategic business decisions and competitive advantage.
+            </p>
+            <div class="description-full">
+              Our reports are designed to provide you with a deep understanding of market trends, consumer behavior, and industry insights. By leveraging our expertise and cutting-edge analytical tools, we ensure that you receive valuable information that can drive your business forward. Whether you are looking to expand into new markets, improve existing processes, or stay ahead of the competition, our reports offer the strategic guidance you need to succeed. Let us empower you with the knowledge and insights to unlock your full potential and achieve your business goals.
+            </div>
+          </div>
+          <button class="read-more-btn" onclick="toggleDescription(this)">
+            Read More <i class="fas fa-chevron-down"></i>
+          </button>
           <button class="cta-button">Select Service</button>
         </div>
 
         <div class="service-card">
           <h3 class="service-title">Copy Editing</h3>
-          <p class="service-description">
-            We provide thorough editing services aimed at enhancing the clarity, coherence, and conciseness of our clients' written materials. Our editing services are designed to elevate the quality of your written work by improving clarity, ensuring coherence throughout the text, and streamlining the content to be concise yet impactful. Whether you need help with a research paper, a business proposal, a creative writing piece, or any other written material, our team is dedicated to enhancing your message and ensuring your ideas shine through effectively. Let us help you polish your writing to make it the best it can be.
-          </p>
+          <div class="service-description">
+            <p class="description-preview">
+              Professional editing to enhance clarity, coherence, and impact of your written materials across all formats.
+            </p>
+            <div class="description-full">
+              We provide thorough editing services aimed at enhancing the clarity, coherence, and conciseness of our clients' written materials. Our editing services are designed to elevate the quality of your written work by improving clarity, ensuring coherence throughout the text, and streamlining the content to be concise yet impactful. Whether you need help with a research paper, a business proposal, a creative writing piece, or any other written material, our team is dedicated to enhancing your message and ensuring your ideas shine through effectively. Let us help you polish your writing to make it the best it can be.
+            </div>
+          </div>
+          <button class="read-more-btn" onclick="toggleDescription(this)">
+            Read More <i class="fas fa-chevron-down"></i>
+          </button>
           <button class="cta-button">Select Service</button>
         </div>
 
         <div class="service-card">
           <h3 class="service-title">Resume and Cover Letter Building</h3>
-          <p class="service-description">
-            Our team understands the importance of standing out in a competitive job market. By tailoring each resume and cover letter to highlight your unique skills and experiences, we aim to help you make a lasting impression on potential employers. Whether you're seeking an internship or applying for your dream job, our personalized approach will showcase your qualifications and set you apart from the crowd. Let us help you take the next step towards achieving your career goals.
-          </p>
+          <div class="service-description">
+            <p class="description-preview">
+              Personalized resumes and cover letters tailored to highlight your unique skills and stand out to employers.
+            </p>
+            <div class="description-full">
+              Our team understands the importance of standing out in a competitive job market. By tailoring each resume and cover letter to highlight your unique skills and experiences, we aim to help you make a lasting impression on potential employers. Whether you're seeking an internship or applying for your dream job, our personalized approach will showcase your qualifications and set you apart from the crowd. Let us help you take the next step towards achieving your career goals.
+            </div>
+          </div>
+          <button class="read-more-btn" onclick="toggleDescription(this)">
+            Read More <i class="fas fa-chevron-down"></i>
+          </button>
           <button class="cta-button">Select Service</button>
         </div>
       </div>
@@ -630,23 +736,39 @@
 
     function createFloatingCodeBackground() {
       const container = document.getElementById('floatingCodeContainer');
-      
+
       for (let i = 0; i < 15; i++) {
         const codeLine = document.createElement('div');
         codeLine.className = 'code-line';
-        
+
         const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
         codeLine.textContent = randomSnippet;
-        
+
         const yPosition = 5 + (i * 6);
         const duration = 15 + Math.random() * 10;
         const delay = Math.random() * 20;
-        
+
         codeLine.style.top = `${yPosition}%`;
         codeLine.style.animationDuration = `${duration}s`;
         codeLine.style.animationDelay = `${delay}s`;
-        
+
         container.appendChild(codeLine);
+      }
+    }
+
+    // Toggle Description
+    function toggleDescription(button) {
+      const card = button.closest('.service-card');
+      const fullDescription = card.querySelector('.description-full');
+      const icon = button.querySelector('i');
+      
+      fullDescription.classList.toggle('expanded');
+      button.classList.toggle('expanded');
+      
+      if (fullDescription.classList.contains('expanded')) {
+        button.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
+      } else {
+        button.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
       }
     }
 
