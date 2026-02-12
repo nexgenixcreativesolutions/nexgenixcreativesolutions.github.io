@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
+
   <style>
     /* =================== GLOBAL RESET & BASE =================== */
     * {
@@ -218,13 +218,55 @@
     }
 
     .hero-subtitle {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: #9ca3af;
       max-width: 900px;
       margin: 0 auto 2.5rem;
       line-height: 1.7;
       opacity: 0;
       animation: fadeInUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero-subtitle-preview {
+      display: block;
+    }
+
+    .hero-subtitle-full {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .hero-subtitle-full.expanded {
+      max-height: 500px;
+    }
+
+    .hero-read-more {
+      background: none;
+      border: none;
+      color: #39FF14;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.5rem 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat Alternates', sans-serif;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-read-more:hover {
+      color: #2ecc71;
+    }
+
+    .hero-read-more i {
+      transition: transform 0.3s ease;
+    }
+
+    .hero-read-more.expanded i {
+      transform: rotate(180deg);
     }
 
     .hero-image {
@@ -312,8 +354,50 @@
     .service-description {
       color: #9ca3af;
       line-height: 1.7;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       font-size: 0.9rem;
+    }
+
+    .description-preview {
+      display: block;
+    }
+
+    .description-full {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .description-full.expanded {
+      max-height: 500px;
+    }
+
+    .read-more-btn {
+      background: none;
+      border: none;
+      color: #39FF14;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat Alternates', sans-serif;
+      margin-bottom: 1rem;
+    }
+
+    .read-more-btn:hover {
+      color: #2ecc71;
+    }
+
+    .read-more-btn i {
+      transition: transform 0.3s ease;
+    }
+
+    .read-more-btn.expanded i {
+      transform: rotate(180deg);
     }
 
     .cta-button {
@@ -546,9 +630,17 @@
       <h1 class="hero-title">
         Digital Design & <span class="gradient-text">Visual Communication</span>
       </h1>
-      <p class="hero-subtitle">
-        Why Is It Important to Have Experts Design Your Website? Running a business comes with numerous responsibilities, and adding website design and management to your workload can be overwhelming. That's where Nex Genix Creative Solutions comes in—specializing in creating and managing professional websites, allowing you to focus on your core business operations. A well-designed website is just as essential as maintaining a fully stocked store. It serves as a key platform for clients and customers to assess your brand's credibility, making a strong online presence crucial for business success.
-      </p>
+      <div class="hero-subtitle">
+        <p class="hero-subtitle-preview">
+          Professional website design is essential for business success. Let Nex Genix Creative Solutions handle your web presence while you focus on your core business operations.
+        </p>
+        <div class="hero-subtitle-full">
+          Why Is It Important to Have Experts Design Your Website? Running a business comes with numerous responsibilities, and adding website design and management to your workload can be overwhelming. That's where Nex Genix Creative Solutions comes in—specializing in creating and managing professional websites, allowing you to focus on your core business operations. A well-designed website is just as essential as maintaining a fully stocked store. It serves as a key platform for clients and customers to assess your brand's credibility, making a strong online presence crucial for business success.
+        </div>
+      </div>
+      <button class="hero-read-more" onclick="toggleHeroDescription(this)">
+        Read More <i class="fas fa-chevron-down"></i>
+      </button>
       <img src="assets/images/33.png" alt="Digital Design Services" class="hero-image">
     </div>
   </section>
@@ -561,9 +653,17 @@
           <img src="assets/images/app design.png" class="service-image" alt="App Design">
           <div class="service-content">
             <h3 class="service-title">App Design</h3>
-            <p class="service-description">
-              Our mobile app design services focus on crafting user-friendly and captivating interfaces for applications. We strive to boost user engagement, establish a compelling brand identity, optimize app functionality, and drive revenue growth.
-            </p>
+            <div class="service-description">
+              <p class="description-preview">
+                User-friendly mobile app interfaces designed to boost engagement and drive revenue growth.
+              </p>
+              <div class="description-full">
+                Our mobile app design services focus on crafting user-friendly and captivating interfaces for applications. We strive to boost user engagement, establish a compelling brand identity, optimize app functionality, and drive revenue growth.
+              </div>
+            </div>
+            <button class="read-more-btn" onclick="toggleDescription(this)">
+              Read More <i class="fas fa-chevron-down"></i>
+            </button>
             <button class="cta-button">Select Service</button>
           </div>
         </div>
@@ -572,9 +672,17 @@
           <img src="assets/images/web design.png" class="service-image" alt="Web Design">
           <div class="service-content">
             <h3 class="service-title">Web Design</h3>
-            <p class="service-description">
-              Our web design service entails the creation of visual elements and layout for a website, while coding is the process of transforming these designs into a functional website using programming languages such as HTML, CSS, and JavaScript.
-            </p>
+            <div class="service-description">
+              <p class="description-preview">
+                Beautiful, functional website designs transformed into reality using modern web technologies.
+              </p>
+              <div class="description-full">
+                Our web design service entails the creation of visual elements and layout for a website, while coding is the process of transforming these designs into a functional website using programming languages such as HTML, CSS, and JavaScript.
+              </div>
+            </div>
+            <button class="read-more-btn" onclick="toggleDescription(this)">
+              Read More <i class="fas fa-chevron-down"></i>
+            </button>
             <button class="cta-button">Select Service</button>
           </div>
         </div>
@@ -583,9 +691,17 @@
           <img src="assets/images/web development.png" class="service-image" alt="Web Development">
           <div class="service-content">
             <h3 class="service-title">Web Development</h3>
-            <p class="service-description">
-              Our web development services cover a broad spectrum, including websites, cybersecurity solutions, UX/UI design, eCommerce solutions, website architectures, QA testing, maintenance, consulting, and custom CMS development.
-            </p>
+            <div class="service-description">
+              <p class="description-preview">
+                Comprehensive web solutions including eCommerce, cybersecurity, and custom CMS development.
+              </p>
+              <div class="description-full">
+                Our web development services cover a broad spectrum, including websites, cybersecurity solutions, UX/UI design, eCommerce solutions, website architectures, QA testing, maintenance, consulting, and custom CMS development.
+              </div>
+            </div>
+            <button class="read-more-btn" onclick="toggleDescription(this)">
+              Read More <i class="fas fa-chevron-down"></i>
+            </button>
             <button class="cta-button">Select Service</button>
           </div>
         </div>
@@ -594,9 +710,17 @@
           <img src="assets/images/UIUX design.png" class="service-image" alt="UI/UX Design">
           <div class="service-content">
             <h3 class="service-title">UI/UX Design</h3>
-            <p class="service-description">
-              UX design services prioritize crafting a seamless and meaningful user experience. UI design focuses on the visual and interactive aspects for aesthetically pleasing interfaces.
-            </p>
+            <div class="service-description">
+              <p class="description-preview">
+                Seamless user experiences with aesthetically pleasing, intuitive interfaces.
+              </p>
+              <div class="description-full">
+                UX design services prioritize crafting a seamless and meaningful user experience. UI design focuses on the visual and interactive aspects for aesthetically pleasing interfaces.
+              </div>
+            </div>
+            <button class="read-more-btn" onclick="toggleDescription(this)">
+              Read More <i class="fas fa-chevron-down"></i>
+            </button>
             <button class="cta-button">Select Service</button>
           </div>
         </div>
@@ -605,9 +729,17 @@
           <img src="assets/images/logo-design.gif" class="service-image" alt="Logo Design">
           <div class="service-content">
             <h3 class="service-title">Logo Design</h3>
-            <p class="service-description">
-              Our team creates unique and memorable logos that truly represent your brand. Each element is carefully chosen to convey your brand identity.
-            </p>
+            <div class="service-description">
+              <p class="description-preview">
+                Unique, memorable logos that truly represent your brand identity.
+              </p>
+              <div class="description-full">
+                Our team creates unique and memorable logos that truly represent your brand. Each element is carefully chosen to convey your brand identity.
+              </div>
+            </div>
+            <button class="read-more-btn" onclick="toggleDescription(this)">
+              Read More <i class="fas fa-chevron-down"></i>
+            </button>
             <button class="cta-button">Select Service</button>
           </div>
         </div>
@@ -616,9 +748,17 @@
           <img src="assets/images/video-ads.gif" class="service-image" alt="Video Ads">
           <div class="service-content">
             <h3 class="service-title">Video Ads</h3>
-            <p class="service-description">
-              High-quality videos to captivate your audience and communicate your message effectively, from concept development to final production.
-            </p>
+            <div class="service-description">
+              <p class="description-preview">
+                High-quality video production from concept to final delivery that captivates your audience.
+              </p>
+              <div class="description-full">
+                High-quality videos to captivate your audience and communicate your message effectively, from concept development to final production.
+              </div>
+            </div>
+            <button class="read-more-btn" onclick="toggleDescription(this)">
+              Read More <i class="fas fa-chevron-down"></i>
+            </button>
             <button class="cta-button">Select Service</button>
           </div>
         </div>
@@ -668,23 +808,54 @@
 
     function createFloatingCodeBackground() {
       const container = document.getElementById('floatingCodeContainer');
-      
+
       for (let i = 0; i < 15; i++) {
         const codeLine = document.createElement('div');
         codeLine.className = 'code-line';
-        
+
         const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
         codeLine.textContent = randomSnippet;
-        
+
         const yPosition = 5 + (i * 6);
         const duration = 15 + Math.random() * 10;
         const delay = Math.random() * 20;
-        
+
         codeLine.style.top = `${yPosition}%`;
         codeLine.style.animationDuration = `${duration}s`;
         codeLine.style.animationDelay = `${delay}s`;
-        
+
         container.appendChild(codeLine);
+      }
+    }
+
+    // Toggle Hero Description
+    function toggleHeroDescription(button) {
+      const fullDescription = document.querySelector('.hero-subtitle-full');
+      const icon = button.querySelector('i');
+      
+      fullDescription.classList.toggle('expanded');
+      button.classList.toggle('expanded');
+      
+      if (fullDescription.classList.contains('expanded')) {
+        button.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
+      } else {
+        button.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
+      }
+    }
+
+    // Toggle Service Description
+    function toggleDescription(button) {
+      const card = button.closest('.service-content');
+      const fullDescription = card.querySelector('.description-full');
+      const icon = button.querySelector('i');
+      
+      fullDescription.classList.toggle('expanded');
+      button.classList.toggle('expanded');
+      
+      if (fullDescription.classList.contains('expanded')) {
+        button.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
+      } else {
+        button.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
       }
     }
 
@@ -723,7 +894,6 @@
 
     // Logout Handler
     function handleLogout() {
-      // Add your logout logic here
       alert('Logging out...');
       window.location.href = 'https://nexgenixcreativesolutions.github.io/login-signup';
     }
