@@ -1,9 +1,304 @@
-<!-- Careers Section (Placeholder for future separate page) -->
-<section class="main-section" id="careers">
-    <article>
-        <h2>Careers</h2>
-        <p style="text-align: center; color: #9ca3af; max-width: 600px; margin: 2rem auto;">
-            We're always looking for talented individuals to join our team. Check back soon for exciting opportunities!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Careers | Nex Genix Creative Solutions</title>
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Floating Code Background */
+    .floating-code-container {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .code-line {
+      position: absolute;
+      white-space: nowrap;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: rgba(57, 255, 20, 0.4);
+      text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+      animation: floatCode linear infinite;
+      opacity: 0;
+    }
+    @keyframes floatCode {
+      0% {
+        transform: translateX(100vw);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+    }
+    @media (min-width: 768px) {
+      .code-line {
+        font-size: 16px;
+      }
+    }
+    
+    /* Careers Section Styling */
+    .careers-section {
+      position: relative;
+      min-height: calc(100vh - 150px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+    
+    .careers-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .careers-emoji {
+      font-size: 5rem;
+      margin-bottom: 2rem;
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+    
+    .careers-title {
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 3rem;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 1.5rem;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .careers-message {
+      font-size: 1.25rem;
+      color: #9ca3af;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    
+    .careers-submessage {
+      font-size: 1.1rem;
+      color: #6b7280;
+      font-style: italic;
+    }
+    
+    .contact-link {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 1rem 2.5rem;
+      background: #39FF14;
+      color: #000;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat Alternates', sans-serif;
+      box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .contact-link:hover {
+      background: #2ee80f;
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(57, 255, 20, 0.8),
+                  0 5px 20px rgba(57, 255, 20, 0.4);
+    }
+    
+    @media (max-width: 768px) {
+      .careers-emoji {
+        font-size: 4rem;
+      }
+      
+      .careers-title {
+        font-size: 2rem;
+      }
+      
+      .careers-message {
+        font-size: 1.1rem;
+      }
+      
+      .careers-submessage {
+        font-size: 1rem;
+      }
+      
+      .careers-section {
+        padding: 4rem 1.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .careers-emoji {
+        font-size: 3rem;
+      }
+      
+      .careers-title {
+        font-size: 1.75rem;
+      }
+      
+      .careers-message {
+        font-size: 1rem;
+      }
+      
+      .careers-submessage {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav id="navbar">
+    <div class="logo">
+        <img src="assets/images/logo.png" alt="logo" class="logo">
+        <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
+        <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
+    </div>
+    <!-- Hamburger Menu Icon -->
+    <div class="hamburger-menu" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+    <ul class="nav-list">
+        <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
+        <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
+        <li><a href="https://nexgenixcreativesolutions.github.io#services">Services</a></li>
+        <li><a href="https://nexgenixcreativesolutions.github.io#reviews">Reviews</a></li>
+        <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
+        <li><a href="https://nexgenixcreativesolutions.github.io#contact">Contact</a></li>
+    </ul>
+    <div class="auth-buttons" id="auth-buttons">
+        <button onclick="handleLogout()" class="logout-btn">Logout</button>
+        <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
+    </div>
+</nav>
+
+<!-- Careers Section -->
+<section class="careers-section">
+    <div class="careers-content">
+        <div class="careers-emoji">😅</div>
+        <h1 class="careers-title">
+            <span class="gradient-text">Careers</span>
+        </h1>
+        <p class="careers-message">
+            We appreciate your interest in joining our team! Unfortunately, we don't have any open positions at the moment.
         </p>
-    </article>
+        <p class="careers-submessage">
+            But hey, keep checking back! Great opportunities might pop up when you least expect them. 
+        </p>
+        <a href="https://nexgenixcreativesolutions.github.io#contact" class="contact-link">Stay in Touch</a>
+    </div>
 </section>
+
+<!-- Footer Section -->
+<footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
+
+<!-- External JavaScript -->
+<script src="script.js"></script>
+
+<!-- Toggle Menu Script -->
+<script>
+    function toggleMenu() {
+        document.querySelector('.nav-list').classList.toggle('active');
+        document.querySelector('.hamburger-menu').classList.toggle('open');
+    }
+</script>
+
+<!-- Floating Code Background Script -->
+<script>
+  // Floating Code Background
+  const codeSnippets = [
+    'const nexgenix = () => {',
+    'function createSolution() {',
+    'import { Innovation } from "future"',
+    '<div className="digital">',
+    'async function buildDreams() {',
+    'export default Excellence;',
+    'return <Success />;',
+    'const vision = await design();',
+    'npm install creativity',
+    'git commit -m "launch"',
+    'SELECT * FROM solutions;',
+    'CREATE TABLE success;',
+    '{ transform: "ideas" }',
+    '.future { display: flex; }',
+    'onClick={() => innovate()}',
+    'useState(creativity);',
+    'useEffect(() => grow());',
+    'class Digital extends Tech {',
+    'interface Vision { }',
+    'type Success = Promise<Growth>;',
+  ];
+  
+  function createFloatingCodeBackground() {
+    const container = document.createElement('div');
+    container.className = 'floating-code-container';
+
+    // Create 15 floating code lines
+    for (let i = 0; i < 15; i++) {
+      const codeLine = document.createElement('div');
+      codeLine.className = 'code-line';
+
+      const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+      codeLine.textContent = randomSnippet;
+
+      const yPosition = 5 + (i * 6);
+      const duration = 15 + Math.random() * 10;
+      const delay = Math.random() * 20;
+
+      codeLine.style.top = `${yPosition}%`;
+      codeLine.style.animationDuration = `${duration}s`;
+      codeLine.style.animationDelay = `${delay}s`;
+
+      container.appendChild(codeLine);
+    }
+
+    // Insert at the beginning of body so it's behind everything
+    document.body.insertBefore(container, document.body.firstChild);
+  }
+  
+  // Initialize when DOM is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', createFloatingCodeBackground);
+  } else {
+    createFloatingCodeBackground();
+  }
+</script>
+
+</body>
+</html>
