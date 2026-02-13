@@ -531,16 +531,16 @@
 
     <ul class="nav-list">
       <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
-      <li><a href="https://nexgenixcreativesolutions.github.io/#about_us">About Us</a></li>
-      <li><a href="https://nexgenixcreativesolutions.github.io/#services">Services</a></li>
-      <li><a href="https://nexgenixcreativesolutions.github.io/#reviews">Reviews</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io#services">Services</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io#reviews">Reviews</a></li>
       <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
-      <li><a href="https://nexgenixcreativesolutions.github.io/#contact">Contact</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io#contact">Contact</a></li>
     </ul>
 
     <div class="auth-buttons" id="auth-buttons">
       <button onclick="handleLogout()" class="logout-btn">Logout</button>
-      <a href="https://nexgenixcreativesolutions.github.io/dashboard.html" class="dashboard-btn">Dashboard</a>
+      <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
     </div>
   </nav>
 
@@ -706,7 +706,7 @@
   </section>
 
   <!-- Footer -->
-  <footer>© 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
+  <footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
 
   <!-- JavaScript -->
   <script>
@@ -761,10 +761,10 @@
       const card = button.closest('.service-card');
       const fullDescription = card.querySelector('.description-full');
       const icon = button.querySelector('i');
-      
+
       fullDescription.classList.toggle('expanded');
       button.classList.toggle('expanded');
-      
+
       if (fullDescription.classList.contains('expanded')) {
         button.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
       } else {
