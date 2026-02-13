@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
+
   <style>
     /* =================== GLOBAL RESET & BASE =================== */
     * {
@@ -506,10 +506,10 @@
     <ul class="nav-list">
       <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
       <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
-      <li><a href="https://nexgenixcreativesolutions.github.io/#services">Services</a></li>
-      <li><a href="https://nexgenixcreativesolutions.github.io/#reviews">Reviews</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io#services">Services</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io#reviews">Reviews</a></li>
       <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
-      <li><a href="https://nexgenixcreativesolutions.github.io/#contact">Contact</a></li>
+      <li><a href="https://nexgenixcreativesolutions.github.io#contact">Contact</a></li>
     </ul>
 
     <div class="auth-buttons" id="auth-buttons">
@@ -554,7 +554,7 @@
 
       <div class="image-text-wrapper">
         <img src="assets/images/home.png" alt="About us" class="wrapped-image">
-        
+
         <div class="points-container">
           <p class="content-text">
             At Nex Genix Creative Solutions, we don't just offer services—we create tailored experiences that bridge creativity, functionality, and growth. Here's what sets us apart:
@@ -607,7 +607,7 @@
   </section>
 
   <!-- Footer -->
-  <footer>&copy; <span>2026 Nex Genix Creative Solutions</span>. All rights reserved.</footer>
+  <footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
 
   <!-- Typeform Script -->
   <script src="https://embed.typeform.com/next/embed.js"></script>
@@ -640,22 +640,22 @@
 
     function createFloatingCodeBackground() {
       const container = document.getElementById('floatingCodeContainer');
-      
+
       for (let i = 0; i < 15; i++) {
         const codeLine = document.createElement('div');
         codeLine.className = 'code-line';
-        
+
         const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
         codeLine.textContent = randomSnippet;
-        
+
         const yPosition = 5 + (i * 6);
         const duration = 15 + Math.random() * 10;
         const delay = Math.random() * 20;
-        
+
         codeLine.style.top = `${yPosition}%`;
         codeLine.style.animationDuration = `${duration}s`;
         codeLine.style.animationDelay = `${delay}s`;
-        
+
         container.appendChild(codeLine);
       }
     }
