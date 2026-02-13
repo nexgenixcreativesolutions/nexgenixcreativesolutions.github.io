@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   </head>
 <style>
 /* Floating Code Background */
@@ -274,534 +274,66 @@
     margin-bottom: 1.25rem;
 }
 .star {
-    width: 1.15rem;
-    height: 1.15rem;
-    color: #f5d400;
-    fill: #f5d400;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #39FF14;
 }
 /* Content */
 .testimonial-content {
     color: #d1d5db;
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem;
-    text-align: justify;
-    flex: 1;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+    font-size: 1rem;
 }
-/* Author - Perfect alignment */
+/* Author Section */
 .testimonial-author {
     display: flex;
     align-items: center;
-    gap: 0.875rem;
-    margin-top: auto;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #1f2937;
 }
 .author-avatar {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
-    background: linear-gradient(135deg, #ff0000, #ffff00, #39FF14);
+    background: linear-gradient(135deg, #39FF14 0%, #2ee80f 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
 }
 .author-initial {
-    color: black;
-    font-weight: bold;
-    font-size: 1.1rem;
-    line-height: 1;
+    color: #000;
+    font-weight: 700;
+    font-size: 1.25rem;
 }
 .author-info {
     flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.25rem;
 }
 .author-name {
     color: white;
-    font-weight: 600;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-    font-size: 0.95rem;
-    text-align: left;
-    display: block;
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 0 0 0.25rem 0;
 }
 .author-role {
-    color: #39FF14;
-    font-size: 0.8rem;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-    text-align: left;
-    display: block;
-}
-/* Service Card */
-.service-card {
-    position: relative;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.3s ease;
-}
-.service-card.visible {
-    animation: fadeInUp 0.6s ease forwards;
-}
-.service-card-inner {
-    position: relative;
-    height: 100%;
-    padding: 2rem;
-    border-radius: 1rem;
-    border: 1px solid #1f2937;
-    background: linear-gradient(to bottom, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.5));
-    backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-}
-/* Color-specific hover effects */
-.service-card[data-color="red"]:hover .service-card-inner {
-    border-color: #ff0000;
-    box-shadow: 0 10px 40px rgba(255, 0, 0, 0.2);
-    transform: translateY(-5px);
-}
-.service-card[data-color="yellow"]:hover .service-card-inner {
-    border-color: #ffff00;
-    box-shadow: 0 10px 40px rgba(255, 255, 0, 0.2);
-    transform: translateY(-5px);
-}
-.service-card[data-color="green"]:hover .service-card-inner {
-    border-color: #39FF14;
-    box-shadow: 0 10px 40px rgba(57, 255, 20, 0.2);
-    transform: translateY(-5px);
-}
-/* Service Icon */
-.service-icon-wrapper {
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    transition: all 0.3s ease;
-}
-.service-card[data-color="red"] .service-icon-wrapper {
-    background: rgba(255, 0, 0, 0.1);
-}
-.service-card[data-color="yellow"] .service-icon-wrapper {
-    background: rgba(255, 255, 0, 0.1);
-}
-.service-card[data-color="green"] .service-icon-wrapper {
-    background: rgba(57, 255, 20, 0.1);
-}
-.service-icon {
-    width: 1.75rem;
-    height: 1.75rem;
-}
-.service-card[data-color="red"] .service-icon {
-    color: #ff0000;
-}
-.service-card[data-color="yellow"] .service-icon {
-    color: #ffff00;
-}
-.service-card[data-color="green"] .service-icon {
-    color: #39FF14;
-}
-.service-card:hover .service-icon-wrapper {
-    transform: scale(1.1);
-}
-/* Service Title */
-.service-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: white;
-    margin: 0 0 1rem 0;
-    line-height: 1.3;
-}
-/* Service Features - NO BULLETS */
-.service-features {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 1.5rem 0;
-    flex: 1;
-}
-.service-features li {
-    color: #d1d5db;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    padding-left: 0;
-    position: relative;
-    margin-bottom: 0.5rem;
-}
-/* Remove the bullet points */
-.service-features li:before {
-    display: none;
-}
-/* Service Button */
-.service-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    margin-top: auto;
-}
-.service-card[data-color="red"] .service-btn {
-    color: #ff0000;
-}
-.service-card[data-color="yellow"] .service-btn {
-    color: #ffff00;
-}
-.service-card[data-color="green"] .service-btn {
-    color: #39FF14;
-}
-.service-btn:hover {
-    transform: translateX(5px);
-}
-.arrow-icon {
-    width: 1rem;
-    height: 1rem;
-    transition: transform 0.3s ease;
-}
-.service-btn:hover .arrow-icon {
-    transform: translateX(3px);
-}
-
-/* Contact Section Styles */
-#contact {
-    padding: 6rem 1rem;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-#contact h2 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: white;
-    text-align: center;
-    margin-bottom: 1rem;
-    font-family: 'Montserrat Alternates', sans-serif;
-}
-
-.contact-subtitle {
-    text-align: center;
     color: #9ca3af;
-    font-size: 1.1rem;
-    margin-bottom: 3rem;
-}
-
-/* Contact Form */
-.contact-form {
-    background: linear-gradient(to bottom, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.5));
-    backdrop-filter: blur(8px);
-    border: 1px solid #1f2937;
-    border-radius: 1rem;
-    padding: 2.5rem;
-    margin-bottom: 3rem;
-    transition: border-color 0.3s ease;
-}
-
-.contact-form:hover {
-    border-color: #39FF14;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    color: white;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 0.875rem 1rem;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid #374151;
-    border-radius: 0.5rem;
-    color: white;
-    font-size: 0.95rem;
-    font-family: 'Montserrat Alternates', sans-serif;
-    transition: all 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: #39FF14;
-    box-shadow: 0 0 0 3px rgba(57, 255, 20, 0.1);
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: #6b7280;
-}
-
-.form-group select {
-    cursor: pointer;
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 120px;
-}
-
-/* Submit Button */
-.btn-submit {
-    width: 100%;
-    padding: 1rem;
-    background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
-    border: none;
-    border-radius: 0.5rem;
-    color: black;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Montserrat Alternates', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(57, 255, 20, 0.3);
-}
-
-.btn-submit:active {
-    transform: translateY(0);
-}
-
-/* Contact Divider */
-.contact-divider {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 3rem 0 2rem 0;
-}
-
-.contact-divider::before,
-.contact-divider::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #374151;
-}
-
-.contact-divider span {
-    color: #9ca3af;
-    padding: 0 1rem;
     font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: 1px;
+    margin: 0;
 }
-
-/* Responsive Design - Tablet */
+/* Responsive */
 @media (min-width: 768px) {
-    .testimonials-section,
-    .services-section {
-        padding: 7rem 2rem;
-    }
-    .testimonials-title,
-    .services-title {
-        font-size: 3.25rem;
-    }
-    .testimonials-subtitle,
-    .services-subtitle {
-        font-size: 1.125rem;
-    }
-    .testimonials-grid,
-    .services-grid {
+    .testimonials-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-        padding: 0;
-    }
-    .testimonial-card-inner {
-        padding: 2rem;
-    }
-    .testimonial-content {
-        font-size: 0.95rem;
-    }
-    .author-avatar {
-        width: 3rem;
-        height: 3rem;
-    }
-    .author-initial {
-        font-size: 1.125rem;
-    }
-    .author-name {
-        font-size: 1rem;
-    }
-    .author-role {
-        font-size: 0.875rem;
-    }
-    .quote-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-    }
-    .star {
-        width: 1.25rem;
-        height: 1.25rem;
-    }
-    .service-title {
-        font-size: 1.375rem;
-    }
-    .service-features li {
-        font-size: 0.95rem;
     }
 }
-/* Responsive Design - Desktop */
 @media (min-width: 1024px) {
-    .testimonials-section,
-    .services-section {
-        padding: 8rem 2rem;
-    }
-    .testimonials-title,
-    .services-title {
-        font-size: 3.75rem;
-    }
-    .testimonials-grid,
-    .services-grid {
+    .testimonials-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-    }
-    .testimonial-content {
-        font-size: 1rem;
-    }
-    .service-title {
-        font-size: 1.25rem;
-    }
-    .service-features li {
-        font-size: 1rem;
     }
 }
-/* Extra small screens - Mobile optimization */
-@media (max-width: 480px) {
-    .testimonials-section,
-    .services-section {
-        padding: 4rem 0.75rem;
-    }
-    .testimonials-title,
-    .services-title {
-        font-size: 2rem;
-    }
-    .testimonials-subtitle,
-    .services-subtitle {
-        font-size: 0.9rem;
-    }
-    .testimonial-card-inner {
-        padding: 1.5rem;
-    }
-    .testimonial-content {
-        font-size: 0.85rem;
-        margin-bottom: 1.25rem;
-    }
-    .author-avatar {
-        width: 2.5rem;
-        height: 2.5rem;
-    }
-    .author-initial {
-        font-size: 1rem;
-    }
-    .author-name {
-        font-size: 0.9rem;
-    }
-    .author-role {
-        font-size: 0.75rem;
-    }
-    .quote-icon {
-        width: 1.75rem;
-        height: 1.75rem;
-        top: 1.25rem;
-        right: 1.25rem;
-    }
-    .star {
-        width: 1rem;
-        height: 1rem;
-    }
-    .service-card-inner {
-        padding: 1.5rem;
-    }
-    .service-icon-wrapper {
-        width: 3rem;
-        height: 3rem;
-    }
-    .service-icon {
-        width: 1.5rem;
-        height: 1.5rem;
-    }
-    .service-title {
-        font-size: 1.1rem;
-    }
-    .service-features li {
-        font-size: 0.85rem;
-    }
-    
-    /* Contact Form Mobile */
-    #contact {
-        padding: 4rem 1rem;
-    }
-    
-    #contact h2 {
-        font-size: 2rem;
-    }
-    
-    .contact-form {
-        padding: 1.5rem;
-    }
-    
-    .form-group label {
-        font-size: 0.875rem;
-    }
-    
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        font-size: 0.875rem;
-        padding: 0.75rem;
-    }
-    
-    .btn-submit {
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 768px) {
-    #contact {
-        padding: 4rem 1rem;
-    }
-    
-    #contact h2 {
-        font-size: 2rem;
-    }
-    
-    .contact-form {
-        padding: 1.5rem;
-    }
-    
-    .form-group label {
-        font-size: 0.875rem;
-    }
-    
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        font-size: 0.875rem;
-        padding: 0.75rem;
-    }
-}
-
-/* Animations */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -814,235 +346,234 @@
 }
 </style>
   <body>
-<!-- Navigation Bar -->
-<nav id="navbar">
+<!-- Header / Navbar -->
+<header>
+  <nav id="navbar">
     <div class="logo">
-        <img src="assets/images/logo.png" alt="logo" class="logo">
-        <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
-        <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
+      <img src="assets/images/nexgenixtrans.png" alt="Logo" />
+      <a href="#home" class="full-title">Nex Genix Creative Solutions</a>
+      <a href="#home" class="short-title">Nex Genix</a>
     </div>
-        <!-- Hamburger Menu Icon -->
-        <div class="hamburger-menu" onclick="toggleMenu()">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
     <ul class="nav-list">
-        <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#reviews">Reviews</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
-        <li><a href="#contact">Contact</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#about-us">About Us</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact-us">Contact Us</a></li>
+      <li><a href="login-signup.html">Login</a></li>
     </ul>
-<div class="auth-buttons" id="auth-buttons">
-    <button onclick="handleLogout()" class="logout-btn">Logout</button>
-    <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
-</div>
-</nav>
-
-<!-- Welcome Section (Desktop) -->
-<section id="welcome-section">
-    <main id="main-doc">
-    <img src="assets/images/banner.png" alt="banner" class="banner">
-    
-<h1 class="slogan">Your Vision, Beautifully Engineered.</h1>
-
-        <p>App Design | Web Design | Web Development | UI/UX Design</p>
-        <!-- ONLY Get Started button for DESKTOP view -->
-        <div class="hero-buttons">
-            <a href="#contact" class="btn-get-started">Get Started</a>
-        </div>
-    </main>
-</section>
-
-<!-- Welcome Section (Mobile) -->
-<section id="welcome-section-mobile">
-    
-    <img src="assets/images/banner-mobile.png" alt="banner" class="responsive-banner">
-<h2 class="responsive-slogan">Your Vision, Beautifully Engineered.</h2>
-    <h5 class="responsive-description">App Design | Web Design | Web Development | UI/UX Design</h5>
-    <!-- ONLY Get Started button for MOBILE view -->
-    <div class="hero-buttons-mobile">
-        <a href="#contact" class="btn-get-started">Get Started</a>
+    <div class="hamburger-menu" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
+  </nav>
+</header>
+
+<!-- Home Section -->
+<section id="home">
+  <div class="home-content">
+    <h1 id="tagline">
+      Empowering Your Business Through <span>Digital Solutions</span>
+    </h1>
+    <p id="description">
+      From cutting-edge web design to insightful business content, we help startups and businesses grow with tailored digital services that drive results.
+    </p>
+    <div class="cta-buttons">
+      <a href="product-landing.html" class="btn btn-primary">Get Started</a>
+      <a href="login-signup.html" class="btn btn-secondary">Log In</a>
+    </div>
+  </div>
 </section>
 
- <!-- Categories Section -->
-    <section class="categories-section">
-      <div class="categories-container">
-        <div class="section-header">
-          <h2 class="section-title">Product <span class="gradient-text">Categories</span></h2>
-          <p class="section-subtitle">
-            Explore our comprehensive range of digital products and services designed to help you succeed
-          </p>
+<!-- About Us Section -->
+<section id="about-us">
+  <div class="about-container">
+    <h2 class="about-heading">About <span>Nex Genix Creative Solutions</span></h2>
+    <p class="about-text">
+      Founded in 2024 by <strong>Arriane Duran,</strong> <span>Nex Genix Creative Solutions</span> was born from a simple mission: to help businesses, startups, and aspiring entrepreneurs build a strong online presence and achieve their goals. With a deep passion for technology, design, and strategic thinking, Arriane combines creativity with business insight to deliver solutions that truly make an impact. <span>Nex Genix Creative Solutions</span> offers a range of services and products — from professional web design and business writing to educational courses in international business, marketing, and languages. Whether you're launching your first website, refining your business strategy, or expanding your skill set, <span>Nex Genix Creative Solutions</span> is here to support your journey every step of the way.
+    </p>
+  </div>
+</section>
+
+<!-- Product Categories Section -->
+<section class="categories-section">
+  <div class="categories-container">
+    <div class="section-header">
+      <h2 class="section-title">Explore Our <span class="gradient-text">Product Categories</span></h2>
+      <p class="section-subtitle">
+        Discover professional courses and services designed to elevate your skills and transform your business
+      </p>
+    </div>
+
+    <div class="categories-grid">
+      <!-- Online Courses Category -->
+      <div class="category-card">
+        <div class="category-icon">
+          <i class="fas fa-graduation-cap"></i>
         </div>
-
-        <div class="categories-grid">
-          <div class="category-card">
-            <div class="category-icon">
-              <i class="fas fa-graduation-cap"></i>
-            </div>
-            <h3 class="category-title">Online Courses</h3>
-            <p class="category-description">
-              Master new skills with our expertly crafted courses in business, language, and technology. Both free and premium options available.
-            </p>
-            <a href="#courses" class="category-link">
-              Explore Courses <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-
-          <div class="category-card">
-            <div class="category-icon">
-              <i class="fas fa-pen-fancy"></i>
-            </div>
-            <h3 class="category-title">Writing Services</h3>
-            <p class="category-description">
-              Professional business writing, content creation, and editing services to help you communicate effectively.
-            </p>
-            <a href="#writing" class="category-link">
-              View Services <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-
-          <div class="category-card">
-            <div class="category-icon">
-              <i class="fas fa-palette"></i>
-            </div>
-            <h3 class="category-title">Design Solutions</h3>
-            <p class="category-description">
-              Custom digital design, web development, and branding services to make your business stand out online.
-            </p>
-            <a href="#design" class="category-link">
-              Explore Design <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-        </div>
+        <h3 class="category-title">Online Courses</h3>
+        <p class="category-description">
+          Professional certification courses in international business, digital marketing, and language learning. Learn at your own pace with lifetime access.
+        </p>
+        <a href="product-landing.html" class="category-link">
+          Browse Courses <i class="fas fa-arrow-right"></i>
+        </a>
       </div>
-    </section> 
 
-<!-- Reviews Section -->
-<section class="main-section testimonials-section" id="reviews">
-    <div class="testimonials-container">
-        <!-- Section header -->
-        <div class="testimonials-header">
-            <h2 class="testimonials-title">
-                Client <span class="gradient-text">Reviews</span>
-            </h2>
-            <p class="testimonials-subtitle">
-                Hear what our valued clients have to say about their experience
-            </p>
+      <!-- Professional Services Category -->
+      <div class="category-card">
+        <div class="category-icon">
+          <i class="fas fa-briefcase"></i>
         </div>
+        <h3 class="category-title">Professional Services</h3>
+        <p class="category-description">
+          Custom business solutions including proposal writing, website design, content creation, and brand identity development.
+        </p>
+        <a href="product-landing.html" class="category-link">
+          View Services <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
 
-        <!-- Testimonials grid -->
-        <div class="testimonials-grid" id="testimonials-grid">
-            <!-- Cards will be inserted here by JavaScript -->
+      <!-- Digital Solutions Category -->
+      <div class="category-card">
+        <div class="category-icon">
+          <i class="fas fa-laptop-code"></i>
         </div>
+        <h3 class="category-title">Digital Solutions</h3>
+        <p class="category-description">
+          End-to-end digital transformation services from web development to e-commerce platforms, tailored to your business needs.
+        </p>
+        <a href="product-landing.html" class="category-link">
+          Explore Solutions <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services">
+  <div class="services-header">
+    <h2 class="services-title">Unlock Your Potential</h2>
+    <p class="gradient-text">Explore Our Expert Services</p>
+  </div>
+  <div class="services-container">
+    <div class="service-card">
+      <i class="fas fa-pencil-alt"></i>
+      <h3>Business Writing</h3>
+      <p>Creating Business Proposals and Documentation to Secure Funding</p>
+    </div>
+    <div class="service-card">
+      <i class="fas fa-code"></i>
+      <h3>Web Design</h3>
+      <p>Building Modern, Responsive Websites that Engage and Convert</p>
+    </div>
+    <div class="service-card">
+      <i class="fas fa-graduation-cap"></i>
+      <h3>Online Courses</h3>
+      <p>International Business, Marketing, Mandarin, Japanese, and more</p>
+    </div>
+    <div class="service-card">
+      <i class="fas fa-chart-line"></i>
+      <h3>Content Writing</h3>
+      <p>Crafting SEO-Optimized Articles, Blogs, and Landing Pages</p>
+    </div>
+  </div>
 </section>
 
 <!-- Counter Section -->
 <section class="counter-section">
-    <div class="counter-container">
-        <div class="counter-item">
-            <div class="counter" data-target="48200">0</div>
-            <div class="label">Projects Completed</div>
-        </div>
-        <div class="counter-item">
-            <div class="counter" data-target="13800">0</div>
-            <div class="label">Clients Served</div>
-        </div>
-        <div class="counter-item">
-            <div class="counter" data-target="22500">0</div>
-            <div class="label">Certificates Granted</div>
-        </div>
-        <div class="counter-item">
-            <div class="counter" data-target="9100">0</div>
-            <div class="label">Books Sold</div>
-        </div>
+  <div class="counter-container">
+    <div class="counter-box">
+      <p class="counter" data-target="43">0</p>
+      <p class="counter-label">Completed Projects</p>
     </div>
-    <!-- View Our Work Button - ONLY HERE, after counter -->
-    <div class="view-work-container">
-        <a href="https://nexgenixcreativesolutions.github.io/our-work" class="btn-view-work">View Our Projects</a>
+    <div class="counter-box">
+      <p class="counter" data-target="35">0</p>
+      <p class="counter-label">Satisfied Clients</p>
     </div>
+    <div class="counter-box">
+      <p class="counter" data-target="98">0</p>
+      <p class="counter-label">Client Retention %</p>
+    </div>
+  </div>
 </section>
 
-<!-- Contact Section with Formspree Form -->
-<section class="main-section" id="contact">
-    <article>
-        <h2>Contact</h2>
-        <p class="contact-subtitle">Get in touch with us. We'd love to hear from you!</p>
-        
-        <!-- Contact Form with YOUR Formspree Link -->
-        <form action="https://formspree.io/f/maqdqdqw" method="POST" class="contact-form">
-            <div class="form-group">
-                <label for="name">Full Name *</label>
-                <input type="text" id="name" name="name" required placeholder="Enter your full name">
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email Address *</label>
-                <input type="email" id="email" name="email" required placeholder="Enter your email">
-            </div>
-            
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
-            </div>
-            
-            <div class="form-group">
-                <label for="service">Service Interest *</label>
-                <select id="service" name="service" required>
-                    <option value="">Select a service</option>
-                    <option value="Digital Design">Digital Design and Visual Communication</option>
-                    <option value="Writing Services">Writing Services</option>
-                    <option value="Education">Education and Training</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="message">Message *</label>
-                <textarea id="message" name="message" rows="5" required placeholder="Tell us about your project or inquiry"></textarea>
-            </div>
-            
-            <button type="submit" class="btn-submit">Send Message</button>
-        </form>
-        
-        <div class="contact-divider">
-            <span>OR CONNECT WITH US</span>
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials-section">
+  <div class="testimonials-container">
+    <div class="testimonials-header">
+      <h2 class="testimonials-title">
+        What Our <span class="gradient-text">Clients Say</span>
+      </h2>
+      <p class="testimonials-subtitle">
+        Real experiences from clients who have transformed their businesses with our solutions
+      </p>
+    </div>
+    <div class="testimonials-grid" id="testimonials-grid">
+      <!-- Testimonials will be dynamically inserted here -->
+    </div>
+  </div>
+</section>
+
+<!-- Contact Us Section -->
+<section id="contact-us">
+  <div class="contact-container">
+    <div class="form-container">
+      <h2>Get in Touch With Us</h2>
+      <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="6bf9de0d-50e7-45c1-95bd-e92fe5ee7f77">
+        <input type="hidden" name="subject" value="New Contact Form Submission from Nex Genix Website">
+        <input type="hidden" name="from_name" value="Nex Genix Contact Form">
+
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your Name" required />
         </div>
-        
-        <div class="contact-buttons">
-            <!-- Facebook -->
-            <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
-                <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
-            </a>
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
-                <button class="contact-btn"><i class="fab fa-instagram"></i></button>
-            </a>
-            <!-- Reddit -->
-            <a href="https://www.reddit.com/user/nexgenix" target="_blank">
-                <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
-            </a>
-            <!-- Gmail -->
-            <a href="mailto:nexgenixcreativesolutions@gmail.com">
-                <button class="contact-btn"><i class="fas fa-envelope"></i></button>
-            </a>
-            <!-- WhatsApp -->
-            <a href="https://wa.me/+639171063504" target="_blank">
-                <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
-            </a>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7b08141209161d092d3b0e1e1508163b1e031a160b171e55181416">[email&#160;protected]</a>" required />
         </div>
-    </article>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Send Message</button>
+      </form>
+    </div>
+
+    <div class="contact-details">
+      <div class="info-box">
+        <i class="fas fa-map-marker-alt"></i>
+        <h3>Location</h3>
+        <p>Abu Dhabi, UAE</p>
+      </div>
+
+      <div class="info-box">
+        <i class="fas fa-envelope"></i>
+        <h3>Email</h3>
+        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dfacbcb3b29fadaaacb6b3b8aef1bcb0b2">[email&#160;protected]</a></p>
+      </div>
+
+      <div class="info-box">
+        <i class="fas fa-phone-alt"></i>
+        <h3>Phone</h3>
+        <p>+971 50 5049 370</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- Footer Section -->
 <footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
 
 <!-- External JavaScript -->
-<script src="script.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
 
 <!-- Counter Animation Script -->
 <script>
@@ -1112,7 +643,7 @@
     'interface Vision { }',
     'type Success = Promise<Growth>;',
   ];
-  
+
   function createFloatingCodeBackground() {
     const container = document.createElement('div');
     container.className = 'floating-code-container';
@@ -1139,7 +670,7 @@
     // Insert at the beginning of body so it's behind everything
     document.body.insertBefore(container, document.body.firstChild);
   }
-  
+
   // Initialize when DOM is loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', createFloatingCodeBackground);
@@ -1164,12 +695,37 @@
       observer.observe(card);
     });
   }
-  
+
   // Initialize when DOM is loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initServices);
   } else {
     initServices();
+  }
+</script>
+
+<!-- Category Cards Scroll Animation Script -->
+<script>
+  // Category cards scroll animation
+  function initCategories() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.category-card').forEach(card => {
+      observer.observe(card);
+    });
+  }
+
+  // Initialize when DOM is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCategories);
+  } else {
+    initCategories();
   }
 </script>
 
@@ -1196,7 +752,7 @@
       rating: 5
     }
   ];
-  
+
   function createStarIcon() {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('class', 'star');
@@ -1209,7 +765,7 @@
     svg.appendChild(path);
     return svg;
   }
-  
+
   function createQuoteIcon() {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('class', 'quote-icon');
@@ -1228,7 +784,7 @@
     svg.appendChild(path2);
     return svg;
   }
-  
+
   function createTestimonialCard(testimonial, index) {
     const card = document.createElement('div');
     card.className = 'testimonial-card';
@@ -1287,7 +843,7 @@
     card.appendChild(cardInner);
     return card;
   }
-  
+
   function initTestimonials() {
     const grid = document.getElementById('testimonials-grid');
     if (!grid) return;
@@ -1310,7 +866,7 @@
       observer.observe(card);
     });
   }
-  
+
   // Initialize when DOM is loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initTestimonials);
@@ -1319,5 +875,5 @@
   }
 </script>
 
-  </body>
+</body>
 </html>
