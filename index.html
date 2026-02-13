@@ -90,6 +90,149 @@
   font-size: 1.1rem;
   max-width: 700px;
   margin: 0 auto;
+  text-align: center;
+}
+
+/* Counter Section with Buttons */
+.counter-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1rem;
+  background-color: black;
+  gap: 2rem;
+}
+
+.counter-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.counter-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.counter-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  text-align: center;
+  width: 100%;
+  min-height: 140px;
+  transition: all 0.3s ease;
+  border: 1px solid #1f2937;
+}
+
+.counter-item:hover {
+  border-color: #39FF14;
+  box-shadow: 0 10px 30px rgba(57, 255, 20, 0.2);
+  transform: translateY(-5px);
+}
+
+.counter {
+  font-family: "Silkscreen", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2.5rem;
+  color: #39FF14;
+  text-shadow: 0 0 10px #39FF14;
+  margin-bottom: 0.75rem;
+  line-height: 1;
+}
+
+.label {
+  font-size: 0.95rem;
+  color: white;
+  opacity: 0.9;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Counter Action Buttons */
+.counter-action-btn {
+  background: transparent;
+  color: white;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat Alternates', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: 100%;
+  max-width: 250px;
+  white-space: nowrap;
+}
+
+.counter-action-btn:hover {
+  background: white;
+  color: black;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+}
+
+.counter-action-btn:active {
+  transform: translateY(0);
+}
+
+/* Single Action Button for Projects/Clients */
+.counter-single-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.counter-action-btn-large {
+  background: transparent;
+  color: white;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat Alternates', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.counter-action-btn-large:hover {
+  background: white;
+  color: black;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+}
+
+.counter-action-btn-large:active {
+  transform: translateY(0);
 }
 .categories-grid {
   display: grid;
@@ -508,6 +651,13 @@
     .category-title {
         font-size: 1.375rem;
     }
+    .counter-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+    }
+    .counter {
+        font-size: 3rem;
+    }
 }
 /* Responsive Design - Desktop */
 @media (min-width: 1024px) {
@@ -529,6 +679,10 @@
     }
     .category-title {
         font-size: 1.5rem;
+    }
+    .counter-container {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
     }
 }
 /* Extra small screens - Mobile optimization */
@@ -587,6 +741,28 @@
     }
     .category-title {
         font-size: 1.1rem;
+    }
+    
+    .counter-section {
+        padding: 3rem 0.75rem;
+    }
+    .counter-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .counter {
+        font-size: 2rem;
+    }
+    .label {
+        font-size: 0.875rem;
+    }
+    .counter-action-btn {
+        font-size: 0.75rem;
+        padding: 0.625rem 1rem;
+    }
+    .counter-action-btn-large {
+        font-size: 0.875rem;
+        padding: 0.875rem 2rem;
     }
     
     /* Contact Form Mobile */
@@ -690,7 +866,7 @@
     
 <h1 class="slogan">Your Vision, Beautifully Engineered.</h1>
 
-        <p>App Design | Web Design | Web Development | UI/UX Design</p>
+        <p class="services-description">App Design | Web Design | Web Development | UI/UX Design</p>
         <!-- ONLY Get Started button for DESKTOP view -->
         <div class="hero-buttons">
             <a href="#contact" class="btn-get-started">Get Started</a>
@@ -793,26 +969,40 @@
 <!-- Counter Section -->
 <section class="counter-section">
     <div class="counter-container">
-        <div class="counter-item">
-            <div class="counter" data-target="48200">0</div>
-            <div class="label">Projects Completed</div>
+        <div class="counter-item-wrapper">
+            <div class="counter-item">
+                <div class="counter" data-target="48200">0</div>
+                <div class="label">Projects Completed</div>
+            </div>
         </div>
-        <div class="counter-item">
-            <div class="counter" data-target="13800">0</div>
-            <div class="label">Clients Served</div>
+        
+        <div class="counter-item-wrapper">
+            <div class="counter-item">
+                <div class="counter" data-target="13800">0</div>
+                <div class="label">Clients Served</div>
+            </div>
         </div>
-        <div class="counter-item">
-            <div class="counter" data-target="22500">0</div>
-            <div class="label">Certificates Granted</div>
+        
+        <div class="counter-item-wrapper">
+            <div class="counter-item">
+                <div class="counter" data-target="22500">0</div>
+                <div class="label">Certificates Granted</div>
+            </div>
+            <a href="#" class="counter-action-btn">Certificate Info</a>
         </div>
-        <div class="counter-item">
-            <div class="counter" data-target="9100">0</div>
-            <div class="label">Books Sold</div>
+        
+        <div class="counter-item-wrapper">
+            <div class="counter-item">
+                <div class="counter" data-target="9100">0</div>
+                <div class="label">Books Sold</div>
+            </div>
+            <a href="https://nexgenixcreativesolutions.github.io/books" class="counter-action-btn">View Our Books</a>
         </div>
     </div>
-    <!-- View Our Work Button - ONLY HERE, after counter -->
-    <div class="view-work-container">
-        <a href="https://nexgenixcreativesolutions.github.io/our-work" class="btn-view-work">View Our Projects</a>
+    
+    <!-- Single button for Projects Completed and Clients Served -->
+    <div class="counter-single-action">
+        <a href="https://nexgenixcreativesolutions.github.io/our-work" class="counter-action-btn-large">View Our Projects</a>
     </div>
 </section>
 
