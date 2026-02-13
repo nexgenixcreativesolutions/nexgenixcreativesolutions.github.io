@@ -161,6 +161,9 @@
   backdrop-filter: blur(10px);
   opacity: 0;
   transform: translateY(50px);
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
 }
 .category-card.visible {
   animation: fadeInUp 0.6s ease forwards;
@@ -200,6 +203,7 @@
   color: #9ca3af;
   line-height: 1.7;
   margin-bottom: 1.5rem;
+  flex: 1;
 }
 .category-link {
   display: inline-flex;
@@ -209,6 +213,7 @@
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
+  margin-top: auto;
 }
 .category-link:hover {
   gap: 1rem;
@@ -611,6 +616,7 @@
     }
     .category-card {
         padding: 1.75rem 1.25rem;
+        min-height: 320px;
     }
     .category-icon {
         width: 3.5rem;
@@ -758,6 +764,7 @@
     
     .category-card {
         padding: 2rem 1.5rem;
+        min-height: 350px;
     }
     
     .category-title {
