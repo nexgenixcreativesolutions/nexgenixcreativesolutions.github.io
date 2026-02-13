@@ -56,7 +56,7 @@
   }
 }
 
-/* CATEGORIES SECTION */
+/* =================== CATEGORIES SECTION =================== */
 .categories-section {
   position: relative;
   padding: 4rem 1rem 2rem 1rem;
@@ -93,7 +93,7 @@
   text-align: center;
 }
 
-/* Counter Section */
+/* Counter Section with Buttons */
 .counter-section {
   display: flex;
   flex-direction: column;
@@ -103,31 +103,13 @@
   background-color: black;
 }
 
-.counter-grid {
+.counter-container {
   display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  width: 100%;
-  max-width: 1200px;
-}
-
-.counter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.counter-row {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-}
-
-.counter-item-wrapper {
-  display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  gap: 1rem;
+  gap: 20px;
+  width: 90%;
+  flex-wrap: nowrap;
 }
 
 .counter-item {
@@ -136,81 +118,30 @@
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.1);
-  padding: 2rem 1.5rem;
-  border-radius: 1rem;
+  padding: 20px;
+  border-radius: 10px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(5px);
   text-align: center;
-  width: 100%;
-  min-height: 140px;
-  transition: all 0.3s ease;
-  border: 1px solid #1f2937;
-}
-
-.counter-item:hover {
-  border-color: #39FF14;
-  box-shadow: 0 10px 30px rgba(57, 255, 20, 0.2);
-  transform: translateY(-5px);
+  flex: 1;
+  max-width: 200px;
 }
 
 .counter {
   font-family: "Silkscreen", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 2.5rem;
+  font-size: 40px;
   color: #39FF14;
   text-shadow: 0 0 10px #39FF14;
-  margin-bottom: 0.75rem;
-  line-height: 1;
+  margin-bottom: 10px;
 }
 
 .label {
-  font-size: 0.95rem;
+  font-size: 14px;
   color: white;
-  opacity: 0.9;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-/* Button Wrapper for alignment */
-.counter-button-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-/* Counter Action Buttons */
-.counter-action-btn {
-  background: transparent;
-  color: white;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border: 2px solid white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: 'Montserrat Alternates', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  min-width: 200px;
-}
-
-.counter-action-btn:hover {
-  background: white;
-  color: black;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
-}
-
-.counter-action-btn:active {
-  transform: translateY(0);
+  opacity: 0.8;
+  margin-top: 10px;
 }
 .categories-grid {
   display: grid;
@@ -718,23 +649,19 @@
     .counter-section {
         padding: 2.5rem 0.75rem;
     }
-    .counter-grid {
-        gap: 2rem;
+    .counter-container {
+        flex-wrap: wrap;
+        gap: 10px;
     }
-    .counter-row {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+    .counter-item {
+        max-width: 150px;
+        padding: 15px;
     }
     .counter {
-        font-size: 2rem;
+        font-size: 30px;
     }
     .label {
-        font-size: 0.875rem;
-    }
-    .counter-action-btn {
-        font-size: 0.75rem;
-        padding: 0.625rem 1rem;
-        min-width: 180px;
+        font-size: 10px;
     }
     
     /* Contact Form Mobile */
@@ -940,43 +867,22 @@
 
 <!-- Counter Section -->
 <section class="counter-section">
-    <div class="counter-grid">
-        <!-- First Row: Projects and Clients -->
-        <div class="counter-group">
-            <div class="counter-row">
-                <div class="counter-item-wrapper">
-                    <div class="counter-item">
-                        <div class="counter" data-target="48200">0</div>
-                        <div class="label">Projects Completed</div>
-                    </div>
-                </div>
-                
-                <div class="counter-item-wrapper">
-                    <div class="counter-item">
-                        <div class="counter" data-target="13800">0</div>
-                        <div class="label">Clients Served</div>
-                    </div>
-                </div>
-            </div>
+    <div class="counter-container">
+        <div class="counter-item">
+            <div class="counter" data-target="48200">0</div>
+            <div class="label">Projects Completed</div>
         </div>
-        
-        <!-- Second Row: Certificates and Books -->
-        <div class="counter-group">
-            <div class="counter-row">
-                <div class="counter-item-wrapper">
-                    <div class="counter-item">
-                        <div class="counter" data-target="22500">0</div>
-                        <div class="label">Certificates Granted</div>
-                    </div>
-                </div>
-                
-                <div class="counter-item-wrapper">
-                    <div class="counter-item">
-                        <div class="counter" data-target="9100">0</div>
-                        <div class="label">Books Sold</div>
-                    </div>
-                </div>
-            </div>
+        <div class="counter-item">
+            <div class="counter" data-target="13800">0</div>
+            <div class="label">Clients Served</div>
+        </div>
+        <div class="counter-item">
+            <div class="counter" data-target="22500">0</div>
+            <div class="label">Certificates Granted</div>
+        </div>
+        <div class="counter-item">
+            <div class="counter" data-target="9100">0</div>
+            <div class="label">Books Sold</div>
         </div>
     </div>
 </section>
@@ -1091,9 +997,9 @@
     }, { threshold: 0.5 });
 
     // Wait for DOM to be ready and check if element exists
-    const counterSection = document.querySelector('.counter-section');
-    if (counterSection) {
-        observer.observe(counterSection);
+    const counterContainer = document.querySelector('.counter-container');
+    if (counterContainer) {
+        observer.observe(counterContainer);
     }
 </script>
 
