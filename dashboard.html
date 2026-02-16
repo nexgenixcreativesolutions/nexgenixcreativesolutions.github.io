@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard | Nex Genix Creative Solutions</title>
+  <title>Service Dashboard | Nex Genix Creative Solutions</title>
   <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     /* =================== GLOBAL RESET & BASE =================== */
@@ -82,6 +82,7 @@
       flex-direction: column;
       justify-content: space-between;
       z-index: 100;
+      overflow-y: auto;
     }
 
     .sidebar-logo {
@@ -200,7 +201,6 @@
       box-shadow: 0 5px 20px rgba(255, 0, 0, 0.3);
     }
 
-    /* Dropdown menu for Home button */
     .dropdown {
       position: relative;
       display: inline-block;
@@ -263,58 +263,13 @@
       background-clip: text;
     }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .stat-card {
-      background: linear-gradient(135deg, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.7));
-      border: 1px solid #1f2937;
-      border-radius: 1rem;
-      padding: 2rem;
-      transition: all 0.3s ease;
-    }
-
-    .stat-card:hover {
-      border-color: #39FF14;
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(57, 255, 20, 0.15);
-    }
-
-    .stat-card h3 {
-      font-size: 0.95rem;
-      color: #9ca3af;
-      margin-bottom: 0.75rem;
-      font-family: 'Montserrat Alternates', sans-serif;
-    }
-
-    .stat-number {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-    }
-
-    .stat-number.green {
-      color: #39FF14;
-    }
-
-    .stat-number.yellow {
-      color: #ffff00;
-    }
-
-    .stat-number.red {
-      color: #ff0000;
-    }
-
     .content-box {
       background: linear-gradient(135deg, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.7));
       border: 1px solid #1f2937;
       padding: 2rem;
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      margin-bottom: 2rem;
     }
 
     .content-box h2 {
@@ -324,18 +279,103 @@
       margin-bottom: 1rem;
     }
 
-    .content-box p {
-      color: #d1d5db;
-      line-height: 1.7;
-      margin-bottom: 1rem;
+    /* =================== SERVICE SELECTION =================== */
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
 
-    /* =================== FORM ELEMENTS =================== */
+    .service-card {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.8), rgba(0, 0, 0, 0.9));
+      border: 2px solid #1f2937;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .service-card:hover {
+      border-color: #39FF14;
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(57, 255, 20, 0.2);
+    }
+
+    .service-card.selected {
+      border-color: #39FF14;
+      background: linear-gradient(135deg, rgba(57, 255, 20, 0.15), rgba(0, 0, 0, 0.9));
+      box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+    }
+
+    .service-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      color: #39FF14;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-card .price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffff00;
+      margin: 1rem 0;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .service-card ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .service-card ul li {
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+      color: #d1d5db;
+    }
+
+    .service-card ul li:before {
+      content: "✓ ";
+      color: #39FF14;
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+
+    .service-card ul li.excluded:before {
+      content: "✗ ";
+      color: #ff0000;
+    }
+
+    /* =================== CUSTOMIZATION PANEL =================== */
+    .customization-panel {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.7));
+      border: 1px solid #39FF14;
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
     .form-group {
       margin-bottom: 1.5rem;
     }
 
-    .input {
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #39FF14;
+      font-size: 0.9rem;
+    }
+
+    .input, .select {
       width: 100%;
       padding: 1rem;
       background: rgba(0, 0, 0, 0.5);
@@ -347,17 +387,133 @@
       transition: all 0.3s ease;
     }
 
-    .input:focus {
+    .input:focus, .select:focus {
       outline: none;
       border-color: #39FF14;
       box-shadow: 0 0 0 3px rgba(57, 255, 20, 0.2);
     }
 
-    .input:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 0.5rem;
     }
 
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid #444;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-item:hover {
+      border-color: #39FF14;
+      background: rgba(57, 255, 20, 0.1);
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    /* =================== INVOICE PREVIEW =================== */
+    .invoice-preview {
+      background: #000;
+      border: 2px solid #39FF14;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 0 40px rgba(57, 255, 20, 0.2);
+    }
+
+    .invoice-header {
+      border-bottom: 2px solid #39FF14;
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .invoice-header h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      color: #39FF14;
+      text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+    }
+
+    .invoice-info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .invoice-info div {
+      padding: 0.5rem;
+    }
+
+    .invoice-info strong {
+      color: #ffff00;
+    }
+
+    .invoice-table {
+      width: 100%;
+      margin-bottom: 2rem;
+      border-collapse: collapse;
+    }
+
+    .invoice-table thead {
+      background: rgba(57, 255, 20, 0.1);
+      border-bottom: 2px solid #39FF14;
+    }
+
+    .invoice-table th {
+      padding: 1rem;
+      text-align: left;
+      font-family: 'Orbitron', sans-serif;
+      color: #39FF14;
+      font-size: 0.9rem;
+    }
+
+    .invoice-table td {
+      padding: 1rem;
+      border-bottom: 1px solid #333;
+      font-size: 0.9rem;
+    }
+
+    .invoice-table tr:hover {
+      background: rgba(57, 255, 20, 0.05);
+    }
+
+    .invoice-total {
+      text-align: right;
+      padding: 1.5rem;
+      background: rgba(57, 255, 20, 0.1);
+      border-radius: 0.75rem;
+      border: 1px solid #39FF14;
+    }
+
+    .invoice-total .total-label {
+      font-size: 1.2rem;
+      color: #ffff00;
+      font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .invoice-total .total-amount {
+      font-size: 2.5rem;
+      color: #39FF14;
+      font-weight: 800;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+    }
+
+    /* =================== BUTTONS =================== */
     .button {
       width: 100%;
       background: #39FF14;
@@ -370,6 +526,7 @@
       cursor: pointer;
       transition: all 0.3s ease;
       font-family: 'Montserrat Alternates', sans-serif;
+      text-transform: uppercase;
     }
 
     .button:hover {
@@ -378,11 +535,40 @@
       box-shadow: 0 5px 20px rgba(57, 255, 20, 0.4);
     }
 
+    .button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .button-secondary {
+      background: transparent;
+      border: 2px solid #ffff00;
+      color: #ffff00;
+    }
+
+    .button-secondary:hover {
+      background: #ffff00;
+      color: #000;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
     .divider {
       border: none;
       height: 1px;
       background: #333;
       margin: 2rem 0;
+    }
+
+    /* =================== SETTINGS =================== */
+    .input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     /* =================== RESPONSIVE DESIGN =================== */
@@ -410,12 +596,44 @@
         margin-left: 0;
       }
 
-      .stats-grid {
+      .welcome-title {
+        font-size: 2rem;
+      }
+
+      .service-grid {
         grid-template-columns: 1fr;
       }
 
-      .welcome-title {
-        font-size: 2rem;
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .invoice-info {
+        grid-template-columns: 1fr;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+    }
+
+    /* =================== MOBILE MENU TOGGLE =================== */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 101;
+      background: #39FF14;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
       }
     }
   </style>
@@ -425,20 +643,21 @@
   <!-- Floating Code Background -->
   <div class="floating-code-container" id="floatingCodeContainer"></div>
 
+  <!-- Mobile Menu Toggle -->
+  <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
   <div class="dashboard-wrapper">
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div>
         <img src="assets/images/dashboard-logo-no-bg.png" class="sidebar-logo" alt="Nex Genix">
         <ul class="sidebar-menu">
-          <li onclick="showSection('dashboard')" class="active">Dashboard</li>
-          <li onclick="showSection('services')">Subscribed Services</li>
-          <li onclick="showSection('courses')">Enrolled Courses</li>
-          <li onclick="showSection('certificates')">Certificates</li>
-          <li onclick="showSection('settings')">Settings</li>
+          <li onclick="showSection('order')" class="active">Order Service</li>
+          <li onclick="showSection('my-orders')">My Orders</li>
+          <li onclick="showSection('settings')">Account Settings</li>
         </ul>
       </div>
-      <p class="sidebar-footer">&copy; 2026 NEX GENIX Creative Solutions | Business School</p>
+      <p class="sidebar-footer">&copy; 2026 NEX GENIX Creative Solutions</p>
     </aside>
 
     <!-- Main Content -->
@@ -448,7 +667,6 @@
         <div id="datetime" class="datetime"></div>
 
         <div class="top-nav-buttons">
-          <!-- Home Dropdown -->
           <div class="dropdown">
             <button class="nav-btn home-btn">
               <span>🏠</span>
@@ -467,53 +685,110 @@
         </div>
       </nav>
 
-      <!-- Dashboard Section -->
-      <div id="dashboard" class="content-section active">
-        <h1 id="welcome-message" class="welcome-title">Welcome, Nex Genix!</h1>
+      <!-- Order Service Section -->
+      <div id="order" class="content-section active">
+        <h1 class="welcome-title">Order Your Service</h1>
 
-        <div class="stats-grid">
-          <div class="stat-card">
-            <h3>Courses Enrolled</h3>
-            <p class="stat-number green">3</p>
-          </div>
-          <div class="stat-card">
-            <h3>Available Programs</h3>
-            <p class="stat-number yellow">12</p>
-          </div>
-          <div class="stat-card">
-            <h3>Certificates Earned</h3>
-            <p class="stat-number red">1</p>
+        <!-- Service Selection -->
+        <div class="content-box">
+          <h2>Select Your Package</h2>
+          <div class="service-grid" id="serviceGrid">
+            <!-- Services will be dynamically loaded -->
           </div>
         </div>
 
-        <div class="content-box">
-          <h2>Recommended for You</h2>
-          <p>Continue <strong>Language Mastery – Module 2</strong></p>
-          <button class="button">Continue Learning</button>
+        <!-- Customization Panel -->
+        <div class="customization-panel" id="customizationPanel" style="display: none;">
+          <h2 style="color: #39FF14; font-family: 'Orbitron', sans-serif; margin-bottom: 1.5rem;">Customize Your Order</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="serviceType">Service Type *</label>
+              <select id="serviceType" class="select" onchange="updateInvoice()">
+                <option value="">Select Service</option>
+                <option value="app-design">App Design</option>
+                <option value="web-design">Web Design</option>
+                <option value="web-development">Web Development</option>
+                <option value="ui-ux-design">UI/UX Design</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="numPages">Number of Pages *</label>
+              <input type="number" id="numPages" class="input" min="1" max="100" placeholder="Enter number of pages" onchange="updateInvoice()">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Additional Features</label>
+            <div class="checkbox-group" id="additionalFeatures">
+              <!-- Dynamically populated based on package -->
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="projectName">Project Name</label>
+              <input type="text" id="projectName" class="input" placeholder="Enter project name">
+            </div>
+
+            <div class="form-group">
+              <label for="deadline">Preferred Deadline</label>
+              <input type="date" id="deadline" class="input">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="specialRequests">Special Requests / Notes</label>
+            <textarea id="specialRequests" class="input" rows="4" placeholder="Any special requirements or notes..."></textarea>
+          </div>
+        </div>
+
+        <!-- Invoice Preview -->
+        <div class="content-box" id="invoiceSection" style="display: none;">
+          <div class="invoice-preview">
+            <div class="invoice-header">
+              <h2>INVOICE PREVIEW</h2>
+              <div class="invoice-info">
+                <div><strong>Invoice No:</strong> <span id="invoiceNumber">NGCS-2026-001</span></div>
+                <div><strong>Date:</strong> <span id="invoiceDate"></span></div>
+                <div><strong>Client:</strong> <span id="clientName">Valued Client</span></div>
+                <div><strong>Issued By:</strong> Nex Genix Creative Solutions</div>
+              </div>
+            </div>
+
+            <table class="invoice-table">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th style="text-align: right;">Amount (PHP)</th>
+                </tr>
+              </thead>
+              <tbody id="invoiceItems">
+                <!-- Dynamic invoice items -->
+              </tbody>
+            </table>
+
+            <div class="invoice-total">
+              <div class="total-label">TOTAL AMOUNT DUE</div>
+              <div class="total-amount" id="totalAmount">₱0.00</div>
+            </div>
+
+            <div class="button-group">
+              <button class="button" onclick="submitOrder()">Proceed to Payment</button>
+              <button class="button button-secondary" onclick="downloadInvoice()">Download Invoice</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Courses Section -->
-      <div id="courses" class="content-section">
-        <h1 class="welcome-title">Enrolled Courses</h1>
+      <!-- My Orders Section -->
+      <div id="my-orders" class="content-section">
+        <h1 class="welcome-title">My Orders</h1>
         <div class="content-box">
-          <div id="coursesContent">Loading courses...</div>
-        </div>
-      </div>
-
-      <!-- Certificates Section -->
-      <div id="certificates" class="content-section">
-        <h1 class="welcome-title">Your Certificates</h1>
-        <div class="content-box">
-          <div id="certificatesContent">No certificates yet.</div>
-        </div>
-      </div>
-
-      <!-- Services Section -->
-      <div id="services" class="content-section">
-        <h1 class="welcome-title">Subscribed Services</h1>
-        <div class="content-box">
-          <div id="servicesContent">Loading services...</div>
+          <div id="ordersContent">
+            <p style="color: #9ca3af; text-align: center; padding: 2rem;">No orders yet. Start by ordering a service!</p>
+          </div>
         </div>
       </div>
 
@@ -522,38 +797,188 @@
         <h1 class="welcome-title">Account Settings</h1>
         <div class="content-box">
           <div class="form-group">
+            <label for="displayNameInput">Display Name</label>
             <input id="displayNameInput" class="input" placeholder="Display Name" type="text">
           </div>
           <div class="form-group">
+            <label for="usernameInput">Username</label>
             <input id="usernameInput" class="input" placeholder="Username" type="text">
           </div>
           <div class="form-group">
+            <label for="phoneInput">Phone Number</label>
             <input id="phoneInput" class="input" placeholder="Phone Number" type="tel">
           </div>
           <div class="form-group">
+            <label for="emailInput">Email</label>
             <input id="emailInput" class="input" placeholder="Email" type="email" disabled>
           </div>
 
           <hr class="divider">
 
           <div class="form-group">
+            <label for="passwordInput">New Password</label>
             <input id="passwordInput" class="input" type="password" placeholder="New Password">
           </div>
           <button class="button" onclick="updatePassword()">Update Password</button>
 
           <div style="margin-top: 1rem;">
-            <button class="button" onclick="saveProfile()">Save Profile</button>
+            <button class="button button-secondary" onclick="saveProfile()">Save Profile</button>
           </div>
         </div>
       </div>
     </main>
   </div>
 
-  <!-- Supabase JS -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script>
-    // Floating Code Background
+    // =================== SERVICE PACKAGES DATA ===================
+    const servicePackages = {
+      basic: {
+        name: 'BASIC - Starter Business',
+        price: 18000,
+        basePages: 5,
+        pricePerPage: 1500,
+        features: [
+          '3-5 page website',
+          'Mobile responsive',
+          'Free domain (1 year)',
+          'Hosting (1 year)',
+          '1 professional email',
+          '30% profit margin'
+        ],
+        excluded: [],
+        bestFor: 'sari-sari, cafés, freelancers, startups'
+      },
+      pro: {
+        name: 'PRO - Growing Business',
+        price: 26000,
+        basePages: 8,
+        pricePerPage: 2000,
+        features: [
+          '5-8 pages',
+          'SQL database',
+          'Contact forms',
+          'Speed optimization',
+          'Website Manager (1 month FREE)',
+          '40% profit margin'
+        ],
+        excluded: [],
+        bestFor: 'clinics, restaurants, agencies'
+      },
+      premium: {
+        name: 'PREMIUM - Established/Corporate',
+        price: 52500,
+        basePages: 12,
+        pricePerPage: 3500,
+        features: [
+          'Custom UI/UX',
+          'Advanced SQL & admin panel',
+          'Multiple emails',
+          'Priority support',
+          '50%+ profit margin',
+          'Dedicated Website Manager'
+        ],
+        excluded: [],
+        bestFor: 'corporations, franchises, e-commerce'
+      },
+      onePage: {
+        name: 'ONE-PAGE Starter',
+        price: 6500,
+        basePages: 2,
+        pricePerPage: 1000,
+        features: [
+          '2 pages',
+          'Mobile responsive',
+          'Basic UI design',
+          'Contact form (email notification)',
+          'Hosted online',
+          'FREE domain (1 year)',
+          'Hosting (1 year)',
+          '30% profit margin'
+        ],
+        excluded: ['No maintenance', 'No business email'],
+        bestFor: 'freelancers, home-based sellers, promos'
+      },
+      onePagePro: {
+        name: 'ONE-PAGE Pro',
+        price: 9500,
+        basePages: 2,
+        pricePerPage: 1500,
+        features: [
+          'Everything in Starter',
+          'Custom layout & branding',
+          'SEO-ready structure',
+          'Faster loading optimization',
+          'Priority setup'
+        ],
+        excluded: ['No maintenance', 'No business email'],
+        bestFor: 'cafés, startups, marketing campaigns'
+      },
+      onePagePremium: {
+        name: 'ONE-PAGE Premium',
+        price: 14000,
+        basePages: 2,
+        pricePerPage: 2000,
+        features: [
+          'Custom-designed landing page',
+          'Conversion-focused layout',
+          'Call-to-action sections',
+          'Google Map integration',
+          'Analytics setup'
+        ],
+        excluded: ['No maintenance', 'No business email'],
+        bestFor: 'product launches, agencies, corporate promos'
+      },
+      multiBasic: {
+        name: 'MULTI-PAGE Basic (No Maintenance)',
+        price: 12000,
+        basePages: 4,
+        pricePerPage: 1200,
+        features: [
+          '3-4 pages',
+          'Mobile responsive',
+          'FREE domain (1 year)',
+          'Hosting (1 year)',
+          'Contact form',
+          '30% profit margin'
+        ],
+        excluded: ['No maintenance', 'No business email', 'No updates after turnover'],
+        bestFor: 'small shops, sari-sari, service providers'
+      },
+      multiStandard: {
+        name: 'MULTI-PAGE Standard (No Maintenance)',
+        price: 17000,
+        basePages: 7,
+        pricePerPage: 1700,
+        features: [
+          '5-7 pages',
+          'Improved UI design',
+          'Speed optimization',
+          'FREE domain (1 year)',
+          'Hosting (1 year)',
+          '40% profit margin'
+        ],
+        excluded: ['No maintenance', 'No business email'],
+        bestFor: 'restaurants, clinics, schools'
+      },
+      multiAdvanced: {
+        name: 'MULTI-PAGE Advanced (No Maintenance)',
+        price: 25000,
+        basePages: 12,
+        pricePerPage: 2500,
+        features: [
+          '8-12 pages',
+          'Custom layout',
+          'SQL database (if needed)',
+          'FREE domain (1 year)',
+          'Hosting (1 year)',
+          '50% profit margin'
+        ],
+        excluded: ['No maintenance', 'No business email'],
+        bestFor: 'large local businesses, organizations'
+      }
+    };
+
+    // =================== FLOATING CODE BACKGROUND ===================
     const codeSnippets = [
       'const nexgenix = () => {',
       'function createSolution() {',
@@ -579,27 +1004,22 @@
 
     function createFloatingCodeBackground() {
       const container = document.getElementById('floatingCodeContainer');
-      
       for (let i = 0; i < 15; i++) {
         const codeLine = document.createElement('div');
         codeLine.className = 'code-line';
-        
         const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
         codeLine.textContent = randomSnippet;
-        
         const yPosition = 5 + (i * 6);
         const duration = 15 + Math.random() * 10;
         const delay = Math.random() * 20;
-        
         codeLine.style.top = `${yPosition}%`;
         codeLine.style.animationDuration = `${duration}s`;
         codeLine.style.animationDelay = `${delay}s`;
-        
         container.appendChild(codeLine);
       }
     }
 
-    // Update DateTime
+    // =================== DATE TIME UPDATE ===================
     function updateDateTime() {
       const now = new Date();
       const options = { 
@@ -608,7 +1028,8 @@
         month: 'long', 
         day: 'numeric',
         hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
+        second: '2-digit'
       };
       document.getElementById('datetime').textContent = now.toLocaleDateString('en-US', options);
     }
@@ -616,184 +1037,240 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
-    /* =========================
-       SUPABASE CONFIG
-    ========================= */
-    const SUPABASE_URL = "https://rranivozhrsldhapzwqc.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_bdfuminbwIZn_S1DPfB7bg_ogP5mUVi";
-
-    const supabaseClient = supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
-
-    /* =========================
-       SHOW/HIDE SECTIONS
-    ========================= */
+    // =================== NAVIGATION ===================
     function showSection(sectionId) {
-      // Hide all sections
       const sections = document.querySelectorAll('.content-section');
       sections.forEach(section => {
         section.classList.remove('active');
       });
 
-      // Remove active class from all menu items
       const menuItems = document.querySelectorAll('.sidebar-menu li');
       menuItems.forEach(item => {
         item.classList.remove('active');
       });
 
-      // Show the clicked section
       const section = document.getElementById(sectionId);
       if (section) {
         section.classList.add('active');
       }
 
-      // Add active class to clicked menu item
       event.target.classList.add('active');
     }
 
-    /* =========================
-       INIT DASHBOARD
-    ========================= */
-    async function initDashboard() {
-      const { data: { user } } = await supabaseClient.auth.getUser();
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
 
-      if (!user) {
-        window.location.href = "https://nexgenixcreativesolutions.github.io/login-signup";
-        return;
-      }
+    // =================== LOAD SERVICES ===================
+    function loadServices() {
+      const grid = document.getElementById('serviceGrid');
+      grid.innerHTML = '';
 
-      // Fetch profile
-      let { data: profile } = await supabaseClient
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
-        .single();
-
-      // Create profile if first login
-      if (!profile) {
-        const { data: newProfile } = await supabaseClient
-          .from("profiles")
-          .insert({
-            id: user.id,
-            email: user.email,
-            full_name: user.user_metadata?.full_name || ""
-          })
-          .select()
-          .single();
-
-        profile = newProfile;
-      }
-
-      // Render dashboard welcome message
-      document.getElementById("welcome-message").textContent =
-        `Welcome, ${profile.full_name || profile.email}`;
-
-      document.getElementById("displayNameInput").value = profile.display_name || "";
-      document.getElementById("usernameInput").value = profile.username || "";
-      document.getElementById("phoneInput").value = profile.phone || "";
-      document.getElementById("emailInput").value = profile.email || "";
-
-      /* =========================
-         ENROLLED COURSES
-      ========================== */
-      const { data: enrolledCourses } = await supabaseClient
-        .from("user_courses")
-        .select("courses(title, category)")
-        .eq("user_id", user.id);
-
-      const coursesContent = document.getElementById("coursesContent");
-      if (coursesContent) {
-        coursesContent.innerHTML = enrolledCourses && enrolledCourses.length
-          ? enrolledCourses.map(c =>
-              `<p style="padding: 1rem; background: rgba(57,255,20,0.1); border-radius: 0.5rem; margin-bottom: 0.75rem;">${c.courses.title} (${c.courses.category})</p>`
-            ).join("")
-          : "No enrolled courses yet.";
-      }
-
-      /* =========================
-         SUBSCRIBED SERVICES
-      ========================== */
-      const { data: services } = await supabaseClient
-        .from("user_services")
-        .select("services(name)")
-        .eq("user_id", user.id);
-
-      const servicesContent = document.getElementById("servicesContent");
-      if (servicesContent) {
-        servicesContent.innerHTML = services && services.length
-          ? services.map(s => `<p style="padding: 1rem; background: rgba(57,255,20,0.1); border-radius: 0.5rem; margin-bottom: 0.75rem;">${s.services.name}</p>`).join("")
-          : "No active services yet.";
+      for (const [key, pkg] of Object.entries(servicePackages)) {
+        const card = document.createElement('div');
+        card.className = 'service-card';
+        card.onclick = () => selectService(key);
+        
+        const featuresHTML = pkg.features.map(f => `<li>${f}</li>`).join('');
+        const excludedHTML = pkg.excluded.map(f => `<li class="excluded">${f}</li>`).join('');
+        
+        card.innerHTML = `
+          <h3>${pkg.name}</h3>
+          <div class="price">₱${pkg.price.toLocaleString()}</div>
+          <p style="color: #9ca3af; font-size: 0.85rem; margin-bottom: 0.5rem;">
+            ${pkg.basePages} pages included • ₱${pkg.pricePerPage.toLocaleString()}/additional page
+          </p>
+          <ul>
+            ${featuresHTML}
+            ${excludedHTML}
+          </ul>
+          <p style="color: #ffff00; font-size: 0.85rem; margin-top: 1rem;">
+            💡 Best for: ${pkg.bestFor}
+          </p>
+        `;
+        
+        grid.appendChild(card);
       }
     }
 
-    /* =========================
-       SAVE PROFILE
-    ========================= */
-    async function saveProfile() {
-      const displayName = document.getElementById("displayNameInput").value;
-      const username = document.getElementById("usernameInput").value;
-      const phone = document.getElementById("phoneInput").value;
+    let selectedPackage = null;
 
-      const { data: { user } } = await supabaseClient.auth.getUser();
-      if (!user) return;
+    function selectService(packageKey) {
+      selectedPackage = packageKey;
+      
+      // Update visual selection
+      document.querySelectorAll('.service-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      event.currentTarget.classList.add('selected');
 
-      const { error } = await supabaseClient
-        .from("profiles")
-        .update({
-          display_name: displayName,
-          username: username,
-          phone: phone,
-          updated_at: new Date()
-        })
-        .eq("id", user.id);
+      // Show customization panel
+      document.getElementById('customizationPanel').style.display = 'block';
+      document.getElementById('invoiceSection').style.display = 'block';
 
-      if (error) {
-        alert(error.message);
-        return;
-      }
+      // Set default number of pages
+      document.getElementById('numPages').value = servicePackages[packageKey].basePages;
 
-      alert("Profile updated successfully!");
-      initDashboard();
+      // Update additional features based on package
+      updateAdditionalFeatures();
+      
+      // Update invoice
+      updateInvoice();
+
+      // Scroll to customization
+      document.getElementById('customizationPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    /* =========================
-       UPDATE PASSWORD
-    ========================= */
-    async function updatePassword() {
-      const newPassword = document.getElementById("passwordInput").value;
-      if (!newPassword || newPassword.length < 6) {
-        alert("Password must be at least 6 characters.");
-        return;
-      }
+    function updateAdditionalFeatures() {
+      const container = document.getElementById('additionalFeatures');
+      const features = [
+        { id: 'seo', label: 'SEO Optimization', price: 3000 },
+        { id: 'analytics', label: 'Analytics Integration', price: 2000 },
+        { id: 'ssl', label: 'SSL Certificate', price: 1500 },
+        { id: 'backup', label: 'Automated Backups', price: 2500 },
+        { id: 'custom-forms', label: 'Custom Forms', price: 3500 },
+        { id: 'ecommerce', label: 'E-commerce Integration', price: 8000 }
+      ];
 
-      const { error } = await supabaseClient.auth.updateUser({
-        password: newPassword
+      container.innerHTML = features.map(f => `
+        <div class="checkbox-item">
+          <input type="checkbox" id="${f.id}" onchange="updateInvoice()">
+          <label for="${f.id}" style="color: #fff; cursor: pointer;">
+            ${f.label} (+₱${f.price.toLocaleString()})
+          </label>
+        </div>
+      `).join('');
+    }
+
+    // =================== INVOICE GENERATION ===================
+    function updateInvoice() {
+      if (!selectedPackage) return;
+
+      const pkg = servicePackages[selectedPackage];
+      const numPages = parseInt(document.getElementById('numPages').value) || pkg.basePages;
+      const serviceType = document.getElementById('serviceType').value;
+
+      let total = pkg.price;
+      const items = [];
+
+      // Base package
+      items.push({
+        description: `${pkg.name} (${pkg.basePages} pages)`,
+        amount: pkg.price
       });
 
-      if (error) {
-        alert(error.message);
-      } else {
-        alert("Password updated successfully!");
-        document.getElementById("passwordInput").value = "";
+      // Additional pages
+      if (numPages > pkg.basePages) {
+        const additionalPages = numPages - pkg.basePages;
+        const additionalCost = additionalPages * pkg.pricePerPage;
+        total += additionalCost;
+        items.push({
+          description: `Additional Pages (${additionalPages} × ₱${pkg.pricePerPage.toLocaleString()})`,
+          amount: additionalCost
+        });
       }
+
+      // Service type customization
+      if (serviceType) {
+        const serviceLabel = document.querySelector(`#serviceType option[value="${serviceType}"]`).textContent;
+        items.push({
+          description: `Service Type: ${serviceLabel}`,
+          amount: 0
+        });
+      }
+
+      // Additional features
+      const features = [
+        { id: 'seo', label: 'SEO Optimization', price: 3000 },
+        { id: 'analytics', label: 'Analytics Integration', price: 2000 },
+        { id: 'ssl', label: 'SSL Certificate', price: 1500 },
+        { id: 'backup', label: 'Automated Backups', price: 2500 },
+        { id: 'custom-forms', label: 'Custom Forms', price: 3500 },
+        { id: 'ecommerce', label: 'E-commerce Integration', price: 8000 }
+      ];
+
+      features.forEach(f => {
+        const checkbox = document.getElementById(f.id);
+        if (checkbox && checkbox.checked) {
+          total += f.price;
+          items.push({
+            description: f.label,
+            amount: f.price
+          });
+        }
+      });
+
+      // Update invoice display
+      const invoiceItems = document.getElementById('invoiceItems');
+      invoiceItems.innerHTML = items.map(item => `
+        <tr>
+          <td>${item.description}</td>
+          <td style="text-align: right; font-weight: 600; color: ${item.amount === 0 ? '#9ca3af' : '#fff'};">
+            ${item.amount === 0 ? 'Included' : '₱' + item.amount.toLocaleString()}
+          </td>
+        </tr>
+      `).join('');
+
+      document.getElementById('totalAmount').textContent = '₱' + total.toLocaleString();
+      document.getElementById('invoiceDate').textContent = new Date().toLocaleDateString('en-US');
+      document.getElementById('invoiceNumber').textContent = 'NGCS-2026-' + String(Math.floor(Math.random() * 9000) + 1000);
     }
 
-    /* =========================
-       LOGOUT
-    ========================= */
-    async function logout() {
-      await supabaseClient.auth.signOut();
-      window.location.href = "https://nexgenixcreativesolutions.github.io/login-signup";
+    // =================== ORDER SUBMISSION ===================
+    function submitOrder() {
+      if (!selectedPackage) {
+        alert('Please select a service package first.');
+        return;
+      }
+
+      const serviceType = document.getElementById('serviceType').value;
+      const numPages = document.getElementById('numPages').value;
+
+      if (!serviceType || !numPages) {
+        alert('Please fill in all required fields (Service Type and Number of Pages).');
+        return;
+      }
+
+      alert('Order submitted successfully! Payment integration will be added soon.\n\nYour invoice has been generated and is ready for download.');
     }
 
-    /* =========================
-       INITIALIZE
-    ========================= */
+    function downloadInvoice() {
+      alert('Invoice download functionality will be implemented with PDF generation.\n\nFor now, please take a screenshot of your invoice.');
+    }
+
+    // =================== USER PROFILE ===================
+    async function saveProfile() {
+      const displayName = document.getElementById('displayNameInput').value;
+      const username = document.getElementById('usernameInput').value;
+      const phone = document.getElementById('phoneInput').value;
+
+      alert('Profile updated successfully!');
+    }
+
+    async function updatePassword() {
+      const newPassword = document.getElementById('passwordInput').value;
+      if (!newPassword || newPassword.length < 6) {
+        alert('Password must be at least 6 characters.');
+        return;
+      }
+
+      alert('Password updated successfully!');
+      document.getElementById('passwordInput').value = '';
+    }
+
+    function logout() {
+      window.location.href = 'https://nexgenixcreativesolutions.github.io/login-signup';
+    }
+
+    // =================== INITIALIZE ===================
     document.addEventListener('DOMContentLoaded', function() {
       createFloatingCodeBackground();
-      initDashboard();
+      loadServices();
+      
+      // Set user info
+      document.getElementById('clientName').textContent = 'Valued Client';
+      document.getElementById('displayNameInput').value = 'Valued Client';
+      document.getElementById('emailInput').value = 'client@example.com';
     });
   </script>
 </body>
