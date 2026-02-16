@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +23,7 @@
       background-color: #000;
       color: #fff;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     /* =================== FLOATING CODE BACKGROUND =================== */
@@ -83,6 +85,7 @@
       justify-content: space-between;
       z-index: 100;
       overflow-y: auto;
+      transition: transform 0.3s ease;
     }
 
     .sidebar-logo {
@@ -135,6 +138,8 @@
       padding: 2rem;
       position: relative;
       z-index: 1;
+      width: 100%;
+      max-width: 100vw;
     }
 
     /* =================== TOP NAVIGATION =================== */
@@ -148,6 +153,8 @@
       border: 1px solid #39FF14;
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(57, 255, 20, 0.1);
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
     .datetime {
@@ -159,6 +166,7 @@
     .top-nav-buttons {
       display: flex;
       gap: 1rem;
+      flex-wrap: wrap;
     }
 
     .nav-btn {
@@ -174,6 +182,7 @@
       font-family: 'Montserrat Alternates', sans-serif;
       font-size: 0.9rem;
       text-decoration: none;
+      white-space: nowrap;
     }
 
     .home-btn {
@@ -261,6 +270,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      text-align: center;
     }
 
     .content-box {
@@ -276,13 +286,41 @@
       font-family: 'Orbitron', sans-serif;
       font-size: 1.5rem;
       color: #39FF14;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    /* =================== PACKAGE CATEGORIES =================== */
+    .package-category {
+      margin-bottom: 3rem;
+    }
+
+    .category-header {
+      background: linear-gradient(135deg, rgba(57, 255, 20, 0.2), rgba(0, 0, 0, 0.5));
+      border: 2px solid #39FF14;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .category-header h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: #39FF14;
+      text-shadow: 0 0 15px rgba(57, 255, 20, 0.6);
+      margin-bottom: 0.5rem;
+    }
+
+    .category-header p {
+      color: #d1d5db;
+      font-size: 0.95rem;
     }
 
     /* =================== SERVICE SELECTION =================== */
     .service-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
       margin-bottom: 2rem;
     }
@@ -295,6 +333,9 @@
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
     .service-card:hover {
@@ -314,6 +355,7 @@
       font-size: 1.2rem;
       color: #39FF14;
       margin-bottom: 0.5rem;
+      line-height: 1.3;
     }
 
     .service-card .price {
@@ -324,15 +366,24 @@
       font-family: 'Orbitron', sans-serif;
     }
 
+    .service-card .price-info {
+      color: #9ca3af;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
     .service-card ul {
       list-style: none;
       margin-top: 1rem;
+      flex-grow: 1;
     }
 
     .service-card ul li {
       padding: 0.5rem 0;
       font-size: 0.9rem;
       color: #d1d5db;
+      line-height: 1.4;
     }
 
     .service-card ul li:before {
@@ -347,6 +398,14 @@
       color: #ff0000;
     }
 
+    .service-card .best-for {
+      color: #ffff00;
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #333;
+    }
+
     /* =================== CUSTOMIZATION PANEL =================== */
     .customization-panel {
       background: linear-gradient(135deg, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.7));
@@ -354,6 +413,14 @@
       border-radius: 1rem;
       padding: 2rem;
       margin-bottom: 2rem;
+    }
+
+    .customization-panel h2 {
+      color: #39FF14;
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-size: 1.5rem;
     }
 
     .form-row {
@@ -375,7 +442,7 @@
       font-size: 0.9rem;
     }
 
-    .input, .select {
+    .input, .select, textarea {
       width: 100%;
       padding: 1rem;
       background: rgba(0, 0, 0, 0.5);
@@ -387,15 +454,20 @@
       transition: all 0.3s ease;
     }
 
-    .input:focus, .select:focus {
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .input:focus, .select:focus, textarea:focus {
       outline: none;
       border-color: #39FF14;
       box-shadow: 0 0 0 3px rgba(57, 255, 20, 0.2);
     }
 
     .checkbox-group {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
       margin-top: 0.5rem;
     }
@@ -421,6 +493,14 @@
       width: 20px;
       height: 20px;
       cursor: pointer;
+      accent-color: #39FF14;
+    }
+
+    .checkbox-item label {
+      color: #fff;
+      cursor: pointer;
+      margin: 0;
+      font-size: 0.9rem;
     }
 
     /* =================== INVOICE PREVIEW =================== */
@@ -443,13 +523,14 @@
       font-size: 2rem;
       color: #39FF14;
       text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+      text-align: center;
     }
 
     .invoice-info {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
-      margin-bottom: 2rem;
+      margin: 1.5rem 0;
       font-size: 0.95rem;
     }
 
@@ -465,6 +546,13 @@
       width: 100%;
       margin-bottom: 2rem;
       border-collapse: collapse;
+      overflow-x: auto;
+      display: block;
+    }
+
+    .invoice-table table {
+      width: 100%;
+      min-width: 500px;
     }
 
     .invoice-table thead {
@@ -491,11 +579,12 @@
     }
 
     .invoice-total {
-      text-align: right;
-      padding: 1.5rem;
-      background: rgba(57, 255, 20, 0.1);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: linear-gradient(135deg, rgba(57, 255, 20, 0.15), rgba(0, 0, 0, 0.5));
       border-radius: 0.75rem;
-      border: 1px solid #39FF14;
+      border: 2px solid #39FF14;
+      margin-bottom: 2rem;
     }
 
     .invoice-total .total-label {
@@ -503,6 +592,7 @@
       color: #ffff00;
       font-weight: 700;
       font-family: 'Orbitron', sans-serif;
+      margin-bottom: 1rem;
     }
 
     .invoice-total .total-amount {
@@ -529,7 +619,7 @@
       text-transform: uppercase;
     }
 
-    .button:hover {
+    .button:hover:not(:disabled) {
       background: #2ee80f;
       transform: translateY(-2px);
       box-shadow: 0 5px 20px rgba(57, 255, 20, 0.4);
@@ -547,13 +637,15 @@
       color: #ffff00;
     }
 
-    .button-secondary:hover {
+    .button-secondary:hover:not(:disabled) {
       background: #ffff00;
       color: #000;
+      box-shadow: 0 5px 20px rgba(255, 255, 0, 0.4);
     }
 
     .button-group {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
       margin-top: 2rem;
     }
@@ -571,52 +663,6 @@
       cursor: not-allowed;
     }
 
-    /* =================== RESPONSIVE DESIGN =================== */
-    @media (max-width: 1024px) {
-      .sidebar {
-        width: 240px;
-      }
-
-      .main-content {
-        margin-left: 240px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-      }
-
-      .sidebar.active {
-        transform: translateX(0);
-      }
-
-      .main-content {
-        margin-left: 0;
-      }
-
-      .welcome-title {
-        font-size: 2rem;
-      }
-
-      .service-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-
-      .invoice-info {
-        grid-template-columns: 1fr;
-      }
-
-      .button-group {
-        flex-direction: column;
-      }
-    }
-
     /* =================== MOBILE MENU TOGGLE =================== */
     .menu-toggle {
       display: none;
@@ -626,14 +672,168 @@
       z-index: 101;
       background: #39FF14;
       border: none;
-      padding: 0.75rem;
+      padding: 0.75rem 1rem;
       border-radius: 0.5rem;
       cursor: pointer;
+      font-size: 1.2rem;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 99;
+    }
+
+    /* =================== RESPONSIVE DESIGN =================== */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 240px;
+      }
+
+      .main-content {
+        margin-left: 240px;
+      }
+
+      .service-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
     }
 
     @media (max-width: 768px) {
       .menu-toggle {
         display: block;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 1rem;
+        padding-top: 4rem;
+      }
+
+      .welcome-title {
+        font-size: 1.8rem;
+        margin-top: 1rem;
+      }
+
+      .service-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .checkbox-group {
+        grid-template-columns: 1fr;
+      }
+
+      .invoice-info {
+        grid-template-columns: 1fr;
+      }
+
+      .button-group {
+        grid-template-columns: 1fr;
+      }
+
+      .top-nav {
+        padding: 1rem;
+      }
+
+      .datetime {
+        font-size: 0.75rem;
+        width: 100%;
+        text-align: center;
+      }
+
+      .top-nav-buttons {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .nav-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .category-header h3 {
+        font-size: 1.4rem;
+      }
+
+      .service-card h3 {
+        font-size: 1.1rem;
+      }
+
+      .service-card .price {
+        font-size: 1.5rem;
+      }
+
+      .invoice-header h2 {
+        font-size: 1.5rem;
+      }
+
+      .invoice-total .total-amount {
+        font-size: 2rem;
+      }
+
+      .content-box {
+        padding: 1.5rem;
+      }
+
+      .customization-panel {
+        padding: 1.5rem;
+      }
+
+      .invoice-preview {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .welcome-title {
+        font-size: 1.5rem;
+      }
+
+      .category-header {
+        padding: 1rem;
+      }
+
+      .category-header h3 {
+        font-size: 1.2rem;
+      }
+
+      .service-card {
+        padding: 1rem;
+      }
+
+      .service-card .price {
+        font-size: 1.3rem;
+      }
+
+      .invoice-total .total-amount {
+        font-size: 1.8rem;
+      }
+
+      .button {
+        padding: 0.875rem 1rem;
+        font-size: 0.9rem;
       }
     }
   </style>
@@ -644,7 +844,10 @@
   <div class="floating-code-container" id="floatingCodeContainer"></div>
 
   <!-- Mobile Menu Toggle -->
-  <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+  <button class="menu-toggle" onclick="toggleSidebar()">☰ Menu</button>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
   <div class="dashboard-wrapper">
     <!-- Sidebar -->
@@ -689,17 +892,48 @@
       <div id="order" class="content-section active">
         <h1 class="welcome-title">Order Your Service</h1>
 
-        <!-- Service Selection -->
-        <div class="content-box">
-          <h2>Select Your Package</h2>
-          <div class="service-grid" id="serviceGrid">
-            <!-- Services will be dynamically loaded -->
+        <!-- MULTI-PAGE WEBSITES WITH MAINTENANCE -->
+        <div class="package-category">
+          <div class="category-header">
+            <h3>📱 Multi-Page Websites (With Maintenance)</h3>
+            <p>Professional websites with ongoing support and maintenance - Perfect for growing businesses</p>
+          </div>
+          <div class="content-box">
+            <div class="service-grid" id="serviceGridMaintenance">
+              <!-- Loaded dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ONE-PAGE WEBSITES -->
+        <div class="package-category">
+          <div class="category-header">
+            <h3>⚡ One-Page Websites (Fast Launch)</h3>
+            <p>Quick and efficient single-page solutions - Best for new businesses, promos, and landing pages</p>
+          </div>
+          <div class="content-box">
+            <div class="service-grid" id="serviceGridOnePage">
+              <!-- Loaded dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- MULTI-PAGE WEBSITES WITHOUT MAINTENANCE -->
+        <div class="package-category">
+          <div class="category-header">
+            <h3>🌐 Multi-Page Websites (No Maintenance)</h3>
+            <p>One-time development with no ongoing costs - For businesses wanting a simple online presence</p>
+          </div>
+          <div class="content-box">
+            <div class="service-grid" id="serviceGridNoMaintenance">
+              <!-- Loaded dynamically -->
+            </div>
           </div>
         </div>
 
         <!-- Customization Panel -->
         <div class="customization-panel" id="customizationPanel" style="display: none;">
-          <h2 style="color: #39FF14; font-family: 'Orbitron', sans-serif; margin-bottom: 1.5rem;">Customize Your Order</h2>
+          <h2>Customize Your Order</h2>
           
           <div class="form-row">
             <div class="form-group">
@@ -722,7 +956,7 @@
           <div class="form-group">
             <label>Additional Features</label>
             <div class="checkbox-group" id="additionalFeatures">
-              <!-- Dynamically populated based on package -->
+              <!-- Dynamically populated -->
             </div>
           </div>
 
@@ -740,7 +974,7 @@
 
           <div class="form-group">
             <label for="specialRequests">Special Requests / Notes</label>
-            <textarea id="specialRequests" class="input" rows="4" placeholder="Any special requirements or notes..."></textarea>
+            <textarea id="specialRequests" class="input" placeholder="Any special requirements or notes..."></textarea>
           </div>
         </div>
 
@@ -757,17 +991,19 @@
               </div>
             </div>
 
-            <table class="invoice-table">
-              <thead>
-                <tr>
-                  <th>Description</th>
-                  <th style="text-align: right;">Amount (PHP)</th>
-                </tr>
-              </thead>
-              <tbody id="invoiceItems">
-                <!-- Dynamic invoice items -->
-              </tbody>
-            </table>
+            <div class="invoice-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th style="text-align: right;">Amount (PHP)</th>
+                  </tr>
+                </thead>
+                <tbody id="invoiceItems">
+                  <!-- Dynamic invoice items -->
+                </tbody>
+              </table>
+            </div>
 
             <div class="invoice-total">
               <div class="total-label">TOTAL AMOUNT DUE</div>
@@ -830,151 +1066,162 @@
   </div>
 
   <script>
-    // =================== SERVICE PACKAGES DATA ===================
+    // =================== SERVICE PACKAGES DATA (CATEGORIZED) ===================
     const servicePackages = {
-      basic: {
-        name: 'BASIC - Starter Business',
-        price: 18000,
-        basePages: 5,
-        pricePerPage: 1500,
-        features: [
-          '3-5 page website',
-          'Mobile responsive',
-          'Free domain (1 year)',
-          'Hosting (1 year)',
-          '1 professional email',
-          '30% profit margin'
-        ],
-        excluded: [],
-        bestFor: 'sari-sari, cafés, freelancers, startups'
+      // CATEGORY 1: MULTI-PAGE WITH MAINTENANCE
+      maintenance: {
+        basic: {
+          name: 'BASIC - Starter Business',
+          price: 18000,
+          basePages: 5,
+          pricePerPage: 1500,
+          features: [
+            '3-5 page website',
+            'Mobile responsive',
+            'Free domain (1 year)',
+            'Hosting (1 year)',
+            '1 professional email',
+            '30% profit margin'
+          ],
+          excluded: [],
+          bestFor: 'sari-sari, cafés, freelancers, startups'
+        },
+        pro: {
+          name: 'PRO - Growing Business',
+          price: 26000,
+          basePages: 8,
+          pricePerPage: 2000,
+          features: [
+            '5-8 pages',
+            'SQL database',
+            'Contact forms',
+            'Speed optimization',
+            'Website Manager (1 month FREE)',
+            '40% profit margin'
+          ],
+          excluded: [],
+          bestFor: 'clinics, restaurants, agencies'
+        },
+        premium: {
+          name: 'PREMIUM - Established/Corporate',
+          price: 52500,
+          basePages: 12,
+          pricePerPage: 3500,
+          features: [
+            'Custom UI/UX',
+            'Advanced SQL & admin panel',
+            'Multiple emails',
+            'Priority support',
+            '50%+ profit margin',
+            'Dedicated Website Manager'
+          ],
+          excluded: [],
+          bestFor: 'corporations, franchises, e-commerce'
+        }
       },
-      pro: {
-        name: 'PRO - Growing Business',
-        price: 26000,
-        basePages: 8,
-        pricePerPage: 2000,
-        features: [
-          '5-8 pages',
-          'SQL database',
-          'Contact forms',
-          'Speed optimization',
-          'Website Manager (1 month FREE)',
-          '40% profit margin'
-        ],
-        excluded: [],
-        bestFor: 'clinics, restaurants, agencies'
-      },
-      premium: {
-        name: 'PREMIUM - Established/Corporate',
-        price: 52500,
-        basePages: 12,
-        pricePerPage: 3500,
-        features: [
-          'Custom UI/UX',
-          'Advanced SQL & admin panel',
-          'Multiple emails',
-          'Priority support',
-          '50%+ profit margin',
-          'Dedicated Website Manager'
-        ],
-        excluded: [],
-        bestFor: 'corporations, franchises, e-commerce'
-      },
+      
+      // CATEGORY 2: TWO-PAGE WEBSITES
       onePage: {
-        name: 'ONE-PAGE Starter',
-        price: 6500,
-        basePages: 2,
-        pricePerPage: 1000,
-        features: [
-          '2 pages',
-          'Mobile responsive',
-          'Basic UI design',
-          'Contact form (email notification)',
-          'Hosted online',
-          'FREE domain (1 year)',
-          'Hosting (1 year)',
-          '30% profit margin'
-        ],
-        excluded: ['No maintenance', 'No business email'],
-        bestFor: 'freelancers, home-based sellers, promos'
+        starter: {
+          name: 'TWO-PAGE Starter',
+          price: 6500,
+          basePages: 2,
+          pricePerPage: 1000,
+          features: [
+            '2 pages',
+            'Mobile responsive',
+            'Basic UI design',
+            'Contact form (email notification)',
+            'Hosted online',
+            'FREE domain (1 year)',
+            'Hosting (1 year)',
+            '30% profit margin'
+          ],
+          excluded: ['No maintenance', 'No business email'],
+          bestFor: 'freelancers, home-based sellers, promos'
+        },
+        pro: {
+          name: 'TWO-PAGE Pro',
+          price: 9500,
+          basePages: 2,
+          pricePerPage: 1500,
+          features: [
+            'Everything in Starter',
+            'Custom layout & branding',
+            'SEO-ready structure',
+            'Faster loading optimization',
+            'Priority setup'
+          ],
+          excluded: ['No maintenance', 'No business email'],
+          bestFor: 'cafés, startups, marketing campaigns'
+        },
+        premium: {
+          name: 'TWO-PAGE Premium',
+          price: 14000,
+          basePages: 2,
+          pricePerPage: 2000,
+          features: [
+            'Custom-designed landing page',
+            'Conversion-focused layout',
+            'Call-to-action sections',
+            'Google Map integration',
+            'Analytics setup'
+          ],
+          excluded: ['No maintenance', 'No business email'],
+          bestFor: 'product launches, agencies, corporate promos'
+        }
       },
-      onePagePro: {
-        name: 'ONE-PAGE Pro',
-        price: 9500,
-        basePages: 2,
-        pricePerPage: 1500,
-        features: [
-          'Everything in Starter',
-          'Custom layout & branding',
-          'SEO-ready structure',
-          'Faster loading optimization',
-          'Priority setup'
-        ],
-        excluded: ['No maintenance', 'No business email'],
-        bestFor: 'cafés, startups, marketing campaigns'
-      },
-      onePagePremium: {
-        name: 'ONE-PAGE Premium',
-        price: 14000,
-        basePages: 2,
-        pricePerPage: 2000,
-        features: [
-          'Custom-designed landing page',
-          'Conversion-focused layout',
-          'Call-to-action sections',
-          'Google Map integration',
-          'Analytics setup'
-        ],
-        excluded: ['No maintenance', 'No business email'],
-        bestFor: 'product launches, agencies, corporate promos'
-      },
-      multiBasic: {
-        name: 'MULTI-PAGE Basic (No Maintenance)',
-        price: 12000,
-        basePages: 4,
-        pricePerPage: 1200,
-        features: [
-          '3-4 pages',
-          'Mobile responsive',
-          'FREE domain (1 year)',
-          'Hosting (1 year)',
-          'Contact form',
-          '30% profit margin'
-        ],
-        excluded: ['No maintenance', 'No business email', 'No updates after turnover'],
-        bestFor: 'small shops, sari-sari, service providers'
-      },
-      multiStandard: {
-        name: 'MULTI-PAGE Standard (No Maintenance)',
-        price: 17000,
-        basePages: 7,
-        pricePerPage: 1700,
-        features: [
-          '5-7 pages',
-          'Improved UI design',
-          'Speed optimization',
-          'FREE domain (1 year)',
-          'Hosting (1 year)',
-          '40% profit margin'
-        ],
-        excluded: ['No maintenance', 'No business email'],
-        bestFor: 'restaurants, clinics, schools'
-      },
-      multiAdvanced: {
-        name: 'MULTI-PAGE Advanced (No Maintenance)',
-        price: 25000,
-        basePages: 12,
-        pricePerPage: 2500,
-        features: [
-          '8-12 pages',
-          'Custom layout',
-          'SQL database (if needed)',
-          'FREE domain (1 year)',
-          'Hosting (1 year)',
-          '50% profit margin'
-        ],
-        excluded: ['No maintenance', 'No business email'],
-        bestFor: 'large local businesses, organizations'
+      
+      // CATEGORY 3: MULTI-PAGE WITHOUT MAINTENANCE
+      noMaintenance: {
+        basic: {
+          name: 'MULTI-PAGE Basic',
+          price: 12000,
+          basePages: 4,
+          pricePerPage: 1200,
+          features: [
+            '3-4 pages',
+            'Mobile responsive',
+            'FREE domain (1 year)',
+            'Hosting (1 year)',
+            'Contact form',
+            '30% profit margin'
+          ],
+          excluded: ['No maintenance', 'No business email', 'No updates after turnover'],
+          bestFor: 'small shops, sari-sari, service providers'
+        },
+        standard: {
+          name: 'MULTI-PAGE Standard',
+          price: 17000,
+          basePages: 7,
+          pricePerPage: 1700,
+          features: [
+            '5-7 pages',
+            'Improved UI design',
+            'Speed optimization',
+            'FREE domain (1 year)',
+            'Hosting (1 year)',
+            '40% profit margin'
+          ],
+          excluded: ['No maintenance', 'No business email'],
+          bestFor: 'restaurants, clinics, schools'
+        },
+        advanced: {
+          name: 'MULTI-PAGE Advanced',
+          price: 25000,
+          basePages: 12,
+          pricePerPage: 2500,
+          features: [
+            '8-12 pages',
+            'Custom layout',
+            'SQL database (if needed)',
+            'FREE domain (1 year)',
+            'Hosting (1 year)',
+            '50% profit margin'
+          ],
+          excluded: ['No maintenance', 'No business email'],
+          bestFor: 'large local businesses, organizations'
+        }
       }
     };
 
@@ -1055,21 +1302,40 @@
       }
 
       event.target.classList.add('active');
+      
+      // Close sidebar on mobile after selection
+      if (window.innerWidth <= 768) {
+        toggleSidebar();
+      }
     }
 
     function toggleSidebar() {
       document.getElementById('sidebar').classList.toggle('active');
+      document.getElementById('sidebarOverlay').classList.toggle('active');
     }
 
-    // =================== LOAD SERVICES ===================
+    // =================== LOAD SERVICES BY CATEGORY ===================
     function loadServices() {
-      const grid = document.getElementById('serviceGrid');
+      // Load maintenance packages
+      loadServiceCategory('serviceGridMaintenance', servicePackages.maintenance, 'maintenance');
+      
+      // Load one-page packages
+      loadServiceCategory('serviceGridOnePage', servicePackages.onePage, 'onePage');
+      
+      // Load no maintenance packages
+      loadServiceCategory('serviceGridNoMaintenance', servicePackages.noMaintenance, 'noMaintenance');
+    }
+
+    function loadServiceCategory(gridId, packages, category) {
+      const grid = document.getElementById(gridId);
+      if (!grid) return;
+      
       grid.innerHTML = '';
 
-      for (const [key, pkg] of Object.entries(servicePackages)) {
+      for (const [key, pkg] of Object.entries(packages)) {
         const card = document.createElement('div');
         card.className = 'service-card';
-        card.onclick = () => selectService(key);
+        card.onclick = () => selectService(category, key);
         
         const featuresHTML = pkg.features.map(f => `<li>${f}</li>`).join('');
         const excludedHTML = pkg.excluded.map(f => `<li class="excluded">${f}</li>`).join('');
@@ -1077,14 +1343,15 @@
         card.innerHTML = `
           <h3>${pkg.name}</h3>
           <div class="price">₱${pkg.price.toLocaleString()}</div>
-          <p style="color: #9ca3af; font-size: 0.85rem; margin-bottom: 0.5rem;">
-            ${pkg.basePages} pages included • ₱${pkg.pricePerPage.toLocaleString()}/additional page
+          <p class="price-info">
+            ${pkg.basePages} pages included<br>
+            ₱${pkg.pricePerPage.toLocaleString()} per additional page
           </p>
           <ul>
             ${featuresHTML}
             ${excludedHTML}
           </ul>
-          <p style="color: #ffff00; font-size: 0.85rem; margin-top: 1rem;">
+          <p class="best-for">
             💡 Best for: ${pkg.bestFor}
           </p>
         `;
@@ -1094,8 +1361,10 @@
     }
 
     let selectedPackage = null;
+    let selectedCategory = null;
 
-    function selectService(packageKey) {
+    function selectService(category, packageKey) {
+      selectedCategory = category;
       selectedPackage = packageKey;
       
       // Update visual selection
@@ -1108,10 +1377,13 @@
       document.getElementById('customizationPanel').style.display = 'block';
       document.getElementById('invoiceSection').style.display = 'block';
 
-      // Set default number of pages
-      document.getElementById('numPages').value = servicePackages[packageKey].basePages;
+      // Get package data
+      const pkg = servicePackages[category][packageKey];
 
-      // Update additional features based on package
+      // Set default number of pages
+      document.getElementById('numPages').value = pkg.basePages;
+
+      // Update additional features
       updateAdditionalFeatures();
       
       // Update invoice
@@ -1135,7 +1407,7 @@
       container.innerHTML = features.map(f => `
         <div class="checkbox-item">
           <input type="checkbox" id="${f.id}" onchange="updateInvoice()">
-          <label for="${f.id}" style="color: #fff; cursor: pointer;">
+          <label for="${f.id}">
             ${f.label} (+₱${f.price.toLocaleString()})
           </label>
         </div>
@@ -1144,9 +1416,9 @@
 
     // =================== INVOICE GENERATION ===================
     function updateInvoice() {
-      if (!selectedPackage) return;
+      if (!selectedPackage || !selectedCategory) return;
 
-      const pkg = servicePackages[selectedPackage];
+      const pkg = servicePackages[selectedCategory][selectedPackage];
       const numPages = parseInt(document.getElementById('numPages').value) || pkg.basePages;
       const serviceType = document.getElementById('serviceType').value;
 
@@ -1218,7 +1490,7 @@
 
     // =================== ORDER SUBMISSION ===================
     function submitOrder() {
-      if (!selectedPackage) {
+      if (!selectedPackage || !selectedCategory) {
         alert('Please select a service package first.');
         return;
       }
