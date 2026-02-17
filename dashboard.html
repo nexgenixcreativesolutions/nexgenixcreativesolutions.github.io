@@ -1095,22 +1095,7 @@
     .total-updating { animation: totalPulse 0.4s ease-out; }
 
     /* =================== MOBILE MENU TOGGLE =================== */
-    .menu-toggle {
-      display: none;
-      position: fixed;
-      top: 1rem;
-      left: 1rem;
-      z-index: 150;
-      background: var(--neon);
-      border: none;
-      padding: 0.65rem 0.875rem;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-size: 1.1rem;
-      color: #000;
-      font-weight: bold;
-      box-shadow: 0 4px 14px var(--neon-glow);
-    }
+    .menu-toggle { display: none !important; }
 
     .sidebar-overlay {
       display: none;
@@ -1134,7 +1119,7 @@
       .sidebar.active { transform: translateX(0); }
       .sidebar-overlay.active { display: block; }
 
-      .main-content { margin-left: 0; padding: 1rem; padding-top: 5rem; }
+      .main-content { margin-left: 0; padding: 1rem; padding-top: 1.25rem; padding-bottom: 72px; }
       .welcome-title { font-size: 1.6rem; margin-top: 1rem; }
       .service-grid { grid-template-columns: 1fr; gap: 0.875rem; }
       .form-row { grid-template-columns: 1fr; }
@@ -1271,9 +1256,6 @@
 <body>
   <!-- Floating Code Background -->
   <div class="floating-code-container" id="floatingCodeContainer"></div>
-
-  <!-- Mobile Menu Toggle -->
-  <button class="menu-toggle" onclick="toggleSidebar()">☰ Menu</button>
 
   <!-- Sidebar Overlay -->
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
