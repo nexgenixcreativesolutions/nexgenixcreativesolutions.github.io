@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -290,6 +289,41 @@
       text-align: center;
     }
 
+    /* =================== ORDER TYPE SELECTOR =================== */
+    .order-type-selector {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .order-type-btn {
+      padding: 1rem 2rem;
+      border-radius: 0.75rem;
+      border: 2px solid #444;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Orbitron', sans-serif;
+      min-width: 200px;
+    }
+
+    .order-type-btn:hover {
+      border-color: #39FF14;
+      background: rgba(57, 255, 20, 0.1);
+    }
+
+    .order-type-btn.active {
+      border-color: #39FF14;
+      background: rgba(57, 255, 20, 0.2);
+      color: #39FF14;
+      box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+    }
+
     /* =================== PACKAGE CATEGORIES =================== */
     .package-category {
       margin-bottom: 3rem;
@@ -330,7 +364,6 @@
       border: 2px solid #1f2937;
       border-radius: 1rem;
       padding: 1.5rem;
-      cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
       display: flex;
@@ -404,6 +437,33 @@
       margin-top: 1rem;
       padding-top: 1rem;
       border-top: 1px solid #333;
+    }
+
+    .service-card .select-btn {
+      width: 100%;
+      background: #39FF14;
+      color: #000;
+      padding: 0.875rem 1.5rem;
+      border: none;
+      border-radius: 0.75rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat Alternates', sans-serif;
+      text-transform: uppercase;
+      margin-top: 1rem;
+    }
+
+    .service-card .select-btn:hover {
+      background: #2ee80f;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(57, 255, 20, 0.4);
+    }
+
+    .service-card.selected .select-btn {
+      background: #ffff00;
+      color: #000;
     }
 
     /* =================== CUSTOMIZATION PANEL =================== */
@@ -669,7 +729,7 @@
       position: fixed;
       top: 1rem;
       left: 1rem;
-      z-index: 101;
+      z-index: 150;
       background: #39FF14;
       border: none;
       padding: 0.75rem 1rem;
@@ -678,6 +738,7 @@
       font-size: 1.2rem;
       color: #000;
       font-weight: bold;
+      box-shadow: 0 4px 12px rgba(57, 255, 20, 0.4);
     }
 
     .sidebar-overlay {
@@ -724,7 +785,7 @@
       .main-content {
         margin-left: 0;
         padding: 1rem;
-        padding-top: 4rem;
+        padding-top: 5rem;
       }
 
       .welcome-title {
@@ -751,6 +812,14 @@
 
       .button-group {
         grid-template-columns: 1fr;
+      }
+
+      .order-type-selector {
+        flex-direction: column;
+      }
+
+      .order-type-btn {
+        width: 100%;
       }
 
       .top-nav {
@@ -876,7 +945,7 @@
               <span>Home</span>
             </button>
             <div class="dropdown-menu">
-              <a href="https://nexgenixbusinesschool.github.io" target="_blank">Nex Genix Business School</a>
+              <a href="https://nexgenixbusinessschool.github.io" target="_blank">Nex Genix Business School</a>
               <a href="https://nexgenixcreativesolutions.github.io" target="_blank">Nex Genix Creative Solutions</a>
             </div>
           </div>
@@ -892,41 +961,93 @@
       <div id="order" class="content-section active">
         <h1 class="welcome-title">Order Your Service</h1>
 
-        <!-- MULTI-PAGE WEBSITES WITH MAINTENANCE -->
-        <div class="package-category">
-          <div class="category-header">
-            <h3>📱 Multi-Page Websites (With Maintenance)</h3>
-            <p>Professional websites with ongoing support and maintenance - Perfect for growing businesses</p>
+        <!-- Order Type Selector -->
+        <div class="order-type-selector">
+          <button class="order-type-btn active" id="newWebsiteBtn" onclick="selectOrderType('new')">
+            🆕 New Website Order
+          </button>
+          <button class="order-type-btn" id="renewalBtn" onclick="selectOrderType('renewal')">
+            🔄 Renewal Service
+          </button>
+        </div>
+
+        <!-- NEW WEBSITE PACKAGES -->
+        <div id="newWebsitePackages">
+          <!-- MULTI-PAGE WEBSITES WITH MAINTENANCE -->
+          <div class="package-category">
+            <div class="category-header">
+              <h3>📱 Multi-Page Websites (With Maintenance)</h3>
+              <p>Professional websites with ongoing support and maintenance - Perfect for growing businesses</p>
+            </div>
+            <div class="content-box">
+              <div class="service-grid" id="serviceGridMaintenance">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
           </div>
-          <div class="content-box">
-            <div class="service-grid" id="serviceGridMaintenance">
-              <!-- Loaded dynamically -->
+
+          <!-- ONE-PAGE WEBSITES -->
+          <div class="package-category">
+            <div class="category-header">
+              <h3>⚡ One-Page Websites (Fast Launch)</h3>
+              <p>Quick and efficient single-page solutions - Best for new businesses, promos, and landing pages</p>
+            </div>
+            <div class="content-box">
+              <div class="service-grid" id="serviceGridOnePage">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- MULTI-PAGE WEBSITES WITHOUT MAINTENANCE -->
+          <div class="package-category">
+            <div class="category-header">
+              <h3>🌐 Multi-Page Websites (No Maintenance)</h3>
+              <p>One-time development with no ongoing costs - For businesses wanting a simple online presence</p>
+            </div>
+            <div class="content-box">
+              <div class="service-grid" id="serviceGridNoMaintenance">
+                <!-- Loaded dynamically -->
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- TWO-PAGE WEBSITES -->
-        <div class="package-category">
-          <div class="category-header">
-            <h3>⚡ Two-Page Websites (Fast Launch)</h3>
-            <p>Quick and efficient two-page solutions - Best for new businesses, promos, and landing pages</p>
-          </div>
-          <div class="content-box">
-            <div class="service-grid" id="serviceGridOnePage">
-              <!-- Loaded dynamically -->
+        <!-- RENEWAL SERVICES -->
+        <div id="renewalPackages" style="display: none;">
+          <!-- WEBSITE MANAGER SERVICES -->
+          <div class="package-category">
+            <div class="category-header">
+              <h3>🔧 Website Manager Services</h3>
+              <p>Monthly or annual website maintenance and support</p>
+            </div>
+            <div class="content-box">
+              <div style="background: rgba(57, 255, 20, 0.1); border: 1px solid #39FF14; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 2rem;">
+                <h4 style="color: #39FF14; font-size: 1.1rem; margin-bottom: 1rem; font-family: 'Orbitron', sans-serif;">Website Manager Includes:</h4>
+                <ul style="list-style: none; padding: 0;">
+                  <li style="padding: 0.5rem 0; color: #d1d5db;">✓ Content updates (text/images)</li>
+                  <li style="padding: 0.5rem 0; color: #d1d5db;">✓ Minor design changes</li>
+                  <li style="padding: 0.5rem 0; color: #d1d5db;">✓ Plugin & security checks</li>
+                  <li style="padding: 0.5rem 0; color: #d1d5db;">✓ Backup monitoring</li>
+                  <li style="padding: 0.5rem 0; color: #d1d5db;">✓ Basic performance checks</li>
+                </ul>
+              </div>
+              <div class="service-grid" id="serviceGridManager">
+                <!-- Loaded dynamically -->
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- MULTI-PAGE WEBSITES WITHOUT MAINTENANCE -->
-        <div class="package-category">
-          <div class="category-header">
-            <h3>🌐 Multi-Page Websites (No Maintenance)</h3>
-            <p>One-time development with no ongoing costs - For businesses wanting a simple online presence</p>
-          </div>
-          <div class="content-box">
-            <div class="service-grid" id="serviceGridNoMaintenance">
-              <!-- Loaded dynamically -->
+          <!-- ANNUAL RENEWAL INVOICE -->
+          <div class="package-category">
+            <div class="category-header">
+              <h3>📅 Annual Website Renewal</h3>
+              <p>Keep your website running with hosting, domain, and essential services</p>
+            </div>
+            <div class="content-box">
+              <div class="service-grid" id="serviceGridRenewal">
+                <!-- Loaded dynamically -->
+              </div>
             </div>
           </div>
         </div>
@@ -947,13 +1068,13 @@
               </select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="numPagesGroup">
               <label for="numPages">Number of Pages *</label>
               <input type="number" id="numPages" class="input" min="1" max="100" placeholder="Enter number of pages" onchange="updateInvoice()">
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" id="additionalFeaturesGroup">
             <label>Additional Features</label>
             <div class="checkbox-group" id="additionalFeatures">
               <!-- Dynamically populated -->
@@ -1120,10 +1241,10 @@
         }
       },
       
-      // CATEGORY 2: TWO-PAGE WEBSITES
+      // CATEGORY 2: ONE-PAGE WEBSITES
       onePage: {
         starter: {
-          name: 'TWO-PAGE Starter',
+          name: 'ONE-PAGE Starter',
           price: 6500,
           basePages: 2,
           pricePerPage: 1000,
@@ -1141,7 +1262,7 @@
           bestFor: 'freelancers, home-based sellers, promos'
         },
         pro: {
-          name: 'TWO-PAGE Pro',
+          name: 'ONE-PAGE Pro',
           price: 9500,
           basePages: 2,
           pricePerPage: 1500,
@@ -1156,7 +1277,7 @@
           bestFor: 'cafés, startups, marketing campaigns'
         },
         premium: {
-          name: 'TWO-PAGE Premium',
+          name: 'ONE-PAGE Premium',
           price: 14000,
           basePages: 2,
           pricePerPage: 2000,
@@ -1222,6 +1343,60 @@
           excluded: ['No maintenance', 'No business email'],
           bestFor: 'large local businesses, organizations'
         }
+      },
+
+      // CATEGORY 4: WEBSITE MANAGER SERVICES
+      manager: {
+        monthly: {
+          name: 'Website Manager (Monthly)',
+          price: 800,
+          basePages: 0,
+          pricePerPage: 0,
+          features: [
+            'Content updates (text/images)',
+            'Minor design changes',
+            'Plugin & security checks',
+            'Backup monitoring',
+            'Basic performance checks',
+            'Startup-friendly pricing'
+          ],
+          excluded: [],
+          bestFor: 'businesses wanting flexible monthly support'
+        },
+        annual: {
+          name: 'Website Manager (Annual)',
+          price: 8000,
+          basePages: 0,
+          pricePerPage: 0,
+          features: [
+            'All monthly features',
+            '2 months FREE',
+            'Priority support',
+            'Discounted rate',
+            'Better value for long-term'
+          ],
+          excluded: [],
+          bestFor: 'businesses committed to ongoing maintenance'
+        }
+      },
+
+      // CATEGORY 5: ANNUAL RENEWAL
+      renewal: {
+        standard: {
+          name: 'Annual Website Renewal',
+          price: 20000,
+          basePages: 0,
+          pricePerPage: 0,
+          features: [
+            'Hostinger Hosting Renewal: ₱1,800',
+            'Domain Renewal: ₱900',
+            'Google Workspace Email Renewal (1 user): ₱6,800',
+            'Website Manager Service (Annual): ₱8,000',
+            'Technical Support & Vendor Handling Fee: ₱2,500'
+          ],
+          excluded: [],
+          bestFor: 'existing clients renewing annual services'
+        }
       }
     };
 
@@ -1284,6 +1459,32 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
+    // =================== ORDER TYPE SELECTION ===================
+    let currentOrderType = 'new';
+
+    function selectOrderType(type) {
+      currentOrderType = type;
+      
+      // Update button states
+      document.getElementById('newWebsiteBtn').classList.toggle('active', type === 'new');
+      document.getElementById('renewalBtn').classList.toggle('active', type === 'renewal');
+      
+      // Show/hide package sections
+      document.getElementById('newWebsitePackages').style.display = type === 'new' ? 'block' : 'none';
+      document.getElementById('renewalPackages').style.display = type === 'renewal' ? 'block' : 'none';
+      
+      // Hide customization and invoice
+      document.getElementById('customizationPanel').style.display = 'none';
+      document.getElementById('invoiceSection').style.display = 'none';
+      
+      // Clear selection
+      selectedPackage = null;
+      selectedCategory = null;
+      document.querySelectorAll('.service-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+    }
+
     // =================== NAVIGATION ===================
     function showSection(sectionId) {
       const sections = document.querySelectorAll('.content-section');
@@ -1324,6 +1525,12 @@
       
       // Load no maintenance packages
       loadServiceCategory('serviceGridNoMaintenance', servicePackages.noMaintenance, 'noMaintenance');
+
+      // Load website manager packages
+      loadServiceCategory('serviceGridManager', servicePackages.manager, 'manager');
+
+      // Load renewal packages
+      loadServiceCategory('serviceGridRenewal', servicePackages.renewal, 'renewal');
     }
 
     function loadServiceCategory(gridId, packages, category) {
@@ -1335,7 +1542,8 @@
       for (const [key, pkg] of Object.entries(packages)) {
         const card = document.createElement('div');
         card.className = 'service-card';
-        card.onclick = () => selectService(category, key);
+        card.setAttribute('data-category', category);
+        card.setAttribute('data-key', key);
         
         const featuresHTML = pkg.features.map(f => `<li>${f}</li>`).join('');
         const excludedHTML = pkg.excluded.map(f => `<li class="excluded">${f}</li>`).join('');
@@ -1343,10 +1551,12 @@
         card.innerHTML = `
           <h3>${pkg.name}</h3>
           <div class="price">₱${pkg.price.toLocaleString()}</div>
-          <p class="price-info">
-            ${pkg.basePages} pages included<br>
-            ₱${pkg.pricePerPage.toLocaleString()} per additional page
-          </p>
+          ${pkg.basePages > 0 ? `
+            <p class="price-info">
+              ${pkg.basePages} pages included<br>
+              ₱${pkg.pricePerPage.toLocaleString()} per additional page
+            </p>
+          ` : ''}
           <ul>
             ${featuresHTML}
             ${excludedHTML}
@@ -1354,6 +1564,7 @@
           <p class="best-for">
             💡 Best for: ${pkg.bestFor}
           </p>
+          <button class="select-btn" onclick="selectService('${category}', '${key}')">Select Package</button>
         `;
         
         grid.appendChild(card);
@@ -1371,7 +1582,11 @@
       document.querySelectorAll('.service-card').forEach(card => {
         card.classList.remove('selected');
       });
-      event.currentTarget.classList.add('selected');
+      
+      const selectedCard = document.querySelector(`[data-category="${category}"][data-key="${packageKey}"]`);
+      if (selectedCard) {
+        selectedCard.classList.add('selected');
+      }
 
       // Show customization panel
       document.getElementById('customizationPanel').style.display = 'block';
@@ -1380,11 +1595,23 @@
       // Get package data
       const pkg = servicePackages[category][packageKey];
 
-      // Set default number of pages
-      document.getElementById('numPages').value = pkg.basePages;
+      // Show/hide page selector based on package type
+      const numPagesGroup = document.getElementById('numPagesGroup');
+      const additionalFeaturesGroup = document.getElementById('additionalFeaturesGroup');
+      
+      if (category === 'manager' || category === 'renewal') {
+        numPagesGroup.style.display = 'none';
+        additionalFeaturesGroup.style.display = 'none';
+      } else {
+        numPagesGroup.style.display = 'block';
+        additionalFeaturesGroup.style.display = 'block';
+        document.getElementById('numPages').value = pkg.basePages;
+      }
 
       // Update additional features
-      updateAdditionalFeatures();
+      if (category !== 'manager' && category !== 'renewal') {
+        updateAdditionalFeatures();
+      }
       
       // Update invoice
       updateInvoice();
@@ -1419,7 +1646,6 @@
       if (!selectedPackage || !selectedCategory) return;
 
       const pkg = servicePackages[selectedCategory][selectedPackage];
-      const numPages = parseInt(document.getElementById('numPages').value) || pkg.basePages;
       const serviceType = document.getElementById('serviceType').value;
 
       let total = pkg.price;
@@ -1427,50 +1653,54 @@
 
       // Base package
       items.push({
-        description: `${pkg.name} (${pkg.basePages} pages)`,
+        description: `${pkg.name}${pkg.basePages > 0 ? ` (${pkg.basePages} pages)` : ''}`,
         amount: pkg.price
       });
 
-      // Additional pages
-      if (numPages > pkg.basePages) {
-        const additionalPages = numPages - pkg.basePages;
-        const additionalCost = additionalPages * pkg.pricePerPage;
-        total += additionalCost;
-        items.push({
-          description: `Additional Pages (${additionalPages} × ₱${pkg.pricePerPage.toLocaleString()})`,
-          amount: additionalCost
-        });
-      }
-
-      // Service type customization
-      if (serviceType) {
-        const serviceLabel = document.querySelector(`#serviceType option[value="${serviceType}"]`).textContent;
-        items.push({
-          description: `Service Type: ${serviceLabel}`,
-          amount: 0
-        });
-      }
-
-      // Additional features
-      const features = [
-        { id: 'seo', label: 'SEO Optimization', price: 3000 },
-        { id: 'analytics', label: 'Analytics Integration', price: 2000 },
-        { id: 'ssl', label: 'SSL Certificate', price: 1500 },
-        { id: 'backup', label: 'Automated Backups', price: 2500 },
-        { id: 'custom-forms', label: 'Custom Forms', price: 3500 },
-        { id: 'ecommerce', label: 'E-commerce Integration', price: 8000 }
-      ];
-
-      features.forEach(f => {
-        const checkbox = document.getElementById(f.id);
-        if (checkbox && checkbox.checked) {
-          total += f.price;
+      // Additional pages (only for website packages)
+      if (selectedCategory !== 'manager' && selectedCategory !== 'renewal') {
+        const numPages = parseInt(document.getElementById('numPages').value) || pkg.basePages;
+        
+        if (numPages > pkg.basePages) {
+          const additionalPages = numPages - pkg.basePages;
+          const additionalCost = additionalPages * pkg.pricePerPage;
+          total += additionalCost;
           items.push({
-            description: f.label,
-            amount: f.price
+            description: `Additional Pages (${additionalPages} × ₱${pkg.pricePerPage.toLocaleString()})`,
+            amount: additionalCost
           });
         }
-      });
+
+        // Service type customization
+        if (serviceType) {
+          const serviceLabel = document.querySelector(`#serviceType option[value="${serviceType}"]`).textContent;
+          items.push({
+            description: `Service Type: ${serviceLabel}`,
+            amount: 0
+          });
+        }
+
+        // Additional features
+        const features = [
+          { id: 'seo', label: 'SEO Optimization', price: 3000 },
+          { id: 'analytics', label: 'Analytics Integration', price: 2000 },
+          { id: 'ssl', label: 'SSL Certificate', price: 1500 },
+          { id: 'backup', label: 'Automated Backups', price: 2500 },
+          { id: 'custom-forms', label: 'Custom Forms', price: 3500 },
+          { id: 'ecommerce', label: 'E-commerce Integration', price: 8000 }
+        ];
+
+        features.forEach(f => {
+          const checkbox = document.getElementById(f.id);
+          if (checkbox && checkbox.checked) {
+            total += f.price;
+            items.push({
+              description: f.label,
+              amount: f.price
+            });
+          }
+        });
+      }
 
       // Update invoice display
       const invoiceItems = document.getElementById('invoiceItems');
@@ -1496,11 +1726,18 @@
       }
 
       const serviceType = document.getElementById('serviceType').value;
-      const numPages = document.getElementById('numPages').value;
-
-      if (!serviceType || !numPages) {
-        alert('Please fill in all required fields (Service Type and Number of Pages).');
-        return;
+      
+      if (selectedCategory !== 'manager' && selectedCategory !== 'renewal') {
+        const numPages = document.getElementById('numPages').value;
+        if (!serviceType || !numPages) {
+          alert('Please fill in all required fields (Service Type and Number of Pages).');
+          return;
+        }
+      } else {
+        if (!serviceType) {
+          alert('Please select a Service Type.');
+          return;
+        }
       }
 
       alert('Order submitted successfully! Payment integration will be added soon.\n\nYour invoice has been generated and is ready for download.');
