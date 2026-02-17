@@ -1166,6 +1166,105 @@
       .invoice-total .total-amount { font-size: 1.6rem; }
       .button { padding: 0.75rem 1rem; font-size: 0.85rem; }
     }
+    /* =================== BOTTOM NAVIGATION BAR =================== */
+    .bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: rgba(8, 11, 18, 0.97);
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      z-index: 200;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 0.25rem;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.5);
+    }
+
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.4rem 0.25rem;
+      transition: all 0.2s ease;
+      border-radius: var(--radius-sm);
+      min-width: 0;
+    }
+
+    .bottom-nav-item span {
+      font-size: 0.6rem;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .bottom-nav-icon {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .bottom-nav-item:hover {
+      color: var(--text);
+    }
+
+    .bottom-nav-item.active {
+      color: var(--neon);
+    }
+
+    .bottom-nav-item.active .bottom-nav-icon {
+      filter: drop-shadow(0 0 6px rgba(57, 255, 20, 0.6));
+    }
+
+    /* The center + button */
+    .bottom-nav-plus {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      background: var(--neon) !important;
+      border-radius: 50% !important;
+      color: #000 !important;
+      box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+      flex: 0 0 auto;
+      padding: 0;
+      margin: 0 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .bottom-nav-plus:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 28px rgba(57, 255, 20, 0.7);
+      color: #000 !important;
+    }
+
+    .bottom-nav-plus.active {
+      color: #000 !important;
+    }
+
+    .bottom-nav-plus .bottom-nav-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .bottom-nav {
+        display: flex;
+      }
+      .main-content {
+        padding-bottom: 72px !important;
+      }
+    }
   </style>
 </head>
 
@@ -1783,6 +1882,43 @@
       </div>
     </main>
   </div>
+
+  <!-- =================== BOTTOM NAVIGATION BAR =================== -->
+  <nav class="bottom-nav">
+    <button class="bottom-nav-item active" onclick="showSection('order'); setBottomActive(this)" title="Order">
+      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>Home</span>
+    </button>
+
+    <button class="bottom-nav-item" onclick="showSection('order'); selectOrderType('new'); setBottomActive(this)" title="Services">
+      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span>Services</span>
+    </button>
+
+    <button class="bottom-nav-item bottom-nav-plus" onclick="showSection('order'); setBottomActive(this)" title="New Order">
+      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+    </button>
+
+    <button class="bottom-nav-item" onclick="showSection('my-orders'); setBottomActive(this)" title="My Orders">
+      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+      </svg>
+      <span>Orders</span>
+    </button>
+
+    <button class="bottom-nav-item" onclick="showSection('settings'); setBottomActive(this)" title="Profile">
+      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span>Profile</span>
+    </button>
+  </nav>
 
   <script>
     // =================== SERVICE PACKAGES DATA (CATEGORIZED) ===================
@@ -2751,6 +2887,12 @@
 
     function logout() {
       window.location.href = 'https://nexgenixcreativesolutions.github.io/login-signup';
+    }
+
+    // =================== BOTTOM NAV ACTIVE STATE ===================
+    function setBottomActive(el) {
+      document.querySelectorAll('.bottom-nav-item').forEach(btn => btn.classList.remove('active'));
+      el.classList.add('active');
     }
 
     // =================== INITIALIZE ===================
