@@ -723,6 +723,123 @@
       cursor: not-allowed;
     }
 
+    /* =================== SERVICE TYPE FILTER TABS =================== */
+    .service-filter-bar {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.6), rgba(0, 0, 0, 0.8));
+      border: 1px solid #1f2937;
+      border-radius: 1rem;
+    }
+
+    .service-filter-bar .filter-label {
+      width: 100%;
+      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      color: #6b7280;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .filter-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 999px;
+      border: 2px solid #333;
+      background: rgba(0,0,0,0.5);
+      color: #9ca3af;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: 'Montserrat Alternates', sans-serif;
+      white-space: nowrap;
+    }
+
+    .filter-tab:hover {
+      border-color: #39FF14;
+      color: #fff;
+      background: rgba(57, 255, 20, 0.08);
+    }
+
+    .filter-tab.active {
+      border-color: #39FF14;
+      background: rgba(57, 255, 20, 0.18);
+      color: #39FF14;
+      box-shadow: 0 0 16px rgba(57, 255, 20, 0.3);
+    }
+
+    .filter-tab .tab-icon {
+      font-size: 1rem;
+    }
+
+    /* =================== PACKAGE CATEGORY VISIBILITY =================== */
+    .package-category {
+      transition: opacity 0.25s ease;
+    }
+    .package-category.hidden {
+      display: none;
+    }
+
+    /* =================== INVOICE ENHANCEMENTS =================== */
+    .invoice-client-edit {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .invoice-client-edit input {
+      background: rgba(57, 255, 20, 0.06);
+      border: 1px solid #39FF14;
+      border-radius: 0.4rem;
+      color: #fff;
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 0.95rem;
+      padding: 0.3rem 0.6rem;
+      width: 180px;
+      outline: none;
+      transition: box-shadow 0.2s;
+    }
+
+    .invoice-client-edit input:focus {
+      box-shadow: 0 0 0 2px rgba(57, 255, 20, 0.3);
+    }
+
+    .edit-icon {
+      color: #39FF14;
+      font-size: 0.85rem;
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    /* Row highlight animation when added */
+    @keyframes rowFlash {
+      0%   { background: rgba(57, 255, 20, 0.22); }
+      100% { background: transparent; }
+    }
+
+    .invoice-row-new {
+      animation: rowFlash 0.8s ease-out forwards;
+    }
+
+    /* Live total pulse */
+    @keyframes totalPulse {
+      0%   { text-shadow: 0 0 8px rgba(57, 255, 20, 0.8); }
+      100% { text-shadow: 0 0 20px rgba(57, 255, 20, 0.5); }
+    }
+
+    .total-updating {
+      animation: totalPulse 0.4s ease-out;
+    }
+
     /* =================== MOBILE MENU TOGGLE =================== */
     .menu-toggle {
       display: none;
@@ -971,10 +1088,30 @@
           </button>
         </div>
 
+        <!-- ★ SERVICE TYPE FILTER BAR (only for new orders) -->
+        <div class="service-filter-bar" id="serviceFilterBar">
+          <div class="filter-label">Filter packages by service type</div>
+          <button class="filter-tab active" id="tab-all" onclick="filterByServiceType('all', this)">
+            <span class="tab-icon">🗂️</span> All Packages
+          </button>
+          <button class="filter-tab" id="tab-app-design" onclick="filterByServiceType('app-design', this)">
+            <span class="tab-icon">📱</span> App Design
+          </button>
+          <button class="filter-tab" id="tab-web-design" onclick="filterByServiceType('web-design', this)">
+            <span class="tab-icon">🎨</span> Web Design
+          </button>
+          <button class="filter-tab" id="tab-web-development" onclick="filterByServiceType('web-development', this)">
+            <span class="tab-icon">🌐</span> Web Development
+          </button>
+          <button class="filter-tab" id="tab-ui-ux" onclick="filterByServiceType('ui-ux-design', this)">
+            <span class="tab-icon">🧩</span> UI/UX Design
+          </button>
+        </div>
+
         <!-- NEW WEBSITE PACKAGES -->
         <div id="newWebsitePackages">
           <!-- MULTI-PAGE WEBSITES WITH MAINTENANCE -->
-          <div class="package-category">
+          <div class="package-category" id="cat-maintenance" data-service-types="web-design web-development">
             <div class="category-header">
               <h3>📱 Multi-Page Websites (With Maintenance)</h3>
               <p>Professional websites with ongoing support and maintenance - Perfect for growing businesses</p>
@@ -987,7 +1124,7 @@
           </div>
 
           <!-- TWO-PAGE WEBSITES -->
-          <div class="package-category">
+          <div class="package-category" id="cat-onepage" data-service-types="web-design web-development">
             <div class="category-header">
               <h3>⚡ Two-Page Websites (Fast Launch)</h3>
               <p>Quick and efficient single-page solutions - Best for new businesses, promos, and landing pages</p>
@@ -1000,13 +1137,39 @@
           </div>
 
           <!-- MULTI-PAGE WEBSITES WITHOUT MAINTENANCE -->
-          <div class="package-category">
+          <div class="package-category" id="cat-nomaintenance" data-service-types="web-design web-development">
             <div class="category-header">
               <h3>🌐 Multi-Page Websites (No Maintenance)</h3>
               <p>One-time development with no ongoing costs - For businesses wanting a simple online presence</p>
             </div>
             <div class="content-box">
               <div class="service-grid" id="serviceGridNoMaintenance">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- APP DESIGN PACKAGES (shown only when App Design is filtered) -->
+          <div class="package-category hidden" id="cat-app-design" data-service-types="app-design">
+            <div class="category-header">
+              <h3>📱 App Design Packages</h3>
+              <p>Mobile app UI/UX design for iOS, Android, and cross-platform applications</p>
+            </div>
+            <div class="content-box">
+              <div class="service-grid" id="serviceGridAppDesign">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- UI/UX DESIGN PACKAGES (shown only when UI/UX is filtered) -->
+          <div class="package-category hidden" id="cat-uiux" data-service-types="ui-ux-design">
+            <div class="category-header">
+              <h3>🧩 UI/UX Design Packages</h3>
+              <p>Wireframes, prototypes, user research, and full design systems</p>
+            </div>
+            <div class="content-box">
+              <div class="service-grid" id="serviceGridUiux">
                 <!-- Loaded dynamically -->
               </div>
             </div>
@@ -1339,7 +1502,13 @@
               <div class="invoice-info">
                 <div><strong>Invoice No:</strong> <span id="invoiceNumber">NGCS-2026-001</span></div>
                 <div><strong>Date:</strong> <span id="invoiceDate"></span></div>
-                <div><strong>Client:</strong> <span id="clientName">Valued Client</span></div>
+                <div>
+                  <strong>Client: </strong>
+                  <span class="invoice-client-edit">
+                    <input type="text" id="clientNameInput" value="Valued Client" placeholder="Enter client name" oninput="syncClientName()" />
+                    <span class="edit-icon">✏️</span>
+                  </span>
+                </div>
                 <div><strong>Issued By:</strong> Nex Genix Creative Solutions</div>
               </div>
             </div>
@@ -1622,6 +1791,105 @@
           excluded: [],
           bestFor: 'existing clients renewing annual services'
         }
+      },
+
+      // CATEGORY 6: APP DESIGN
+      appDesign: {
+        starter: {
+          name: 'APP DESIGN - Starter',
+          price: 8000,
+          basePages: 0,
+          pricePerPage: 0,
+          features: [
+            'Up to 8 screens',
+            'iOS or Android',
+            'Static Figma mockups',
+            'Basic UI design',
+            'Mobile-first layout'
+          ],
+          excluded: ['No prototype', 'No branding'],
+          bestFor: 'small apps, MVPs, simple utilities'
+        },
+        pro: {
+          name: 'APP DESIGN - Pro',
+          price: 18000,
+          basePages: 0,
+          pricePerPage: 0,
+          features: [
+            'Up to 20 screens',
+            'iOS & Android',
+            'Clickable prototype',
+            'Custom branding & icon',
+            'Onboarding screens'
+          ],
+          excluded: [],
+          bestFor: 'startups, e-commerce apps, service apps'
+        },
+        premium: {
+          name: 'APP DESIGN - Premium',
+          price: 35000,
+          basePages: 0,
+          pricePerPage: 0,
+          features: [
+            'Unlimited screens',
+            'Cross-platform design',
+            'Animated prototype',
+            'Full design system',
+            'Dark & light mode',
+            'Developer handoff'
+          ],
+          excluded: [],
+          bestFor: 'funded startups, enterprise apps, SaaS'
+        }
+      },
+
+      // CATEGORY 7: UI/UX DESIGN
+      uiuxDesign: {
+        wireframe: {
+          name: 'UI/UX - Wireframes',
+          price: 5000,
+          basePages: 0,
+          pricePerPage: 0,
+          features: [
+            'Up to 10 screens',
+            'Low to mid-fidelity',
+            'User flow diagrams',
+            'Figma deliverables',
+            'Revision rounds included'
+          ],
+          excluded: ['No visual design', 'No prototype'],
+          bestFor: 'early-stage planning, concept validation'
+        },
+        prototype: {
+          name: 'UI/UX - Full Prototype',
+          price: 14000,
+          basePages: 0,
+          pricePerPage: 0,
+          features: [
+            'Up to 25 screens',
+            'High-fidelity design',
+            'Clickable prototype',
+            'User journey mapping',
+            'Information architecture'
+          ],
+          excluded: [],
+          bestFor: 'investor demos, usability testing, pitches'
+        },
+        system: {
+          name: 'UI/UX - Design System',
+          price: 28000,
+          basePages: 0,
+          pricePerPage: 0,
+          features: [
+            'Complete component library',
+            'Design tokens & variables',
+            'Accessibility audit (WCAG)',
+            'Developer handoff specs',
+            'Documentation included'
+          ],
+          excluded: [],
+          bestFor: 'product teams, SaaS platforms, enterprises'
+        }
       }
     };
 
@@ -1684,6 +1952,49 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
+    // =================== SERVICE TYPE FILTER ===================
+    let activeServiceFilter = 'all';
+
+    function filterByServiceType(type, btn) {
+      activeServiceFilter = type;
+
+      // Update tab active states
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Show/hide package categories based on data-service-types attribute
+      document.querySelectorAll('#newWebsitePackages .package-category').forEach(cat => {
+        const types = (cat.dataset.serviceTypes || '').split(' ');
+        if (type === 'all' || types.includes(type)) {
+          cat.classList.remove('hidden');
+        } else {
+          cat.classList.add('hidden');
+        }
+      });
+
+      // Reset any selected package when filter changes
+      if (selectedPackage) {
+        selectedPackage = null;
+        selectedCategory = null;
+        document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+        document.getElementById('customizationPanel').style.display = 'none';
+        document.getElementById('invoiceSection').style.display = 'none';
+      }
+
+      // Pre-set the service type dropdown to match the filter tab
+      const serviceTypeMap = {
+        'app-design': 'app-design',
+        'web-design': 'web-design',
+        'web-development': 'web-development',
+        'ui-ux-design': 'ui-ux-design'
+      };
+      if (type !== 'all' && serviceTypeMap[type]) {
+        document.getElementById('serviceType').value = serviceTypeMap[type];
+      } else {
+        document.getElementById('serviceType').value = '';
+      }
+    }
+
     // =================== ORDER TYPE SELECTION ===================
     let currentOrderType = 'new';
 
@@ -1697,6 +2008,7 @@
       // Show/hide package sections
       document.getElementById('newWebsitePackages').style.display = type === 'new' ? 'block' : 'none';
       document.getElementById('renewalPackages').style.display = type === 'renewal' ? 'block' : 'none';
+      document.getElementById('serviceFilterBar').style.display = type === 'new' ? 'flex' : 'none';
 
       // Hide customization and invoice
       document.getElementById('customizationPanel').style.display = 'none';
@@ -1756,6 +2068,12 @@
 
       // Load renewal packages
       loadServiceCategory('serviceGridRenewal', servicePackages.renewal, 'renewal');
+
+      // Load app design packages
+      loadServiceCategory('serviceGridAppDesign', servicePackages.appDesign, 'appDesign');
+
+      // Load UI/UX packages
+      loadServiceCategory('serviceGridUiux', servicePackages.uiuxDesign, 'uiuxDesign');
     }
 
     function loadServiceCategory(gridId, packages, category) {
@@ -1798,6 +2116,7 @@
 
     let selectedPackage = null;
     let selectedCategory = null;
+    let prevInvoiceKeys = new Set();
 
     function selectService(category, packageKey) {
       selectedCategory = category;
@@ -1817,12 +2136,25 @@
       document.getElementById('customizationPanel').style.display = 'block';
       document.getElementById('invoiceSection').style.display = 'block';
 
-      // For manager/renewal, hide service-type options since they don't need them
+      // Auto-set service type dropdown based on category
+      const categoryToServiceType = {
+        appDesign: 'app-design',
+        uiuxDesign: 'ui-ux-design'
+      };
+      if (categoryToServiceType[category]) {
+        document.getElementById('serviceType').value = categoryToServiceType[category];
+        onServiceTypeChange();
+      }
+
+      // For manager/renewal, hide service-type options
       if (category === 'manager' || category === 'renewal') {
         document.getElementById('serviceType').value = '';
         document.querySelectorAll('.service-type-options').forEach(el => el.style.display = 'none');
         document.getElementById('projectDetailsSection').style.display = 'block';
       }
+
+      // Reset prev invoice keys so first render flashes everything
+      prevInvoiceKeys = new Set();
 
       // Update invoice
       updateInvoice();
@@ -1830,6 +2162,9 @@
       // Scroll to customization
       document.getElementById('customizationPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+
+    // =================== EDITABLE CLIENT NAME ===================
+    function syncClientName() { /* input is the direct source of truth */ }
 
     // =================== SERVICE TYPE CHANGE ===================
     function onServiceTypeChange() {
@@ -2043,18 +2378,32 @@
     }
 
     function renderInvoice(items, total) {
-      const invoiceItems = document.getElementById('invoiceItems');
-      invoiceItems.innerHTML = items.map(item => `
-        <tr>
-          <td>${item.description}</td>
-          <td style="text-align: right; font-weight: 600; color: ${item.amount === 0 ? '#9ca3af' : '#fff'};">
-            ${item.amount === 0 ? 'Included' : '₱' + item.amount.toLocaleString()}
-          </td>
-        </tr>
-      `).join('');
+      const invoiceItemsEl = document.getElementById('invoiceItems');
+      const currentKeys = new Set(items.map(i => i.description));
 
-      document.getElementById('totalAmount').textContent = '₱' + total.toLocaleString();
-      document.getElementById('invoiceDate').textContent = new Date().toLocaleDateString('en-US');
+      invoiceItemsEl.innerHTML = items.map(item => {
+        const isNew = !prevInvoiceKeys.has(item.description);
+        const rowClass = isNew ? 'invoice-row-new' : '';
+        return `
+          <tr class="${rowClass}">
+            <td>${item.description}</td>
+            <td style="text-align: right; font-weight: 600; color: ${item.amount === 0 ? '#9ca3af' : '#fff'};">
+              ${item.amount === 0 ? 'Included' : '₱' + item.amount.toLocaleString()}
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      prevInvoiceKeys = currentKeys;
+
+      // Pulse the total
+      const totalEl = document.getElementById('totalAmount');
+      totalEl.textContent = '₱' + total.toLocaleString();
+      totalEl.classList.remove('total-updating');
+      void totalEl.offsetWidth; // reflow to restart animation
+      totalEl.classList.add('total-updating');
+
+      document.getElementById('invoiceDate').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
       document.getElementById('invoiceNumber').textContent = 'NGCS-2026-' + String(Math.floor(Math.random() * 9000) + 1000);
     }
 
@@ -2120,7 +2469,7 @@
       loadServices();
 
       // Set user info
-      document.getElementById('clientName').textContent = 'Valued Client';
+      document.getElementById('clientNameInput').value = 'Valued Client';
       document.getElementById('displayNameInput').value = 'Valued Client';
       document.getElementById('emailInput').value = 'client@example.com';
     });
