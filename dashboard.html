@@ -723,6 +723,100 @@
       cursor: not-allowed;
     }
 
+    /* =================== SMART PAGE COUNTER =================== */
+    .page-counter-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .page-counter {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid #444;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .page-counter:focus-within {
+      border-color: #39FF14;
+      box-shadow: 0 0 0 3px rgba(57,255,20,0.2);
+    }
+
+    .page-counter.at-max {
+      border-color: #ffff00;
+    }
+
+    .page-counter.over-max {
+      border-color: #ff6600;
+    }
+
+    .page-counter-btn {
+      background: rgba(57,255,20,0.1);
+      border: none;
+      color: #39FF14;
+      font-size: 1.3rem;
+      font-weight: 700;
+      width: 44px;
+      height: 48px;
+      cursor: pointer;
+      transition: background 0.15s;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-counter-btn:hover:not(:disabled) {
+      background: rgba(57,255,20,0.25);
+    }
+
+    .page-counter-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .page-counter-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+      padding: 0;
+      min-width: 0;
+    }
+
+    .page-counter-hint {
+      font-size: 0.78rem;
+      color: #6b7280;
+      padding-left: 0.25rem;
+      transition: color 0.2s;
+    }
+
+    .page-counter-hint.hint-included {
+      color: #39FF14;
+    }
+
+    .page-counter-hint.hint-extra {
+      color: #ffff00;
+    }
+
+    .page-counter-hint.hint-overage {
+      color: #ff6600;
+    }
+
+    .page-counter-hint.hint-fixed {
+      color: #9ca3af;
+      font-style: italic;
+    }
+
     /* =================== SERVICE TYPE BADGE (auto-detected) =================== */
     .service-type-badge {
       display: inline-flex;
@@ -1542,7 +1636,14 @@
               </div>
               <div class="form-group">
                 <label for="numPages">Number of Pages *</label>
-                <input type="number" id="numPages" class="input" min="1" max="100" placeholder="Enter number of pages" onchange="updateInvoice()">
+                <div class="page-counter-wrap">
+                  <div class="page-counter" id="numPagesCounter">
+                    <button type="button" class="page-counter-btn" id="numPagesMinus" onclick="adjustPages('numPages',-1)">−</button>
+                    <input type="number" id="numPages" class="page-counter-input" min="1" readonly onchange="updateInvoice()">
+                    <button type="button" class="page-counter-btn" id="numPagesPlus" onclick="adjustPages('numPages',1)">+</button>
+                  </div>
+                  <span class="page-counter-hint" id="numPagesHint">Select a package first</span>
+                </div>
               </div>
             </div>
             <div class="form-row">
@@ -1590,7 +1691,14 @@
               </div>
               <div class="form-group">
                 <label for="numPagesdev">Number of Pages *</label>
-                <input type="number" id="numPagesdev" class="input" min="1" max="100" placeholder="Enter number of pages" onchange="updateInvoice()">
+                <div class="page-counter-wrap">
+                  <div class="page-counter" id="numPagesdevCounter">
+                    <button type="button" class="page-counter-btn" id="numPagesdevMinus" onclick="adjustPages('numPagesdev',-1)">−</button>
+                    <input type="number" id="numPagesdev" class="page-counter-input" min="1" readonly onchange="updateInvoice()">
+                    <button type="button" class="page-counter-btn" id="numPagesdevPlus" onclick="adjustPages('numPagesdev',1)">+</button>
+                  </div>
+                  <span class="page-counter-hint" id="numPagesdevHint">Select a package first</span>
+                </div>
               </div>
             </div>
             <div class="form-row">
@@ -1817,6 +1925,8 @@
           name: 'BASIC - Starter Business',
           price: 18000,
           basePages: 5,
+          minPages: 3,
+          maxPages: 5,
           pricePerPage: 1500,
           features: [
             '3-5 page website',
@@ -1832,6 +1942,8 @@
           name: 'PRO - Growing Business',
           price: 26000,
           basePages: 8,
+          minPages: 5,
+          maxPages: 8,
           pricePerPage: 2000,
           features: [
             '5-8 pages',
@@ -1847,6 +1959,8 @@
           name: 'PREMIUM - Established/Corporate',
           price: 52500,
           basePages: 12,
+          minPages: 8,
+          maxPages: 12,
           pricePerPage: 3500,
           features: [
             'Custom UI/UX',
@@ -1866,6 +1980,8 @@
           name: 'TWO-PAGE Starter',
           price: 6500,
           basePages: 2,
+          minPages: 2,
+          maxPages: 2,
           pricePerPage: 1000,
           features: [
             '2 pages',
@@ -1883,6 +1999,8 @@
           name: 'TWO-PAGE Pro',
           price: 9500,
           basePages: 2,
+          minPages: 2,
+          maxPages: 2,
           pricePerPage: 1500,
           features: [
             'Everything in Starter',
@@ -1898,6 +2016,8 @@
           name: 'TWO-PAGE Premium',
           price: 14000,
           basePages: 2,
+          minPages: 2,
+          maxPages: 2,
           pricePerPage: 2000,
           features: [
             'Custom-designed landing page',
@@ -1917,6 +2037,8 @@
           name: 'MULTI-PAGE Basic',
           price: 12000,
           basePages: 4,
+          minPages: 3,
+          maxPages: 4,
           pricePerPage: 1200,
           features: [
             '3-4 pages',
@@ -1932,6 +2054,8 @@
           name: 'MULTI-PAGE Standard',
           price: 17000,
           basePages: 7,
+          minPages: 5,
+          maxPages: 7,
           pricePerPage: 1700,
           features: [
             '5-7 pages',
@@ -1947,6 +2071,8 @@
           name: 'MULTI-PAGE Advanced',
           price: 25000,
           basePages: 12,
+          minPages: 8,
+          maxPages: 12,
           pricePerPage: 2500,
           features: [
             '8-12 pages',
@@ -2373,6 +2499,94 @@
       updateInvoice();
     }
 
+    // =================== SMART PAGE COUNTER ===================
+    function initPageCounter(inputId) {
+      if (!selectedPackage || !selectedCategory) return;
+      const pkg = servicePackages[selectedCategory][selectedPackage];
+
+      const min = pkg.minPages || 1;
+      const max = pkg.maxPages || 999;
+      const fixed = (min === max);
+      const input = document.getElementById(inputId);
+      const hint  = document.getElementById(inputId + 'Hint');
+      const wrap  = document.getElementById(inputId + 'Counter');
+      const btnMinus = document.getElementById(inputId + 'Minus');
+      const btnPlus  = document.getElementById(inputId + 'Plus');
+
+      if (!input) return;
+
+      // Set value to minimum (or fixed value)
+      input.value = min;
+      input.min = min;
+
+      if (fixed) {
+        // Locked — two-page packages
+        if (btnMinus) btnMinus.disabled = true;
+        if (btnPlus)  btnPlus.disabled  = true;
+        if (hint) {
+          hint.textContent = `Fixed at ${min} page${min > 1 ? 's' : ''} — included in package`;
+          hint.className = 'page-counter-hint hint-fixed';
+        }
+        if (wrap) wrap.className = 'page-counter';
+      } else {
+        if (btnMinus) btnMinus.disabled = (min <= min); // starts at min so minus is disabled
+        if (btnPlus)  btnPlus.disabled  = false;
+        if (hint) {
+          hint.textContent = `${min}–${max} pages included • beyond ${max}: +₱${pkg.pricePerPage.toLocaleString()}/page`;
+          hint.className = 'page-counter-hint hint-included';
+        }
+        if (wrap) wrap.className = 'page-counter';
+      }
+
+      updateInvoice();
+    }
+
+    function adjustPages(inputId, delta) {
+      if (!selectedPackage || !selectedCategory) return;
+      const pkg = servicePackages[selectedCategory][selectedPackage];
+
+      const min = pkg.minPages || 1;
+      const max = pkg.maxPages || 999;
+      const input = document.getElementById(inputId);
+      const hint  = document.getElementById(inputId + 'Hint');
+      const wrap  = document.getElementById(inputId + 'Counter');
+      const btnMinus = document.getElementById(inputId + 'Minus');
+      const btnPlus  = document.getElementById(inputId + 'Plus');
+
+      if (!input) return;
+
+      let current = parseInt(input.value) || min;
+      current = Math.max(min, current + delta);  // never go below min
+
+      input.value = current;
+
+      // Update minus button state
+      if (btnMinus) btnMinus.disabled = (current <= min);
+
+      // Update hint and border colour
+      if (current < min) {
+        // shouldn't happen but safety
+        if (hint) { hint.textContent = `Minimum is ${min} pages`; hint.className = 'page-counter-hint hint-extra'; }
+        if (wrap) wrap.className = 'page-counter';
+      } else if (current <= max) {
+        const remaining = max - current;
+        if (remaining === 0) {
+          if (hint) { hint.textContent = `At package maximum (${max} pages) — extra pages cost ₱${pkg.pricePerPage.toLocaleString()}/page`; hint.className = 'page-counter-hint hint-extra'; }
+          if (wrap) wrap.className = 'page-counter at-max';
+        } else {
+          if (hint) { hint.textContent = `${current} page${current>1?'s':''} • ${remaining} more included free`; hint.className = 'page-counter-hint hint-included'; }
+          if (wrap) wrap.className = 'page-counter';
+        }
+      } else {
+        const over = current - max;
+        const overCost = over * pkg.pricePerPage;
+        if (hint) { hint.textContent = `${over} extra page${over>1?'s':''} beyond package → +₱${overCost.toLocaleString()} added to invoice`; hint.className = 'page-counter-hint hint-overage'; }
+        if (wrap) wrap.className = 'page-counter over-max';
+      }
+
+      updateInvoice();
+    }
+
     // Map category → service type label and icon
     const categoryServiceMap = {
       maintenance:    { type: 'web-development', label: '🌐 Web Development', badgeText: '🌐 WEB DEVELOPMENT' },
@@ -2413,9 +2627,11 @@
       } else if (activeServiceType === 'web-design') {
         document.getElementById('webDesignOptions').style.display = 'block';
         document.getElementById('bizQuestionnaire').style.display = 'block';
+        initPageCounter('numPages');
       } else if (activeServiceType === 'web-development') {
         document.getElementById('webDevOptions').style.display = 'block';
         document.getElementById('bizQuestionnaire').style.display = 'block';
+        initPageCounter('numPagesdev');
       } else if (activeServiceType === 'ui-ux-design') {
         document.getElementById('uiuxOptions').style.display = 'block';
         document.getElementById('bizQuestionnaire').style.display = 'block';
@@ -2502,13 +2718,19 @@
       } else if (serviceType === 'web-design') {
         const wdType = document.getElementById('wdType');
         if (wdType && wdType.value) items.push({ description: `Website Type: ${wdType.value}`, amount: 0 });
-        const numPages = parseInt(document.getElementById('numPages').value) || pkg.basePages;
-        if (numPages > pkg.basePages) {
-          const extra = (numPages - pkg.basePages) * pkg.pricePerPage;
-          items.push({ description: `Additional Pages (${numPages - pkg.basePages} × ₱${pkg.pricePerPage.toLocaleString()})`, amount: extra });
-          total += extra;
-        } else if (numPages > 0) {
-          items.push({ description: `Pages: ${numPages}`, amount: 0 });
+
+        const numPages = parseInt(document.getElementById('numPages').value) || pkg.minPages || pkg.basePages;
+        const maxPg = pkg.maxPages || pkg.basePages;
+        const minPg = pkg.minPages || 1;
+
+        if (numPages <= maxPg) {
+          items.push({ description: `Pages: ${numPages} of ${maxPg} included`, amount: 0 });
+        } else {
+          const extra = numPages - maxPg;
+          const extraCost = extra * pkg.pricePerPage;
+          items.push({ description: `Pages: ${maxPg} included in package`, amount: 0 });
+          items.push({ description: `Extra Pages: ${extra} × ₱${pkg.pricePerPage.toLocaleString()} (beyond package max)`, amount: extraCost });
+          total += extraCost;
         }
         [['wd-responsive','Mobile Responsive Design'],['wd-illustrations','Custom Illustrations'],['wd-logo','Logo Design'],['wd-motion','Animated / Motion Elements'],['wd-brandguide','Brand Style Guide'],['wd-darkmode','Dark Mode Design'],['wd-prototype','Clickable Prototype'],['wd-socialmedia','Social Media Kit']].forEach(([id, label]) => {
           const cb = document.getElementById(id);
@@ -2523,13 +2745,17 @@
           items.push({ description: `Tech Stack: ${stack.value}`, amount: extra });
           total += extra;
         }
-        const numPagesdev = parseInt(document.getElementById('numPagesdev').value) || pkg.basePages;
-        if (numPagesdev > pkg.basePages) {
-          const extra = (numPagesdev - pkg.basePages) * pkg.pricePerPage;
-          items.push({ description: `Additional Pages (${numPagesdev - pkg.basePages} × ₱${pkg.pricePerPage.toLocaleString()})`, amount: extra });
-          total += extra;
-        } else if (numPagesdev > 0) {
-          items.push({ description: `Pages: ${numPagesdev}`, amount: 0 });
+        const numPagesdev = parseInt(document.getElementById('numPagesdev').value) || pkg.minPages || pkg.basePages;
+        const maxPgDev = pkg.maxPages || pkg.basePages;
+
+        if (numPagesdev <= maxPgDev) {
+          items.push({ description: `Pages: ${numPagesdev} of ${maxPgDev} included`, amount: 0 });
+        } else {
+          const extra = numPagesdev - maxPgDev;
+          const extraCost = extra * pkg.pricePerPage;
+          items.push({ description: `Pages: ${maxPgDev} included in package`, amount: 0 });
+          items.push({ description: `Extra Pages: ${extra} × ₱${pkg.pricePerPage.toLocaleString()} (beyond package max)`, amount: extraCost });
+          total += extraCost;
         }
         const maint = document.getElementById('devMaintenance');
         if (maint && maint.value && maint.value !== 'none') {
