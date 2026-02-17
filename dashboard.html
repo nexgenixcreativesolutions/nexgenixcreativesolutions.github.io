@@ -723,6 +723,188 @@
       cursor: not-allowed;
     }
 
+    /* =================== SERVICE TYPE BADGE (auto-detected) =================== */
+    .service-type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.2rem;
+      background: rgba(57, 255, 20, 0.12);
+      border: 1.5px solid #39FF14;
+      border-radius: 999px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      color: #39FF14;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* =================== BUSINESS QUESTIONNAIRE =================== */
+    .biz-questionnaire {
+      background: linear-gradient(135deg, rgba(57,255,20,0.05), rgba(0,0,0,0.3));
+      border: 1px solid rgba(57,255,20,0.3);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .biz-questionnaire h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      color: #ffff00;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .biz-tags-label {
+      display: block;
+      font-size: 0.82rem;
+      color: #9ca3af;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .biz-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .biz-tag {
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      border: 1.5px solid #333;
+      background: rgba(0,0,0,0.4);
+      color: #9ca3af;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .biz-tag:hover {
+      border-color: #39FF14;
+      color: #fff;
+    }
+
+    .biz-tag.selected {
+      border-color: #39FF14;
+      background: rgba(57,255,20,0.15);
+      color: #39FF14;
+      font-weight: 600;
+    }
+
+    .biz-tag.selected::before {
+      content: '✓ ';
+    }
+
+    /* =================== IMPROVED MULTI-SELECT TOGGLES =================== */
+    .toggle-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .toggle-item {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1.5px solid #333;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .toggle-item:hover {
+      border-color: #39FF14;
+      background: rgba(57, 255, 20, 0.06);
+    }
+
+    .toggle-item.selected {
+      border-color: #39FF14;
+      background: rgba(57, 255, 20, 0.12);
+    }
+
+    .toggle-item input[type="checkbox"] {
+      display: none;
+    }
+
+    .toggle-check {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 5px;
+      border: 2px solid #444;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      margin-top: 1px;
+    }
+
+    .toggle-item.selected .toggle-check {
+      background: #39FF14;
+      border-color: #39FF14;
+    }
+
+    .toggle-check::after {
+      content: '';
+      display: none;
+    }
+
+    .toggle-item.selected .toggle-check::after {
+      content: '✓';
+      display: block;
+      color: #000;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .toggle-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .toggle-name {
+      font-size: 0.88rem;
+      color: #e5e7eb;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .toggle-item.selected .toggle-name {
+      color: #fff;
+    }
+
+    .toggle-price {
+      font-size: 0.78rem;
+      color: #39FF14;
+      font-weight: 700;
+    }
+
+    /* section divider inside customization panel */
+    .panel-section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6b7280;
+      padding: 0.5rem 0 0.75rem;
+      border-bottom: 1px solid #1f2937;
+      margin-bottom: 1.25rem;
+    }
+
     /* =================== SERVICE TYPE FILTER TABS =================== */
     .service-filter-bar {
       display: flex;
@@ -1219,20 +1401,55 @@
         <div class="customization-panel" id="customizationPanel" style="display: none;">
           <h2>Customize Your Order</h2>
 
-          <!-- SERVICE TYPE SELECTOR -->
-          <div class="form-group">
-            <label for="serviceType">Service Type *</label>
-            <select id="serviceType" class="select" onchange="onServiceTypeChange()">
-              <option value="">Select Service</option>
-              <option value="app-design">📱 App Design</option>
-              <option value="web-design">🎨 Web Design</option>
-              <option value="web-development">🌐 Web Development</option>
-              <option value="ui-ux-design">🧩 UI/UX Design</option>
-            </select>
+          <!-- AUTO-DETECTED SERVICE TYPE BADGE -->
+          <div style="text-align:center; margin-bottom:1.5rem;">
+            <span class="service-type-badge" id="serviceTypeBadge">⚙️ Select a package above</span>
+          </div>
+
+          <!-- ★ BUSINESS QUESTIONNAIRE (universal, always shown first) -->
+          <div class="biz-questionnaire" id="bizQuestionnaire">
+            <h3>🏢 Tell us about your business</h3>
+
+            <span class="biz-tags-label">What type of business or project is this for? <em style="color:#6b7280;">(select all that apply)</em></span>
+            <div class="biz-tags" id="bizTypeTagsEl">
+              <span class="biz-tag" onclick="toggleBizTag(this,'type','Startup')">🚀 Startup</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'type','Small Business')">🏪 Small Business</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'type','Corporate / Enterprise')">🏢 Corporate / Enterprise</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'type','Freelancer / Personal')">👤 Freelancer / Personal</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'type','Non-Profit / Organization')">🤝 Non-Profit / Organization</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'type','E-Commerce / Online Store')">🛒 E-Commerce / Online Store</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'type','Restaurant / Food & Beverage')">🍽️ Restaurant / F&B</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'type','Health & Wellness')">💊 Health & Wellness</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'type','Education / E-Learning')">📚 Education / E-Learning</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'type','Real Estate')">🏠 Real Estate</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'type','Events / Entertainment')">🎉 Events / Entertainment</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'type','Technology / SaaS')">💻 Technology / SaaS</span>
+            </div>
+
+            <span class="biz-tags-label">What is your goal with this project? <em style="color:#6b7280;">(select all that apply)</em></span>
+            <div class="biz-tags" id="bizGoalTagsEl">
+              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Generate Leads / Inquiries')">📩 Generate Leads</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Sell Products / Services Online')">💳 Sell Online</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Build Brand Awareness')">✨ Brand Awareness</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Showcase Portfolio / Work')">🖼️ Showcase Portfolio</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Provide Information / Blog')">📰 Information / Blog</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'goal','User Login & Dashboard')">🔐 User Login / Dashboard</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Booking / Appointments')">📅 Booking / Appointments</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Community / Social')">👥 Community / Social</span>
+            </div>
+
+            <span class="biz-tags-label">What stage is your business/project currently in?</span>
+            <div class="biz-tags" id="bizStageTagsEl" data-single="true">
+              <span class="biz-tag" onclick="toggleBizTag(this,'stage','Just Starting Out')">🌱 Just Starting Out</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'stage','Already Operating')">🔄 Already Operating</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'stage','Rebranding / Redesign')">🔁 Rebranding / Redesign</span>
+              <span class="biz-tag" onclick="toggleBizTag(this,'stage','Scaling Up')">📈 Scaling Up</span>
+            </div>
           </div>
 
           <!-- ===== APP DESIGN OPTIONS ===== -->
           <div id="appDesignOptions" class="service-type-options" style="display:none;">
+            <div class="panel-section-title">📱 App Design Configuration</div>
             <div class="form-row">
               <div class="form-group">
                 <label>Platform *</label>
@@ -1293,20 +1510,21 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Additional App Features</label>
-              <div class="checkbox-group">
-                <div class="checkbox-item"><input type="checkbox" id="app-branding" data-price="500" onchange="updateInvoice()"><label for="app-branding">Branding / Logo Integration (+₱500)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="app-darkmode" data-price="400" onchange="updateInvoice()"><label for="app-darkmode">Dark Mode Version (+₱400)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="app-icon" data-price="300" onchange="updateInvoice()"><label for="app-icon">App Icon Design (+₱300)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="app-onboarding" data-price="600" onchange="updateInvoice()"><label for="app-onboarding">Onboarding Screens (+₱600)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="app-designsystem" data-price="900" onchange="updateInvoice()"><label for="app-designsystem">Design System / Style Guide (+₱900)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="app-splash" data-price="250" onchange="updateInvoice()"><label for="app-splash">Splash Screen Design (+₱250)</label></div>
+              <label>Additional App Features <span style="color:#6b7280;font-size:0.8rem;">(select multiple)</span></label>
+              <div class="toggle-group">
+                <div class="toggle-item" onclick="toggleFeature(this,'app-branding')"><input type="checkbox" id="app-branding" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Branding / Logo Integration</span><span class="toggle-price">+₱500</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'app-darkmode')"><input type="checkbox" id="app-darkmode" data-price="400" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Dark Mode Version</span><span class="toggle-price">+₱400</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'app-icon')"><input type="checkbox" id="app-icon" data-price="300" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">App Icon Design</span><span class="toggle-price">+₱300</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'app-onboarding')"><input type="checkbox" id="app-onboarding" data-price="600" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Onboarding Screens</span><span class="toggle-price">+₱600</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'app-designsystem')"><input type="checkbox" id="app-designsystem" data-price="900" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Design System / Style Guide</span><span class="toggle-price">+₱900</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'app-splash')"><input type="checkbox" id="app-splash" data-price="250" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Splash Screen Design</span><span class="toggle-price">+₱250</span></div></div>
               </div>
             </div>
           </div>
 
           <!-- ===== WEB DESIGN OPTIONS ===== -->
           <div id="webDesignOptions" class="service-type-options" style="display:none;">
+            <div class="panel-section-title">🎨 Web Design Configuration</div>
             <div class="form-row">
               <div class="form-group">
                 <label>Website Type *</label>
@@ -1322,7 +1540,7 @@
                   <option value="Event / Promo Site">Event / Promo Site</option>
                 </select>
               </div>
-              <div class="form-group" id="numPagesGroup">
+              <div class="form-group">
                 <label for="numPages">Number of Pages *</label>
                 <input type="number" id="numPages" class="input" min="1" max="100" placeholder="Enter number of pages" onchange="updateInvoice()">
               </div>
@@ -1339,22 +1557,23 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Additional Design Features</label>
-              <div class="checkbox-group" id="additionalFeatures">
-                <div class="checkbox-item"><input type="checkbox" id="wd-responsive" data-price="500" onchange="updateInvoice()"><label for="wd-responsive">Mobile Responsive Design (+₱500)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="wd-illustrations" data-price="800" onchange="updateInvoice()"><label for="wd-illustrations">Custom Illustrations (+₱800)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="wd-logo" data-price="600" onchange="updateInvoice()"><label for="wd-logo">Logo Design (+₱600)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="wd-motion" data-price="700" onchange="updateInvoice()"><label for="wd-motion">Animated / Motion Elements (+₱700)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="wd-brandguide" data-price="900" onchange="updateInvoice()"><label for="wd-brandguide">Brand Style Guide (+₱900)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="wd-darkmode" data-price="400" onchange="updateInvoice()"><label for="wd-darkmode">Dark Mode Design (+₱400)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="wd-prototype" data-price="800" onchange="updateInvoice()"><label for="wd-prototype">Clickable Prototype (+₱800)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="wd-socialmedia" data-price="500" onchange="updateInvoice()"><label for="wd-socialmedia">Social Media Kit (+₱500)</label></div>
+              <label>Additional Design Features <span style="color:#6b7280;font-size:0.8rem;">(select multiple)</span></label>
+              <div class="toggle-group">
+                <div class="toggle-item" onclick="toggleFeature(this,'wd-responsive')"><input type="checkbox" id="wd-responsive" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Mobile Responsive Design</span><span class="toggle-price">+₱500</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'wd-illustrations')"><input type="checkbox" id="wd-illustrations" data-price="800" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Custom Illustrations</span><span class="toggle-price">+₱800</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'wd-logo')"><input type="checkbox" id="wd-logo" data-price="600" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Logo Design</span><span class="toggle-price">+₱600</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'wd-motion')"><input type="checkbox" id="wd-motion" data-price="700" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Animated / Motion Elements</span><span class="toggle-price">+₱700</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'wd-brandguide')"><input type="checkbox" id="wd-brandguide" data-price="900" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Brand Style Guide</span><span class="toggle-price">+₱900</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'wd-darkmode')"><input type="checkbox" id="wd-darkmode" data-price="400" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Dark Mode Design</span><span class="toggle-price">+₱400</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'wd-prototype')"><input type="checkbox" id="wd-prototype" data-price="800" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Clickable Prototype</span><span class="toggle-price">+₱800</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'wd-socialmedia')"><input type="checkbox" id="wd-socialmedia" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Social Media Kit</span><span class="toggle-price">+₱500</span></div></div>
               </div>
             </div>
           </div>
 
           <!-- ===== WEB DEVELOPMENT OPTIONS ===== -->
           <div id="webDevOptions" class="service-type-options" style="display:none;">
+            <div class="panel-section-title">🌐 Web Development Configuration</div>
             <div class="form-row">
               <div class="form-group">
                 <label>Tech Stack / Platform *</label>
@@ -1385,25 +1604,26 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Additional Development Features</label>
-              <div class="checkbox-group">
-                <div class="checkbox-item"><input type="checkbox" id="dev-ecommerce" data-price="3000" onchange="updateInvoice()"><label for="dev-ecommerce">E-Commerce / Online Store (+₱3,000)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="dev-cms" data-price="1500" onchange="updateInvoice()"><label for="dev-cms">CMS Integration (+₱1,500)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="dev-forms" data-price="500" onchange="updateInvoice()"><label for="dev-forms">Contact Form / Email Setup (+₱500)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="dev-seo" data-price="3000" onchange="updateInvoice()"><label for="dev-seo">SEO Optimization (+₱3,000)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="dev-analytics" data-price="2000" onchange="updateInvoice()"><label for="dev-analytics">Analytics Integration (+₱2,000)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="dev-ssl" data-price="1500" onchange="updateInvoice()"><label for="dev-ssl">SSL Certificate (+₱1,500)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="dev-backup" data-price="2500" onchange="updateInvoice()"><label for="dev-backup">Automated Backups (+₱2,500)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="dev-hosting" data-price="1000" onchange="updateInvoice()"><label for="dev-hosting">Hosting & Domain Setup (+₱1,000)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="dev-livechat" data-price="400" onchange="updateInvoice()"><label for="dev-livechat">Live Chat Integration (+₱400)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="dev-social" data-price="350" onchange="updateInvoice()"><label for="dev-social">Social Media Integration (+₱350)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="dev-speed" data-price="600" onchange="updateInvoice()"><label for="dev-speed">Speed Optimization (+₱600)</label></div>
+              <label>Additional Development Features <span style="color:#6b7280;font-size:0.8rem;">(select multiple)</span></label>
+              <div class="toggle-group">
+                <div class="toggle-item" onclick="toggleFeature(this,'dev-ecommerce')"><input type="checkbox" id="dev-ecommerce" data-price="3000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">E-Commerce / Online Store</span><span class="toggle-price">+₱3,000</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'dev-cms')"><input type="checkbox" id="dev-cms" data-price="1500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">CMS Integration</span><span class="toggle-price">+₱1,500</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'dev-forms')"><input type="checkbox" id="dev-forms" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Contact Form / Email Setup</span><span class="toggle-price">+₱500</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'dev-seo')"><input type="checkbox" id="dev-seo" data-price="3000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">SEO Optimization</span><span class="toggle-price">+₱3,000</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'dev-analytics')"><input type="checkbox" id="dev-analytics" data-price="2000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Analytics Integration</span><span class="toggle-price">+₱2,000</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'dev-ssl')"><input type="checkbox" id="dev-ssl" data-price="1500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">SSL Certificate</span><span class="toggle-price">+₱1,500</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'dev-backup')"><input type="checkbox" id="dev-backup" data-price="2500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Automated Backups</span><span class="toggle-price">+₱2,500</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'dev-hosting')"><input type="checkbox" id="dev-hosting" data-price="1000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Hosting & Domain Setup</span><span class="toggle-price">+₱1,000</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'dev-livechat')"><input type="checkbox" id="dev-livechat" data-price="400" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Live Chat Integration</span><span class="toggle-price">+₱400</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'dev-social')"><input type="checkbox" id="dev-social" data-price="350" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Social Media Integration</span><span class="toggle-price">+₱350</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'dev-speed')"><input type="checkbox" id="dev-speed" data-price="600" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Speed Optimization</span><span class="toggle-price">+₱600</span></div></div>
               </div>
             </div>
           </div>
 
           <!-- ===== UI/UX DESIGN OPTIONS ===== -->
           <div id="uiuxOptions" class="service-type-options" style="display:none;">
+            <div class="panel-section-title">🧩 UI/UX Design Configuration</div>
             <div class="form-row">
               <div class="form-group">
                 <label>Project Type *</label>
@@ -1461,22 +1681,23 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Additional UI/UX Features</label>
-              <div class="checkbox-group">
-                <div class="checkbox-item"><input type="checkbox" id="ux-research" data-price="2000" onchange="updateInvoice()"><label for="ux-research">User Research & Personas (+₱2,000)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="ux-journey" data-price="1500" onchange="updateInvoice()"><label for="ux-journey">User Journey Mapping (+₱1,500)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="ux-ia" data-price="1000" onchange="updateInvoice()"><label for="ux-ia">Information Architecture (+₱1,000)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="ux-usability" data-price="1800" onchange="updateInvoice()"><label for="ux-usability">Usability Testing Plan (+₱1,800)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="ux-accessibility" data-price="1200" onchange="updateInvoice()"><label for="ux-accessibility">Accessibility Audit (WCAG) (+₱1,200)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="ux-microinteraction" data-price="900" onchange="updateInvoice()"><label for="ux-microinteraction">Micro-Interaction Design (+₱900)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="ux-handoff" data-price="600" onchange="updateInvoice()"><label for="ux-handoff">Developer Handoff / Specs (+₱600)</label></div>
-                <div class="checkbox-item"><input type="checkbox" id="ux-brand" data-price="500" onchange="updateInvoice()"><label for="ux-brand">Brand Integration (+₱500)</label></div>
+              <label>Additional UI/UX Features <span style="color:#6b7280;font-size:0.8rem;">(select multiple)</span></label>
+              <div class="toggle-group">
+                <div class="toggle-item" onclick="toggleFeature(this,'ux-research')"><input type="checkbox" id="ux-research" data-price="2000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">User Research & Personas</span><span class="toggle-price">+₱2,000</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'ux-journey')"><input type="checkbox" id="ux-journey" data-price="1500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">User Journey Mapping</span><span class="toggle-price">+₱1,500</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'ux-ia')"><input type="checkbox" id="ux-ia" data-price="1000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Information Architecture</span><span class="toggle-price">+₱1,000</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'ux-usability')"><input type="checkbox" id="ux-usability" data-price="1800" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Usability Testing Plan</span><span class="toggle-price">+₱1,800</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'ux-accessibility')"><input type="checkbox" id="ux-accessibility" data-price="1200" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Accessibility Audit (WCAG)</span><span class="toggle-price">+₱1,200</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'ux-microinteraction')"><input type="checkbox" id="ux-microinteraction" data-price="900" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Micro-Interaction Design</span><span class="toggle-price">+₱900</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'ux-handoff')"><input type="checkbox" id="ux-handoff" data-price="600" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Developer Handoff / Specs</span><span class="toggle-price">+₱600</span></div></div>
+                <div class="toggle-item" onclick="toggleFeature(this,'ux-brand')"><input type="checkbox" id="ux-brand" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Brand Integration</span><span class="toggle-price">+₱500</span></div></div>
               </div>
             </div>
           </div>
 
-          <!-- PROJECT DETAILS (always shown after service type picked) -->
+          <!-- PROJECT DETAILS (always shown) -->
           <div id="projectDetailsSection" style="display:none;">
+            <div class="panel-section-title">📋 Project Details</div>
             <div class="form-row">
               <div class="form-group">
                 <label for="projectName">Project Name</label>
@@ -1981,7 +2202,7 @@
         document.getElementById('invoiceSection').style.display = 'none';
       }
 
-      // Pre-set the service type dropdown to match the filter tab
+      // Pre-set activeServiceType to match the filter tab so when a card is clicked it's consistent
       const serviceTypeMap = {
         'app-design': 'app-design',
         'web-design': 'web-design',
@@ -1989,9 +2210,9 @@
         'ui-ux-design': 'ui-ux-design'
       };
       if (type !== 'all' && serviceTypeMap[type]) {
-        document.getElementById('serviceType').value = serviceTypeMap[type];
+        activeServiceType = serviceTypeMap[type];
       } else {
-        document.getElementById('serviceType').value = '';
+        activeServiceType = '';
       }
     }
 
@@ -2117,80 +2338,107 @@
     let selectedPackage = null;
     let selectedCategory = null;
     let prevInvoiceKeys = new Set();
+    let activeServiceType = '';
+
+    // Business questionnaire tag state
+    const bizSelections = { type: [], goal: [], stage: [] };
+
+    function toggleBizTag(el, group, value) {
+      const container = el.closest('.biz-tags');
+      const isSingle = container.dataset.single === 'true';
+
+      if (isSingle) {
+        // Deselect all siblings first
+        container.querySelectorAll('.biz-tag').forEach(t => t.classList.remove('selected'));
+        bizSelections[group] = [value];
+        el.classList.add('selected');
+      } else {
+        if (el.classList.contains('selected')) {
+          el.classList.remove('selected');
+          bizSelections[group] = bizSelections[group].filter(v => v !== value);
+        } else {
+          el.classList.add('selected');
+          bizSelections[group].push(value);
+        }
+      }
+      updateInvoice();
+    }
+
+    // Toggle feature checkboxes (multi-select card toggles)
+    function toggleFeature(toggleEl, checkboxId) {
+      const cb = document.getElementById(checkboxId);
+      if (!cb) return;
+      cb.checked = !cb.checked;
+      toggleEl.classList.toggle('selected', cb.checked);
+      updateInvoice();
+    }
+
+    // Map category → service type label and icon
+    const categoryServiceMap = {
+      maintenance:    { type: 'web-development', label: '🌐 Web Development', badgeText: '🌐 WEB DEVELOPMENT' },
+      onePage:        { type: 'web-development', label: '🌐 Web Development', badgeText: '🌐 WEB DEVELOPMENT' },
+      noMaintenance:  { type: 'web-development', label: '🌐 Web Development', badgeText: '🌐 WEB DEVELOPMENT' },
+      appDesign:      { type: 'app-design',       label: '📱 App Design',      badgeText: '📱 APP DESIGN' },
+      uiuxDesign:     { type: 'ui-ux-design',     label: '🧩 UI/UX Design',    badgeText: '🧩 UI/UX DESIGN' },
+      manager:        { type: '',                 label: '🔧 Maintenance',     badgeText: '🔧 WEBSITE MANAGER' },
+      renewal:        { type: '',                 label: '📅 Renewal',         badgeText: '📅 ANNUAL RENEWAL' }
+    };
 
     function selectService(category, packageKey) {
       selectedCategory = category;
       selectedPackage = packageKey;
 
-      // Update visual selection
-      document.querySelectorAll('.service-card').forEach(card => {
-        card.classList.remove('selected');
-      });
-
+      // Update visual selection on cards
+      document.querySelectorAll('.service-card').forEach(card => card.classList.remove('selected'));
       const selectedCard = document.querySelector(`[data-category="${category}"][data-key="${packageKey}"]`);
-      if (selectedCard) {
-        selectedCard.classList.add('selected');
-      }
+      if (selectedCard) selectedCard.classList.add('selected');
+
+      // Determine and set the service type from the category
+      const mapping = categoryServiceMap[category] || { type: '', badgeText: '⚙️ Service Selected' };
+      activeServiceType = mapping.type;
+
+      // Update the badge
+      document.getElementById('serviceTypeBadge').textContent = mapping.badgeText;
 
       // Show customization panel
       document.getElementById('customizationPanel').style.display = 'block';
       document.getElementById('invoiceSection').style.display = 'block';
 
-      // Auto-set service type dropdown based on category
-      const categoryToServiceType = {
-        appDesign: 'app-design',
-        uiuxDesign: 'ui-ux-design'
-      };
-      if (categoryToServiceType[category]) {
-        document.getElementById('serviceType').value = categoryToServiceType[category];
-        onServiceTypeChange();
+      // Hide all service-specific options, then show the right one
+      document.querySelectorAll('.service-type-options').forEach(el => el.style.display = 'none');
+
+      if (activeServiceType === 'app-design') {
+        document.getElementById('appDesignOptions').style.display = 'block';
+        document.getElementById('bizQuestionnaire').style.display = 'block';
+      } else if (activeServiceType === 'web-design') {
+        document.getElementById('webDesignOptions').style.display = 'block';
+        document.getElementById('bizQuestionnaire').style.display = 'block';
+      } else if (activeServiceType === 'web-development') {
+        document.getElementById('webDevOptions').style.display = 'block';
+        document.getElementById('bizQuestionnaire').style.display = 'block';
+      } else if (activeServiceType === 'ui-ux-design') {
+        document.getElementById('uiuxOptions').style.display = 'block';
+        document.getElementById('bizQuestionnaire').style.display = 'block';
+      } else {
+        // manager / renewal — no biz questionnaire needed
+        document.getElementById('bizQuestionnaire').style.display = 'none';
       }
 
-      // For manager/renewal, hide service-type options
-      if (category === 'manager' || category === 'renewal') {
-        document.getElementById('serviceType').value = '';
-        document.querySelectorAll('.service-type-options').forEach(el => el.style.display = 'none');
-        document.getElementById('projectDetailsSection').style.display = 'block';
-      }
+      // Always show project details
+      document.getElementById('projectDetailsSection').style.display = 'block';
 
-      // Reset prev invoice keys so first render flashes everything
+      // Reset invoice flash tracking
       prevInvoiceKeys = new Set();
 
-      // Update invoice
       updateInvoice();
-
-      // Scroll to customization
       document.getElementById('customizationPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     // =================== EDITABLE CLIENT NAME ===================
     function syncClientName() { /* input is the direct source of truth */ }
 
-    // =================== SERVICE TYPE CHANGE ===================
+    // =================== SERVICE TYPE CHANGE (kept for filter-tab pre-setting) ===================
     function onServiceTypeChange() {
-      const serviceType = document.getElementById('serviceType').value;
-
-      // Hide all service-specific option panels
-      document.querySelectorAll('.service-type-options').forEach(el => el.style.display = 'none');
-
-      // Show the right panel
-      if (serviceType === 'app-design') {
-        document.getElementById('appDesignOptions').style.display = 'block';
-      } else if (serviceType === 'web-design') {
-        document.getElementById('webDesignOptions').style.display = 'block';
-      } else if (serviceType === 'web-development') {
-        document.getElementById('webDevOptions').style.display = 'block';
-      } else if (serviceType === 'ui-ux-design') {
-        document.getElementById('uiuxOptions').style.display = 'block';
-      }
-
-      // Show project details once a service type is chosen
-      if (serviceType) {
-        document.getElementById('projectDetailsSection').style.display = 'block';
-      } else {
-        document.getElementById('projectDetailsSection').style.display = 'none';
-      }
-
       updateInvoice();
     }
 
@@ -2199,7 +2447,7 @@
       if (!selectedPackage || !selectedCategory) return;
 
       const pkg = servicePackages[selectedCategory][selectedPackage];
-      const serviceType = document.getElementById('serviceType').value;
+      const serviceType = activeServiceType;
 
       let total = pkg.price;
       const items = [];
@@ -2216,10 +2464,15 @@
         return;
       }
 
-      // Show service type label
-      if (serviceType) {
-        const serviceLabel = document.querySelector(`#serviceType option[value="${serviceType}"]`).textContent.trim();
-        items.push({ description: `Service Type: ${serviceLabel}`, amount: 0 });
+      // Business profile notes (informational, ₱0)
+      if (bizSelections.type.length > 0) {
+        items.push({ description: `Business Type: ${bizSelections.type.join(', ')}`, amount: 0 });
+      }
+      if (bizSelections.goal.length > 0) {
+        items.push({ description: `Goals: ${bizSelections.goal.join(', ')}`, amount: 0 });
+      }
+      if (bizSelections.stage.length > 0) {
+        items.push({ description: `Stage: ${bizSelections.stage[0]}`, amount: 0 });
       }
 
       // ── APP DESIGN ──
@@ -2238,22 +2491,11 @@
         if (proto && proto.value && proto.value !== 'none') {
           const extra = parseInt(proto.options[proto.selectedIndex].dataset.extra || 0);
           if (extra > 0) { items.push({ description: `Prototype: ${proto.value}`, amount: extra }); total += extra; }
+          else if (proto.value) { items.push({ description: `Prototype: ${proto.value}`, amount: 0 }); }
         }
-        const appFeatures = [
-          { id: 'app-branding', label: 'Branding / Logo Integration' },
-          { id: 'app-darkmode', label: 'Dark Mode Version' },
-          { id: 'app-icon', label: 'App Icon Design' },
-          { id: 'app-onboarding', label: 'Onboarding Screens' },
-          { id: 'app-designsystem', label: 'Design System / Style Guide' },
-          { id: 'app-splash', label: 'Splash Screen Design' }
-        ];
-        appFeatures.forEach(f => {
-          const cb = document.getElementById(f.id);
-          if (cb && cb.checked) {
-            const price = parseInt(cb.dataset.price || 0);
-            items.push({ description: f.label, amount: price });
-            total += price;
-          }
+        [['app-branding','Branding / Logo Integration'],['app-darkmode','Dark Mode Version'],['app-icon','App Icon Design'],['app-onboarding','Onboarding Screens'],['app-designsystem','Design System / Style Guide'],['app-splash','Splash Screen Design']].forEach(([id, label]) => {
+          const cb = document.getElementById(id);
+          if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
         });
 
       // ── WEB DESIGN ──
@@ -2268,23 +2510,9 @@
         } else if (numPages > 0) {
           items.push({ description: `Pages: ${numPages}`, amount: 0 });
         }
-        const wdFeatures = [
-          { id: 'wd-responsive', label: 'Mobile Responsive Design' },
-          { id: 'wd-illustrations', label: 'Custom Illustrations' },
-          { id: 'wd-logo', label: 'Logo Design' },
-          { id: 'wd-motion', label: 'Animated / Motion Elements' },
-          { id: 'wd-brandguide', label: 'Brand Style Guide' },
-          { id: 'wd-darkmode', label: 'Dark Mode Design' },
-          { id: 'wd-prototype', label: 'Clickable Prototype' },
-          { id: 'wd-socialmedia', label: 'Social Media Kit' }
-        ];
-        wdFeatures.forEach(f => {
-          const cb = document.getElementById(f.id);
-          if (cb && cb.checked) {
-            const price = parseInt(cb.dataset.price || 0);
-            items.push({ description: f.label, amount: price });
-            total += price;
-          }
+        [['wd-responsive','Mobile Responsive Design'],['wd-illustrations','Custom Illustrations'],['wd-logo','Logo Design'],['wd-motion','Animated / Motion Elements'],['wd-brandguide','Brand Style Guide'],['wd-darkmode','Dark Mode Design'],['wd-prototype','Clickable Prototype'],['wd-socialmedia','Social Media Kit']].forEach(([id, label]) => {
+          const cb = document.getElementById(id);
+          if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
         });
 
       // ── WEB DEVELOPMENT ──
@@ -2309,26 +2537,9 @@
           items.push({ description: `Maintenance Plan: ${maint.value}`, amount: extra });
           total += extra;
         }
-        const devFeatures = [
-          { id: 'dev-ecommerce', label: 'E-Commerce / Online Store' },
-          { id: 'dev-cms', label: 'CMS Integration' },
-          { id: 'dev-forms', label: 'Contact Form / Email Setup' },
-          { id: 'dev-seo', label: 'SEO Optimization' },
-          { id: 'dev-analytics', label: 'Analytics Integration' },
-          { id: 'dev-ssl', label: 'SSL Certificate' },
-          { id: 'dev-backup', label: 'Automated Backups' },
-          { id: 'dev-hosting', label: 'Hosting & Domain Setup' },
-          { id: 'dev-livechat', label: 'Live Chat Integration' },
-          { id: 'dev-social', label: 'Social Media Integration' },
-          { id: 'dev-speed', label: 'Speed Optimization' }
-        ];
-        devFeatures.forEach(f => {
-          const cb = document.getElementById(f.id);
-          if (cb && cb.checked) {
-            const price = parseInt(cb.dataset.price || 0);
-            items.push({ description: f.label, amount: price });
-            total += price;
-          }
+        [['dev-ecommerce','E-Commerce / Online Store'],['dev-cms','CMS Integration'],['dev-forms','Contact Form / Email Setup'],['dev-seo','SEO Optimization'],['dev-analytics','Analytics Integration'],['dev-ssl','SSL Certificate'],['dev-backup','Automated Backups'],['dev-hosting','Hosting & Domain Setup'],['dev-livechat','Live Chat Integration'],['dev-social','Social Media Integration'],['dev-speed','Speed Optimization']].forEach(([id, label]) => {
+          const cb = document.getElementById(id);
+          if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
         });
 
       // ── UI/UX DESIGN ──
@@ -2345,28 +2556,14 @@
         if (fidelity && fidelity.value) items.push({ description: `Fidelity: ${fidelity.value}`, amount: 0 });
         const screens = document.getElementById('uxScreens');
         if (screens && screens.value) items.push({ description: `Screens: ${screens.value}`, amount: 0 });
-        const uxFeatures = [
-          { id: 'ux-research', label: 'User Research & Personas' },
-          { id: 'ux-journey', label: 'User Journey Mapping' },
-          { id: 'ux-ia', label: 'Information Architecture' },
-          { id: 'ux-usability', label: 'Usability Testing Plan' },
-          { id: 'ux-accessibility', label: 'Accessibility Audit (WCAG)' },
-          { id: 'ux-microinteraction', label: 'Micro-Interaction Design' },
-          { id: 'ux-handoff', label: 'Developer Handoff / Specs' },
-          { id: 'ux-brand', label: 'Brand Integration' }
-        ];
-        uxFeatures.forEach(f => {
-          const cb = document.getElementById(f.id);
-          if (cb && cb.checked) {
-            const price = parseInt(cb.dataset.price || 0);
-            items.push({ description: f.label, amount: price });
-            total += price;
-          }
+        [['ux-research','User Research & Personas'],['ux-journey','User Journey Mapping'],['ux-ia','Information Architecture'],['ux-usability','Usability Testing Plan'],['ux-accessibility','Accessibility Audit (WCAG)'],['ux-microinteraction','Micro-Interaction Design'],['ux-handoff','Developer Handoff / Specs'],['ux-brand','Brand Integration']].forEach(([id, label]) => {
+          const cb = document.getElementById(id);
+          if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
         });
 
-      // ── GENERIC (no service type yet) - just additional pages ──
+      // ── GENERIC fallback ──
       } else {
-        const numPages = parseInt(document.getElementById('numPages') ? document.getElementById('numPages').value : 0) || pkg.basePages;
+        const numPages = parseInt((document.getElementById('numPages') || {}).value || 0) || pkg.basePages;
         if (numPages > pkg.basePages) {
           const extra = (numPages - pkg.basePages) * pkg.pricePerPage;
           items.push({ description: `Additional Pages (${numPages - pkg.basePages} × ₱${pkg.pricePerPage.toLocaleString()})`, amount: extra });
@@ -2414,20 +2611,19 @@
         return;
       }
 
-      const serviceType = document.getElementById('serviceType').value;
       const isManagerOrRenewal = selectedCategory === 'manager' || selectedCategory === 'renewal';
 
-      if (!isManagerOrRenewal && !serviceType) {
-        alert('Please select a Service Type.');
+      if (!isManagerOrRenewal && !activeServiceType) {
+        alert('Please select a service package first.');
         return;
       }
 
-      if (serviceType === 'web-design' && !document.getElementById('numPages').value) {
+      if (activeServiceType === 'web-design' && !document.getElementById('numPages').value) {
         alert('Please enter the Number of Pages for Web Design.');
         return;
       }
 
-      if (serviceType === 'web-development' && !document.getElementById('numPagesdev').value) {
+      if (activeServiceType === 'web-development' && !document.getElementById('numPagesdev').value) {
         alert('Please enter the Number of Pages for Web Development.');
         return;
       }
