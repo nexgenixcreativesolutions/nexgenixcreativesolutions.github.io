@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
   <style>
     /* =================== CSS VARIABLES =================== */
@@ -2210,6 +2211,21 @@
   </div>
 
   <script>
+    // =================== EMAILJS CONFIGURATION ===================
+    // Initialize EmailJS with your Public Key
+    // IMPORTANT: Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS Public Key
+    // Get it from: https://dashboard.emailjs.com/admin/account
+    (function() {
+      emailjs.init('YOUR_PUBLIC_KEY'); // Replace with your public key
+    })();
+
+    // EmailJS Service Configuration
+    const EMAILJS_CONFIG = {
+      serviceID: 'service_ju84tjo',  // Your service ID from screenshot
+      templateID: 'template_order',   // You'll need to create this template
+      publicKey: 'YOUR_PUBLIC_KEY'    // Replace with your public key
+    };
+
     // =================== CURRENCY CONVERSION ===================
     let currentCurrency = 'USD';
     const conversionRates = {
@@ -3229,52 +3245,98 @@
       // Collect order data
       const orderData = collectOrderData();
       
-      // Send to EmailJS (free email service)
-      try {
-        const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            service_id: 'service_nexgenix',
-            template_id: 'template_order',
-            user_id: 'YOUR_EMAILJS_PUBLIC_KEY', // Replace with actual key
-            template_params: {
-              to_email: 'nexgenixcreativesolutions@gmail.com',
-              client_name: document.getElementById('clientNameInput').value,
-              invoice_number: document.getElementById('invoiceNumber').textContent,
-              package_name: orderData.packageName,
-              total_amount: document.getElementById('totalAmount').textContent,
-              order_details: JSON.stringify(orderData, null, 2)
-            }
-          })
-        });
+      // Show loading state
+      const originalText = event.target.textContent;
+      event.target.textContent = 'Sending Order...';
+      event.target.disabled = true;
+      
+      // Prepare email parameters
+      const emailParams = {
+        to_email: 'nexgenixcreativesolutions@gmail.com',
+        from_name: orderData.clientName,
+        invoice_number: orderData.invoiceNumber,
+        package_name: orderData.packageName,
+        total_amount: orderData.totalAmount,
+        currency: currentCurrency,
+        order_date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        service_type: activeServiceType || 'N/A',
+        // Add detailed breakdown
+        order_details: JSON.stringify(orderData, null, 2)
+      };
 
-        if (response.ok) {
-          alert('✅ Order submitted successfully!\n\nYour order has been sent to Nex Genix Creative Solutions. They will contact you shortly to confirm and process payment.\n\nYou can now download your invoice for your records.');
-        } else {
-          // Fallback - show mailto link
-          const mailto = `mailto:nexgenixcreativesolutions@gmail.com?subject=New Order - ${document.getElementById('invoiceNumber').textContent}&body=Client: ${document.getElementById('clientNameInput').value}%0D%0APackage: ${orderData.packageName}%0D%0ATotal: ${document.getElementById('totalAmount').textContent}%0D%0A%0D%0APlease contact this client to process their order.`;
-          window.open(mailto, '_blank');
-          alert('✅ Order prepared!\n\nPlease send the email that just opened to complete your order submission. You can also download your invoice below.');
-        }
+      try {
+        // Send email using EmailJS
+        const response = await emailjs.send(
+          EMAILJS_CONFIG.serviceID,
+          EMAILJS_CONFIG.templateID,
+          emailParams
+        );
+
+        console.log('Email sent successfully:', response);
+        
+        alert('✅ Order submitted successfully!\n\nYour order has been sent to Nex Genix Creative Solutions. They will contact you shortly via email to confirm and process payment.\n\nYou can now download your invoice for your records.');
+        
+        event.target.textContent = originalText;
+        event.target.disabled = false;
+
       } catch (error) {
-        // Fallback to mailto
-        const mailto = `mailto:nexgenixcreativesolutions@gmail.com?subject=New Order - ${document.getElementById('invoiceNumber').textContent}&body=Client: ${document.getElementById('clientNameInput').value}%0D%0APackage: ${orderData.packageName}%0D%0ATotal: ${document.getElementById('totalAmount').textContent}%0D%0A%0D%0APlease contact this client to process their order.`;
+        console.error('EmailJS Error:', error);
+        
+        // Fallback to mailto if EmailJS fails
+        const subject = encodeURIComponent(`New Order - ${orderData.invoiceNumber}`);
+        const body = encodeURIComponent(`
+Order Details:
+━━━━━━━━━━━━━━━━━━
+Client: ${orderData.clientName}
+Package: ${orderData.packageName}
+Total Amount: ${orderData.totalAmount}
+Currency: ${currentCurrency}
+Invoice #: ${orderData.invoiceNumber}
+Date: ${new Date().toLocaleDateString()}
+
+Please contact this client to process their order.
+
+Full order details:
+${JSON.stringify(orderData, null, 2)}
+        `);
+        
+        const mailto = `mailto:nexgenixcreativesolutions@gmail.com?subject=${subject}&body=${body}`;
         window.open(mailto, '_blank');
-        alert('✅ Order prepared!\n\nPlease send the email that just opened to complete your order submission. You can also download your invoice below.');
+        
+        alert('⚠️ Automatic email failed.\n\nA draft email has been opened in your email client. Please send it to complete your order submission.\n\nAlternatively, contact us directly at nexgenixcreativesolutions@gmail.com');
+        
+        event.target.textContent = originalText;
+        event.target.disabled = false;
       }
     }
 
     function collectOrderData() {
       const pkg = servicePackages[selectedCategory][selectedPackage];
+      
+      // Collect all invoice items
+      const invoiceItems = [];
+      const itemRows = document.querySelectorAll('#invoiceItems tr');
+      itemRows.forEach(row => {
+        const cols = row.querySelectorAll('td');
+        if (cols.length === 2) {
+          invoiceItems.push({
+            description: cols[0].textContent.trim(),
+            amount: cols[1].textContent.trim()
+          });
+        }
+      });
+
       return {
         invoiceNumber: document.getElementById('invoiceNumber').textContent,
         clientName: document.getElementById('clientNameInput').value,
+        clientEmail: document.getElementById('emailInput').value,
         packageName: pkg.name,
-        packagePrice: pkg.price,
+        packagePrice: formatPrice(convertPHPToUSD(pkg.price)),
         category: selectedCategory,
         serviceType: activeServiceType,
         totalAmount: document.getElementById('totalAmount').textContent,
+        currency: currentCurrency,
+        invoiceItems: invoiceItems,
         timestamp: new Date().toISOString()
       };
     }
