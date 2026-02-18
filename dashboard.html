@@ -233,6 +233,65 @@
       display: inline-block;
     }
 
+    .currency-dropdown .currency-dropdown-menu {
+      position: absolute;
+      top: 110%;
+      right: 0;
+      min-width: 260px;
+      max-height: 360px;
+      overflow-y: auto;
+      background: #0c1018;
+      border: 1px solid rgba(232, 212, 77, 0.4);
+      border-radius: var(--radius-sm);
+      padding: 0.25rem;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.6), 0 0 0 1px rgba(232, 212, 77, 0.1);
+    }
+
+    .currency-dropdown-menu::-webkit-scrollbar { width: 4px; }
+    .currency-dropdown-menu::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .currency-dropdown-menu a {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 0.35rem;
+      transition: all 0.2s ease;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .currency-dropdown-menu a:hover {
+      background: rgba(232, 212, 77, 0.12);
+      color: var(--yellow);
+      transform: translateX(4px);
+    }
+
+    .currency-btn {
+      border-color: rgba(232, 212, 77, 0.6) !important;
+      color: var(--yellow) !important;
+      background: rgba(232, 212, 77, 0.15) !important;
+      position: relative;
+    }
+
+    .currency-btn::after {
+      content: '▼';
+      font-size: 0.65rem;
+      margin-left: 0.25rem;
+      opacity: 0.7;
+    }
+
+    .currency-btn:hover {
+      background: var(--yellow) !important;
+      color: #000 !important;
+      border-color: var(--yellow) !important;
+      box-shadow: 0 4px 16px rgba(232, 212, 77, 0.3);
+    }
+
     .dropdown-menu {
       position: absolute;
       top: 110%;
@@ -1387,6 +1446,28 @@
         <div id="datetime" class="datetime"></div>
 
         <div class="top-nav-buttons">
+          <div class="dropdown currency-dropdown">
+            <button class="nav-btn currency-btn" id="currencyBtn" onclick="toggleCurrencyDropdown()" title="Change Currency">
+              <span>💱</span>
+              <span id="currencyLabel">USD</span>
+            </button>
+            <div class="currency-dropdown-menu" id="currencyMenu" style="display: none;">
+              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid rgba(57, 255, 20, 0.2); margin-bottom: 0.5rem;">
+                <p style="margin: 0; font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;">Select Currency</p>
+              </div>
+              <a onclick="changeCurrency('USD'); return false;">💵 $ USD - US Dollar</a>
+              <a onclick="changeCurrency('PHP'); return false;">🇵🇭 ₱ PHP - Philippine Peso</a>
+              <a onclick="changeCurrency('EUR'); return false;">🇪🇺 € EUR - Euro</a>
+              <a onclick="changeCurrency('GBP'); return false;">🇬🇧 £ GBP - British Pound</a>
+              <a onclick="changeCurrency('JPY'); return false;">🇯🇵 ¥ JPY - Japanese Yen</a>
+              <a onclick="changeCurrency('AUD'); return false;">🇦🇺 A$ AUD - Australian Dollar</a>
+              <a onclick="changeCurrency('CAD'); return false;">🇨🇦 C$ CAD - Canadian Dollar</a>
+              <a onclick="changeCurrency('SGD'); return false;">🇸🇬 S$ SGD - Singapore Dollar</a>
+              <a onclick="changeCurrency('INR'); return false;">🇮🇳 ₹ INR - Indian Rupee</a>
+              <a onclick="changeCurrency('CNY'); return false;">🇨🇳 ¥ CNY - Chinese Yuan</a>
+            </div>
+          </div>
+
           <div class="dropdown">
             <button class="nav-btn home-btn">
               <span>🏠</span>
@@ -2064,6 +2145,67 @@
   </div>
 
   <script>
+    // =================== CURRENCY CONVERSION ===================
+    let currentCurrency = 'USD';
+    const conversionRates = {
+      'USD': 1,           // Base currency
+      'PHP': 56.50,       // 1 USD = 56.50 PHP
+      'EUR': 0.92,        // 1 USD = 0.92 EUR
+      'GBP': 0.79,        // 1 USD = 0.79 GBP
+      'JPY': 149.50,      // 1 USD = 149.50 JPY
+      'AUD': 1.52,        // 1 USD = 1.52 AUD
+      'CAD': 1.39,        // 1 USD = 1.39 CAD
+      'SGD': 1.34,        // 1 USD = 1.34 SGD
+      'INR': 83.20,       // 1 USD = 83.20 INR
+      'CNY': 7.24         // 1 USD = 7.24 CNY
+    };
+
+    const currencySymbols = {
+      'USD': '$',
+      'PHP': '₱',
+      'EUR': '€',
+      'GBP': '£',
+      'JPY': '¥',
+      'AUD': 'A$',
+      'CAD': 'C$',
+      'SGD': 'S$',
+      'INR': '₹',
+      'CNY': '¥'
+    };
+
+    function formatPrice(usdAmount) {
+      const converted = usdAmount * conversionRates[currentCurrency];
+      const symbol = currencySymbols[currentCurrency];
+      
+      // Format with proper decimal places
+      if (currentCurrency === 'JPY') {
+        return symbol + Math.round(converted).toLocaleString();
+      }
+      return symbol + converted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function convertPHPToUSD(phpAmount) {
+      // All prices in servicePackages are in PHP, convert to USD as base
+      return phpAmount / 56.50;
+    }
+
+    function changeCurrency(currency) {
+      currentCurrency = currency;
+      document.getElementById('currencyLabel').textContent = currency;
+      
+      // Reload services to update all prices
+      loadServices();
+      
+      // Update invoice if visible
+      if (selectedPackage) {
+        updateInvoice();
+      }
+
+      // Close dropdown
+      const dropdown = document.getElementById('currencyMenu');
+      if (dropdown) dropdown.style.display = 'none';
+    }
+
     // =================== SERVICE PACKAGES DATA (CATEGORIZED) ===================
     const servicePackages = {
       // CATEGORY 1: MULTI-PAGE WITH MAINTENANCE
@@ -2585,13 +2727,17 @@
         const featuresHTML = pkg.features.map(f => `<li>${f}</li>`).join('');
         const excludedHTML = pkg.excluded.map(f => `<li class="excluded">${f}</li>`).join('');
 
+        // Convert prices from PHP (stored) to current currency
+        const priceUSD = convertPHPToUSD(pkg.price);
+        const pricePerPageUSD = convertPHPToUSD(pkg.pricePerPage);
+
         card.innerHTML = `
           <h3>${pkg.name}</h3>
-          <div class="price">₱${pkg.price.toLocaleString()}</div>
+          <div class="price">${formatPrice(priceUSD)}</div>
           ${pkg.basePages > 0 ? `
             <p class="price-info">
               ${pkg.basePages} pages included<br>
-              ₱${pkg.pricePerPage.toLocaleString()} per additional page
+              ${formatPrice(pricePerPageUSD)} per additional page
             </p>
           ` : ''}
           <ul>
@@ -2951,14 +3097,21 @@
       const invoiceItemsEl = document.getElementById('invoiceItems');
       const currentKeys = new Set(items.map(i => i.description));
 
+      // Convert total from PHP to current currency
+      const totalUSD = convertPHPToUSD(total);
+
       invoiceItemsEl.innerHTML = items.map(item => {
         const isNew = !prevInvoiceKeys.has(item.description);
         const rowClass = isNew ? 'invoice-row-new' : '';
+        
+        // Convert item amounts from PHP to current currency
+        const itemAmountUSD = convertPHPToUSD(item.amount);
+        
         return `
           <tr class="${rowClass}">
             <td>${item.description}</td>
             <td style="text-align: right; font-weight: 600; color: ${item.amount === 0 ? '#9ca3af' : '#fff'};">
-              ${item.amount === 0 ? 'Included' : '₱' + item.amount.toLocaleString()}
+              ${item.amount === 0 ? 'Included' : formatPrice(itemAmountUSD)}
             </td>
           </tr>
         `;
@@ -2968,7 +3121,7 @@
 
       // Pulse the total
       const totalEl = document.getElementById('totalAmount');
-      totalEl.textContent = '₱' + total.toLocaleString();
+      totalEl.textContent = formatPrice(totalUSD);
       totalEl.classList.remove('total-updating');
       void totalEl.offsetWidth; // reflow to restart animation
       totalEl.classList.add('total-updating');
@@ -3096,21 +3249,22 @@
       doc.text(`Date: ${invoiceDate}`, 20, 72);
       doc.text(`Client: ${clientName}`, 20, 79);
       doc.text('Issued By: Nex Genix Creative Solutions', 20, 86);
+      doc.text(`Currency: ${currencySymbols[currentCurrency]} ${currentCurrency}`, 20, 93);
 
       // Line separator
       doc.setDrawColor(...neonGreen);
       doc.setLineWidth(0.5);
-      doc.line(20, 92, 190, 92);
+      doc.line(20, 98, 190, 98);
 
       // Invoice items table
       doc.setFontSize(11);
       doc.setTextColor(...textColor);
       doc.setFont('helvetica', 'bold');
-      doc.text('Description', 20, 102);
-      doc.text('Amount (PHP)', 150, 102);
+      doc.text('Description', 20, 108);
+      doc.text(`Amount (${currentCurrency})`, 150, 108);
       doc.setFont('helvetica', 'normal');
 
-      let yPos = 110;
+      let yPos = 116;
       const items = document.querySelectorAll('#invoiceItems tr');
       
       items.forEach((row) => {
@@ -3178,6 +3332,24 @@
     function logout() {
       window.location.href = 'https://nexgenixcreativesolutions.github.io/login-signup';
     }
+
+    function toggleCurrencyDropdown() {
+      const menu = document.getElementById('currencyMenu');
+      if (menu.style.display === 'none' || !menu.style.display) {
+        menu.style.display = 'block';
+      } else {
+        menu.style.display = 'none';
+      }
+    }
+
+    // Close currency dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const dropdown = document.querySelector('.currency-dropdown');
+      const menu = document.getElementById('currencyMenu');
+      if (menu && dropdown && !dropdown.contains(event.target)) {
+        menu.style.display = 'none';
+      }
+    });
 
     // =================== BOTTOM NAV ACTIVE STATE ===================
     function setBottomActive(el) {
