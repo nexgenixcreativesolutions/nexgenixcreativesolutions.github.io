@@ -233,65 +233,6 @@
       display: inline-block;
     }
 
-    .currency-dropdown .currency-dropdown-menu {
-      position: absolute;
-      top: 110%;
-      right: 0;
-      min-width: 260px;
-      max-height: 360px;
-      overflow-y: auto;
-      background: #0c1018;
-      border: 1px solid rgba(232, 212, 77, 0.4);
-      border-radius: var(--radius-sm);
-      padding: 0.25rem;
-      z-index: 1000;
-      backdrop-filter: blur(12px);
-      scrollbar-width: thin;
-      scrollbar-color: var(--border) transparent;
-      box-shadow: 0 12px 36px rgba(0,0,0,0.6), 0 0 0 1px rgba(232, 212, 77, 0.1);
-    }
-
-    .currency-dropdown-menu::-webkit-scrollbar { width: 4px; }
-    .currency-dropdown-menu::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    .currency-dropdown-menu a {
-      display: block;
-      padding: 0.75rem 1rem;
-      color: var(--text);
-      text-decoration: none;
-      border-radius: 0.35rem;
-      transition: all 0.2s ease;
-      font-size: 0.88rem;
-      cursor: pointer;
-    }
-
-    .currency-dropdown-menu a:hover {
-      background: rgba(232, 212, 77, 0.12);
-      color: var(--yellow);
-      transform: translateX(4px);
-    }
-
-    .currency-btn {
-      border-color: rgba(232, 212, 77, 0.6) !important;
-      color: var(--yellow) !important;
-      background: rgba(232, 212, 77, 0.15) !important;
-      position: relative;
-    }
-
-    .currency-btn::after {
-      content: '▼';
-      font-size: 0.65rem;
-      margin-left: 0.25rem;
-      opacity: 0.7;
-    }
-
-    .currency-btn:hover {
-      background: var(--yellow) !important;
-      color: #000 !important;
-      border-color: var(--yellow) !important;
-      box-shadow: 0 4px 16px rgba(232, 212, 77, 0.3);
-    }
-
     .dropdown-menu {
       position: absolute;
       top: 110%;
@@ -1053,6 +994,87 @@
     }
 
     /* =================== SERVICE FILTER BAR =================== */
+    /* =================== STANDALONE CURRENCY SELECTOR =================== */
+    .currency-selector-standalone {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(135deg, rgba(232, 212, 77, 0.08), rgba(0,0,0,0.4));
+      border: 1px solid rgba(232, 212, 77, 0.3);
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .currency-selector-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.82rem;
+      color: var(--yellow);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .currency-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .currency-option {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1rem;
+      background: rgba(0,0,0,0.5);
+      border: 1.5px solid var(--border-dim);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Montserrat Alternates', sans-serif;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .currency-option:hover {
+      border-color: var(--yellow);
+      background: rgba(232, 212, 77, 0.1);
+      color: var(--text);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(232, 212, 77, 0.2);
+    }
+
+    .currency-option.active {
+      border-color: var(--yellow);
+      background: rgba(232, 212, 77, 0.2);
+      color: var(--yellow);
+      box-shadow: 0 0 16px rgba(232, 212, 77, 0.3), inset 0 0 12px rgba(232, 212, 77, 0.1);
+    }
+
+    .currency-option .currency-flag {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .currency-option .currency-code {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .currency-option .currency-symbol {
+      opacity: 0.6;
+      font-size: 0.9rem;
+    }
+
+    .currency-option.active .currency-symbol {
+      opacity: 1;
+    }
+
     .service-filter-bar {
       display: flex;
       gap: 0.6rem;
@@ -1200,6 +1222,11 @@
       .content-box { padding: 1.25rem; }
       .customization-panel { padding: 1.25rem; }
       .invoice-preview { padding: 1.25rem; }
+      
+      .currency-buttons { gap: 0.4rem; }
+      .currency-option { padding: 0.5rem 0.75rem; font-size: 0.78rem; }
+      .currency-option .currency-code { display: none; }
+      .currency-option .currency-flag { font-size: 1rem; }
     }
 
     @media (max-width: 480px) {
@@ -1446,28 +1473,6 @@
         <div id="datetime" class="datetime"></div>
 
         <div class="top-nav-buttons">
-          <div class="dropdown currency-dropdown">
-            <button class="nav-btn currency-btn" id="currencyBtn" onclick="toggleCurrencyDropdown()" title="Change Currency">
-              <span>💱</span>
-              <span id="currencyLabel">USD</span>
-            </button>
-            <div class="currency-dropdown-menu" id="currencyMenu" style="display: none;">
-              <div style="padding: 0.75rem 1rem; border-bottom: 1px solid rgba(57, 255, 20, 0.2); margin-bottom: 0.5rem;">
-                <p style="margin: 0; font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;">Select Currency</p>
-              </div>
-              <a onclick="changeCurrency('USD'); return false;">💵 $ USD - US Dollar</a>
-              <a onclick="changeCurrency('PHP'); return false;">🇵🇭 ₱ PHP - Philippine Peso</a>
-              <a onclick="changeCurrency('EUR'); return false;">🇪🇺 € EUR - Euro</a>
-              <a onclick="changeCurrency('GBP'); return false;">🇬🇧 £ GBP - British Pound</a>
-              <a onclick="changeCurrency('JPY'); return false;">🇯🇵 ¥ JPY - Japanese Yen</a>
-              <a onclick="changeCurrency('AUD'); return false;">🇦🇺 A$ AUD - Australian Dollar</a>
-              <a onclick="changeCurrency('CAD'); return false;">🇨🇦 C$ CAD - Canadian Dollar</a>
-              <a onclick="changeCurrency('SGD'); return false;">🇸🇬 S$ SGD - Singapore Dollar</a>
-              <a onclick="changeCurrency('INR'); return false;">🇮🇳 ₹ INR - Indian Rupee</a>
-              <a onclick="changeCurrency('CNY'); return false;">🇨🇳 ¥ CNY - Chinese Yuan</a>
-            </div>
-          </div>
-
           <div class="dropdown">
             <button class="nav-btn home-btn">
               <span>🏠</span>
@@ -1498,6 +1503,66 @@
           <button class="order-type-btn" id="renewalBtn" onclick="selectOrderType('renewal')">
             🔄 Renewal Service
           </button>
+        </div>
+
+        <!-- ★ CURRENCY SELECTOR ★ -->
+        <div class="currency-selector-standalone">
+          <div class="currency-selector-label">
+            <span>💱</span>
+            <span>View Prices In:</span>
+          </div>
+          <div class="currency-buttons">
+            <button class="currency-option active" data-currency="USD" onclick="changeCurrencyStandalone(this, 'USD')">
+              <span class="currency-flag">💵</span>
+              <span class="currency-code">USD</span>
+              <span class="currency-symbol">$</span>
+            </button>
+            <button class="currency-option" data-currency="PHP" onclick="changeCurrencyStandalone(this, 'PHP')">
+              <span class="currency-flag">🇵🇭</span>
+              <span class="currency-code">PHP</span>
+              <span class="currency-symbol">₱</span>
+            </button>
+            <button class="currency-option" data-currency="EUR" onclick="changeCurrencyStandalone(this, 'EUR')">
+              <span class="currency-flag">🇪🇺</span>
+              <span class="currency-code">EUR</span>
+              <span class="currency-symbol">€</span>
+            </button>
+            <button class="currency-option" data-currency="GBP" onclick="changeCurrencyStandalone(this, 'GBP')">
+              <span class="currency-flag">🇬🇧</span>
+              <span class="currency-code">GBP</span>
+              <span class="currency-symbol">£</span>
+            </button>
+            <button class="currency-option" data-currency="JPY" onclick="changeCurrencyStandalone(this, 'JPY')">
+              <span class="currency-flag">🇯🇵</span>
+              <span class="currency-code">JPY</span>
+              <span class="currency-symbol">¥</span>
+            </button>
+            <button class="currency-option" data-currency="AUD" onclick="changeCurrencyStandalone(this, 'AUD')">
+              <span class="currency-flag">🇦🇺</span>
+              <span class="currency-code">AUD</span>
+              <span class="currency-symbol">A$</span>
+            </button>
+            <button class="currency-option" data-currency="CAD" onclick="changeCurrencyStandalone(this, 'CAD')">
+              <span class="currency-flag">🇨🇦</span>
+              <span class="currency-code">CAD</span>
+              <span class="currency-symbol">C$</span>
+            </button>
+            <button class="currency-option" data-currency="SGD" onclick="changeCurrencyStandalone(this, 'SGD')">
+              <span class="currency-flag">🇸🇬</span>
+              <span class="currency-code">SGD</span>
+              <span class="currency-symbol">S$</span>
+            </button>
+            <button class="currency-option" data-currency="INR" onclick="changeCurrencyStandalone(this, 'INR')">
+              <span class="currency-flag">🇮🇳</span>
+              <span class="currency-code">INR</span>
+              <span class="currency-symbol">₹</span>
+            </button>
+            <button class="currency-option" data-currency="CNY" onclick="changeCurrencyStandalone(this, 'CNY')">
+              <span class="currency-flag">🇨🇳</span>
+              <span class="currency-code">CNY</span>
+              <span class="currency-symbol">¥</span>
+            </button>
+          </div>
         </div>
 
         <!-- ★ SERVICE TYPE FILTER BAR (only for new orders) -->
@@ -2191,7 +2256,14 @@
 
     function changeCurrency(currency) {
       currentCurrency = currency;
-      document.getElementById('currencyLabel').textContent = currency;
+      
+      // Update standalone selector active state
+      document.querySelectorAll('.currency-option').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.currency === currency) {
+          btn.classList.add('active');
+        }
+      });
       
       // Reload services to update all prices
       loadServices();
@@ -2200,10 +2272,10 @@
       if (selectedPackage) {
         updateInvoice();
       }
+    }
 
-      // Close dropdown
-      const dropdown = document.getElementById('currencyMenu');
-      if (dropdown) dropdown.style.display = 'none';
+    function changeCurrencyStandalone(btn, currency) {
+      changeCurrency(currency);
     }
 
     // =================== SERVICE PACKAGES DATA (CATEGORIZED) ===================
@@ -3332,24 +3404,6 @@
     function logout() {
       window.location.href = 'https://nexgenixcreativesolutions.github.io/login-signup';
     }
-
-    function toggleCurrencyDropdown() {
-      const menu = document.getElementById('currencyMenu');
-      if (menu.style.display === 'none' || !menu.style.display) {
-        menu.style.display = 'block';
-      } else {
-        menu.style.display = 'none';
-      }
-    }
-
-    // Close currency dropdown when clicking outside
-    document.addEventListener('click', function(event) {
-      const dropdown = document.querySelector('.currency-dropdown');
-      const menu = document.getElementById('currencyMenu');
-      if (menu && dropdown && !dropdown.contains(event.target)) {
-        menu.style.display = 'none';
-      }
-    });
 
     // =================== BOTTOM NAV ACTIVE STATE ===================
     function setBottomActive(el) {
