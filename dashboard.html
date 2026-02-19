@@ -591,103 +591,243 @@
     }
 
     /* =================== INVOICE PREVIEW =================== */
+    /* =================== INVOICE PREVIEW =================== */
     .invoice-preview {
-      background: rgba(4, 6, 10, 0.95);
-      border: 1px solid var(--border);
+      background: rgba(4, 6, 10, 0.97);
+      border: 1px solid rgba(57,255,20,0.18);
       border-radius: var(--radius);
-      padding: 2rem;
-      box-shadow: 0 0 40px rgba(57, 255, 20, 0.08);
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(57, 255, 20, 0.08);
     }
 
-    .invoice-header {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 1.25rem;
-      margin-bottom: 1.75rem;
+    /* Banner header */
+    .invoice-banner-wrap {
+      position: relative;
+      width: 100%;
+      background: #060609;
+      border-bottom: 2px solid var(--neon);
+      overflow: hidden;
     }
-
-    .invoice-header h2 {
+    .invoice-banner-wrap img {
+      width: 100%;
+      max-height: 140px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      opacity: 0.92;
+    }
+    .invoice-banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(6,6,9,0.55) 0%, transparent 60%, rgba(6,6,9,0.3) 100%);
+      pointer-events: none;
+    }
+    .invoice-badge {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: rgba(6,6,9,0.82);
+      border: 1.5px solid var(--neon);
+      border-radius: 8px;
+      padding: 6px 14px;
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.6rem;
+      font-size: 0.72rem;
       color: var(--neon);
-      text-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
-      text-align: center;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
+      backdrop-filter: blur(6px);
     }
 
-    .invoice-info {
+    /* Meta bar below banner */
+    .invoice-meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      background: rgba(57,255,20,0.05);
+      border-bottom: 1px solid rgba(57,255,20,0.12);
+    }
+    .invoice-meta-cell {
+      flex: 1 1 160px;
+      padding: 0.7rem 1.25rem;
+      border-right: 1px solid rgba(57,255,20,0.08);
+    }
+    .invoice-meta-cell:last-child { border-right: none; }
+    .invoice-meta-label {
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 3px;
+    }
+    .invoice-meta-value {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--neon);
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    /* Body padding */
+    .invoice-body { padding: 1.5rem; }
+
+    /* Bill to / Issued by two-col */
+    .invoice-parties {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 0.75rem;
-      margin: 1.25rem 0;
-      font-size: 0.9rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
+    .invoice-party-card {
+      background: rgba(14,18,28,0.8);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .invoice-party-head {
+      padding: 0.55rem 1rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .invoice-party-head.bill { background: rgba(57,255,20,0.12); color: var(--neon); border-bottom: 1px solid rgba(57,255,20,0.15); }
+    .invoice-party-head.issuer { background: rgba(14,18,28,0.95); color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .invoice-party-body { padding: 0.875rem 1rem; font-size: 0.84rem; }
+    .invoice-party-body .p-name { font-weight: 700; color: var(--text); margin-bottom: 0.35rem; font-size: 0.9rem; }
+    .invoice-party-body .p-detail { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.2rem; line-height: 1.5; }
+    .invoice-party-body .p-detail.green { color: #25D366; }
+    .invoice-party-body .p-detail.neon { color: var(--neon); }
 
-    .invoice-info div { padding: 0.35rem; }
-    .invoice-info strong { color: var(--yellow); }
+    /* Client editable fields */
+    .invoice-client-edit {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .invoice-client-edit input {
+      background: rgba(57,255,20,0.06);
+      border: 1px solid rgba(57,255,20,0.2);
+      border-radius: 0.35rem;
+      color: var(--text);
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 0.84rem;
+      padding: 0.25rem 0.5rem;
+      width: 100%;
+      max-width: 200px;
+      outline: none;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .invoice-client-edit input:focus {
+      box-shadow: 0 0 0 2px var(--neon-dim);
+      border-color: var(--neon);
+    }
+    .edit-icon { color: var(--neon); font-size: 0.75rem; opacity: 0.5; }
 
+    /* Table */
     .invoice-table {
       width: 100%;
-      margin-bottom: 1.5rem;
-      border-collapse: collapse;
+      margin-bottom: 1.25rem;
       overflow-x: auto;
-      display: block;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.07);
     }
-
-    .invoice-table table {
-      width: 100%;
-      min-width: 480px;
-    }
-
-    .invoice-table thead {
-      background: var(--neon-dim);
-      border-bottom: 1px solid var(--border);
-    }
-
+    .invoice-table table { width: 100%; border-collapse: collapse; min-width: 300px; }
+    .invoice-table thead { background: rgba(6,6,9,0.9); }
     .invoice-table th {
-      padding: 0.875rem 1rem;
+      padding: 0.75rem 1rem;
       text-align: left;
       font-family: 'Orbitron', sans-serif;
       color: var(--neon);
-      font-size: 0.78rem;
+      font-size: 0.68rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      border-bottom: 1px solid rgba(57,255,20,0.15);
     }
-
     .invoice-table td {
-      padding: 0.875rem 1rem;
-      border-bottom: 1px solid var(--border-dim);
-      font-size: 0.88rem;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.85rem;
       color: var(--text);
     }
+    .invoice-table tbody tr { border-left: 2.5px solid transparent; transition: all 0.15s; }
+    .invoice-table tbody tr:hover { background: rgba(57,255,20,0.04); border-left-color: var(--neon); }
+    .invoice-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.015); }
 
-    .invoice-table tr:hover { background: rgba(57, 255, 20, 0.04); }
-
+    /* Total */
     .invoice-total {
-      text-align: center;
-      padding: 1.75rem;
-      background: linear-gradient(135deg, rgba(57, 255, 20, 0.08), rgba(0,0,0,0.5));
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(135deg, rgba(6,6,9,0.95), rgba(14,20,10,0.9));
+      border: 1.5px solid rgba(57,255,20,0.3);
+      border-radius: 10px;
+      margin-bottom: 1.25rem;
     }
-
     .invoice-total .total-label {
-      font-size: 0.82rem;
+      font-size: 0.72rem;
       color: var(--yellow);
       font-weight: 700;
       font-family: 'Orbitron', sans-serif;
-      margin-bottom: 0.75rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
-
     .invoice-total .total-amount {
-      font-size: 2.25rem;
+      font-size: 2rem;
       color: var(--neon);
       font-weight: 800;
       font-family: 'Orbitron', sans-serif;
       text-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
     }
+
+    /* Payment methods */
+    .inv-pay-section {
+      background: rgba(10,14,22,0.9);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .inv-pay-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .inv-pay-sub {
+      font-size: 0.65rem;
+      color: rgba(107,114,128,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      margin-top: 0.65rem;
+    }
+    .inv-pay-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .inv-pay-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.35rem 0.75rem 0.35rem 0.45rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      transition: transform 0.15s;
+    }
+    .inv-pay-chip:hover { transform: translateY(-1px); }
+    .inv-pay-chip svg { flex-shrink: 0; }
+    .chip-gcash   { background:rgba(0,104,255,0.12); border:1px solid rgba(0,104,255,0.3); color:#60a5fa; }
+    .chip-bank    { background:rgba(57,255,20,0.08); border:1px solid rgba(57,255,20,0.2); color:var(--neon); }
+    .chip-maya    { background:rgba(0,183,150,0.1);  border:1px solid rgba(0,183,150,0.3); color:#34d399; }
+    .chip-paypal  { background:rgba(0,48,135,0.2);   border:1px solid rgba(0,150,220,0.35); color:#60a5fa; }
+    .chip-stripe  { background:rgba(99,91,255,0.12); border:1px solid rgba(99,91,255,0.35); color:#a78bfa; }
+    .inv-pay-terms { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.5; }
 
     /* =================== BUTTONS =================== */
     .button {
@@ -1276,6 +1416,10 @@
       .form-row { grid-template-columns: 1fr; }
       .checkbox-group { grid-template-columns: 1fr; }
       .invoice-info { grid-template-columns: 1fr; }
+      .invoice-parties { grid-template-columns: 1fr; }
+      .invoice-meta-bar { flex-direction: column; }
+      .invoice-meta-cell { border-right: none; border-bottom: 1px solid rgba(57,255,20,0.08); padding: 0.5rem 1rem; }
+      .invoice-banner-wrap img { max-height: 100px; }
       .button-group { grid-template-columns: 1fr; }
       .order-type-selector { flex-direction: column; }
       .order-type-btn { width: 100%; }
@@ -1954,75 +2098,126 @@
         <!-- Invoice Preview -->
         <div class="content-box" id="invoiceSection" style="display: none;">
           <div class="invoice-preview">
-            <div class="invoice-header">
-              <h2>INVOICE PREVIEW</h2>
-              <div class="invoice-info">
-                <div><strong>Invoice No:</strong> <span id="invoiceNumber">NGCS-2026-001</span></div>
-                <div><strong>Date:</strong> <span id="invoiceDate"></span></div>
-                <div>
-                  <strong>Client: </strong>
-                  <span class="invoice-client-edit">
-                    <input type="text" id="clientNameInput" value="Valued Client" placeholder="Enter client name" oninput="syncClientName()" />
-                    <span class="edit-icon">✏️</span>
-                  </span>
-                </div>
-                <div style="margin-top:0.35rem;">
-                  <strong>Email: </strong>
-                  <span class="invoice-client-edit">
-                    <input type="email" id="invoiceEmailInput" placeholder="your@email.com" oninput="syncInvoiceEmail()" />
-                    <span class="edit-icon">✏️</span>
-                  </span>
-                </div>
-                <div style="margin-top:0.35rem;">
-                  <strong>WhatsApp: </strong>
-                  <span class="invoice-client-edit">
-                    <span class="phone-input-group">
-                      <select id="invoicePhoneCode" class="phone-country-select" oninput="syncInvoicePhone()">
-                        <!-- populated by JS -->
-                      </select>
-                      <input type="tel" id="invoicePhoneNumber" class="phone-number-input" placeholder="9XX XXX XXXX" oninput="syncInvoicePhone()" maxlength="15" />
-                    </span>
-                    <span class="whatsapp-badge">
+
+            <!-- ── BANNER HEADER ── -->
+            <div class="invoice-banner-wrap">
+              <img src="https://nexgenixcreativesolutions.github.io/assets/images/banner.png"
+                   alt="Nex Genix Creative Solutions"
+                   onerror="this.onerror=null;this.src='assets/images/dashboard-logo-no-bg.png';this.style.maxHeight='80px';this.style.objectFit='contain';this.style.padding='1rem';" />
+              <div class="invoice-banner-overlay"></div>
+              <div class="invoice-badge">INVOICE</div>
+            </div>
+
+            <!-- ── META BAR ── -->
+            <div class="invoice-meta-bar">
+              <div class="invoice-meta-cell">
+                <div class="invoice-meta-label">Invoice No</div>
+                <div class="invoice-meta-value" id="invoiceNumber" style="font-size:0.78rem;">NGCS-2026-001</div>
+              </div>
+              <div class="invoice-meta-cell">
+                <div class="invoice-meta-label">Date</div>
+                <div class="invoice-meta-value" style="font-size:0.78rem;" id="invoiceDate"></div>
+              </div>
+              <div class="invoice-meta-cell">
+                <div class="invoice-meta-label">Status</div>
+                <div class="invoice-meta-value" style="color:var(--yellow);font-size:0.72rem;">⏳ PENDING</div>
+              </div>
+              <div class="invoice-meta-cell">
+                <div class="invoice-meta-label">Currency</div>
+                <div class="invoice-meta-value" id="invoiceCurrencyMeta" style="font-size:0.78rem;">PHP</div>
+              </div>
+            </div>
+
+            <!-- ── BODY ── -->
+            <div class="invoice-body">
+
+              <!-- Bill To / Issued By -->
+              <div class="invoice-parties">
+                <div class="invoice-party-card">
+                  <div class="invoice-party-head bill">👤 Bill To</div>
+                  <div class="invoice-party-body">
+                    <div class="p-name">
+                      <span class="invoice-client-edit">
+                        <input type="text" id="clientNameInput" value="Valued Client" placeholder="Client name" oninput="syncClientName()" />
+                        <span class="edit-icon">✏️</span>
+                      </span>
+                    </div>
+                    <div class="p-detail neon">
+                      <span class="invoice-client-edit">
+                        <input type="email" id="invoiceEmailInput" placeholder="email@example.com" oninput="syncInvoiceEmail()" />
+                        <span class="edit-icon">✏️</span>
+                      </span>
+                    </div>
+                    <div class="p-detail green" style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
                       <svg width="11" height="11" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                      WhatsApp
-                    </span>
+                      <span class="phone-input-group">
+                        <select id="invoicePhoneCode" class="phone-country-select" oninput="syncInvoicePhone()"></select>
+                        <input type="tel" id="invoicePhoneNumber" class="phone-number-input" placeholder="9XX XXX XXXX" oninput="syncInvoicePhone()" maxlength="15" />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="invoice-party-card">
+                  <div class="invoice-party-head issuer">🏢 Issued By</div>
+                  <div class="invoice-party-body">
+                    <div class="p-name">Nex Genix Creative Solutions</div>
+                    <div class="p-detail neon">nexgenixcreativesolutions@gmail.com</div>
+                    <div class="p-detail">Philippines</div>
+                    <div class="p-detail" style="color:var(--text-muted);font-size:0.75rem;">nexgenixcreativesolutions.github.io</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Items Table -->
+              <div class="invoice-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Description</th>
+                      <th style="text-align:right;">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody id="invoiceItems"></tbody>
+                </table>
+              </div>
+
+              <!-- Total -->
+              <div class="invoice-total">
+                <div class="total-label">💰 Total Amount Due</div>
+                <div class="total-amount" id="totalAmount">₱0.00</div>
+              </div>
+
+              <!-- Payment Methods -->
+              <div class="inv-pay-section">
+                <div class="inv-pay-label">Payment Methods Accepted</div>
+                <div class="inv-pay-sub">🇵🇭 Local — Philippines</div>
+                <div class="inv-pay-grid">
+                  <span class="inv-pay-chip chip-gcash">
+                    <svg width="16" height="16" viewBox="0 0 44 44"><defs><linearGradient id="ipgc" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse"><stop stop-color="#0068FF"/><stop offset="1" stop-color="#00C2FF"/></linearGradient></defs><rect width="44" height="44" rx="8" fill="url(#ipgc)"/><text x="22" y="30" font-family="Helvetica" font-size="22" font-weight="900" fill="white" text-anchor="middle">G</text></svg>
+                    GCash
+                  </span>
+                  <span class="inv-pay-chip chip-bank">
+                    <svg width="16" height="16" viewBox="0 0 44 44"><rect width="44" height="44" rx="8" fill="#0d1f0d"/><polygon points="22,8 8,18 36,18" fill="#39FF14"/><rect x="10" y="20" width="4" height="10" rx="1" fill="#39FF14"/><rect x="16" y="20" width="4" height="10" rx="1" fill="#39FF14"/><rect x="22" y="20" width="4" height="10" rx="1" fill="#39FF14"/><rect x="28" y="20" width="4" height="10" rx="1" fill="#39FF14"/><rect x="7" y="31" width="30" height="3" rx="1.5" fill="#39FF14"/></svg>
+                    Bank Transfer
+                  </span>
+                  <span class="inv-pay-chip chip-maya">
+                    <svg width="16" height="16" viewBox="0 0 44 44"><defs><linearGradient id="ipmm" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse"><stop stop-color="#00B796"/><stop offset="1" stop-color="#007A63"/></linearGradient></defs><rect width="44" height="44" rx="8" fill="url(#ipmm)"/><polyline points="10,31 10,13 22,25 34,13 34,31" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Maya
                   </span>
                 </div>
-                <div><strong>Issued By:</strong> Nex Genix Creative Solutions</div>
+                <div class="inv-pay-sub">🌐 International</div>
+                <div class="inv-pay-grid">
+                  <span class="inv-pay-chip chip-paypal">
+                    <svg width="16" height="16" viewBox="0 0 44 44"><rect width="44" height="44" rx="8" fill="#003087"/><path d="M26 12H18.5a1.2 1.2 0 00-1.2 1l-3 19h4.2l.9-5.5h4.2c4.8 0 7.8-2.4 8.6-7 .7-4.1-1.7-6.5-4.8-7.2A6 6 0 0026 12z" fill="#009CDE"/><path d="M22.5 16H16a1 1 0 00-1 .9L12.5 32h4l.9-5.5h4.2c4.2 0 7-2.2 7.8-6.2.6-3.4-1.3-5.7-4.2-6.5A5 5 0 0022.5 16z" fill="#012169"/><path d="M24 20h-5.5a1 1 0 00-1 .9l-2 12.1h3.8l.8-4.8h3.6c3.6 0 6-1.9 6.7-5.5.5-3-1-5-3.5-5.9A4 4 0 0024 20z" fill="white"/></svg>
+                    PayPal
+                  </span>
+                  <span class="inv-pay-chip chip-stripe">
+                    <svg width="16" height="16" viewBox="0 0 44 44"><rect width="44" height="44" rx="8" fill="#635BFF"/><path d="M22.2 13.5c-4.6 0-7.2 2.2-7.2 5.6 0 4.4 5.9 5.4 5.9 7.7 0 1.2-1.1 1.9-2.8 1.9-2.4 0-5-1.3-5-1.3v3.8s2.3 1.1 5.1 1.1c4.8 0 7.5-2.2 7.5-5.7 0-4.6-6-5.6-6-7.7 0-1 .9-1.7 2.4-1.7 2.1 0 4.3 1 4.3 1v-3.7s-2.1-.9-4.2-.9z" fill="white"/></svg>
+                    Stripe
+                  </span>
+                </div>
+                <div class="inv-pay-terms">50% downpayment required to start · 50% upon project completion</div>
               </div>
-            </div>
-
-            <div class="invoice-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Description</th>
-                    <th style="text-align: right;">Amount (PHP)</th>
-                  </tr>
-                </thead>
-                <tbody id="invoiceItems">
-                  <!-- Dynamic invoice items -->
-                </tbody>
-              </table>
-            </div>
-
-            <div class="invoice-total">
-              <div class="total-label">TOTAL AMOUNT DUE</div>
-              <div class="total-amount" id="totalAmount">₱0.00</div>
-            </div>
-
-            <!-- Payment Methods -->
-            <div style="margin-top:1rem; padding:1rem 1.25rem; background:rgba(14,18,28,0.8); border:1px solid rgba(255,255,255,0.07); border-radius:var(--radius);">
-              <div style="font-family:'Orbitron',sans-serif; font-size:0.65rem; color:var(--text-muted); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.75rem;">💳 Payment Methods Accepted</div>
-              <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
-                <span style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);border-radius:6px;padding:0.3rem 0.65rem;font-size:0.75rem;font-weight:700;color:var(--neon);">📱 GCash</span>
-                <span style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);border-radius:6px;padding:0.3rem 0.65rem;font-size:0.75rem;font-weight:700;color:var(--neon);">🏦 Bank Transfer</span>
-                <span style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);border-radius:6px;padding:0.3rem 0.65rem;font-size:0.75rem;font-weight:700;color:var(--neon);">💳 PayMaya</span>
-                <span style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(0,112,240,0.12);border:1px solid rgba(0,112,240,0.3);border-radius:6px;padding:0.3rem 0.65rem;font-size:0.75rem;font-weight:700;color:#60a5fa;">🌐 PayPal</span>
-                <span style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(99,91,255,0.12);border:1px solid rgba(99,91,255,0.3);border-radius:6px;padding:0.3rem 0.65rem;font-size:0.75rem;font-weight:700;color:#a78bfa;">⚡ Stripe</span>
-              </div>
-              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.65rem;line-height:1.5;">50% downpayment required to start · 50% upon project completion</div>
-            </div>
 
             <!-- Order Success Banner (hidden until order placed) -->
             <div id="orderSuccessBanner" style="display:none; margin-bottom:1rem; padding:1.1rem 1.25rem; background:rgba(57,255,20,0.10); border:1.5px solid var(--neon); border-radius:var(--radius); text-align:center;">
@@ -2228,6 +2423,10 @@
 
     function changeCurrency(currency) {
       currentCurrency = currency;
+
+      // Sync currency meta in invoice
+      const metaEl = document.getElementById('invoiceCurrencyMeta');
+      if (metaEl) metaEl.textContent = currency;
 
       // Sync dropdown
       const dropdown = document.getElementById('currencyDropdown');
@@ -3495,7 +3694,7 @@ ${JSON.stringify(orderData, null, 2)}
       };
     }
 
-    function downloadInvoice() {
+    async function downloadInvoice() {
       if (!selectedPackage || !selectedCategory) {
         alert('Please select a service package first to generate an invoice.');
         return;
@@ -3525,32 +3724,67 @@ ${JSON.stringify(orderData, null, 2)}
       // ═══════════════════════════════════════════════════════════════
       // HEADER BAND
       // ═══════════════════════════════════════════════════════════════
-      doc.setFillColor(15, 20, 30);
-      doc.rect(0, 0, W, 38, 'F');
+      // HEADER — Banner image with fallback to text
+      // ═══════════════════════════════════════════════════════════════
+      const bannerUrl = 'https://nexgenixcreativesolutions.github.io/assets/images/banner.png';
+      const headerH = 38;
 
-      // Company name
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(20);
-      doc.text('NEX GENIX', 16, 17);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9);
-      doc.setTextColor(156, 163, 175);
-      doc.text('CREATIVE SOLUTIONS', 16, 23);
+      const drawHeader = (imgDataUrl) => {
+        if (imgDataUrl) {
+          // Draw banner image across full width
+          doc.addImage(imgDataUrl, 'PNG', 0, 0, W, headerH, '', 'FAST');
+          // Dark overlay for readability
+          doc.setFillColor(6, 6, 9);
+          doc.setGState(new doc.GState({ opacity: 0.45 }));
+          doc.rect(0, 0, W, headerH, 'F');
+          doc.setGState(new doc.GState({ opacity: 1 }));
+        } else {
+          // Fallback: dark band with text
+          doc.setFillColor(15, 20, 30);
+          doc.rect(0, 0, W, headerH, 'F');
+          doc.setTextColor(...white);
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(20);
+          doc.text('NEX GENIX', 16, 17);
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(9);
+          doc.setTextColor(156, 163, 175);
+          doc.text('CREATIVE SOLUTIONS', 16, 23);
+          doc.setFillColor(...accentGreen);
+          doc.rect(16, 25.5, 38, 1.2, 'F');
+        }
+        // INVOICE label always shown on top
+        doc.setTextColor(...white);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(26);
+        doc.text('INVOICE', W - 16, 20, { align: 'right' });
+        doc.setFontSize(8.5);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(200, 220, 200);
+        doc.text(`# ${invoiceNum}`, W - 16, 27, { align: 'right' });
 
-      // Green accent bar under tagline
-      doc.setFillColor(...accentGreen);
-      doc.rect(16, 25.5, 38, 1.2, 'F');
+        // Neon bottom border on header
+        doc.setFillColor(...accentGreen);
+        doc.rect(0, headerH - 1, W, 1.5, 'F');
+      };
 
-      // INVOICE label (right side)
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(26);
-      doc.text('INVOICE', W - 16, 20, { align: 'right' });
-      doc.setFontSize(8.5);
-      doc.setFont('helvetica', 'normal');
-      doc.setTextColor(156, 163, 175);
-      doc.text(`# ${invoiceNum}`, W - 16, 27, { align: 'right' });
+      // Try loading banner image; always render synchronously with fallback
+      try {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        await new Promise((resolve) => {
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width; canvas.height = img.height;
+            canvas.getContext('2d').drawImage(img, 0, 0);
+            drawHeader(canvas.toDataURL('image/png'));
+            resolve();
+          };
+          img.onerror = () => { drawHeader(null); resolve(); };
+          img.src = bannerUrl;
+          setTimeout(() => { if (!img.complete) { drawHeader(null); resolve(); } }, 3000);
+        });
+      } catch(e) { drawHeader(null); }
 
       // ═══════════════════════════════════════════════════════════════
       // META ROW — date + status badge
