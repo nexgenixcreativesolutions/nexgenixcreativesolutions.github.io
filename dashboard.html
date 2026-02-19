@@ -1124,6 +1124,7 @@
       display: flex;
       align-items: center;
       gap: 0.4rem;
+      flex-wrap: wrap;
     }
 
     .invoice-client-edit input {
@@ -1134,7 +1135,7 @@
       font-family: 'Montserrat Alternates', sans-serif;
       font-size: 0.9rem;
       padding: 0.25rem 0.5rem;
-      width: 170px;
+      width: 190px;
       outline: none;
       transition: box-shadow 0.2s;
     }
@@ -1148,6 +1149,86 @@
       font-size: 0.8rem;
       cursor: default;
       opacity: 0.6;
+    }
+
+    /* Phone field with country code */
+    .phone-input-group {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: nowrap;
+    }
+
+    .phone-country-select {
+      background: var(--neon-dim);
+      border: 1px solid var(--border);
+      border-radius: 0.35rem;
+      color: var(--text);
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 0.82rem;
+      padding: 0.25rem 0.3rem;
+      width: 110px;
+      outline: none;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .phone-country-select:focus {
+      box-shadow: 0 0 0 2px var(--neon-dim);
+    }
+
+    .phone-country-select option {
+      background: #0e121a;
+      color: var(--text);
+    }
+
+    .phone-number-input {
+      background: var(--neon-dim);
+      border: 1px solid var(--border);
+      border-radius: 0.35rem;
+      color: var(--text);
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.25rem 0.5rem;
+      width: 135px;
+      outline: none;
+      transition: box-shadow 0.2s;
+    }
+
+    .phone-number-input:focus {
+      box-shadow: 0 0 0 2px var(--neon-dim);
+    }
+
+    .whatsapp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: rgba(37, 211, 102, 0.15);
+      border: 1px solid rgba(37, 211, 102, 0.4);
+      border-radius: 0.3rem;
+      padding: 0.15rem 0.4rem;
+      font-size: 0.7rem;
+      color: #25D366;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    /* Settings phone group */
+    .settings-phone-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .settings-phone-group select {
+      flex: 0 0 160px;
+    }
+
+    .settings-phone-group input {
+      flex: 1;
     }
 
     @keyframes rowFlash {
@@ -1992,6 +2073,28 @@
                     <span class="edit-icon">✏️</span>
                   </span>
                 </div>
+                <div style="margin-top:0.35rem;">
+                  <strong>Email: </strong>
+                  <span class="invoice-client-edit">
+                    <input type="email" id="invoiceEmailInput" placeholder="your@email.com" oninput="syncInvoiceEmail()" />
+                    <span class="edit-icon">✏️</span>
+                  </span>
+                </div>
+                <div style="margin-top:0.35rem;">
+                  <strong>WhatsApp: </strong>
+                  <span class="invoice-client-edit">
+                    <span class="phone-input-group">
+                      <select id="invoicePhoneCode" class="phone-country-select" oninput="syncInvoicePhone()">
+                        <!-- populated by JS -->
+                      </select>
+                      <input type="tel" id="invoicePhoneNumber" class="phone-number-input" placeholder="9XX XXX XXXX" oninput="syncInvoicePhone()" maxlength="15" />
+                    </span>
+                    <span class="whatsapp-badge">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                      WhatsApp
+                    </span>
+                  </span>
+                </div>
                 <div><strong>Issued By:</strong> Nex Genix Creative Solutions</div>
               </div>
             </div>
@@ -2046,12 +2149,17 @@
             <input id="usernameInput" class="input" placeholder="Username" type="text">
           </div>
           <div class="form-group">
-            <label for="phoneInput">Phone Number</label>
-            <input id="phoneInput" class="input" placeholder="Phone Number" type="tel">
+            <label for="phoneNumber">WhatsApp Number <span class="whatsapp-badge" style="font-size:0.68rem;vertical-align:middle;"><svg width="10" height="10" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</span></label>
+            <div class="settings-phone-group">
+              <select id="phoneCode" class="input" style="flex:0 0 170px;padding:0.6rem 0.5rem;font-size:0.83rem;">
+                <!-- populated by JS -->
+              </select>
+              <input id="phoneNumber" class="input" placeholder="9XX XXX XXXX" type="tel" maxlength="15" style="flex:1;">
+            </div>
           </div>
           <div class="form-group">
-            <label for="emailInput">Email</label>
-            <input id="emailInput" class="input" placeholder="Email" type="email" disabled>
+            <label for="emailInput">Email Address</label>
+            <input id="emailInput" class="input" placeholder="your@email.com" type="email" oninput="syncInvoiceEmailFromSettings()">
           </div>
 
           <hr class="divider">
@@ -3016,6 +3124,113 @@
     // =================== EDITABLE CLIENT NAME ===================
     function syncClientName() { /* input is the direct source of truth */ }
 
+    function syncInvoiceEmail() {
+      const val = document.getElementById('invoiceEmailInput').value;
+      const settingsEmail = document.getElementById('emailInput');
+      if (settingsEmail && !settingsEmail.dataset.userEdited) {
+        settingsEmail.value = val;
+      }
+    }
+
+    function syncInvoiceEmailFromSettings() {
+      const val = document.getElementById('emailInput').value;
+      const invoiceEmail = document.getElementById('invoiceEmailInput');
+      if (invoiceEmail) invoiceEmail.value = val;
+      document.getElementById('emailInput').dataset.userEdited = 'true';
+    }
+
+    function syncInvoicePhone() {
+      const code = document.getElementById('invoicePhoneCode').value;
+      const num = document.getElementById('invoicePhoneNumber').value;
+      const settingsCode = document.getElementById('phoneCode');
+      const settingsNum = document.getElementById('phoneNumber');
+      if (settingsCode) settingsCode.value = code;
+      if (settingsNum) settingsNum.value = num;
+    }
+
+    function syncSettingsPhoneToInvoice() {
+      const code = document.getElementById('phoneCode').value;
+      const num = document.getElementById('phoneNumber').value;
+      const invCode = document.getElementById('invoicePhoneCode');
+      const invNum = document.getElementById('invoicePhoneNumber');
+      if (invCode) invCode.value = code;
+      if (invNum) invNum.value = num;
+    }
+
+    function getFullWhatsApp() {
+      const code = document.getElementById('invoicePhoneCode')?.value || '';
+      const num = document.getElementById('invoicePhoneNumber')?.value || '';
+      return num ? `${code}${num.replace(/\s/g, '')}` : '';
+    }
+
+    // =================== COUNTRY PHONE CODES ===================
+    const PHONE_COUNTRIES = [
+      { code: '+1',    flag: '🇺🇸', name: 'US/Canada',       abbr: 'US' },
+      { code: '+44',   flag: '🇬🇧', name: 'United Kingdom',   abbr: 'GB' },
+      { code: '+63',   flag: '🇵🇭', name: 'Philippines',      abbr: 'PH' },
+      { code: '+39',   flag: '🇮🇹', name: 'Italy',            abbr: 'IT' },
+      { code: '+48',   flag: '🇵🇱', name: 'Poland',           abbr: 'PL' },
+      { code: '+61',   flag: '🇦🇺', name: 'Australia',        abbr: 'AU' },
+      { code: '+1',    flag: '🇨🇦', name: 'Canada',           abbr: 'CA' },
+      { code: '+65',   flag: '🇸🇬', name: 'Singapore',        abbr: 'SG' },
+      { code: '+91',   flag: '🇮🇳', name: 'India',            abbr: 'IN' },
+      { code: '+86',   flag: '🇨🇳', name: 'China',            abbr: 'CN' },
+      { code: '+81',   flag: '🇯🇵', name: 'Japan',            abbr: 'JP' },
+      { code: '+82',   flag: '🇰🇷', name: 'South Korea',      abbr: 'KR' },
+      { code: '+49',   flag: '🇩🇪', name: 'Germany',          abbr: 'DE' },
+      { code: '+33',   flag: '🇫🇷', name: 'France',           abbr: 'FR' },
+      { code: '+34',   flag: '🇪🇸', name: 'Spain',            abbr: 'ES' },
+      { code: '+31',   flag: '🇳🇱', name: 'Netherlands',      abbr: 'NL' },
+      { code: '+46',   flag: '🇸🇪', name: 'Sweden',           abbr: 'SE' },
+      { code: '+47',   flag: '🇳🇴', name: 'Norway',           abbr: 'NO' },
+      { code: '+45',   flag: '🇩🇰', name: 'Denmark',          abbr: 'DK' },
+      { code: '+358',  flag: '🇫🇮', name: 'Finland',          abbr: 'FI' },
+      { code: '+7',    flag: '🇷🇺', name: 'Russia',           abbr: 'RU' },
+      { code: '+55',   flag: '🇧🇷', name: 'Brazil',           abbr: 'BR' },
+      { code: '+52',   flag: '🇲🇽', name: 'Mexico',           abbr: 'MX' },
+      { code: '+54',   flag: '🇦🇷', name: 'Argentina',        abbr: 'AR' },
+      { code: '+56',   flag: '🇨🇱', name: 'Chile',            abbr: 'CL' },
+      { code: '+57',   flag: '🇨🇴', name: 'Colombia',         abbr: 'CO' },
+      { code: '+971',  flag: '🇦🇪', name: 'UAE',              abbr: 'AE' },
+      { code: '+966',  flag: '🇸🇦', name: 'Saudi Arabia',     abbr: 'SA' },
+      { code: '+20',   flag: '🇪🇬', name: 'Egypt',            abbr: 'EG' },
+      { code: '+27',   flag: '🇿🇦', name: 'South Africa',     abbr: 'ZA' },
+      { code: '+234',  flag: '🇳🇬', name: 'Nigeria',          abbr: 'NG' },
+      { code: '+254',  flag: '🇰🇪', name: 'Kenya',            abbr: 'KE' },
+      { code: '+62',   flag: '🇮🇩', name: 'Indonesia',        abbr: 'ID' },
+      { code: '+60',   flag: '🇲🇾', name: 'Malaysia',         abbr: 'MY' },
+      { code: '+66',   flag: '🇹🇭', name: 'Thailand',         abbr: 'TH' },
+      { code: '+84',   flag: '🇻🇳', name: 'Vietnam',          abbr: 'VN' },
+      { code: '+880',  flag: '🇧🇩', name: 'Bangladesh',       abbr: 'BD' },
+      { code: '+92',   flag: '🇵🇰', name: 'Pakistan',         abbr: 'PK' },
+      { code: '+94',   flag: '🇱🇰', name: 'Sri Lanka',        abbr: 'LK' },
+      { code: '+64',   flag: '🇳🇿', name: 'New Zealand',      abbr: 'NZ' },
+      { code: '+41',   flag: '🇨🇭', name: 'Switzerland',      abbr: 'CH' },
+      { code: '+43',   flag: '🇦🇹', name: 'Austria',          abbr: 'AT' },
+      { code: '+32',   flag: '🇧🇪', name: 'Belgium',          abbr: 'BE' },
+      { code: '+351',  flag: '🇵🇹', name: 'Portugal',         abbr: 'PT' },
+      { code: '+30',   flag: '🇬🇷', name: 'Greece',           abbr: 'GR' },
+      { code: '+380',  flag: '🇺🇦', name: 'Ukraine',          abbr: 'UA' },
+      { code: '+90',   flag: '🇹🇷', name: 'Turkey',           abbr: 'TR' },
+      { code: '+98',   flag: '🇮🇷', name: 'Iran',             abbr: 'IR' },
+      { code: '+972',  flag: '🇮🇱', name: 'Israel',           abbr: 'IL' },
+      { code: '+852',  flag: '🇭🇰', name: 'Hong Kong',        abbr: 'HK' },
+      { code: '+886',  flag: '🇹🇼', name: 'Taiwan',           abbr: 'TW' },
+    ];
+
+    function populatePhoneDropdowns() {
+      const selects = ['invoicePhoneCode', 'phoneCode'];
+      selects.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.innerHTML = PHONE_COUNTRIES.map(c =>
+          `<option value="${c.code}" data-abbr="${c.abbr}">${c.flag} ${c.abbr} ${c.code}</option>`
+        ).join('');
+        // default to PH
+        el.value = '+63';
+      });
+    }
+
     // =================== SERVICE TYPE CHANGE (kept for filter-tab pre-setting) ===================
     function onServiceTypeChange() {
       updateInvoice();
@@ -3248,7 +3463,7 @@
         order_date: orderDate,
         service_type: activeServiceType || 'N/A',
         client_email: orderData.clientEmail,
-        message: `New order received from ${orderData.clientName} (${orderData.clientEmail}).\n\nPackage: ${orderData.packageName}\nService Type: ${activeServiceType || 'N/A'}\nTotal: ${orderData.totalAmount} ${currentCurrency}\nInvoice #: ${orderData.invoiceNumber}\nDate: ${orderDate}\n\nPlease follow up with the client to confirm and process payment.`,
+        message: `New order received from ${orderData.clientName} (${orderData.clientEmail}).\nWhatsApp: ${orderData.clientPhone || 'N/A'}\n\nPackage: ${orderData.packageName}\nService Type: ${activeServiceType || 'N/A'}\nTotal: ${orderData.totalAmount} ${currentCurrency}\nInvoice #: ${orderData.invoiceNumber}\nDate: ${orderDate}\n\nPlease follow up with the client to confirm and process payment.`,
         order_details: JSON.stringify(orderData, null, 2)
       };
 
@@ -3348,7 +3563,8 @@ ${JSON.stringify(orderData, null, 2)}
       return {
         invoiceNumber: document.getElementById('invoiceNumber').textContent,
         clientName: document.getElementById('clientNameInput').value,
-        clientEmail: document.getElementById('emailInput').value,
+        clientEmail: document.getElementById('invoiceEmailInput').value || document.getElementById('emailInput').value,
+        clientPhone: getFullWhatsApp(),
         packageName: pkg.name,
         packagePrice: formatPrice(convertPHPToUSD(pkg.price)),
         category: selectedCategory,
@@ -3401,23 +3617,28 @@ ${JSON.stringify(orderData, null, 2)}
       doc.text(`Invoice #: ${invoiceNum}`, 20, 65);
       doc.text(`Date: ${invoiceDate}`, 20, 72);
       doc.text(`Client: ${clientName}`, 20, 79);
-      doc.text('Issued By: Nex Genix Creative Solutions', 20, 86);
-      doc.text(`Currency: ${currencySymbols[currentCurrency]} ${currentCurrency}`, 20, 93);
+      const clientEmailPDF = document.getElementById('invoiceEmailInput').value || document.getElementById('emailInput').value;
+      const clientPhonePDF = getFullWhatsApp();
+      let yOffset = 86;
+      if (clientEmailPDF) { doc.text(`Email: ${clientEmailPDF}`, 20, yOffset); yOffset += 7; }
+      if (clientPhonePDF) { doc.text(`WhatsApp: ${clientPhonePDF}`, 20, yOffset); yOffset += 7; }
+      doc.text('Issued By: Nex Genix Creative Solutions', 20, yOffset); yOffset += 7;
+      doc.text(`Currency: ${currencySymbols[currentCurrency]} ${currentCurrency}`, 20, yOffset); yOffset += 7;
 
       // Line separator
       doc.setDrawColor(...neonGreen);
       doc.setLineWidth(0.5);
-      doc.line(20, 98, 190, 98);
+      doc.line(20, yOffset, 190, yOffset);
 
       // Invoice items table
       doc.setFontSize(11);
       doc.setTextColor(...textColor);
       doc.setFont('helvetica', 'bold');
-      doc.text('Description', 20, 108);
-      doc.text(`Amount (${currentCurrency})`, 150, 108);
+      doc.text('Description', 20, yOffset + 10);
+      doc.text(`Amount (${currentCurrency})`, 150, yOffset + 10);
       doc.setFont('helvetica', 'normal');
 
-      let yPos = 116;
+      let yPos = yOffset + 18;
       const items = document.querySelectorAll('#invoiceItems tr');
 
       items.forEach((row) => {
@@ -3466,9 +3687,14 @@ ${JSON.stringify(orderData, null, 2)}
     async function saveProfile() {
       const displayName = document.getElementById('displayNameInput').value;
       const username = document.getElementById('usernameInput').value;
-      const phone = document.getElementById('phoneInput').value;
+      const phoneCode = document.getElementById('phoneCode').value;
+      const phoneNum = document.getElementById('phoneNumber').value;
+      const fullPhone = phoneNum ? `${phoneCode}${phoneNum.replace(/\s/g,'')}`  : '';
 
-      alert('Profile updated successfully!');
+      // Sync to invoice
+      syncSettingsPhoneToInvoice();
+
+      alert('Profile updated successfully!' + (fullPhone ? `\nWhatsApp: ${fullPhone}` : ''));
     }
 
     async function updatePassword() {
@@ -3638,11 +3864,17 @@ If asked something you don't know, say you'll connect them with a human agent. N
     document.addEventListener('DOMContentLoaded', function() {
       createFloatingCodeBackground();
       loadServices();
+      populatePhoneDropdowns();
 
       // Set user info
       document.getElementById('clientNameInput').value = 'Valued Client';
       document.getElementById('displayNameInput').value = 'Valued Client';
       document.getElementById('emailInput').value = 'client@example.com';
+      document.getElementById('invoiceEmailInput').value = 'client@example.com';
+
+      // Sync settings phone to invoice whenever settings phone changes
+      document.getElementById('phoneCode').addEventListener('change', syncSettingsPhoneToInvoice);
+      document.getElementById('phoneNumber').addEventListener('input', syncSettingsPhoneToInvoice);
     });
   </script>
 </body>
