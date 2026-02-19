@@ -3299,40 +3299,80 @@
 
       const orderDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
+      // Build a clean readable order summary for the message body
+      const itemsList = (() => {
+        const rows = document.querySelectorAll('#invoiceItems tr');
+        let lines = '';
+        rows.forEach(row => {
+          const cols = row.querySelectorAll('td');
+          if (cols.length === 2) lines += `  • ${cols[0].textContent.trim()} — ${cols[1].textContent.trim()}\n`;
+        });
+        return lines;
+      })();
+
       // 1) Notification email to NexGenix
       const adminEmailParams = {
-        to_email: 'nexgenixcreativesolutions@gmail.com',
         to_name: 'Nex Genix Creative Solutions',
+        to_email: 'nexgenixcreativesolutions@gmail.com',
         from_name: orderData.clientName,
-        reply_to: orderData.clientEmail,
-        subject: `New Order Received - ${orderData.invoiceNumber}`,
-        invoice_number: orderData.invoiceNumber,
-        package_name: orderData.packageName,
-        total_amount: orderData.totalAmount,
-        currency: currentCurrency,
-        order_date: orderDate,
-        service_type: activeServiceType || 'N/A',
-        client_email: orderData.clientEmail,
-        message: `New order received from ${orderData.clientName} (${orderData.clientEmail}).\nWhatsApp: ${orderData.clientPhone || 'N/A'}\n\nPackage: ${orderData.packageName}\nService Type: ${activeServiceType || 'N/A'}\nTotal: ${orderData.totalAmount} ${currentCurrency}\nInvoice #: ${orderData.invoiceNumber}\nDate: ${orderDate}\n\nPlease follow up with the client to confirm and process payment.`,
-        order_details: JSON.stringify(orderData, null, 2)
+        reply_to: orderData.clientEmail || 'no-reply@example.com',
+        subject: `New Order Received — ${orderData.invoiceNumber}`,
+        message:
+`📦 NEW ORDER RECEIVED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Invoice #:    ${orderData.invoiceNumber}
+Date:         ${orderDate}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CLIENT DETAILS
+Name:         ${orderData.clientName}
+Email:        ${orderData.clientEmail || 'N/A'}
+WhatsApp:     ${orderData.clientPhone || 'N/A'}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ORDER DETAILS
+Package:      ${orderData.packageName}
+Service Type: ${activeServiceType || 'N/A'}
+Currency:     ${currentCurrency}
+
+Items:
+${itemsList}
+TOTAL:        ${orderData.totalAmount}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Please follow up with the client to confirm and process payment.`
       };
 
       // 2) Confirmation email to client
       const clientEmailParams = {
-        to_email: orderData.clientEmail,
         to_name: orderData.clientName,
+        to_email: orderData.clientEmail,
         from_name: 'Nex Genix Creative Solutions',
         reply_to: 'nexgenixcreativesolutions@gmail.com',
-        subject: `Order Confirmation - ${orderData.invoiceNumber}`,
-        invoice_number: orderData.invoiceNumber,
-        package_name: orderData.packageName,
-        total_amount: orderData.totalAmount,
-        currency: currentCurrency,
-        order_date: orderDate,
-        service_type: activeServiceType || 'N/A',
-        client_email: orderData.clientEmail,
-        message: `Dear ${orderData.clientName},\n\nThank you for placing your order with Nex Genix Creative Solutions! We have received your order and will be in touch shortly to confirm details and process payment.\n\nOrder Summary:\n━━━━━━━━━━━━━━━━━━\nInvoice #: ${orderData.invoiceNumber}\nPackage: ${orderData.packageName}\nService Type: ${activeServiceType || 'N/A'}\nTotal Amount: ${orderData.totalAmount} ${currentCurrency}\nDate: ${orderDate}\n━━━━━━━━━━━━━━━━━━\n\nIf you have any questions, feel free to reply to this email or contact us at nexgenixcreativesolutions@gmail.com.\n\nBest regards,\nNex Genix Creative Solutions Team`,
-        order_details: JSON.stringify(orderData, null, 2)
+        subject: `Order Confirmation — ${orderData.invoiceNumber}`,
+        message:
+`Dear ${orderData.clientName},
+
+Thank you for placing your order with Nex Genix Creative Solutions! 🎉
+We have received your request and will be in touch shortly to confirm details and process payment.
+
+ORDER SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Invoice #:    ${orderData.invoiceNumber}
+Package:      ${orderData.packageName}
+Service Type: ${activeServiceType || 'N/A'}
+Currency:     ${currentCurrency}
+Date:         ${orderDate}
+
+Items:
+${itemsList}
+TOTAL AMOUNT DUE: ${orderData.totalAmount}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Payment Terms: 50% downpayment to start, 50% upon completion
+Payment Methods: GCash, Bank Transfer, PayMaya
+
+If you have any questions, feel free to reply to this email or reach us at nexgenixcreativesolutions@gmail.com.
+
+Best regards,
+Nex Genix Creative Solutions Team`
       };
 
       try {
@@ -3459,102 +3499,246 @@ ${JSON.stringify(orderData, null, 2)}
       }
 
       const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
+      const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+      const W = 210; // page width mm
 
-      // Colors
-      const neonGreen = [57, 255, 20];
-      const yellow = [232, 212, 77];
-      const darkBg = [8, 12, 20];
-      const textColor = [226, 232, 240];
+      // ── Color palette (print-friendly) ──────────────────────────────
+      const black      = [15,  20,  30];
+      const darkGray   = [55,  65,  81];
+      const midGray    = [107, 114, 128];
+      const lightGray  = [229, 231, 235];
+      const veryLight  = [248, 249, 250];
+      const accentGreen= [22,  163, 74];   // deep green — readable on white
+      const accentDark = [15,  118, 110];
+      const white      = [255, 255, 255];
 
-      // Header - Company Name
-      doc.setFillColor(...darkBg);
-      doc.rect(0, 0, 210, 40, 'F');
-      doc.setTextColor(...neonGreen);
-      doc.setFontSize(24);
+      const invoiceNum   = document.getElementById('invoiceNumber').textContent;
+      const invoiceDate  = document.getElementById('invoiceDate').textContent;
+      const clientName   = document.getElementById('clientNameInput').value || 'Valued Client';
+      const clientEmail  = document.getElementById('invoiceEmailInput').value || document.getElementById('emailInput').value || '';
+      const clientPhone  = getFullWhatsApp();
+      const totalAmountText = document.getElementById('totalAmount').textContent;
+
+      // ═══════════════════════════════════════════════════════════════
+      // HEADER BAND
+      // ═══════════════════════════════════════════════════════════════
+      doc.setFillColor(15, 20, 30);
+      doc.rect(0, 0, W, 38, 'F');
+
+      // Company name
+      doc.setTextColor(...white);
       doc.setFont('helvetica', 'bold');
-      doc.text('NEX GENIX', 105, 20, { align: 'center' });
-      doc.setFontSize(10);
-      doc.setTextColor(...textColor);
-      doc.text('Creative Solutions', 105, 28, { align: 'center' });
-
-      // INVOICE title
       doc.setFontSize(20);
-      doc.setTextColor(...neonGreen);
-      doc.text('INVOICE', 105, 50, { align: 'center' });
-
-      // Invoice details
-      doc.setFontSize(10);
-      doc.setTextColor(100, 100, 100);
-      const invoiceNum = document.getElementById('invoiceNumber').textContent;
-      const invoiceDate = document.getElementById('invoiceDate').textContent;
-      const clientName = document.getElementById('clientNameInput').value;
-
-      doc.text(`Invoice #: ${invoiceNum}`, 20, 65);
-      doc.text(`Date: ${invoiceDate}`, 20, 72);
-      doc.text(`Client: ${clientName}`, 20, 79);
-      const clientEmailPDF = document.getElementById('invoiceEmailInput').value || document.getElementById('emailInput').value;
-      const clientPhonePDF = getFullWhatsApp();
-      let yOffset = 86;
-      if (clientEmailPDF) { doc.text(`Email: ${clientEmailPDF}`, 20, yOffset); yOffset += 7; }
-      if (clientPhonePDF) { doc.text(`WhatsApp: ${clientPhonePDF}`, 20, yOffset); yOffset += 7; }
-      doc.text('Issued By: Nex Genix Creative Solutions', 20, yOffset); yOffset += 7;
-      doc.text(`Currency: ${currencySymbols[currentCurrency]} ${currentCurrency}`, 20, yOffset); yOffset += 7;
-
-      // Line separator
-      doc.setDrawColor(...neonGreen);
-      doc.setLineWidth(0.5);
-      doc.line(20, yOffset, 190, yOffset);
-
-      // Invoice items table
-      doc.setFontSize(11);
-      doc.setTextColor(...textColor);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Description', 20, yOffset + 10);
-      doc.text(`Amount (${currentCurrency})`, 150, yOffset + 10);
+      doc.text('NEX GENIX', 16, 17);
       doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(156, 163, 175);
+      doc.text('CREATIVE SOLUTIONS', 16, 23);
 
-      let yPos = yOffset + 18;
+      // Green accent bar under tagline
+      doc.setFillColor(...accentGreen);
+      doc.rect(16, 25.5, 38, 1.2, 'F');
+
+      // INVOICE label (right side)
+      doc.setTextColor(...white);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(26);
+      doc.text('INVOICE', W - 16, 20, { align: 'right' });
+      doc.setFontSize(8.5);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(156, 163, 175);
+      doc.text(`# ${invoiceNum}`, W - 16, 27, { align: 'right' });
+
+      // ═══════════════════════════════════════════════════════════════
+      // META ROW — date + status badge
+      // ═══════════════════════════════════════════════════════════════
+      doc.setFillColor(...veryLight);
+      doc.rect(0, 38, W, 14, 'F');
+      doc.setTextColor(...midGray);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.text(`Date Issued: ${invoiceDate}`, 16, 46);
+      doc.text(`Currency: ${currencySymbols[currentCurrency]} ${currentCurrency}`, 85, 46);
+
+      // Status badge
+      doc.setFillColor(...accentGreen);
+      doc.roundedRect(W - 46, 40, 30, 9, 2, 2, 'F');
+      doc.setTextColor(...white);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.text('PENDING PAYMENT', W - 31, 45.5, { align: 'center' });
+
+      // ═══════════════════════════════════════════════════════════════
+      // BILL TO / ISSUED BY — two column cards
+      // ═══════════════════════════════════════════════════════════════
+      let y = 62;
+
+      // Left card: Bill To
+      doc.setFillColor(...veryLight);
+      doc.roundedRect(14, y, 84, 34, 2, 2, 'F');
+      doc.setFillColor(...accentGreen);
+      doc.roundedRect(14, y, 84, 8, 2, 2, 'F');
+      doc.rect(14, y + 4, 84, 4, 'F'); // square bottom corners on top band
+      doc.setTextColor(...white);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.text('BILL TO', 21, y + 5.5);
+
+      doc.setTextColor(...black);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
+      doc.text(clientName, 21, y + 16);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...darkGray);
+      if (clientEmail) { doc.text(clientEmail, 21, y + 22); }
+      if (clientPhone) {
+        doc.setTextColor(22, 163, 74);
+        doc.text(`WhatsApp: ${clientPhone}`, 21, y + 28);
+      }
+
+      // Right card: Issued By
+      doc.setFillColor(...veryLight);
+      doc.roundedRect(112, y, 84, 34, 2, 2, 'F');
+      doc.setFillColor(15, 20, 30);
+      doc.roundedRect(112, y, 84, 8, 2, 2, 'F');
+      doc.rect(112, y + 4, 84, 4, 'F');
+      doc.setTextColor(...white);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.text('ISSUED BY', 119, y + 5.5);
+
+      doc.setTextColor(...black);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
+      doc.text('Nex Genix Creative Solutions', 119, y + 16);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...darkGray);
+      doc.text('nexgenixcreativesolutions@gmail.com', 119, y + 22);
+      doc.text('Philippines', 119, y + 28);
+
+      // ═══════════════════════════════════════════════════════════════
+      // ITEMS TABLE
+      // ═══════════════════════════════════════════════════════════════
+      y += 42;
+
+      // Table header
+      doc.setFillColor(15, 20, 30);
+      doc.rect(14, y, 182, 9, 'F');
+      doc.setTextColor(...white);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.text('DESCRIPTION', 20, y + 6);
+      doc.text('AMOUNT', W - 18, y + 6, { align: 'right' });
+
+      y += 9;
       const items = document.querySelectorAll('#invoiceItems tr');
+      let rowIndex = 0;
 
       items.forEach((row) => {
         const cols = row.querySelectorAll('td');
-        if (cols.length === 2) {
-          const desc = cols[0].textContent.trim();
-          const amount = cols[1].textContent.trim();
+        if (cols.length !== 2) return;
 
-          // Word wrap for long descriptions
-          const splitDesc = doc.splitTextToSize(desc, 120);
-          doc.setFontSize(9);
-          doc.text(splitDesc, 20, yPos);
-          doc.text(amount, 150, yPos);
-          yPos += splitDesc.length * 5 + 3;
+        const desc   = cols[0].textContent.trim();
+        const amount = cols[1].textContent.trim();
+
+        // Alternate row shading
+        if (rowIndex % 2 === 0) {
+          doc.setFillColor(255, 255, 255);
+        } else {
+          doc.setFillColor(248, 250, 248);
         }
+
+        const splitDesc = doc.splitTextToSize(desc, 140);
+        const rowH = Math.max(8, splitDesc.length * 5 + 3);
+
+        doc.rect(14, y, 182, rowH, 'F');
+
+        // Left border accent
+        doc.setFillColor(...accentGreen);
+        doc.rect(14, y, 1.5, rowH, 'F');
+
+        doc.setTextColor(...darkGray);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8.5);
+        doc.text(splitDesc, 20, y + 5.5);
+
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...black);
+        doc.text(amount, W - 18, y + 5.5, { align: 'right' });
+
+        // Bottom border line
+        doc.setDrawColor(...lightGray);
+        doc.setLineWidth(0.3);
+        doc.line(14, y + rowH, 196, y + rowH);
+
+        y += rowH;
+        rowIndex++;
       });
 
-      // Total box
-      yPos += 10;
-      doc.setFillColor(...neonGreen);
-      doc.roundedRect(130, yPos, 60, 20, 3, 3, 'F');
-      doc.setTextColor(0, 0, 0);
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
-      doc.text('TOTAL AMOUNT DUE', 160, yPos + 8, { align: 'center' });
-      doc.setFontSize(16);
-      const totalAmount = document.getElementById('totalAmount').textContent;
-      doc.text(totalAmount, 160, yPos + 16, { align: 'center' });
+      // ═══════════════════════════════════════════════════════════════
+      // TOTAL BOX
+      // ═══════════════════════════════════════════════════════════════
+      y += 6;
 
-      // Footer
-      doc.setFontSize(8);
-      doc.setTextColor(100, 100, 100);
+      // Outer total area
+      doc.setFillColor(15, 20, 30);
+      doc.roundedRect(112, y, 84, 22, 3, 3, 'F');
+
+      doc.setTextColor(156, 163, 175);
       doc.setFont('helvetica', 'normal');
-      const footerY = 270;
-      doc.text('Payment Terms: 50% downpayment to start, 50% upon completion', 105, footerY, { align: 'center' });
-      doc.text('Payment Methods: GCash, Bank Transfer, PayMaya', 105, footerY + 5, { align: 'center' });
-      doc.text('Contact: nexgenixcreativesolutions@gmail.com', 105, footerY + 10, { align: 'center' });
-      doc.text('© 2026 NEX GENIX Creative Solutions. All Rights Reserved.', 105, footerY + 15, { align: 'center' });
+      doc.setFontSize(7.5);
+      doc.text('TOTAL AMOUNT DUE', 196, y + 8, { align: 'right' });
 
-      // Save the PDF
+      doc.setTextColor(...white);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(18);
+      doc.text(totalAmountText, 196, y + 18, { align: 'right' });
+
+      // Subtotal label (left side of total row)
+      doc.setTextColor(...midGray);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.text(`Service: ${document.getElementById('clientNameInput').value || 'Valued Client'}`, 16, y + 10);
+      doc.text(`Package: ${selectedPackage ? servicePackages[selectedCategory][selectedPackage].name : ''}`, 16, y + 16);
+
+      // ═══════════════════════════════════════════════════════════════
+      // PAYMENT INFO BOX
+      // ═══════════════════════════════════════════════════════════════
+      y += 30;
+      doc.setFillColor(240, 253, 244); // very light green
+      doc.setDrawColor(...accentGreen);
+      doc.setLineWidth(0.5);
+      doc.roundedRect(14, y, 182, 22, 2, 2, 'FD');
+
+      doc.setTextColor(...accentDark);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.text('PAYMENT INFORMATION', 20, y + 7);
+
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(...darkGray);
+      doc.setFontSize(8);
+      doc.text('Terms: 50% downpayment to start · 50% upon project completion', 20, y + 13);
+      doc.text('Methods: GCash  ·  Bank Transfer  ·  PayMaya', 20, y + 18.5);
+
+      // ═══════════════════════════════════════════════════════════════
+      // FOOTER
+      // ═══════════════════════════════════════════════════════════════
+      const footerY = 278;
+      doc.setFillColor(...lightGray);
+      doc.rect(0, footerY - 2, W, 0.4, 'F');
+
+      doc.setTextColor(...midGray);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.5);
+      doc.text('Thank you for choosing Nex Genix Creative Solutions!', W / 2, footerY + 4, { align: 'center' });
+      doc.text('nexgenixcreativesolutions@gmail.com  ·  Philippines', W / 2, footerY + 9, { align: 'center' });
+      doc.setFontSize(7);
+      doc.text(`© ${new Date().getFullYear()} Nex Genix Creative Solutions. All Rights Reserved.`, W / 2, footerY + 14, { align: 'center' });
+
+      // Save
       const filename = `NexGenix_Invoice_${invoiceNum.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
       doc.save(filename);
     }
