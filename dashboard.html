@@ -2125,7 +2125,10 @@
     // IMPORTANT: Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS Public Key
     // Get it from: https://dashboard.emailjs.com/admin/account
     (function() {
-      emailjs.init('coUeJ01I7BIMQ-ABN'); // Public key
+      emailjs.init({
+        publicKey: 'coUeJ01I7BiMQ-ABN',
+        blockHeadless: false,
+      });
     })();
 
     // EmailJS Service Configuration
@@ -2133,7 +2136,7 @@
       serviceID: 'service_ju84tjo',           // Gmail service ID
       adminTemplateID: 'template_7z9si7j',    // "Order Confirmation" template → notifies NexGenix
       clientTemplateID: 'template_7z9si7j',   // "Order Confirmation" template → confirms to client
-      publicKey: 'coUeJ01I7BIMQ-ABN'          // Public key
+      publicKey: 'coUeJ01I7BiMQ-ABN'          // Public key
     };
 
     // =================== CURRENCY CONVERSION ===================
@@ -3310,24 +3313,23 @@
         return lines;
       })();
 
-      // 1) Notification email to NexGenix
-      const adminEmailParams = {
-        to_name: 'Nex Genix Creative Solutions',
-        to_email: 'nexgenixcreativesolutions@gmail.com',
+      // ── Single email to NexGenix (free plan only allows sending to verified address)
+      // Variable names MUST match the EmailJS template exactly: {{email}}, {{from_name}}, {{subject}}, {{message}}
+      const emailParams = {
+        email:     'nexgenixcreativesolutions@gmail.com',   // matches {{email}} in template To Email field
         from_name: orderData.clientName,
-        reply_to: orderData.clientEmail || 'no-reply@example.com',
-        subject: `New Order Received — ${orderData.invoiceNumber}`,
+        subject:   `New Order — ${orderData.invoiceNumber} | ${orderData.clientName}`,
         message:
 `📦 NEW ORDER RECEIVED
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Invoice #:    ${orderData.invoiceNumber}
 Date:         ${orderDate}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 CLIENT DETAILS
 Name:         ${orderData.clientName}
 Email:        ${orderData.clientEmail || 'N/A'}
 WhatsApp:     ${orderData.clientPhone || 'N/A'}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 ORDER DETAILS
 Package:      ${orderData.packageName}
 Service Type: ${activeServiceType || 'N/A'}
@@ -3337,66 +3339,19 @@ Items:
 ${itemsList}
 TOTAL:        ${orderData.totalAmount}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Please follow up with the client to confirm and process payment.`
-      };
-
-      // 2) Confirmation email to client
-      const clientEmailParams = {
-        to_name: orderData.clientName,
-        to_email: orderData.clientEmail,
-        from_name: 'Nex Genix Creative Solutions',
-        reply_to: 'nexgenixcreativesolutions@gmail.com',
-        subject: `Order Confirmation — ${orderData.invoiceNumber}`,
-        message:
-`Dear ${orderData.clientName},
-
-Thank you for placing your order with Nex Genix Creative Solutions! 🎉
-We have received your request and will be in touch shortly to confirm details and process payment.
-
-ORDER SUMMARY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Invoice #:    ${orderData.invoiceNumber}
-Package:      ${orderData.packageName}
-Service Type: ${activeServiceType || 'N/A'}
-Currency:     ${currentCurrency}
-Date:         ${orderDate}
-
-Items:
-${itemsList}
-TOTAL AMOUNT DUE: ${orderData.totalAmount}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Payment Terms: 50% downpayment to start, 50% upon completion
-Payment Methods: GCash, Bank Transfer, PayMaya
-
-If you have any questions, feel free to reply to this email or reach us at nexgenixcreativesolutions@gmail.com.
-
-Best regards,
-Nex Genix Creative Solutions Team`
+ACTION REQUIRED: Follow up with client to confirm and process payment.
+Reply-to client at: ${orderData.clientEmail || 'N/A'}`
       };
 
       try {
-        // Send notification to NexGenix using "Contact Us" template
-        const adminResponse = await emailjs.send(
+        // Send order notification to NexGenix
+        const response = await emailjs.send(
           EMAILJS_CONFIG.serviceID,
           EMAILJS_CONFIG.adminTemplateID,
-          adminEmailParams
+          emailParams,
+          EMAILJS_CONFIG.publicKey
         );
-        console.log('Admin notification sent:', adminResponse);
-
-        // Send confirmation to client using "Order Confirmation" template
-        if (orderData.clientEmail && orderData.clientEmail.includes('@')) {
-          try {
-            const clientResponse = await emailjs.send(
-              EMAILJS_CONFIG.serviceID,
-              EMAILJS_CONFIG.clientTemplateID,
-              clientEmailParams
-            );
-            console.log('Client confirmation sent:', clientResponse);
-          } catch (clientErr) {
-            console.warn('Client confirmation email failed (order still submitted):', clientErr);
-          }
-        }
+        console.log('Order notification sent:', response);
 
         // Show success state
         btn.textContent = '✅ Order Placed!';
