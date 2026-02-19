@@ -2011,6 +2011,19 @@
               <div class="total-amount" id="totalAmount">₱0.00</div>
             </div>
 
+            <!-- Payment Methods -->
+            <div style="margin-top:1rem; padding:1rem 1.25rem; background:rgba(14,18,28,0.8); border:1px solid rgba(255,255,255,0.07); border-radius:var(--radius);">
+              <div style="font-family:'Orbitron',sans-serif; font-size:0.65rem; color:var(--text-muted); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.75rem;">💳 Payment Methods Accepted</div>
+              <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+                <span style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);border-radius:6px;padding:0.3rem 0.65rem;font-size:0.75rem;font-weight:700;color:var(--neon);">📱 GCash</span>
+                <span style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);border-radius:6px;padding:0.3rem 0.65rem;font-size:0.75rem;font-weight:700;color:var(--neon);">🏦 Bank Transfer</span>
+                <span style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2);border-radius:6px;padding:0.3rem 0.65rem;font-size:0.75rem;font-weight:700;color:var(--neon);">💳 PayMaya</span>
+                <span style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(0,112,240,0.12);border:1px solid rgba(0,112,240,0.3);border-radius:6px;padding:0.3rem 0.65rem;font-size:0.75rem;font-weight:700;color:#60a5fa;">🌐 PayPal</span>
+                <span style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(99,91,255,0.12);border:1px solid rgba(99,91,255,0.3);border-radius:6px;padding:0.3rem 0.65rem;font-size:0.75rem;font-weight:700;color:#a78bfa;">⚡ Stripe</span>
+              </div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.65rem;line-height:1.5;">50% downpayment required to start · 50% upon project completion</div>
+            </div>
+
             <!-- Order Success Banner (hidden until order placed) -->
             <div id="orderSuccessBanner" style="display:none; margin-bottom:1rem; padding:1.1rem 1.25rem; background:rgba(57,255,20,0.10); border:1.5px solid var(--neon); border-radius:var(--radius); text-align:center;">
               <div style="font-family:'Orbitron',sans-serif; font-size:1rem; color:var(--neon); letter-spacing:0.06em; margin-bottom:0.4rem;">✅ ORDER PLACED!</div>
@@ -2134,8 +2147,8 @@
     // EmailJS Service Configuration
     const EMAILJS_CONFIG = {
       serviceID: 'service_ju84tjo',           // Gmail service ID
-      adminTemplateID: 'template_7z9si7j',    // "Order Confirmation" template → notifies NexGenix
-      clientTemplateID: 'template_7z9si7j',   // "Order Confirmation" template → confirms to client
+      adminTemplateID: 'template_7z9si7j',    // Admin template → notifies NexGenix (auto-reply linked to client template_s8jsvcf)
+      clientTemplateID: 'template_s8jsvcf',   // Client template → confirmation email to client
       publicKey: 'coUeJ01I7BiMQ-ABN'          // Public key
     };
 
@@ -3316,9 +3329,17 @@
       // ── Single email to NexGenix (free plan only allows sending to verified address)
       // Variable names MUST match the EmailJS template exactly: {{email}}, {{from_name}}, {{subject}}, {{message}}
       const emailParams = {
-        email:     'nexgenixcreativesolutions@gmail.com',   // matches {{email}} in template To Email field
-        from_name: orderData.clientName,
-        subject:   `New Order — ${orderData.invoiceNumber} | ${orderData.clientName}`,
+        // ── To NexGenix (matches {{email}} in template To Email field) ──
+        email:      'nexgenixcreativesolutions@gmail.com',
+        from_name:  orderData.clientName,
+        reply_to:   orderData.clientEmail || 'nexgenixcreativesolutions@gmail.com',
+        subject:    `New Order — ${orderData.invoiceNumber} | ${orderData.clientName}`,
+
+        // ── Client fields used by EmailJS Auto-Reply tab ──
+        client_name:  orderData.clientName,
+        client_email: orderData.clientEmail || '',   // Auto-Reply sends to this address
+
+        // ── Admin notification message body ──
         message:
 `📦 NEW ORDER RECEIVED
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -3340,7 +3361,34 @@ ${itemsList}
 TOTAL:        ${orderData.totalAmount}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ACTION REQUIRED: Follow up with client to confirm and process payment.
-Reply-to client at: ${orderData.clientEmail || 'N/A'}`
+Reply-to client at: ${orderData.clientEmail || 'N/A'}`,
+
+        // ── Auto-Reply message body (sent to client) ──
+        auto_reply_message:
+`Dear ${orderData.clientName},
+
+Thank you for placing your order with Nex Genix Creative Solutions! 🎉
+We have received your request and will be in touch shortly to confirm details and arrange payment.
+
+ORDER SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Invoice #:    ${orderData.invoiceNumber}
+Package:      ${orderData.packageName}
+Service Type: ${activeServiceType || 'N/A'}
+Total Amount: ${orderData.totalAmount} (${currentCurrency})
+Date:         ${orderDate}
+
+Items Ordered:
+${itemsList}
+Payment Terms: 50% downpayment to start · 50% upon completion
+Payment Methods: GCash · Bank Transfer · PayMaya · PayPal · Stripe
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If you have any questions, feel free to reply to this email.
+
+Best regards,
+Nex Genix Creative Solutions
+nexgenixcreativesolutions@gmail.com`
       };
 
       try {
@@ -3665,7 +3713,7 @@ ${JSON.stringify(orderData, null, 2)}
       doc.setFillColor(240, 253, 244); // very light green
       doc.setDrawColor(...accentGreen);
       doc.setLineWidth(0.5);
-      doc.roundedRect(14, y, 182, 22, 2, 2, 'FD');
+      doc.roundedRect(14, y, 182, 30, 2, 2, 'FD');
 
       doc.setTextColor(...accentDark);
       doc.setFont('helvetica', 'bold');
@@ -3675,8 +3723,9 @@ ${JSON.stringify(orderData, null, 2)}
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(...darkGray);
       doc.setFontSize(8);
-      doc.text('Terms: 50% downpayment to start · 50% upon project completion', 20, y + 13);
-      doc.text('Methods: GCash  ·  Bank Transfer  ·  PayMaya', 20, y + 18.5);
+      doc.text('Terms: 50% downpayment to start · 50% upon project completion', 20, y + 14);
+      doc.text('Local: GCash  ·  Bank Transfer  ·  PayMaya', 20, y + 21);
+      doc.text('International: PayPal  ·  Stripe', 20, y + 27);
 
       // ═══════════════════════════════════════════════════════════════
       // FOOTER
