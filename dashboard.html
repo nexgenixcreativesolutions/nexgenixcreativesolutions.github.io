@@ -1020,60 +1020,47 @@
       font-weight: 700;
     }
 
-    .currency-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .currency-option {
+    .currency-dropdown-wrap {
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.6rem 1rem;
-      background: rgba(0,0,0,0.5);
-      border: 1.5px solid var(--border-dim);
+    }
+
+    .currency-dropdown {
+      width: 100%;
+      padding: 0.75rem 2.5rem 0.75rem 1rem;
+      background: rgba(0,0,0,0.6);
+      border: 1.5px solid rgba(232, 212, 77, 0.4);
       border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: 'Montserrat Alternates', sans-serif;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .currency-option:hover {
-      border-color: var(--yellow);
-      background: rgba(232, 212, 77, 0.1);
-      color: var(--text);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(232, 212, 77, 0.2);
-    }
-
-    .currency-option.active {
-      border-color: var(--yellow);
-      background: rgba(232, 212, 77, 0.2);
       color: var(--yellow);
-      box-shadow: 0 0 16px rgba(232, 212, 77, 0.3), inset 0 0 12px rgba(232, 212, 77, 0.1);
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 12px rgba(232,212,77,0.1);
     }
 
-    .currency-option .currency-flag {
-      font-size: 1.1rem;
-      line-height: 1;
+    .currency-dropdown:hover, .currency-dropdown:focus {
+      border-color: var(--yellow);
+      outline: none;
+      box-shadow: 0 0 20px rgba(232,212,77,0.25);
     }
 
-    .currency-option .currency-code {
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
-
-    .currency-option .currency-symbol {
-      opacity: 0.6;
+    .currency-dropdown option {
+      background: #0e1214;
+      color: #e2e8f0;
       font-size: 0.9rem;
     }
 
-    .currency-option.active .currency-symbol {
-      opacity: 1;
+    .currency-dropdown-arrow {
+      position: absolute;
+      right: 0.85rem;
+      pointer-events: none;
+      color: var(--yellow);
+      font-size: 0.7rem;
     }
 
     .service-filter-bar {
@@ -1223,11 +1210,6 @@
       .content-box { padding: 1.25rem; }
       .customization-panel { padding: 1.25rem; }
       .invoice-preview { padding: 1.25rem; }
-      
-      .currency-buttons { gap: 0.4rem; }
-      .currency-option { padding: 0.5rem 0.75rem; font-size: 0.78rem; }
-      .currency-option .currency-code { display: none; }
-      .currency-option .currency-flag { font-size: 1rem; }
     }
 
     @media (max-width: 480px) {
@@ -1512,57 +1494,27 @@
             <span>💱</span>
             <span>View Prices In:</span>
           </div>
-          <div class="currency-buttons">
-            <button class="currency-option active" data-currency="USD" onclick="changeCurrencyStandalone(this, 'USD')">
-              <span class="currency-flag">💵</span>
-              <span class="currency-code">USD</span>
-              <span class="currency-symbol">$</span>
-            </button>
-            <button class="currency-option" data-currency="PHP" onclick="changeCurrencyStandalone(this, 'PHP')">
-              <span class="currency-flag">🇵🇭</span>
-              <span class="currency-code">PHP</span>
-              <span class="currency-symbol">₱</span>
-            </button>
-            <button class="currency-option" data-currency="EUR" onclick="changeCurrencyStandalone(this, 'EUR')">
-              <span class="currency-flag">🇪🇺</span>
-              <span class="currency-code">EUR</span>
-              <span class="currency-symbol">€</span>
-            </button>
-            <button class="currency-option" data-currency="GBP" onclick="changeCurrencyStandalone(this, 'GBP')">
-              <span class="currency-flag">🇬🇧</span>
-              <span class="currency-code">GBP</span>
-              <span class="currency-symbol">£</span>
-            </button>
-            <button class="currency-option" data-currency="JPY" onclick="changeCurrencyStandalone(this, 'JPY')">
-              <span class="currency-flag">🇯🇵</span>
-              <span class="currency-code">JPY</span>
-              <span class="currency-symbol">¥</span>
-            </button>
-            <button class="currency-option" data-currency="AUD" onclick="changeCurrencyStandalone(this, 'AUD')">
-              <span class="currency-flag">🇦🇺</span>
-              <span class="currency-code">AUD</span>
-              <span class="currency-symbol">A$</span>
-            </button>
-            <button class="currency-option" data-currency="CAD" onclick="changeCurrencyStandalone(this, 'CAD')">
-              <span class="currency-flag">🇨🇦</span>
-              <span class="currency-code">CAD</span>
-              <span class="currency-symbol">C$</span>
-            </button>
-            <button class="currency-option" data-currency="SGD" onclick="changeCurrencyStandalone(this, 'SGD')">
-              <span class="currency-flag">🇸🇬</span>
-              <span class="currency-code">SGD</span>
-              <span class="currency-symbol">S$</span>
-            </button>
-            <button class="currency-option" data-currency="INR" onclick="changeCurrencyStandalone(this, 'INR')">
-              <span class="currency-flag">🇮🇳</span>
-              <span class="currency-code">INR</span>
-              <span class="currency-symbol">₹</span>
-            </button>
-            <button class="currency-option" data-currency="CNY" onclick="changeCurrencyStandalone(this, 'CNY')">
-              <span class="currency-flag">🇨🇳</span>
-              <span class="currency-code">CNY</span>
-              <span class="currency-symbol">¥</span>
-            </button>
+          <div class="currency-dropdown-wrap">
+            <select id="currencyDropdown" onchange="changeCurrencyFromDropdown(this)" class="currency-dropdown">
+              <option value="USD" data-flag="💵">💵 USD — US Dollar ($)</option>
+              <option value="PHP" data-flag="🇵🇭">🇵🇭 PHP — Philippine Peso (₱)</option>
+              <option value="EUR" data-flag="🇪🇺">🇪🇺 EUR — Euro / Italy (€)</option>
+              <option value="PLN" data-flag="🇵🇱">🇵🇱 PLN — Polish Złoty (zł)</option>
+              <option value="GBP" data-flag="🇬🇧">🇬🇧 GBP — British Pound (£)</option>
+              <option value="JPY" data-flag="🇯🇵">🇯🇵 JPY — Japanese Yen (¥)</option>
+              <option value="AUD" data-flag="🇦🇺">🇦🇺 AUD — Australian Dollar (A$)</option>
+              <option value="CAD" data-flag="🇨🇦">🇨🇦 CAD — Canadian Dollar (C$)</option>
+              <option value="SGD" data-flag="🇸🇬">🇸🇬 SGD — Singapore Dollar (S$)</option>
+              <option value="INR" data-flag="🇮🇳">🇮🇳 INR — Indian Rupee (₹)</option>
+              <option value="CNY" data-flag="🇨🇳">🇨🇳 CNY — Chinese Yuan (¥)</option>
+              <option value="MXN" data-flag="🇲🇽">🇲🇽 MXN — Mexican Peso (MX$)</option>
+              <option value="BRL" data-flag="🇧🇷">🇧🇷 BRL — Brazilian Real (R$)</option>
+              <option value="KRW" data-flag="🇰🇷">🇰🇷 KRW — South Korean Won (₩)</option>
+              <option value="CHF" data-flag="🇨🇭">🇨🇭 CHF — Swiss Franc (Fr)</option>
+              <option value="AED" data-flag="🇦🇪">🇦🇪 AED — UAE Dirham (د.إ)</option>
+              <option value="SAR" data-flag="🇸🇦">🇸🇦 SAR — Saudi Riyal (﷼)</option>
+            </select>
+            <span class="currency-dropdown-arrow">▼</span>
           </div>
         </div>
 
@@ -2216,29 +2168,36 @@
     // IMPORTANT: Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS Public Key
     // Get it from: https://dashboard.emailjs.com/admin/account
     (function() {
-      emailjs.init('coUeJ01I7BiMQ-ABN'); // Replace with your public key
+      emailjs.init('coUeJ01I7BIMQ-ABN'); // Public key
     })();
 
     // EmailJS Service Configuration
     const EMAILJS_CONFIG = {
-      serviceID: 'service_ju84tjo',  // Your service ID from screenshot
-      templateID: 'template_order',   // You'll need to create this template
-      publicKey: 'coUeJ01I7BiMQ-ABN'    // Replace with your public key
+      serviceID: 'service_ju84tjo',      // Gmail service ID
+      templateID: 'template_k1sev1k',    // "Contact Us" template ID
+      publicKey: 'coUeJ01I7BIMQ-ABN'    // Public key
     };
 
     // =================== CURRENCY CONVERSION ===================
     let currentCurrency = 'USD';
     const conversionRates = {
-      'USD': 1,           // Base currency
-      'PHP': 56.50,       // 1 USD = 56.50 PHP
-      'EUR': 0.92,        // 1 USD = 0.92 EUR
-      'GBP': 0.79,        // 1 USD = 0.79 GBP
-      'JPY': 149.50,      // 1 USD = 149.50 JPY
-      'AUD': 1.52,        // 1 USD = 1.52 AUD
-      'CAD': 1.39,        // 1 USD = 1.39 CAD
-      'SGD': 1.34,        // 1 USD = 1.34 SGD
-      'INR': 83.20,       // 1 USD = 83.20 INR
-      'CNY': 7.24         // 1 USD = 7.24 CNY
+      'USD': 1,           // US Dollar
+      'PHP': 56.50,       // Philippine Peso
+      'EUR': 0.92,        // Euro (EU incl. Italy)
+      'GBP': 0.79,        // British Pound
+      'JPY': 149.50,      // Japanese Yen
+      'AUD': 1.52,        // Australian Dollar
+      'CAD': 1.39,        // Canadian Dollar
+      'SGD': 1.34,        // Singapore Dollar
+      'INR': 83.20,       // Indian Rupee
+      'CNY': 7.24,        // Chinese Yuan
+      'PLN': 3.98,        // Polish Złoty
+      'MXN': 17.15,       // Mexican Peso
+      'BRL': 4.97,        // Brazilian Real
+      'KRW': 1325.00,     // South Korean Won
+      'CHF': 0.89,        // Swiss Franc
+      'AED': 3.67,        // UAE Dirham
+      'SAR': 3.75         // Saudi Riyal
     };
 
     const currencySymbols = {
@@ -2251,15 +2210,38 @@
       'CAD': 'C$',
       'SGD': 'S$',
       'INR': '₹',
-      'CNY': '¥'
+      'CNY': '¥',
+      'PLN': 'zł',
+      'MXN': 'MX$',
+      'BRL': 'R$',
+      'KRW': '₩',
+      'CHF': 'Fr',
+      'AED': 'د.إ',
+      'SAR': '﷼'
+    };
+
+    const currencyNames = {
+      'USD': 'US Dollar', 'PHP': 'Philippine Peso', 'EUR': 'Euro (Italy/EU)',
+      'GBP': 'British Pound', 'JPY': 'Japanese Yen', 'AUD': 'Australian Dollar',
+      'CAD': 'Canadian Dollar', 'SGD': 'Singapore Dollar', 'INR': 'Indian Rupee',
+      'CNY': 'Chinese Yuan', 'PLN': 'Polish Złoty', 'MXN': 'Mexican Peso',
+      'BRL': 'Brazilian Real', 'KRW': 'South Korean Won', 'CHF': 'Swiss Franc',
+      'AED': 'UAE Dirham', 'SAR': 'Saudi Riyal'
+    };
+
+    const currencyFlags = {
+      'USD': '💵', 'PHP': '🇵🇭', 'EUR': '🇪🇺', 'GBP': '🇬🇧', 'JPY': '🇯🇵',
+      'AUD': '🇦🇺', 'CAD': '🇨🇦', 'SGD': '🇸🇬', 'INR': '🇮🇳', 'CNY': '🇨🇳',
+      'PLN': '🇵🇱', 'MXN': '🇲🇽', 'BRL': '🇧🇷', 'KRW': '🇰🇷', 'CHF': '🇨🇭',
+      'AED': '🇦🇪', 'SAR': '🇸🇦'
     };
 
     function formatPrice(usdAmount) {
       const converted = usdAmount * conversionRates[currentCurrency];
       const symbol = currencySymbols[currentCurrency];
-      
+
       // Format with proper decimal places
-      if (currentCurrency === 'JPY') {
+      if (['JPY', 'KRW', 'INR'].includes(currentCurrency)) {
         return symbol + Math.round(converted).toLocaleString();
       }
       return symbol + converted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -2272,22 +2254,22 @@
 
     function changeCurrency(currency) {
       currentCurrency = currency;
-      
-      // Update standalone selector active state
-      document.querySelectorAll('.currency-option').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.currency === currency) {
-          btn.classList.add('active');
-        }
-      });
-      
+
+      // Sync dropdown
+      const dropdown = document.getElementById('currencyDropdown');
+      if (dropdown) dropdown.value = currency;
+
       // Reload services to update all prices
       loadServices();
-      
+
       // Update invoice if visible
       if (selectedPackage) {
         updateInvoice();
       }
+    }
+
+    function changeCurrencyFromDropdown(select) {
+      changeCurrency(select.value);
     }
 
     function changeCurrencyStandalone(btn, currency) {
@@ -3191,10 +3173,10 @@
       invoiceItemsEl.innerHTML = items.map(item => {
         const isNew = !prevInvoiceKeys.has(item.description);
         const rowClass = isNew ? 'invoice-row-new' : '';
-        
+
         // Convert item amounts from PHP to current currency
         const itemAmountUSD = convertPHPToUSD(item.amount);
-        
+
         return `
           <tr class="${rowClass}">
             <td>${item.description}</td>
@@ -3244,44 +3226,81 @@
 
       // Collect order data
       const orderData = collectOrderData();
-      
+
       // Show loading state
       const originalText = event.target.textContent;
       event.target.textContent = 'Sending Order...';
       event.target.disabled = true;
-      
-      // Prepare email parameters
-      const emailParams = {
+
+      const orderDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+      // 1) Notification email to NexGenix
+      const adminEmailParams = {
         to_email: 'nexgenixcreativesolutions@gmail.com',
+        to_name: 'Nex Genix Creative Solutions',
         from_name: orderData.clientName,
+        reply_to: orderData.clientEmail,
+        subject: `New Order Received - ${orderData.invoiceNumber}`,
         invoice_number: orderData.invoiceNumber,
         package_name: orderData.packageName,
         total_amount: orderData.totalAmount,
         currency: currentCurrency,
-        order_date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        order_date: orderDate,
         service_type: activeServiceType || 'N/A',
-        // Add detailed breakdown
+        client_email: orderData.clientEmail,
+        message: `New order received from ${orderData.clientName} (${orderData.clientEmail}).\n\nPackage: ${orderData.packageName}\nService Type: ${activeServiceType || 'N/A'}\nTotal: ${orderData.totalAmount} ${currentCurrency}\nInvoice #: ${orderData.invoiceNumber}\nDate: ${orderDate}\n\nPlease follow up with the client to confirm and process payment.`,
+        order_details: JSON.stringify(orderData, null, 2)
+      };
+
+      // 2) Confirmation email to client
+      const clientEmailParams = {
+        to_email: orderData.clientEmail,
+        to_name: orderData.clientName,
+        from_name: 'Nex Genix Creative Solutions',
+        reply_to: 'nexgenixcreativesolutions@gmail.com',
+        subject: `Order Confirmation - ${orderData.invoiceNumber}`,
+        invoice_number: orderData.invoiceNumber,
+        package_name: orderData.packageName,
+        total_amount: orderData.totalAmount,
+        currency: currentCurrency,
+        order_date: orderDate,
+        service_type: activeServiceType || 'N/A',
+        client_email: orderData.clientEmail,
+        message: `Dear ${orderData.clientName},\n\nThank you for placing your order with Nex Genix Creative Solutions! We have received your order and will be in touch shortly to confirm details and process payment.\n\nOrder Summary:\n━━━━━━━━━━━━━━━━━━\nInvoice #: ${orderData.invoiceNumber}\nPackage: ${orderData.packageName}\nService Type: ${activeServiceType || 'N/A'}\nTotal Amount: ${orderData.totalAmount} ${currentCurrency}\nDate: ${orderDate}\n━━━━━━━━━━━━━━━━━━\n\nIf you have any questions, feel free to reply to this email or contact us at nexgenixcreativesolutions@gmail.com.\n\nBest regards,\nNex Genix Creative Solutions Team`,
         order_details: JSON.stringify(orderData, null, 2)
       };
 
       try {
-        // Send email using EmailJS
-        const response = await emailjs.send(
+        // Send notification to NexGenix
+        const adminResponse = await emailjs.send(
           EMAILJS_CONFIG.serviceID,
           EMAILJS_CONFIG.templateID,
-          emailParams
+          adminEmailParams
         );
+        console.log('Admin notification sent:', adminResponse);
 
-        console.log('Email sent successfully:', response);
-        
-        alert('✅ Order submitted successfully!\n\nYour order has been sent to Nex Genix Creative Solutions. They will contact you shortly via email to confirm and process payment.\n\nYou can now download your invoice for your records.');
-        
+        // Send confirmation to client (only if they provided an email)
+        if (orderData.clientEmail && orderData.clientEmail.includes('@')) {
+          try {
+            const clientResponse = await emailjs.send(
+              EMAILJS_CONFIG.serviceID,
+              EMAILJS_CONFIG.templateID,
+              clientEmailParams
+            );
+            console.log('Client confirmation sent:', clientResponse);
+          } catch (clientErr) {
+            console.warn('Client confirmation email failed (order still submitted):', clientErr);
+          }
+        }
+
+        alert('✅ Order submitted successfully!\n\nYour order has been sent to Nex Genix Creative Solutions. A confirmation email has been sent to ' + (orderData.clientEmail || 'your email') + '.\n\nThey will contact you shortly to confirm and process payment.\n\nYou can now download your invoice for your records.');
+
         event.target.textContent = originalText;
         event.target.disabled = false;
 
       } catch (error) {
         console.error('EmailJS Error:', error);
-        
+
         // Fallback to mailto if EmailJS fails
         const subject = encodeURIComponent(`New Order - ${orderData.invoiceNumber}`);
         const body = encodeURIComponent(`
@@ -3299,12 +3318,12 @@ Please contact this client to process their order.
 Full order details:
 ${JSON.stringify(orderData, null, 2)}
         `);
-        
+
         const mailto = `mailto:nexgenixcreativesolutions@gmail.com?subject=${subject}&body=${body}`;
         window.open(mailto, '_blank');
-        
+
         alert('⚠️ Automatic email failed.\n\nA draft email has been opened in your email client. Please send it to complete your order submission.\n\nAlternatively, contact us directly at nexgenixcreativesolutions@gmail.com');
-        
+
         event.target.textContent = originalText;
         event.target.disabled = false;
       }
@@ -3312,7 +3331,7 @@ ${JSON.stringify(orderData, null, 2)}
 
     function collectOrderData() {
       const pkg = servicePackages[selectedCategory][selectedPackage];
-      
+
       // Collect all invoice items
       const invoiceItems = [];
       const itemRows = document.querySelectorAll('#invoiceItems tr');
@@ -3400,13 +3419,13 @@ ${JSON.stringify(orderData, null, 2)}
 
       let yPos = 116;
       const items = document.querySelectorAll('#invoiceItems tr');
-      
+
       items.forEach((row) => {
         const cols = row.querySelectorAll('td');
         if (cols.length === 2) {
           const desc = cols[0].textContent.trim();
           const amount = cols[1].textContent.trim();
-          
+
           // Word wrap for long descriptions
           const splitDesc = doc.splitTextToSize(desc, 120);
           doc.setFontSize(9);
