@@ -1,3832 +1,1307 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Service Dashboard | Nex Genix Creative Solutions</title>
-  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nex Genix Creative Solutions</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
+<!-- Orbitron Font -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  </head>
+<style>
+/* Floating Code Background */
+.floating-code-container {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.code-line {
+  position: absolute;
+  white-space: nowrap;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: rgba(57, 255, 20, 0.4);
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+  animation: floatCode linear infinite;
+  opacity: 0;
+}
+@keyframes floatCode {
+  0% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+@media (min-width: 768px) {
+  .code-line {
+    font-size: 16px;
+  }
+}
 
-  <style>
-    /* =================== CSS VARIABLES =================== */
-    :root {
-      --neon: #39FF14;
-      --neon-dim: rgba(57, 255, 20, 0.12);
-      --neon-glow: rgba(57, 255, 20, 0.25);
-      --yellow: #e8d44d;
-      --yellow-dim: rgba(232, 212, 77, 0.12);
-      --red: #ff4040;
-      --bg: #060609;
-      --surface: rgba(14, 18, 28, 0.85);
-      --surface-2: rgba(20, 26, 40, 0.7);
-      --border: rgba(57, 255, 20, 0.18);
-      --border-dim: rgba(255,255,255,0.07);
-      --text: #e2e8f0;
-      --text-muted: #6b7280;
-      --radius: 0.875rem;
-      --radius-sm: 0.5rem;
+/* =================== CATEGORIES SECTION =================== */
+.categories-section {
+  position: relative;
+  padding: 4rem 1rem 2rem 1rem;
+  background: transparent;
+}
+.categories-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+}
+.section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 1rem;
+}
+.gradient-text {
+  background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.section-subtitle {
+  color: #9ca3af;
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Counter Section with Buttons */
+.counter-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  background-color: black;
+}
+
+.counter-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  width: 90%;
+  flex-wrap: nowrap;
+}
+
+.counter-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  text-align: center;
+  flex: 1;
+  max-width: 200px;
+}
+
+.counter {
+  font-family: "Silkscreen", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 40px;
+  color: #39FF14;
+  text-shadow: 0 0 10px #39FF14;
+  margin-bottom: 5px;
+  line-height: 1;
+}
+
+.label {
+  font-size: 14px;
+  color: white;
+  opacity: 0.8;
+  margin-top: 5px;
+  line-height: 1.2;
+}
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+.category-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.6), rgba(0, 0, 0, 0.8));
+  border: 1px solid #1f2937;
+  border-radius: 1rem;
+  padding: 2.5rem;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(50px);
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+}
+.category-card.visible {
+  animation: fadeInUp 0.6s ease forwards;
+}
+.category-card:hover {
+  transform: translateY(-10px);
+  border-color: #39FF14;
+  box-shadow: 0 15px 50px rgba(57, 255, 20, 0.2);
+}
+.category-icon {
+  width: 4rem;
+  height: 4rem;
+  background: rgba(57, 255, 20, 0.1);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+.category-card:hover .category-icon {
+  background: rgba(57, 255, 20, 0.2);
+  transform: scale(1.1);
+}
+.category-icon i {
+  font-size: 2rem;
+  color: #39FF14;
+}
+.category-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+.category-description {
+  color: #9ca3af;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+.category-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #39FF14;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+.category-link:hover {
+  gap: 1rem;
+}
+.category-link i {
+  transition: transform 0.3s ease;
+}
+.category-link:hover i {
+  transform: translateX(5px);
+}
+
+/* Combined Testimonials Section Styles */
+.testimonials-section {
+    position: relative;
+    padding: 2rem 1rem 4rem 1rem;
+    background: transparent;
+}
+.testimonials-container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+/* Combined Headers */
+.testimonials-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+.testimonials-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    margin: 0 0 1.5rem 0;
+    padding: 0;
+    line-height: 1.2;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+.testimonials-subtitle {
+    color: #9ca3af;
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: center;
+}
+/* Grid */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 0.5rem;
+}
+/* Testimonial Card */
+.testimonial-card {
+    position: relative;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+.testimonial-card.visible {
+    animation: fadeInUp 0.6s ease forwards;
+}
+.testimonial-card-inner {
+    position: relative;
+    height: 100%;
+    padding: 1.75rem;
+    border-radius: 1rem;
+    border: 1px solid #1f2937;
+    background: linear-gradient(to bottom, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.5));
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+.testimonial-card:hover .testimonial-card-inner {
+    border-color: #39FF14;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(57, 255, 20, 0.1);
+}
+/* Quote Icon */
+.quote-icon {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+    color: rgba(57, 255, 20, 0.1);
+    transition: color 0.3s ease;
+}
+.testimonial-card:hover .quote-icon {
+    color: rgba(57, 255, 20, 0.2);
+}
+/* Rating Stars */
+.rating-stars {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1.25rem;
+}
+.star {
+    width: 1.15rem;
+    height: 1.15rem;
+    color: #f5d400;
+    fill: #f5d400;
+}
+/* Content */
+.testimonial-content {
+    color: #d1d5db;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    text-align: justify;
+    flex: 1;
+}
+/* Author - Perfect alignment */
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin-top: auto;
+}
+.author-avatar {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff0000, #ffff00, #39FF14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.author-initial {
+    color: black;
+    font-weight: bold;
+    font-size: 1.1rem;
+    line-height: 1;
+}
+.author-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+}
+.author-name {
+    color: white;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    font-size: 0.95rem;
+    text-align: left;
+    display: block;
+}
+.author-role {
+    color: #39FF14;
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    text-align: left;
+    display: block;
+}
+
+/* Contact Section Styles */
+#contact {
+    padding: 6rem 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#contact h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.contact-subtitle {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+}
+
+/* Contact Form */
+.contact-form {
+    background: linear-gradient(to bottom, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.5));
+    backdrop-filter: blur(8px);
+    border: 1px solid #1f2937;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    transition: border-color 0.3s ease;
+}
+
+.contact-form:hover {
+    border-color: #39FF14;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 0.95rem;
+    font-family: 'Montserrat Alternates', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #39FF14;
+    box-shadow: 0 0 0 3px rgba(57, 255, 20, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #6b7280;
+}
+
+.form-group select {
+    cursor: pointer;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Submit Button */
+.btn-submit {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+    border: none;
+    border-radius: 0.5rem;
+    color: black;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat Alternates', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(57, 255, 20, 0.3);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+/* Contact Divider */
+.contact-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 3rem 0 2rem 0;
+}
+
+.contact-divider::before,
+.contact-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #374151;
+}
+
+.contact-divider span {
+    color: #9ca3af;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Responsive Design - Tablet */
+@media (min-width: 768px) {
+    .categories-section,
+    .testimonials-section {
+        padding: 5rem 2rem 3rem 2rem;
     }
-
-    /* =================== GLOBAL RESET & BASE =================== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    .section-title,
+    .testimonials-title {
+        font-size: 3.25rem;
     }
-
-    body {
-      font-family: 'Montserrat Alternates', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-      line-height: 1.6;
+    .section-subtitle,
+    .testimonials-subtitle {
+        font-size: 1.125rem;
     }
-
-    /* =================== FLOATING CODE BACKGROUND =================== */
-    .floating-code-container {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 0;
+    .categories-grid,
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        padding: 0;
     }
-
-    .code-line {
-      position: absolute;
-      white-space: nowrap;
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
-      color: rgba(57, 255, 20, 0.12);
-      animation: floatCode linear infinite;
-      opacity: 0;
+    .testimonial-card-inner {
+        padding: 2rem;
     }
-
-    @keyframes floatCode {
-      0%   { transform: translateX(100vw); opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: 1; }
-      100% { transform: translateX(-100%); opacity: 0; }
+    .testimonial-content {
+        font-size: 0.95rem;
     }
-
-    /* =================== LAYOUT =================== */
-    .dashboard-wrapper {
-      display: flex;
-      min-height: 100vh;
+    .author-avatar {
+        width: 3rem;
+        height: 3rem;
     }
-
-    /* =================== SIDEBAR =================== */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 260px;
-      height: 100vh;
-      background: linear-gradient(180deg, #080b12 0%, #04060a 100%);
-      border-right: 1px solid var(--border);
-      box-shadow: 4px 0 32px rgba(57, 255, 20, 0.07);
-      padding: 1.75rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      z-index: 100;
-      overflow-y: auto;
-      transition: transform 0.3s ease;
+    .author-initial {
+        font-size: 1.125rem;
     }
-
-    .sidebar-logo {
-      width: 130px;
-      margin-bottom: 2rem;
+    .author-name {
+        font-size: 1rem;
     }
-
-    .sidebar-menu {
-      list-style: none;
-      flex: 1;
+    .author-role {
+        font-size: 0.875rem;
     }
-
-    .sidebar-menu li {
-      padding: 0.8rem 1rem;
-      margin-bottom: 0.35rem;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.25s ease;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-      border: 1px solid transparent;
+    .quote-icon {
+        width: 2.5rem;
+        height: 2.5rem;
     }
-
-    .sidebar-menu li:hover {
-      background: var(--neon-dim);
-      border-color: var(--border);
-      color: var(--text);
-      transform: translateX(4px);
+    .star {
+        width: 1.25rem;
+        height: 1.25rem;
     }
-
-    .sidebar-menu li.active {
-      background: var(--neon-dim);
-      border-color: var(--neon);
-      color: var(--neon);
-      box-shadow: inset 3px 0 0 var(--neon);
+    .category-title {
+        font-size: 1.375rem;
     }
-
-    .sidebar-footer {
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      text-align: center;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border-dim);
-      font-family: 'Courier New', monospace;
-      opacity: 0.6;
+    .counter {
+        font-size: 3rem;
     }
-
-    /* =================== MAIN CONTENT =================== */
-    .main-content {
-      margin-left: 260px;
-      flex: 1;
-      padding: 1.75rem 2rem;
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 100vw;
+}
+/* Responsive Design - Desktop */
+@media (min-width: 1024px) {
+    .categories-section {
+        padding: 6rem 2rem 4rem 2rem;
     }
-
-    /* =================== TOP NAVIGATION =================== */
-    .top-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      padding: 1rem 1.25rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      backdrop-filter: blur(12px);
-      flex-wrap: wrap;
-      gap: 0.75rem;
+    .testimonials-section {
+        padding: 4rem 2rem 6rem 2rem;
     }
-
-    .datetime {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      font-family: 'Courier New', monospace;
-      letter-spacing: 0.04em;
+    .section-title,
+    .testimonials-title {
+        font-size: 3.75rem;
     }
-
-    .top-nav-buttons {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
+    .categories-grid,
+    .testimonials-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
     }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.6rem 1.1rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      font-family: 'Montserrat Alternates', sans-serif;
-      font-size: 0.85rem;
-      text-decoration: none;
-      white-space: nowrap;
-      letter-spacing: 0.02em;
+    .testimonial-content {
+        font-size: 1rem;
     }
-
-    .home-btn {
-      position: relative;
-      border-color: rgba(232, 212, 77, 0.5);
-      color: var(--yellow);
-      background: var(--yellow-dim);
+    .category-title {
+        font-size: 1.5rem;
     }
-
-    .home-btn:hover {
-      background: var(--yellow);
-      color: #000;
-      border-color: var(--yellow);
-      box-shadow: 0 4px 16px rgba(232, 212, 77, 0.25);
+}
+/* Extra small screens - Mobile optimization */
+@media (max-width: 480px) {
+    .categories-section,
+    .testimonials-section {
+        padding: 3rem 0.75rem;
     }
-
-    .logout-btn {
-      border-color: rgba(255, 64, 64, 0.4);
-      color: var(--red);
-      background: rgba(255, 64, 64, 0.07);
+    .section-title,
+    .testimonials-title {
+        font-size: 1.75rem;
     }
-
-    .logout-btn:hover {
-      background: var(--red);
-      color: #fff;
-      border-color: var(--red);
-      box-shadow: 0 4px 16px rgba(255, 64, 64, 0.25);
+    .section-subtitle,
+    .testimonials-subtitle {
+        font-size: 0.85rem;
+        padding: 0 0.5rem;
     }
-
-    .dropdown {
-      position: relative;
-      display: inline-block;
+    .categories-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
-
-    .dropdown-menu {
-      position: absolute;
-      top: 110%;
-      right: 0;
-      min-width: 260px;
-      background: #0c1018;
-      border: 1px solid rgba(232, 212, 77, 0.3);
-      border-radius: var(--radius-sm);
-      padding: 0.4rem;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-8px);
-      transition: all 0.25s ease;
-      z-index: 1000;
-      backdrop-filter: blur(12px);
+    .category-card {
+        padding: 1.75rem 1.25rem;
+        min-height: 320px;
     }
-
-    .dropdown:hover .dropdown-menu {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
+    .category-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+        margin-bottom: 1rem;
     }
-
-    .dropdown-menu a {
-      display: block;
-      padding: 0.75rem 1rem;
-      color: var(--text);
-      text-decoration: none;
-      border-radius: 0.35rem;
-      transition: all 0.2s ease;
-      font-size: 0.88rem;
+    .category-icon i {
+        font-size: 1.75rem;
     }
-
-    .dropdown-menu a:hover {
-      background: var(--yellow-dim);
-      color: var(--yellow);
+    .category-title {
+        font-size: 1.15rem;
+        margin-bottom: 0.75rem;
+        line-height: 1.3;
     }
-
-    /* =================== CONTENT SECTIONS =================== */
-    .content-section { display: none; }
-    .content-section.active { display: block; }
-
-    .welcome-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      margin-bottom: 1.75rem;
-      background: linear-gradient(90deg, #ff5555 0%, var(--yellow) 50%, var(--neon) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-align: center;
-      letter-spacing: 0.03em;
+    .category-description {
+        font-size: 0.875rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
     }
-
-    .content-box {
-      background: var(--surface);
-      border: 1px solid var(--border-dim);
-      padding: 1.75rem;
-      border-radius: var(--radius);
-      margin-bottom: 1.5rem;
-      backdrop-filter: blur(8px);
+    .category-link {
+        font-size: 0.875rem;
     }
-
-    .content-box h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.25rem;
-      color: var(--neon);
-      margin-bottom: 1.25rem;
-      text-align: center;
+    
+    .testimonial-card-inner {
+        padding: 1.5rem;
     }
-
-    /* =================== ORDER TYPE SELECTOR =================== */
-    .order-type-selector {
-      display: flex;
-      gap: 0.875rem;
-      justify-content: center;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
+    .testimonial-content {
+        font-size: 0.85rem;
+        margin-bottom: 1.25rem;
     }
-
-    .order-type-btn {
-      padding: 0.875rem 1.75rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-dim);
-      background: var(--surface-2);
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      font-family: 'Orbitron', sans-serif;
-      min-width: 180px;
-      letter-spacing: 0.02em;
+    .author-avatar {
+        width: 2.5rem;
+        height: 2.5rem;
     }
-
-    .order-type-btn:hover {
-      border-color: var(--neon);
-      background: var(--neon-dim);
-      color: var(--text);
+    .author-initial {
+        font-size: 1rem;
     }
-
-    .order-type-btn.active {
-      border-color: var(--neon);
-      background: var(--neon-dim);
-      color: var(--neon);
-      box-shadow: 0 0 16px var(--neon-glow);
+    .author-name {
+        font-size: 0.9rem;
     }
-
-    /* =================== PACKAGE CATEGORIES =================== */
-    .package-category {
-      margin-bottom: 2.5rem;
-      transition: opacity 0.25s ease;
+    .author-role {
+        font-size: 0.75rem;
     }
-
-    .package-category.hidden { display: none; }
-
-    .category-header {
-      background: linear-gradient(135deg, rgba(57, 255, 20, 0.1), rgba(0,0,0,0.4));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 1.25rem;
-      text-align: center;
+    .quote-icon {
+        width: 1.75rem;
+        height: 1.75rem;
+        top: 1.25rem;
+        right: 1.25rem;
     }
-
-    .category-header h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.35rem;
-      color: var(--neon);
-      margin-bottom: 0.3rem;
-      letter-spacing: 0.02em;
+    .star {
+        width: 1rem;
+        height: 1rem;
     }
-
-    .category-header p {
-      color: var(--text-muted);
-      font-size: 0.88rem;
+    
+    .counter-section {
+        padding: 2.5rem 0.75rem;
     }
-
-    /* =================== SERVICE CARDS =================== */
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 1.5rem;
+    .counter-container {
+        flex-wrap: wrap;
+        gap: 10px;
     }
-
-    .service-card {
-      background: var(--surface);
-      border: 1px solid var(--border-dim);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      transition: all 0.25s ease;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      backdrop-filter: blur(8px);
+    .counter-item {
+        max-width: 150px;
+        padding: 15px 10px;
     }
-
-    .service-card:hover {
-      border-color: var(--border);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(57, 255, 20, 0.12);
+    .counter {
+        font-size: 24px;
+        margin-bottom: 5px;
     }
-
-    .service-card.selected {
-      border-color: var(--neon);
-      background: linear-gradient(135deg, rgba(57, 255, 20, 0.1), var(--surface));
-      box-shadow: 0 0 24px var(--neon-glow);
+    .label {
+        font-size: 10px;
+        margin-top: 5px;
     }
-
-    .service-card h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
-      color: var(--neon);
-      margin-bottom: 0.4rem;
-      line-height: 1.4;
-      letter-spacing: 0.02em;
+    
+    /* Contact Form Mobile */
+    #contact {
+        padding: 4rem 1rem;
     }
-
-    .service-card .price {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--yellow);
-      margin: 0.75rem 0;
-      font-family: 'Orbitron', sans-serif;
+    
+    #contact h2 {
+        font-size: 2rem;
     }
-
-    .service-card .price-info {
-      color: var(--text-muted);
-      font-size: 0.82rem;
-      margin-bottom: 0.75rem;
-      line-height: 1.5;
+    
+    .contact-form {
+        padding: 1.5rem;
     }
-
-    .service-card ul {
-      list-style: none;
-      margin-top: 0.75rem;
-      flex-grow: 1;
-    }
-
-    .service-card ul li {
-      padding: 0.4rem 0;
-      font-size: 0.86rem;
-      color: #b0bec5;
-      line-height: 1.4;
-    }
-
-    .service-card ul li:before {
-      content: "✓ ";
-      color: var(--neon);
-      font-weight: bold;
-      margin-right: 0.35rem;
-    }
-
-    .service-card ul li.excluded:before {
-      content: "✗ ";
-      color: var(--red);
-    }
-
-    .service-card .best-for {
-      color: var(--yellow);
-      font-size: 0.82rem;
-      margin-top: 0.875rem;
-      padding-top: 0.875rem;
-      border-top: 1px solid var(--border-dim);
-    }
-
-    .service-card .select-btn {
-      width: 100%;
-      background: var(--neon);
-      color: #000;
-      padding: 0.75rem 1.25rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-weight: 700;
-      font-size: 0.88rem;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      font-family: 'Montserrat Alternates', sans-serif;
-      text-transform: uppercase;
-      margin-top: 0.875rem;
-      letter-spacing: 0.06em;
-    }
-
-    .service-card .select-btn:hover {
-      background: #5aff3a;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px var(--neon-glow);
-    }
-
-    .service-card.selected .select-btn {
-      background: var(--yellow);
-      color: #000;
-    }
-
-    /* =================== CUSTOMIZATION PANEL =================== */
-    .customization-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-      margin-bottom: 1.5rem;
-      backdrop-filter: blur(8px);
-    }
-
-    .customization-panel h2 {
-      color: var(--neon);
-      font-family: 'Orbitron', sans-serif;
-      margin-bottom: 1.25rem;
-      text-align: center;
-      font-size: 1.2rem;
-      letter-spacing: 0.03em;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .form-group { margin-bottom: 1.25rem; }
-
+    
     .form-group label {
-      display: block;
-      margin-bottom: 0.4rem;
-      font-weight: 600;
-      color: var(--neon);
-      font-size: 0.82rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .input, .select, textarea {
-      width: 100%;
-      padding: 0.85rem 1rem;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid var(--border-dim);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      font-family: 'Montserrat Alternates', sans-serif;
-      font-size: 0.9rem;
-      transition: all 0.25s ease;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 90px;
-    }
-
-    .input:focus, .select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--neon);
-      box-shadow: 0 0 0 3px var(--neon-dim);
-    }
-
-    .checkbox-group {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 0.75rem;
-      margin-top: 0.5rem;
-    }
-
-    .checkbox-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 0.875rem;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid var(--border-dim);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .checkbox-item:hover {
-      border-color: var(--neon);
-      background: var(--neon-dim);
-    }
-
-    .checkbox-item input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-      accent-color: var(--neon);
-    }
-
-    .checkbox-item label {
-      color: var(--text);
-      cursor: pointer;
-      margin: 0;
-      font-size: 0.87rem;
-    }
-
-    /* =================== INVOICE PREVIEW =================== */
-    .invoice-preview {
-      background: rgba(4, 6, 10, 0.95);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      box-shadow: 0 0 40px rgba(57, 255, 20, 0.08);
-    }
-
-    .invoice-header {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 1.25rem;
-      margin-bottom: 1.75rem;
-    }
-
-    .invoice-header h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.6rem;
-      color: var(--neon);
-      text-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
-      text-align: center;
-      letter-spacing: 0.08em;
-    }
-
-    .invoice-info {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 0.75rem;
-      margin: 1.25rem 0;
-      font-size: 0.9rem;
-    }
-
-    .invoice-info div { padding: 0.35rem; }
-    .invoice-info strong { color: var(--yellow); }
-
-    .invoice-table {
-      width: 100%;
-      margin-bottom: 1.5rem;
-      border-collapse: collapse;
-      overflow-x: auto;
-      display: block;
-    }
-
-    .invoice-table table {
-      width: 100%;
-      min-width: 480px;
-    }
-
-    .invoice-table thead {
-      background: var(--neon-dim);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .invoice-table th {
-      padding: 0.875rem 1rem;
-      text-align: left;
-      font-family: 'Orbitron', sans-serif;
-      color: var(--neon);
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .invoice-table td {
-      padding: 0.875rem 1rem;
-      border-bottom: 1px solid var(--border-dim);
-      font-size: 0.88rem;
-      color: var(--text);
-    }
-
-    .invoice-table tr:hover { background: rgba(57, 255, 20, 0.04); }
-
-    .invoice-total {
-      text-align: center;
-      padding: 1.75rem;
-      background: linear-gradient(135deg, rgba(57, 255, 20, 0.08), rgba(0,0,0,0.5));
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      margin-bottom: 1.5rem;
-    }
-
-    .invoice-total .total-label {
-      font-size: 0.82rem;
-      color: var(--yellow);
-      font-weight: 700;
-      font-family: 'Orbitron', sans-serif;
-      margin-bottom: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .invoice-total .total-amount {
-      font-size: 2.25rem;
-      color: var(--neon);
-      font-weight: 800;
-      font-family: 'Orbitron', sans-serif;
-      text-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
-    }
-
-    /* =================== BUTTONS =================== */
-    .button {
-      width: 100%;
-      background: var(--neon);
-      color: #000;
-      padding: 0.875rem 1.25rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      font-family: 'Montserrat Alternates', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-    }
-
-    .button:hover:not(:disabled) {
-      background: #5aff3a;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px var(--neon-glow);
-    }
-
-    .button:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .button-secondary {
-      background: transparent;
-      border: 1px solid rgba(232, 212, 77, 0.5);
-      color: var(--yellow);
-    }
-
-    .button-secondary:hover:not(:disabled) {
-      background: var(--yellow);
-      color: #000;
-      border-color: var(--yellow);
-      box-shadow: 0 6px 20px rgba(232, 212, 77, 0.25);
-    }
-
-    .button-group {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 0.875rem;
-      margin-top: 1.5rem;
-    }
-
-    .divider {
-      border: none;
-      height: 1px;
-      background: var(--border-dim);
-      margin: 1.75rem 0;
-    }
-
-    /* =================== SETTINGS =================== */
-    .input:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    /* =================== SMART PAGE COUNTER =================== */
-    .page-counter-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .page-counter {
-      display: flex;
-      align-items: center;
-      background: rgba(0,0,0,0.4);
-      border: 1px solid var(--border-dim);
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      transition: border-color 0.2s;
-    }
-
-    .page-counter:focus-within {
-      border-color: var(--neon);
-      box-shadow: 0 0 0 3px var(--neon-dim);
-    }
-
-    .page-counter.at-max { border-color: var(--yellow); }
-    .page-counter.over-max { border-color: #ff6600; }
-
-    .page-counter-btn {
-      background: var(--neon-dim);
-      border: none;
-      color: var(--neon);
-      font-size: 1.2rem;
-      font-weight: 700;
-      width: 42px;
-      height: 44px;
-      cursor: pointer;
-      transition: background 0.15s;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .page-counter-btn:hover:not(:disabled) { background: rgba(57,255,20,0.2); }
-    .page-counter-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-
-    .page-counter-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      text-align: center;
-      outline: none;
-      padding: 0;
-      min-width: 0;
-    }
-
-    .page-counter-hint {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      padding-left: 0.25rem;
-      transition: color 0.2s;
-    }
-
-    .page-counter-hint.hint-included { color: var(--neon); }
-    .page-counter-hint.hint-extra { color: var(--yellow); }
-    .page-counter-hint.hint-overage { color: #ff6600; }
-    .page-counter-hint.hint-fixed { color: var(--text-muted); font-style: italic; }
-
-    /* =================== SERVICE TYPE BADGE =================== */
-    .service-type-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.4rem 1rem;
-      background: var(--neon-dim);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.75rem;
-      color: var(--neon);
-      margin-bottom: 1.25rem;
-      letter-spacing: 0.06em;
-    }
-
-    /* =================== BUSINESS QUESTIONNAIRE =================== */
-    .biz-questionnaire {
-      background: linear-gradient(135deg, rgba(57,255,20,0.04), rgba(0,0,0,0.3));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .biz-questionnaire h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.88rem;
-      color: var(--yellow);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      letter-spacing: 0.04em;
-    }
-
-    .biz-tags-label {
-      display: block;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-bottom: 0.6rem;
-      font-weight: 600;
-    }
-
-    .biz-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 1rem;
-    }
-
-    .biz-tag {
-      padding: 0.35rem 0.875rem;
-      border-radius: 999px;
-      border: 1px solid var(--border-dim);
-      background: rgba(0,0,0,0.35);
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      user-select: none;
-    }
-
-    .biz-tag:hover {
-      border-color: var(--border);
-      color: var(--text);
-    }
-
-    .biz-tag.selected {
-      border-color: var(--neon);
-      background: var(--neon-dim);
-      color: var(--neon);
-      font-weight: 600;
-    }
-
-    .biz-tag.selected::before { content: '✓ '; }
-
-    /* =================== TOGGLE ITEMS =================== */
-    .toggle-group {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
-      gap: 0.6rem;
-      margin-top: 0.5rem;
-    }
-
-    .toggle-item {
-      position: relative;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.65rem;
-      padding: 0.75rem 0.875rem;
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid var(--border-dim);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      user-select: none;
-    }
-
-    .toggle-item:hover {
-      border-color: var(--border);
-      background: var(--neon-dim);
-    }
-
-    .toggle-item.selected {
-      border-color: var(--neon);
-      background: var(--neon-dim);
-    }
-
-    .toggle-item input[type="checkbox"] { display: none; }
-
-    .toggle-check {
-      width: 18px;
-      height: 18px;
-      min-width: 18px;
-      border-radius: 4px;
-      border: 1.5px solid #555;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-      margin-top: 1px;
-    }
-
-    .toggle-item.selected .toggle-check {
-      background: var(--neon);
-      border-color: var(--neon);
-    }
-
-    .toggle-check::after { content: ''; display: none; }
-
-    .toggle-item.selected .toggle-check::after {
-      content: '✓';
-      display: block;
-      color: #000;
-      font-size: 11px;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .toggle-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-    }
-
-    .toggle-name {
-      font-size: 0.84rem;
-      color: #c5cdd8;
-      font-weight: 500;
-      line-height: 1.3;
-    }
-
-    .toggle-item.selected .toggle-name { color: var(--text); }
-
-    .toggle-price {
-      font-size: 0.75rem;
-      color: var(--neon);
-      font-weight: 700;
-    }
-
-    .panel-section-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      padding: 0.4rem 0 0.65rem;
-      border-bottom: 1px solid var(--border-dim);
-      margin-bottom: 1.1rem;
-    }
-
-    /* =================== SERVICE FILTER BAR =================== */
-    /* =================== STANDALONE CURRENCY SELECTOR =================== */
-    .currency-selector-standalone {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      padding: 1.25rem 1.5rem;
-      background: linear-gradient(135deg, rgba(232, 212, 77, 0.08), rgba(0,0,0,0.4));
-      border: 1px solid rgba(232, 212, 77, 0.3);
-      border-radius: var(--radius);
-      margin-bottom: 1.5rem;
-      backdrop-filter: blur(8px);
-    }
-
-    .currency-selector-label {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.82rem;
-      color: var(--yellow);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-
-    .currency-dropdown-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .currency-dropdown {
-      width: 100%;
-      padding: 0.75rem 2.5rem 0.75rem 1rem;
-      background: rgba(0,0,0,0.6);
-      border: 1.5px solid rgba(232, 212, 77, 0.4);
-      border-radius: var(--radius-sm);
-      color: var(--yellow);
-      font-family: 'Montserrat Alternates', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-      transition: all 0.2s ease;
-      box-shadow: 0 0 12px rgba(232,212,77,0.1);
-    }
-
-    .currency-dropdown:hover, .currency-dropdown:focus {
-      border-color: var(--yellow);
-      outline: none;
-      box-shadow: 0 0 20px rgba(232,212,77,0.25);
-    }
-
-    .currency-dropdown option {
-      background: #0e1214;
-      color: #e2e8f0;
-      font-size: 0.9rem;
-    }
-
-    .currency-dropdown-arrow {
-      position: absolute;
-      right: 0.85rem;
-      pointer-events: none;
-      color: var(--yellow);
-      font-size: 0.7rem;
-    }
-
-    .service-filter-bar {
-      display: flex;
-      gap: 0.6rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-      padding: 1rem 1.25rem;
-      background: var(--surface);
-      border: 1px solid var(--border-dim);
-      border-radius: var(--radius);
-      backdrop-filter: blur(8px);
-    }
-
-    .service-filter-bar .filter-label {
-      width: 100%;
-      text-align: center;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-    }
-
-    .filter-tab {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.55rem 1.1rem;
-      border-radius: 999px;
-      border: 1px solid var(--border-dim);
-      background: rgba(0,0,0,0.4);
-      color: var(--text-muted);
-      font-size: 0.84rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: 'Montserrat Alternates', sans-serif;
-      white-space: nowrap;
-    }
-
-    .filter-tab:hover {
-      border-color: var(--border);
-      color: var(--text);
-      background: var(--neon-dim);
-    }
-
-    .filter-tab.active {
-      border-color: var(--neon);
-      background: var(--neon-dim);
-      color: var(--neon);
-      box-shadow: 0 0 14px rgba(57, 255, 20, 0.2);
-    }
-
-    .filter-tab .tab-icon { font-size: 0.95rem; }
-
-    /* =================== INVOICE ENHANCEMENTS =================== */
-    .invoice-client-edit {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-    }
-
-    .invoice-client-edit input {
-      background: var(--neon-dim);
-      border: 1px solid var(--border);
-      border-radius: 0.35rem;
-      color: var(--text);
-      font-family: 'Montserrat Alternates', sans-serif;
-      font-size: 0.9rem;
-      padding: 0.25rem 0.5rem;
-      width: 190px;
-      outline: none;
-      transition: box-shadow 0.2s;
-    }
-
-    .invoice-client-edit input:focus {
-      box-shadow: 0 0 0 2px var(--neon-dim);
-    }
-
-    .edit-icon {
-      color: var(--neon);
-      font-size: 0.8rem;
-      cursor: default;
-      opacity: 0.6;
-    }
-
-    /* Phone field with country code */
-    .phone-input-group {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      flex-wrap: nowrap;
-    }
-
-    .phone-country-select {
-      background: var(--neon-dim);
-      border: 1px solid var(--border);
-      border-radius: 0.35rem;
-      color: var(--text);
-      font-family: 'Montserrat Alternates', sans-serif;
-      font-size: 0.82rem;
-      padding: 0.25rem 0.3rem;
-      width: 110px;
-      outline: none;
-      cursor: pointer;
-      transition: box-shadow 0.2s;
-      appearance: none;
-      -webkit-appearance: none;
-    }
-
-    .phone-country-select:focus {
-      box-shadow: 0 0 0 2px var(--neon-dim);
-    }
-
-    .phone-country-select option {
-      background: #0e121a;
-      color: var(--text);
-    }
-
-    .phone-number-input {
-      background: var(--neon-dim);
-      border: 1px solid var(--border);
-      border-radius: 0.35rem;
-      color: var(--text);
-      font-family: 'Montserrat Alternates', sans-serif;
-      font-size: 0.9rem;
-      padding: 0.25rem 0.5rem;
-      width: 135px;
-      outline: none;
-      transition: box-shadow 0.2s;
-    }
-
-    .phone-number-input:focus {
-      box-shadow: 0 0 0 2px var(--neon-dim);
-    }
-
-    .whatsapp-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      background: rgba(37, 211, 102, 0.15);
-      border: 1px solid rgba(37, 211, 102, 0.4);
-      border-radius: 0.3rem;
-      padding: 0.15rem 0.4rem;
-      font-size: 0.7rem;
-      color: #25D366;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      white-space: nowrap;
-    }
-
-    /* Settings phone group */
-    .settings-phone-group {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
-
-    .settings-phone-group select {
-      flex: 0 0 160px;
-    }
-
-    .settings-phone-group input {
-      flex: 1;
-    }
-
-    @keyframes rowFlash {
-      0%   { background: rgba(57, 255, 20, 0.15); }
-      100% { background: transparent; }
-    }
-
-    .invoice-row-new { animation: rowFlash 0.8s ease-out forwards; }
-
-    @keyframes totalPulse {
-      0%   { text-shadow: 0 0 12px rgba(57, 255, 20, 0.9); }
-      100% { text-shadow: 0 0 20px rgba(57, 255, 20, 0.4); }
-    }
-
-    .total-updating { animation: totalPulse 0.4s ease-out; }
-
-    /* =================== MOBILE MENU TOGGLE =================== */
-    .menu-toggle { display: none !important; }
-
-    .sidebar-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      z-index: 99;
-    }
-
-    /* =================== RESPONSIVE DESIGN =================== */
-    @media (max-width: 1024px) {
-      .sidebar { width: 230px; }
-      .main-content { margin-left: 230px; }
-      .service-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-    }
-
-    @media (max-width: 768px) {
-      .menu-toggle { display: block; }
-
-      .sidebar { transform: translateX(-100%); width: 260px; }
-      .sidebar.active { transform: translateX(0); }
-      .sidebar-overlay.active { display: block; }
-
-      .main-content { margin-left: 0; padding: 1rem; padding-top: 1.25rem; padding-bottom: 72px; }
-      .welcome-title { font-size: 1.6rem; margin-top: 1rem; }
-      .service-grid { grid-template-columns: 1fr; gap: 0.875rem; }
-      .form-row { grid-template-columns: 1fr; }
-      .checkbox-group { grid-template-columns: 1fr; }
-      .invoice-info { grid-template-columns: 1fr; }
-      .button-group { grid-template-columns: 1fr; }
-      .order-type-selector { flex-direction: column; }
-      .order-type-btn { width: 100%; }
-      .top-nav { padding: 0.875rem; }
-      .datetime { font-size: 0.72rem; width: 100%; text-align: center; }
-      .top-nav-buttons { width: 100%; justify-content: center; }
-      .nav-btn { padding: 0.55rem 0.875rem; font-size: 0.8rem; }
-      .category-header h3 { font-size: 1.1rem; }
-      .service-card h3 { font-size: 0.95rem; }
-      .service-card .price { font-size: 1.4rem; }
-      .invoice-header h2 { font-size: 1.3rem; }
-      .invoice-total .total-amount { font-size: 1.8rem; }
-      .content-box { padding: 1.25rem; }
-      .customization-panel { padding: 1.25rem; }
-      .invoice-preview { padding: 1.25rem; }
-    }
-
-    @media (max-width: 480px) {
-      .welcome-title { font-size: 1.35rem; }
-      .category-header { padding: 0.875rem; }
-      .category-header h3 { font-size: 1rem; }
-      .service-card { padding: 1rem; }
-      .service-card .price { font-size: 1.25rem; }
-      .invoice-total .total-amount { font-size: 1.6rem; }
-      .button { padding: 0.75rem 1rem; font-size: 0.85rem; }
-    }
-    /* =================== BOTTOM NAVIGATION BAR =================== */
-    .bottom-nav {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 64px;
-      background: rgba(8, 11, 18, 0.97);
-      border-top: 1px solid var(--border);
-      backdrop-filter: blur(16px);
-      z-index: 200;
-      align-items: center;
-      justify-content: space-around;
-      padding: 0 0.25rem;
-      box-shadow: 0 -4px 24px rgba(0,0,0,0.5);
-    }
-
-    .bottom-nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      flex: 1;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      padding: 0.4rem 0.25rem;
-      transition: all 0.2s ease;
-      border-radius: var(--radius-sm);
-      min-width: 0;
-    }
-
-    .bottom-nav-item span {
-      font-size: 0.6rem;
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .bottom-nav-icon {
-      width: 22px;
-      height: 22px;
-      flex-shrink: 0;
-    }
-
-    .bottom-nav-item:hover {
-      color: var(--text);
-    }
-
-    .bottom-nav-item.active {
-      color: var(--neon);
-    }
-
-    .bottom-nav-item.active .bottom-nav-icon {
-      filter: drop-shadow(0 0 6px rgba(57, 255, 20, 0.6));
-    }
-
-    /* The center + button */
-    .bottom-nav-plus {
-      width: 48px;
-      height: 48px;
-      min-width: 48px;
-      background: var(--neon) !important;
-      border-radius: 50% !important;
-      color: #000 !important;
-      box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
-      flex: 0 0 auto;
-      padding: 0;
-      margin: 0 0.5rem;
-      transition: all 0.2s ease;
-    }
-
-    .bottom-nav-plus:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 28px rgba(57, 255, 20, 0.7);
-      color: #000 !important;
-    }
-
-    .bottom-nav-plus.active {
-      color: #000 !important;
-    }
-
-    .bottom-nav-plus .bottom-nav-icon {
-      width: 24px;
-      height: 24px;
-    }
-
-    @media (max-width: 768px) {
-      .bottom-nav { display: flex; }
-      .main-content { padding-bottom: 72px !important; }
-    }
-
-
-  </style>
-</head>
-
-<body>
-  <!-- Floating Code Background -->
-  <div class="floating-code-container" id="floatingCodeContainer"></div>
-
-  <!-- Sidebar Overlay -->
-  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-
-  <div class="dashboard-wrapper">
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div>
-        <img src="assets/images/dashboard-logo-no-bg.png" class="sidebar-logo" alt="Nex Genix">
-        <ul class="sidebar-menu">
-          <li onclick="showSection('order')" class="active">Order Service</li>
-          <li onclick="showSection('my-orders')">My Orders</li>
-          <li onclick="showSection('settings')">Account Settings</li>
-        </ul>
-      </div>
-      <p class="sidebar-footer">&copy; 2026 NEX GENIX Creative Solutions</p>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Top Navigation -->
-      <nav class="top-nav">
-        <div id="datetime" class="datetime"></div>
-
-        <div class="top-nav-buttons">
-          <div class="dropdown">
-            <button class="nav-btn home-btn">
-              <span>🏠</span>
-              <span>Home</span>
-            </button>
-            <div class="dropdown-menu">
-              <a href="https://nexgenixbusinessschool.github.io" target="_blank">Nex Genix Business School</a>
-              <a href="https://nexgenixcreativesolutions.github.io" target="_blank">Nex Genix Creative Solutions</a>
-            </div>
-          </div>
-
-          <button onclick="logout()" class="nav-btn logout-btn">
-            <span>🚪</span>
-            <span>Logout</span>
-          </button>
+        font-size: 0.875rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 0.875rem;
+        padding: 0.75rem;
+    }
+    
+    .btn-submit {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #contact {
+        padding: 4rem 1rem;
+    }
+    
+    #contact h2 {
+        font-size: 2rem;
+    }
+    
+    .contact-form {
+        padding: 1.5rem;
+    }
+    
+    .form-group label {
+        font-size: 0.875rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 0.875rem;
+        padding: 0.75rem;
+    }
+    
+    /* Mobile Products & Services adjustments */
+    .categories-section {
+        padding: 3rem 1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .section-subtitle {
+        font-size: 0.95rem;
+    }
+    
+    .categories-grid {
+        grid-template-columns: 1fr;
+        gap: 1.75rem;
+    }
+    
+    .category-card {
+        padding: 2rem 1.5rem;
+        min-height: 350px;
+    }
+    
+    .category-title {
+        font-size: 1.25rem;
+        line-height: 1.35;
+    }
+    
+    .category-description {
+        font-size: 0.9rem;
+        line-height: 1.65;
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+  <body>
+<!-- Navigation Bar -->
+<nav id="navbar">
+    <div class="logo">
+        <img src="assets/images/logo.png" alt="logo" class="logo">
+        <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
+        <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
+    </div>
+        <!-- Hamburger Menu Icon -->
+        <div class="hamburger-menu" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
         </div>
-      </nav>
+    <ul class="nav-list">
+        <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
+        <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+<div class="auth-buttons" id="auth-buttons">
+    <button onclick="handleLogout()" class="logout-btn">Logout</button>
+    <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
+</div>
+</nav>
 
-      <!-- Order Service Section -->
-      <div id="order" class="content-section active">
-        <h1 class="welcome-title">Order Your Service</h1>
+<!-- Welcome Section (Desktop) -->
+<section id="welcome-section">
+    <main id="main-doc">
+    <img src="assets/images/banner.png" alt="banner" class="banner">
+    
+<h1 class="slogan">Your Vision, Beautifully Engineered.</h1>
 
-        <!-- Order Type Selector -->
-        <div class="order-type-selector">
-          <button class="order-type-btn active" id="newWebsiteBtn" onclick="selectOrderType('new')">
-            🆕 New Website Order
-          </button>
-          <button class="order-type-btn" id="renewalBtn" onclick="selectOrderType('renewal')">
-            🔄 Renewal Service
-          </button>
+        <p class="services-description">App Design | Web Design | Web Development | UI/UX Design</p>
+        <!-- ONLY Get Started button for DESKTOP view -->
+        <div class="hero-buttons">
+            <a href="#contact" class="btn-get-started">Get Started</a>
         </div>
-
-        <!-- ★ CURRENCY SELECTOR ★ -->
-        <div class="currency-selector-standalone">
-          <div class="currency-selector-label">
-            <span>💱</span>
-            <span>View Prices In:</span>
-          </div>
-          <div class="currency-dropdown-wrap">
-            <select id="currencyDropdown" onchange="changeCurrencyFromDropdown(this)" class="currency-dropdown">
-              <option value="USD" data-flag="💵">💵 USD — US Dollar ($)</option>
-              <option value="PHP" data-flag="🇵🇭">🇵🇭 PHP — Philippine Peso (₱)</option>
-              <option value="EUR" data-flag="🇪🇺">🇪🇺 EUR — Euro / Italy (€)</option>
-              <option value="PLN" data-flag="🇵🇱">🇵🇱 PLN — Polish Złoty (zł)</option>
-              <option value="GBP" data-flag="🇬🇧">🇬🇧 GBP — British Pound (£)</option>
-              <option value="JPY" data-flag="🇯🇵">🇯🇵 JPY — Japanese Yen (¥)</option>
-              <option value="AUD" data-flag="🇦🇺">🇦🇺 AUD — Australian Dollar (A$)</option>
-              <option value="CAD" data-flag="🇨🇦">🇨🇦 CAD — Canadian Dollar (C$)</option>
-              <option value="SGD" data-flag="🇸🇬">🇸🇬 SGD — Singapore Dollar (S$)</option>
-              <option value="INR" data-flag="🇮🇳">🇮🇳 INR — Indian Rupee (₹)</option>
-              <option value="CNY" data-flag="🇨🇳">🇨🇳 CNY — Chinese Yuan (¥)</option>
-              <option value="MXN" data-flag="🇲🇽">🇲🇽 MXN — Mexican Peso (MX$)</option>
-              <option value="BRL" data-flag="🇧🇷">🇧🇷 BRL — Brazilian Real (R$)</option>
-              <option value="KRW" data-flag="🇰🇷">🇰🇷 KRW — South Korean Won (₩)</option>
-              <option value="CHF" data-flag="🇨🇭">🇨🇭 CHF — Swiss Franc (Fr)</option>
-              <option value="AED" data-flag="🇦🇪">🇦🇪 AED — UAE Dirham (د.إ)</option>
-              <option value="SAR" data-flag="🇸🇦">🇸🇦 SAR — Saudi Riyal (﷼)</option>
-            </select>
-            <span class="currency-dropdown-arrow">▼</span>
-          </div>
-        </div>
-
-        <!-- ★ SERVICE TYPE FILTER BAR (only for new orders) -->
-        <div class="service-filter-bar" id="serviceFilterBar">
-          <div class="filter-label">Filter packages by service type</div>
-          <button class="filter-tab active" id="tab-all" onclick="filterByServiceType('all', this)">
-            <span class="tab-icon">🗂️</span> All Packages
-          </button>
-          <button class="filter-tab" id="tab-app-design" onclick="filterByServiceType('app-design', this)">
-            <span class="tab-icon">📱</span> App Design
-          </button>
-          <button class="filter-tab" id="tab-web-design" onclick="filterByServiceType('web-design', this)">
-            <span class="tab-icon">🎨</span> Web Design
-          </button>
-          <button class="filter-tab" id="tab-web-development" onclick="filterByServiceType('web-development', this)">
-            <span class="tab-icon">🌐</span> Web Development
-          </button>
-          <button class="filter-tab" id="tab-ui-ux" onclick="filterByServiceType('ui-ux-design', this)">
-            <span class="tab-icon">🧩</span> UI/UX Design
-          </button>
-        </div>
-
-        <!-- NEW WEBSITE PACKAGES -->
-        <div id="newWebsitePackages">
-          <!-- MULTI-PAGE WEBSITES WITH MAINTENANCE -->
-          <div class="package-category" id="cat-maintenance" data-service-types="web-design web-development">
-            <div class="category-header">
-              <h3>📱 Multi-Page Websites (With Maintenance)</h3>
-              <p>Professional websites with ongoing support and maintenance - Perfect for growing businesses</p>
-            </div>
-            <div class="content-box">
-              <div class="service-grid" id="serviceGridMaintenance">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
-          </div>
-
-          <!-- TWO-PAGE WEBSITES -->
-          <div class="package-category" id="cat-onepage" data-service-types="web-design web-development">
-            <div class="category-header">
-              <h3>⚡ Two-Page Websites (Fast Launch)</h3>
-              <p>Quick and efficient single-page solutions - Best for new businesses, promos, and landing pages</p>
-            </div>
-            <div class="content-box">
-              <div class="service-grid" id="serviceGridOnePage">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
-          </div>
-
-          <!-- MULTI-PAGE WEBSITES WITHOUT MAINTENANCE -->
-          <div class="package-category" id="cat-nomaintenance" data-service-types="web-design web-development">
-            <div class="category-header">
-              <h3>🌐 Multi-Page Websites (No Maintenance)</h3>
-              <p>One-time development with no ongoing costs - For businesses wanting a simple online presence</p>
-            </div>
-            <div class="content-box">
-              <div class="service-grid" id="serviceGridNoMaintenance">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
-          </div>
-
-          <!-- APP DESIGN PACKAGES (shown only when App Design is filtered) -->
-          <div class="package-category hidden" id="cat-app-design" data-service-types="app-design">
-            <div class="category-header">
-              <h3>📱 App Design Packages</h3>
-              <p>Mobile app UI/UX design for iOS, Android, and cross-platform applications</p>
-            </div>
-            <div class="content-box">
-              <div class="service-grid" id="serviceGridAppDesign">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
-          </div>
-
-          <!-- UI/UX DESIGN PACKAGES (shown only when UI/UX is filtered) -->
-          <div class="package-category hidden" id="cat-uiux" data-service-types="ui-ux-design">
-            <div class="category-header">
-              <h3>🧩 UI/UX Design Packages</h3>
-              <p>Wireframes, prototypes, user research, and full design systems</p>
-            </div>
-            <div class="content-box">
-              <div class="service-grid" id="serviceGridUiux">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- RENEWAL SERVICES -->
-        <div id="renewalPackages" style="display: none;">
-          <!-- WEBSITE MANAGER SERVICES -->
-          <div class="package-category">
-            <div class="category-header">
-              <h3>🔧 Website Manager Services</h3>
-              <p>Monthly or annual website maintenance and support</p>
-            </div>
-            <div class="content-box">
-              <div style="background: var(--neon-dim); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.25rem; margin-bottom: 1.5rem;">
-                <h4 style="color: var(--neon); font-size: 0.95rem; margin-bottom: 0.875rem; font-family: 'Orbitron', sans-serif; letter-spacing: 0.04em;">Website Manager Includes:</h4>
-                <ul style="list-style: none; padding: 0;">
-                  <li style="padding: 0.4rem 0; color: #b0bec5; font-size: 0.88rem;">✓ Content updates (text/images)</li>
-                  <li style="padding: 0.4rem 0; color: #b0bec5; font-size: 0.88rem;">✓ Minor design changes</li>
-                  <li style="padding: 0.4rem 0; color: #b0bec5; font-size: 0.88rem;">✓ Plugin & security checks</li>
-                  <li style="padding: 0.4rem 0; color: #b0bec5; font-size: 0.88rem;">✓ Backup monitoring</li>
-                  <li style="padding: 0.4rem 0; color: #b0bec5; font-size: 0.88rem;">✓ Basic performance checks</li>
-                </ul>
-              </div>
-              <div class="service-grid" id="serviceGridManager">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
-          </div>
-
-          <!-- ANNUAL RENEWAL INVOICE -->
-          <div class="package-category">
-            <div class="category-header">
-              <h3>📅 Annual Website Renewal</h3>
-              <p>Keep your website running with hosting, domain, and essential services</p>
-            </div>
-            <div class="content-box">
-              <div class="service-grid" id="serviceGridRenewal">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Customization Panel -->
-        <div class="customization-panel" id="customizationPanel" style="display: none;">
-          <h2>Customize Your Order</h2>
-
-          <!-- AUTO-DETECTED SERVICE TYPE BADGE -->
-          <div style="text-align:center; margin-bottom:1.5rem;">
-            <span class="service-type-badge" id="serviceTypeBadge">⚙️ Select a package above</span>
-          </div>
-
-          <!-- ★ BUSINESS QUESTIONNAIRE (universal, always shown first) -->
-          <div class="biz-questionnaire" id="bizQuestionnaire">
-            <h3>🏢 Tell us about your business</h3>
-
-            <span class="biz-tags-label">What type of business or project is this for? <em style="color:#6b7280;">(select all that apply)</em></span>
-            <div class="biz-tags" id="bizTypeTagsEl">
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Startup')">🚀 Startup</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Small Business')">🏪 Small Business</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Corporate / Enterprise')">🏢 Corporate / Enterprise</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Freelancer / Personal')">👤 Freelancer / Personal</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Non-Profit / Organization')">🤝 Non-Profit / Organization</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','E-Commerce / Online Store')">🛒 E-Commerce / Online Store</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Restaurant / Food & Beverage')">🍽️ Restaurant / F&B</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Health & Wellness')">💊 Health & Wellness</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Education / E-Learning')">📚 Education / E-Learning</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Real Estate')">🏠 Real Estate</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Events / Entertainment')">🎉 Events / Entertainment</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Technology / SaaS')">💻 Technology / SaaS</span>
-            </div>
-
-            <span class="biz-tags-label">What is your goal with this project? <em style="color:#6b7280;">(select all that apply)</em></span>
-            <div class="biz-tags" id="bizGoalTagsEl">
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Generate Leads / Inquiries')">📩 Generate Leads</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Sell Products / Services Online')">💳 Sell Online</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Build Brand Awareness')">✨ Brand Awareness</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Showcase Portfolio / Work')">🖼️ Showcase Portfolio</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Provide Information / Blog')">📰 Information / Blog</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','User Login & Dashboard')">🔐 User Login / Dashboard</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Booking / Appointments')">📅 Booking / Appointments</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Community / Social')">👥 Community / Social</span>
-            </div>
-
-            <span class="biz-tags-label">What stage is your business/project currently in?</span>
-            <div class="biz-tags" id="bizStageTagsEl" data-single="true">
-              <span class="biz-tag" onclick="toggleBizTag(this,'stage','Just Starting Out')">🌱 Just Starting Out</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'stage','Already Operating')">🔄 Already Operating</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'stage','Rebranding / Redesign')">🔁 Rebranding / Redesign</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'stage','Scaling Up')">📈 Scaling Up</span>
-            </div>
-          </div>
-
-          <!-- ===== APP DESIGN OPTIONS ===== -->
-          <div id="appDesignOptions" class="service-type-options" style="display:none;">
-            <div class="panel-section-title">📱 App Design Configuration</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Platform *</label>
-                <select id="appPlatform" class="select" onchange="updateInvoice()">
-                  <option value="">Select platform</option>
-                  <option value="iOS">iOS Only</option>
-                  <option value="Android">Android Only</option>
-                  <option value="Cross-Platform" data-extra="500">Cross-Platform (iOS + Android) +₱500</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>App Category *</label>
-                <select id="appCategory" class="select" onchange="updateInvoice()">
-                  <option value="">Select category</option>
-                  <option value="Business / Corporate">Business / Corporate</option>
-                  <option value="E-Commerce / Shopping">E-Commerce / Shopping</option>
-                  <option value="Social / Community">Social / Community</option>
-                  <option value="Utility / Productivity">Utility / Productivity</option>
-                  <option value="Food & Delivery">Food & Delivery</option>
-                  <option value="Health & Fitness">Health & Fitness</option>
-                  <option value="Education / E-Learning">Education / E-Learning</option>
-                  <option value="Entertainment / Media">Entertainment / Media</option>
-                  <option value="Finance / Banking">Finance / Banking</option>
-                  <option value="Travel & Booking">Travel & Booking</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Number of Screens *</label>
-                <select id="appScreens" class="select" onchange="updateInvoice()">
-                  <option value="">Select range</option>
-                  <option value="1–5 Screens">1–5 Screens</option>
-                  <option value="6–10 Screens">6–10 Screens</option>
-                  <option value="11–20 Screens">11–20 Screens</option>
-                  <option value="20+ Screens">20+ Screens</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Prototype Type</label>
-                <select id="appPrototype" class="select" onchange="updateInvoice()">
-                  <option value="none">No prototype needed</option>
-                  <option value="Static Mockup">Static Mockup (Figma Frames)</option>
-                  <option value="Clickable Prototype" data-extra="800">Clickable Prototype +₱800</option>
-                  <option value="Animated Prototype" data-extra="1500">Animated / Motion Prototype +₱1,500</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Design Tool Preference</label>
-                <select id="appTool" class="select">
-                  <option value="Figma">Figma (Recommended)</option>
-                  <option value="Adobe XD">Adobe XD</option>
-                  <option value="Sketch">Sketch</option>
-                  <option value="No Preference">No Preference</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Additional App Features <span style="color:#6b7280;font-size:0.8rem;">(select multiple)</span></label>
-              <div class="toggle-group">
-                <div class="toggle-item" onclick="toggleFeature(this,'app-branding')"><input type="checkbox" id="app-branding" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Branding / Logo Integration</span><span class="toggle-price">+₱500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'app-darkmode')"><input type="checkbox" id="app-darkmode" data-price="400" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Dark Mode Version</span><span class="toggle-price">+₱400</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'app-icon')"><input type="checkbox" id="app-icon" data-price="300" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">App Icon Design</span><span class="toggle-price">+₱300</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'app-onboarding')"><input type="checkbox" id="app-onboarding" data-price="600" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Onboarding Screens</span><span class="toggle-price">+₱600</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'app-designsystem')"><input type="checkbox" id="app-designsystem" data-price="900" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Design System / Style Guide</span><span class="toggle-price">+₱900</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'app-splash')"><input type="checkbox" id="app-splash" data-price="250" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Splash Screen Design</span><span class="toggle-price">+₱250</span></div></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===== WEB DESIGN OPTIONS ===== -->
-          <div id="webDesignOptions" class="service-type-options" style="display:none;">
-            <div class="panel-section-title">🎨 Web Design Configuration</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Website Type *</label>
-                <select id="wdType" class="select" onchange="updateInvoice()">
-                  <option value="">Select type</option>
-                  <option value="Portfolio / Personal">Portfolio / Personal</option>
-                  <option value="Corporate / Company">Corporate / Company</option>
-                  <option value="Landing Page">Landing Page</option>
-                  <option value="Blog / Magazine">Blog / Magazine</option>
-                  <option value="E-Commerce">E-Commerce</option>
-                  <option value="Non-Profit / Organization">Non-Profit / Organization</option>
-                  <option value="Restaurant / Food">Restaurant / Food</option>
-                  <option value="Event / Promo Site">Event / Promo Site</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="numPages">Number of Pages *</label>
-                <div class="page-counter-wrap">
-                  <div class="page-counter" id="numPagesCounter">
-                    <button type="button" class="page-counter-btn" id="numPagesMinus" onclick="adjustPages('numPages',-1)">−</button>
-                    <input type="number" id="numPages" class="page-counter-input" min="1" readonly onchange="updateInvoice()">
-                    <button type="button" class="page-counter-btn" id="numPagesPlus" onclick="adjustPages('numPages',1)">+</button>
-                  </div>
-                  <span class="page-counter-hint" id="numPagesHint">Select a package first</span>
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Design Tool Preference</label>
-                <select id="wdTool" class="select">
-                  <option value="Figma">Figma (Recommended)</option>
-                  <option value="Adobe XD">Adobe XD</option>
-                  <option value="Photoshop">Photoshop</option>
-                  <option value="No Preference">No Preference</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Additional Design Features <span style="color:#6b7280;font-size:0.8rem;">(select multiple)</span></label>
-              <div class="toggle-group">
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-responsive')"><input type="checkbox" id="wd-responsive" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Mobile Responsive Design</span><span class="toggle-price">+₱500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-illustrations')"><input type="checkbox" id="wd-illustrations" data-price="800" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Custom Illustrations</span><span class="toggle-price">+₱800</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-logo')"><input type="checkbox" id="wd-logo" data-price="600" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Logo Design</span><span class="toggle-price">+₱600</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-motion')"><input type="checkbox" id="wd-motion" data-price="700" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Animated / Motion Elements</span><span class="toggle-price">+₱700</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-brandguide')"><input type="checkbox" id="wd-brandguide" data-price="900" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Brand Style Guide</span><span class="toggle-price">+₱900</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-darkmode')"><input type="checkbox" id="wd-darkmode" data-price="400" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Dark Mode Design</span><span class="toggle-price">+₱400</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-prototype')"><input type="checkbox" id="wd-prototype" data-price="800" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Clickable Prototype</span><span class="toggle-price">+₱800</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-socialmedia')"><input type="checkbox" id="wd-socialmedia" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Social Media Kit</span><span class="toggle-price">+₱500</span></div></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===== WEB DEVELOPMENT OPTIONS ===== -->
-          <div id="webDevOptions" class="service-type-options" style="display:none;">
-            <div class="panel-section-title">🌐 Web Development Configuration</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Tech Stack / Platform *</label>
-                <select id="devStack" class="select" onchange="updateInvoice()">
-                  <option value="">Select stack</option>
-                  <option value="Custom HTML/CSS/JS">Custom HTML / CSS / JS</option>
-                  <option value="WordPress" data-extra="500">WordPress +₱500</option>
-                  <option value="React / Next.js" data-extra="1500">React / Next.js +₱1,500</option>
-                  <option value="Vue.js / Nuxt" data-extra="1500">Vue.js / Nuxt +₱1,500</option>
-                  <option value="Webflow" data-extra="800">Webflow +₱800</option>
-                  <option value="Shopify" data-extra="2000">Shopify +₱2,000</option>
-                  <option value="Laravel / PHP" data-extra="2000">Laravel / PHP Backend +₱2,000</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="numPagesdev">Number of Pages *</label>
-                <div class="page-counter-wrap">
-                  <div class="page-counter" id="numPagesdevCounter">
-                    <button type="button" class="page-counter-btn" id="numPagesdevMinus" onclick="adjustPages('numPagesdev',-1)">−</button>
-                    <input type="number" id="numPagesdev" class="page-counter-input" min="1" readonly onchange="updateInvoice()">
-                    <button type="button" class="page-counter-btn" id="numPagesdevPlus" onclick="adjustPages('numPagesdev',1)">+</button>
-                  </div>
-                  <span class="page-counter-hint" id="numPagesdevHint">Select a package first</span>
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Maintenance Plan</label>
-                <select id="devMaintenance" class="select" onchange="updateInvoice()">
-                  <option value="none">No maintenance needed</option>
-                  <option value="Monthly" data-extra="1500">Monthly Plan +₱1,500/mo</option>
-                  <option value="Annual" data-extra="15000">Annual Plan +₱15,000/yr</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Additional Development Features <span style="color:#6b7280;font-size:0.8rem;">(select multiple)</span></label>
-              <div class="toggle-group">
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-ecommerce')"><input type="checkbox" id="dev-ecommerce" data-price="3000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">E-Commerce / Online Store</span><span class="toggle-price">+₱3,000</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-cms')"><input type="checkbox" id="dev-cms" data-price="1500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">CMS Integration</span><span class="toggle-price">+₱1,500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-forms')"><input type="checkbox" id="dev-forms" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Contact Form / Email Setup</span><span class="toggle-price">+₱500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-seo')"><input type="checkbox" id="dev-seo" data-price="3000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">SEO Optimization</span><span class="toggle-price">+₱3,000</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-analytics')"><input type="checkbox" id="dev-analytics" data-price="2000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Analytics Integration</span><span class="toggle-price">+₱2,000</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-ssl')"><input type="checkbox" id="dev-ssl" data-price="1500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">SSL Certificate</span><span class="toggle-price">+₱1,500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-backup')"><input type="checkbox" id="dev-backup" data-price="2500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Automated Backups</span><span class="toggle-price">+₱2,500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-hosting')"><input type="checkbox" id="dev-hosting" data-price="1000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Hosting & Domain Setup</span><span class="toggle-price">+₱1,000</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-livechat')"><input type="checkbox" id="dev-livechat" data-price="400" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Live Chat Integration</span><span class="toggle-price">+₱400</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-social')"><input type="checkbox" id="dev-social" data-price="350" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Social Media Integration</span><span class="toggle-price">+₱350</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-speed')"><input type="checkbox" id="dev-speed" data-price="600" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Speed Optimization</span><span class="toggle-price">+₱600</span></div></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===== UI/UX DESIGN OPTIONS ===== -->
-          <div id="uiuxOptions" class="service-type-options" style="display:none;">
-            <div class="panel-section-title">🧩 UI/UX Design Configuration</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Project Type *</label>
-                <select id="uxProjectType" class="select" onchange="updateInvoice()">
-                  <option value="">Select type</option>
-                  <option value="Web App">Web App</option>
-                  <option value="Mobile App">Mobile App</option>
-                  <option value="Desktop Software">Desktop Software</option>
-                  <option value="Dashboard / Admin Panel">Dashboard / Admin Panel</option>
-                  <option value="SaaS Product">SaaS Product</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Deliverable Type *</label>
-                <select id="uxDeliverable" class="select" onchange="updateInvoice()">
-                  <option value="">Select deliverable</option>
-                  <option value="Wireframes Only" data-extra="2000">Wireframes Only +₱2,000</option>
-                  <option value="Wireframes + Hi-Fi Design" data-extra="5000">Wireframes + Hi-Fi Design +₱5,000</option>
-                  <option value="Full Clickable Prototype" data-extra="7500">Full Clickable Prototype +₱7,500</option>
-                  <option value="Design System" data-extra="9000">Design System / Component Library +₱9,000</option>
-                  <option value="Complete UX Package" data-extra="12000">Complete UX Package +₱12,000</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Wireframe Fidelity</label>
-                <select id="uxFidelity" class="select" onchange="updateInvoice()">
-                  <option value="">Select fidelity</option>
-                  <option value="Low-Fidelity (Sketch)">Low-Fidelity (Sketch)</option>
-                  <option value="Mid-Fidelity (Greyscale)">Mid-Fidelity (Greyscale)</option>
-                  <option value="High-Fidelity (Full Color)">High-Fidelity (Full Color)</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Number of Screens / Views *</label>
-                <select id="uxScreens" class="select" onchange="updateInvoice()">
-                  <option value="">Select range</option>
-                  <option value="1–5 Screens">1–5 Screens</option>
-                  <option value="6–15 Screens">6–15 Screens</option>
-                  <option value="16–30 Screens">16–30 Screens</option>
-                  <option value="30+ Screens">30+ Screens</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Design Tool Preference</label>
-                <select id="uxTool" class="select">
-                  <option value="Figma">Figma (Recommended)</option>
-                  <option value="Adobe XD">Adobe XD</option>
-                  <option value="Sketch">Sketch</option>
-                  <option value="No Preference">No Preference</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Additional UI/UX Features <span style="color:#6b7280;font-size:0.8rem;">(select multiple)</span></label>
-              <div class="toggle-group">
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-research')"><input type="checkbox" id="ux-research" data-price="2000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">User Research & Personas</span><span class="toggle-price">+₱2,000</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-journey')"><input type="checkbox" id="ux-journey" data-price="1500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">User Journey Mapping</span><span class="toggle-price">+₱1,500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-ia')"><input type="checkbox" id="ux-ia" data-price="1000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Information Architecture</span><span class="toggle-price">+₱1,000</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-usability')"><input type="checkbox" id="ux-usability" data-price="1800" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Usability Testing Plan</span><span class="toggle-price">+₱1,800</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-accessibility')"><input type="checkbox" id="ux-accessibility" data-price="1200" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Accessibility Audit (WCAG)</span><span class="toggle-price">+₱1,200</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-microinteraction')"><input type="checkbox" id="ux-microinteraction" data-price="900" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Micro-Interaction Design</span><span class="toggle-price">+₱900</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-handoff')"><input type="checkbox" id="ux-handoff" data-price="600" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Developer Handoff / Specs</span><span class="toggle-price">+₱600</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-brand')"><input type="checkbox" id="ux-brand" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Brand Integration</span><span class="toggle-price">+₱500</span></div></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- PROJECT DETAILS (always shown) -->
-          <div id="projectDetailsSection" style="display:none;">
-            <div class="panel-section-title">📋 Project Details</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="projectName">Project Name</label>
-                <input type="text" id="projectName" class="input" placeholder="Enter project name">
-              </div>
-              <div class="form-group">
-                <label for="deadline">Preferred Deadline</label>
-                <input type="date" id="deadline" class="input">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="specialRequests">Special Requests / Notes</label>
-              <textarea id="specialRequests" class="input" placeholder="Any special requirements or notes..."></textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- Invoice Preview -->
-        <div class="content-box" id="invoiceSection" style="display: none;">
-          <div class="invoice-preview">
-            <div class="invoice-header">
-              <h2>INVOICE PREVIEW</h2>
-              <div class="invoice-info">
-                <div><strong>Invoice No:</strong> <span id="invoiceNumber">NGCS-2026-001</span></div>
-                <div><strong>Date:</strong> <span id="invoiceDate"></span></div>
-                <div>
-                  <strong>Client: </strong>
-                  <span class="invoice-client-edit">
-                    <input type="text" id="clientNameInput" value="Valued Client" placeholder="Enter client name" oninput="syncClientName()" />
-                    <span class="edit-icon">✏️</span>
-                  </span>
-                </div>
-                <div style="margin-top:0.35rem;">
-                  <strong>Email: </strong>
-                  <span class="invoice-client-edit">
-                    <input type="email" id="invoiceEmailInput" placeholder="your@email.com" oninput="syncInvoiceEmail()" />
-                    <span class="edit-icon">✏️</span>
-                  </span>
-                </div>
-                <div style="margin-top:0.35rem;">
-                  <strong>WhatsApp: </strong>
-                  <span class="invoice-client-edit">
-                    <span class="phone-input-group">
-                      <select id="invoicePhoneCode" class="phone-country-select" oninput="syncInvoicePhone()">
-                        <!-- populated by JS -->
-                      </select>
-                      <input type="tel" id="invoicePhoneNumber" class="phone-number-input" placeholder="9XX XXX XXXX" oninput="syncInvoicePhone()" maxlength="15" />
-                    </span>
-                    <span class="whatsapp-badge">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                      WhatsApp
-                    </span>
-                  </span>
-                </div>
-                <div><strong>Issued By:</strong> Nex Genix Creative Solutions</div>
-              </div>
-            </div>
-
-            <div class="invoice-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Description</th>
-                    <th style="text-align: right;">Amount (PHP)</th>
-                  </tr>
-                </thead>
-                <tbody id="invoiceItems">
-                  <!-- Dynamic invoice items -->
-                </tbody>
-              </table>
-            </div>
-
-            <div class="invoice-total">
-              <div class="total-label">TOTAL AMOUNT DUE</div>
-              <div class="total-amount" id="totalAmount">₱0.00</div>
-            </div>
-
-            <!-- Order Success Banner (hidden until order placed) -->
-            <div id="orderSuccessBanner" style="display:none; margin-bottom:1rem; padding:1.1rem 1.25rem; background:rgba(57,255,20,0.10); border:1.5px solid var(--neon); border-radius:var(--radius); text-align:center;">
-              <div style="font-family:'Orbitron',sans-serif; font-size:1rem; color:var(--neon); letter-spacing:0.06em; margin-bottom:0.4rem;">✅ ORDER PLACED!</div>
-              <div style="font-size:0.88rem; color:var(--text-muted);">Your order has been received. A confirmation email is on its way. Nex Genix will reach out shortly to process your payment.</div>
-            </div>
-
-            <div class="button-group">
-              <button class="button" id="placeOrderBtn" onclick="submitOrder(event)">🛒 Place Order</button>
-              <button class="button button-secondary" onclick="downloadInvoice()">⬇️ Download Invoice</button>
-            </div>
-            <div style="margin-top:0.75rem; text-align:center;">
-              <button class="button button-secondary" id="newPurchaseBtn" style="display:none; width:100%; background:rgba(232,212,77,0.12); border-color:var(--yellow); color:var(--yellow);" onclick="startNewPurchase()">✨ Make Another Purchase</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- My Orders Section -->
-      <div id="my-orders" class="content-section">
-        <h1 class="welcome-title">My Orders</h1>
-        <div class="content-box">
-          <div id="ordersContent">
-            <p style="color: var(--text-muted); text-align: center; padding: 2.5rem; font-size: 0.95rem; letter-spacing: 0.02em;">No orders yet. Start by ordering a service!</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Settings Section -->
-      <div id="settings" class="content-section">
-        <h1 class="welcome-title">Account Settings</h1>
-        <div class="content-box">
-          <div class="form-group">
-            <label for="displayNameInput">Display Name</label>
-            <input id="displayNameInput" class="input" placeholder="Display Name" type="text">
-          </div>
-          <div class="form-group">
-            <label for="usernameInput">Username</label>
-            <input id="usernameInput" class="input" placeholder="Username" type="text">
-          </div>
-          <div class="form-group">
-            <label for="phoneNumber">WhatsApp Number <span class="whatsapp-badge" style="font-size:0.68rem;vertical-align:middle;"><svg width="10" height="10" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</span></label>
-            <div class="settings-phone-group">
-              <select id="phoneCode" class="input" style="flex:0 0 170px;padding:0.6rem 0.5rem;font-size:0.83rem;">
-                <!-- populated by JS -->
-              </select>
-              <input id="phoneNumber" class="input" placeholder="9XX XXX XXXX" type="tel" maxlength="15" style="flex:1;">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="emailInput">Email Address</label>
-            <input id="emailInput" class="input" placeholder="your@email.com" type="email" oninput="syncInvoiceEmailFromSettings()">
-          </div>
-
-          <hr class="divider">
-
-          <div class="form-group">
-            <label for="passwordInput">New Password</label>
-            <input id="passwordInput" class="input" type="password" placeholder="New Password">
-          </div>
-          <button class="button" onclick="updatePassword()">Update Password</button>
-
-          <div style="margin-top: 1rem;">
-            <button class="button button-secondary" onclick="saveProfile()">Save Profile</button>
-          </div>
-        </div>
-      </div>
     </main>
-  </div>
+</section>
 
-  <!-- =================== BOTTOM NAVIGATION BAR =================== -->
-  <nav class="bottom-nav">
-    <button class="bottom-nav-item active" onclick="showSection('order'); setBottomActive(this)" title="Order">
-      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-      <span>Home</span>
-    </button>
+<!-- Welcome Section (Mobile) -->
+<section id="welcome-section-mobile">
+    
+    <img src="assets/images/banner-mobile.png" alt="banner" class="responsive-banner">
+<h2 class="responsive-slogan">Your Vision, Beautifully Engineered.</h2>
+    <h5 class="responsive-description">App Design | Web Design | Web Development | UI/UX Design</h5>
+    <!-- ONLY Get Started button for MOBILE view -->
+    <div class="hero-buttons-mobile">
+        <a href="#contact" class="btn-get-started">Get Started</a>
+    </div>
+</section>
 
-    <button class="bottom-nav-item" onclick="showSection('order'); selectOrderType('new'); setBottomActive(this)" title="Services">
-      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
-      </svg>
-      <span>Services</span>
-    </button>
-
-    <button class="bottom-nav-item bottom-nav-plus" onclick="showSection('order'); setBottomActive(this)" title="New Order">
-      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-      </svg>
-    </button>
-
-    <button class="bottom-nav-item" onclick="showSection('my-orders'); setBottomActive(this)" title="My Orders">
-      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
-      </svg>
-      <span>Orders</span>
-    </button>
-
-    <button class="bottom-nav-item" onclick="showSection('settings'); setBottomActive(this)" title="Profile">
-      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
-      </svg>
-      <span>Profile</span>
-    </button>
-  </nav>
-
-  <!-- =================== AI CHAT WIDGET =================== -->
-
-  <script>
-    // =================== EMAILJS CONFIGURATION ===================
-    // Initialize EmailJS with your Public Key
-    // IMPORTANT: Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS Public Key
-    // Get it from: https://dashboard.emailjs.com/admin/account
-    (function() {
-      emailjs.init({
-        publicKey: 'coUeJ01I7BiMQ-ABN',
-        blockHeadless: false,
-      });
-    })();
-
-    // EmailJS Service Configuration
-    const EMAILJS_CONFIG = {
-      serviceID: 'service_ju84tjo',           // Gmail service ID
-      adminTemplateID: 'template_7z9si7j',    // "Order Confirmation" template → notifies NexGenix
-      clientTemplateID: 'template_7z9si7j',   // "Order Confirmation" template → confirms to client
-      publicKey: 'coUeJ01I7BiMQ-ABN'          // Public key
-    };
-
-    // =================== CURRENCY CONVERSION ===================
-    let currentCurrency = 'USD';
-    const conversionRates = {
-      'USD': 1,           // US Dollar
-      'PHP': 56.50,       // Philippine Peso
-      'EUR': 0.92,        // Euro (EU incl. Italy)
-      'GBP': 0.79,        // British Pound
-      'JPY': 149.50,      // Japanese Yen
-      'AUD': 1.52,        // Australian Dollar
-      'CAD': 1.39,        // Canadian Dollar
-      'SGD': 1.34,        // Singapore Dollar
-      'INR': 83.20,       // Indian Rupee
-      'CNY': 7.24,        // Chinese Yuan
-      'PLN': 3.98,        // Polish Złoty
-      'MXN': 17.15,       // Mexican Peso
-      'BRL': 4.97,        // Brazilian Real
-      'KRW': 1325.00,     // South Korean Won
-      'CHF': 0.89,        // Swiss Franc
-      'AED': 3.67,        // UAE Dirham
-      'SAR': 3.75         // Saudi Riyal
-    };
-
-    const currencySymbols = {
-      'USD': '$',
-      'PHP': '₱',
-      'EUR': '€',
-      'GBP': '£',
-      'JPY': '¥',
-      'AUD': 'A$',
-      'CAD': 'C$',
-      'SGD': 'S$',
-      'INR': '₹',
-      'CNY': '¥',
-      'PLN': 'zł',
-      'MXN': 'MX$',
-      'BRL': 'R$',
-      'KRW': '₩',
-      'CHF': 'Fr',
-      'AED': 'د.إ',
-      'SAR': '﷼'
-    };
-
-    const currencyNames = {
-      'USD': 'US Dollar', 'PHP': 'Philippine Peso', 'EUR': 'Euro (Italy/EU)',
-      'GBP': 'British Pound', 'JPY': 'Japanese Yen', 'AUD': 'Australian Dollar',
-      'CAD': 'Canadian Dollar', 'SGD': 'Singapore Dollar', 'INR': 'Indian Rupee',
-      'CNY': 'Chinese Yuan', 'PLN': 'Polish Złoty', 'MXN': 'Mexican Peso',
-      'BRL': 'Brazilian Real', 'KRW': 'South Korean Won', 'CHF': 'Swiss Franc',
-      'AED': 'UAE Dirham', 'SAR': 'Saudi Riyal'
-    };
-
-    const currencyFlags = {
-      'USD': '💵', 'PHP': '🇵🇭', 'EUR': '🇪🇺', 'GBP': '🇬🇧', 'JPY': '🇯🇵',
-      'AUD': '🇦🇺', 'CAD': '🇨🇦', 'SGD': '🇸🇬', 'INR': '🇮🇳', 'CNY': '🇨🇳',
-      'PLN': '🇵🇱', 'MXN': '🇲🇽', 'BRL': '🇧🇷', 'KRW': '🇰🇷', 'CHF': '🇨🇭',
-      'AED': '🇦🇪', 'SAR': '🇸🇦'
-    };
-
-    function formatPrice(usdAmount) {
-      const converted = usdAmount * conversionRates[currentCurrency];
-      const symbol = currencySymbols[currentCurrency];
-
-      // Format with proper decimal places
-      if (['JPY', 'KRW', 'INR'].includes(currentCurrency)) {
-        return symbol + Math.round(converted).toLocaleString();
-      }
-      return symbol + converted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
-
-    function convertPHPToUSD(phpAmount) {
-      // All prices in servicePackages are in PHP, convert to USD as base
-      return phpAmount / 56.50;
-    }
-
-    function changeCurrency(currency) {
-      currentCurrency = currency;
-
-      // Sync dropdown
-      const dropdown = document.getElementById('currencyDropdown');
-      if (dropdown) dropdown.value = currency;
-
-      // Reload services to update all prices
-      loadServices();
-
-      // Update invoice if visible
-      if (selectedPackage) {
-        updateInvoice();
-      }
-    }
-
-    function changeCurrencyFromDropdown(select) {
-      changeCurrency(select.value);
-    }
-
-    function changeCurrencyStandalone(btn, currency) {
-      changeCurrency(currency);
-    }
-
-    // =================== SERVICE PACKAGES DATA (CATEGORIZED) ===================
-    const servicePackages = {
-      // CATEGORY 1: MULTI-PAGE WITH MAINTENANCE
-      maintenance: {
-        basic: {
-          name: 'BASIC - Starter Business',
-          price: 18000,
-          basePages: 5,
-          minPages: 3,
-          maxPages: 5,
-          pricePerPage: 1500,
-          features: [
-            '3-5 page website',
-            'Mobile responsive',
-            'Free domain (1 year)',
-            'Hosting (1 year)',
-            '1 professional email'
-          ],
-          excluded: [],
-          bestFor: 'sari-sari, cafés, freelancers, startups'
-        },
-        pro: {
-          name: 'PRO - Growing Business',
-          price: 26000,
-          basePages: 8,
-          minPages: 5,
-          maxPages: 8,
-          pricePerPage: 2000,
-          features: [
-            '5-8 pages',
-            'SQL database',
-            'Contact forms',
-            'Speed optimization',
-            'Website Manager (1 month FREE)'
-          ],
-          excluded: [],
-          bestFor: 'clinics, restaurants, agencies'
-        },
-        premium: {
-          name: 'PREMIUM - Established/Corporate',
-          price: 52500,
-          basePages: 12,
-          minPages: 8,
-          maxPages: 12,
-          pricePerPage: 3500,
-          features: [
-            'Custom UI/UX',
-            'Advanced SQL & admin panel',
-            'Multiple emails',
-            'Priority support',
-            'Dedicated Website Manager'
-          ],
-          excluded: [],
-          bestFor: 'corporations, franchises, e-commerce'
-        }
-      },
-
-      // CATEGORY 2: TWO-PAGE WEBSITES
-      onePage: {
-        starter: {
-          name: 'TWO-PAGE Starter',
-          price: 6500,
-          basePages: 2,
-          minPages: 2,
-          maxPages: 2,
-          pricePerPage: 1000,
-          features: [
-            '2 pages',
-            'Mobile responsive',
-            'Basic UI design',
-            'Contact form (email notification)',
-            'Hosted online',
-            'FREE domain (1 year)',
-            'Hosting (1 year)'
-          ],
-          excluded: ['No maintenance', 'No business email'],
-          bestFor: 'freelancers, home-based sellers, promos'
-        },
-        pro: {
-          name: 'TWO-PAGE Pro',
-          price: 9500,
-          basePages: 2,
-          minPages: 2,
-          maxPages: 2,
-          pricePerPage: 1500,
-          features: [
-            'Everything in Starter',
-            'Custom layout & branding',
-            'SEO-ready structure',
-            'Faster loading optimization',
-            'Priority setup'
-          ],
-          excluded: ['No maintenance', 'No business email'],
-          bestFor: 'cafés, startups, marketing campaigns'
-        },
-        premium: {
-          name: 'TWO-PAGE Premium',
-          price: 14000,
-          basePages: 2,
-          minPages: 2,
-          maxPages: 2,
-          pricePerPage: 2000,
-          features: [
-            'Custom-designed landing page',
-            'Conversion-focused layout',
-            'Call-to-action sections',
-            'Google Map integration',
-            'Analytics setup'
-          ],
-          excluded: ['No maintenance', 'No business email'],
-          bestFor: 'product launches, agencies, corporate promos'
-        }
-      },
-
-      // CATEGORY 3: MULTI-PAGE WITHOUT MAINTENANCE
-      noMaintenance: {
-        basic: {
-          name: 'MULTI-PAGE Basic',
-          price: 12000,
-          basePages: 4,
-          minPages: 3,
-          maxPages: 4,
-          pricePerPage: 1200,
-          features: [
-            '3-4 pages',
-            'Mobile responsive',
-            'FREE domain (1 year)',
-            'Hosting (1 year)',
-            'Contact form'
-          ],
-          excluded: ['No maintenance', 'No business email', 'No updates after turnover'],
-          bestFor: 'small shops, sari-sari, service providers'
-        },
-        standard: {
-          name: 'MULTI-PAGE Standard',
-          price: 17000,
-          basePages: 7,
-          minPages: 5,
-          maxPages: 7,
-          pricePerPage: 1700,
-          features: [
-            '5-7 pages',
-            'Improved UI design',
-            'Speed optimization',
-            'FREE domain (1 year)',
-            'Hosting (1 year)'
-          ],
-          excluded: ['No maintenance', 'No business email'],
-          bestFor: 'restaurants, clinics, schools'
-        },
-        advanced: {
-          name: 'MULTI-PAGE Advanced',
-          price: 25000,
-          basePages: 12,
-          minPages: 8,
-          maxPages: 12,
-          pricePerPage: 2500,
-          features: [
-            '8-12 pages',
-            'Custom layout',
-            'SQL database (if needed)',
-            'FREE domain (1 year)',
-            'Hosting (1 year)'
-          ],
-          excluded: ['No maintenance', 'No business email'],
-          bestFor: 'large local businesses, organizations'
-        }
-      },
-
-      // CATEGORY 4: WEBSITE MANAGER SERVICES
-      manager: {
-        monthly: {
-          name: 'Website Manager (Monthly)',
-          price: 800,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Content updates (text/images)',
-            'Minor design changes',
-            'Plugin & security checks',
-            'Backup monitoring',
-            'Basic performance checks',
-            'Startup-friendly pricing'
-          ],
-          excluded: [],
-          bestFor: 'businesses wanting flexible monthly support'
-        },
-        annual: {
-          name: 'Website Manager (Annual)',
-          price: 8000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'All monthly features',
-            '2 months FREE',
-            'Priority support',
-            'Discounted rate',
-            'Better value for long-term'
-          ],
-          excluded: [],
-          bestFor: 'businesses committed to ongoing maintenance'
-        }
-      },
-
-      // CATEGORY 5: ANNUAL RENEWAL
-      renewal: {
-        standard: {
-          name: 'Annual Website Renewal',
-          price: 20000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Hosting Renewal: ₱1,800',
-            'Domain Renewal: ₱900',
-            'Google Workspace Email Renewal (1 user): ₱6,800',
-            'Website Manager Service (Annual): ₱8,000',
-            'Technical Support & Vendor Handling Fee: ₱2,500'
-          ],
-          excluded: [],
-          bestFor: 'existing clients renewing annual services'
-        }
-      },
-
-      // CATEGORY 6: APP DESIGN
-      appDesign: {
-        starter: {
-          name: 'APP DESIGN - Starter',
-          price: 8000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Up to 8 screens',
-            'iOS or Android',
-            'Static Figma mockups',
-            'Basic UI design',
-            'Mobile-first layout'
-          ],
-          excluded: ['No prototype', 'No branding'],
-          bestFor: 'small apps, MVPs, simple utilities'
-        },
-        pro: {
-          name: 'APP DESIGN - Pro',
-          price: 18000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Up to 20 screens',
-            'iOS & Android',
-            'Clickable prototype',
-            'Custom branding & icon',
-            'Onboarding screens'
-          ],
-          excluded: [],
-          bestFor: 'startups, e-commerce apps, service apps'
-        },
-        premium: {
-          name: 'APP DESIGN - Premium',
-          price: 35000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Unlimited screens',
-            'Cross-platform design',
-            'Animated prototype',
-            'Full design system',
-            'Dark & light mode',
-            'Developer handoff'
-          ],
-          excluded: [],
-          bestFor: 'funded startups, enterprise apps, SaaS'
-        }
-      },
-
-      // CATEGORY 7: UI/UX DESIGN
-      uiuxDesign: {
-        wireframe: {
-          name: 'UI/UX - Wireframes',
-          price: 5000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Up to 10 screens',
-            'Low to mid-fidelity',
-            'User flow diagrams',
-            'Figma deliverables',
-            'Revision rounds included'
-          ],
-          excluded: ['No visual design', 'No prototype'],
-          bestFor: 'early-stage planning, concept validation'
-        },
-        prototype: {
-          name: 'UI/UX - Full Prototype',
-          price: 14000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Up to 25 screens',
-            'High-fidelity design',
-            'Clickable prototype',
-            'User journey mapping',
-            'Information architecture'
-          ],
-          excluded: [],
-          bestFor: 'investor demos, usability testing, pitches'
-        },
-        system: {
-          name: 'UI/UX - Design System',
-          price: 28000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Complete component library',
-            'Design tokens & variables',
-            'Accessibility audit (WCAG)',
-            'Developer handoff specs',
-            'Documentation included'
-          ],
-          excluded: [],
-          bestFor: 'product teams, SaaS platforms, enterprises'
-        }
-      }
-    };
-
-    // =================== FLOATING CODE BACKGROUND ===================
-    const codeSnippets = [
-      'const nexgenix = () => {',
-      'function createSolution() {',
-      'import { Innovation } from "future"',
-      '<div className="digital">',
-      'async function buildDreams() {',
-      'export default Excellence;',
-      'return <Success />;',
-      'const vision = await design();',
-      'npm install creativity',
-      'git commit -m "launch"',
-      'SELECT * FROM solutions;',
-      'CREATE TABLE success;',
-      '{ transform: "ideas" }',
-      '.future { display: flex; }',
-      'onClick={() => innovate()}',
-      'useState(creativity);',
-      'useEffect(() => grow());',
-      'class Digital extends Tech {',
-      'interface Vision { }',
-      'type Success = Promise<Growth>;'
-    ];
-
-    function createFloatingCodeBackground() {
-      const container = document.getElementById('floatingCodeContainer');
-      for (let i = 0; i < 15; i++) {
-        const codeLine = document.createElement('div');
-        codeLine.className = 'code-line';
-        const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-        codeLine.textContent = randomSnippet;
-        const yPosition = 5 + (i * 6);
-        const duration = 15 + Math.random() * 10;
-        const delay = Math.random() * 20;
-        codeLine.style.top = `${yPosition}%`;
-        codeLine.style.animationDuration = `${duration}s`;
-        codeLine.style.animationDelay = `${delay}s`;
-        container.appendChild(codeLine);
-      }
-    }
-
-    // =================== DATE TIME UPDATE ===================
-    function updateDateTime() {
-      const now = new Date();
-      const options = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      };
-      document.getElementById('datetime').textContent = now.toLocaleDateString('en-US', options);
-    }
-
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
-
-    // =================== SERVICE TYPE FILTER ===================
-    let activeServiceFilter = 'all';
-
-    function filterByServiceType(type, btn) {
-      activeServiceFilter = type;
-
-      // Update tab active states
-      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-
-      // Show/hide package categories based on data-service-types attribute
-      document.querySelectorAll('#newWebsitePackages .package-category').forEach(cat => {
-        const types = (cat.dataset.serviceTypes || '').split(' ');
-        if (type === 'all' || types.includes(type)) {
-          cat.classList.remove('hidden');
-        } else {
-          cat.classList.add('hidden');
-        }
-      });
-
-      // Reset any selected package when filter changes
-      if (selectedPackage) {
-        selectedPackage = null;
-        selectedCategory = null;
-        document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
-        document.getElementById('customizationPanel').style.display = 'none';
-        document.getElementById('invoiceSection').style.display = 'none';
-      }
-
-      // Pre-set activeServiceType to match the filter tab so when a card is clicked it's consistent
-      const serviceTypeMap = {
-        'app-design': 'app-design',
-        'web-design': 'web-design',
-        'web-development': 'web-development',
-        'ui-ux-design': 'ui-ux-design'
-      };
-      if (type !== 'all' && serviceTypeMap[type]) {
-        activeServiceType = serviceTypeMap[type];
-      } else {
-        activeServiceType = '';
-      }
-    }
-
-    // =================== ORDER TYPE SELECTION ===================
-    let currentOrderType = 'new';
-
-    function selectOrderType(type) {
-      currentOrderType = type;
-
-      // Update button states
-      document.getElementById('newWebsiteBtn').classList.toggle('active', type === 'new');
-      document.getElementById('renewalBtn').classList.toggle('active', type === 'renewal');
-
-      // Show/hide package sections
-      document.getElementById('newWebsitePackages').style.display = type === 'new' ? 'block' : 'none';
-      document.getElementById('renewalPackages').style.display = type === 'renewal' ? 'block' : 'none';
-      document.getElementById('serviceFilterBar').style.display = type === 'new' ? 'flex' : 'none';
-
-      // Hide customization and invoice
-      document.getElementById('customizationPanel').style.display = 'none';
-      document.getElementById('invoiceSection').style.display = 'none';
-
-      // Clear selection
-      selectedPackage = null;
-      selectedCategory = null;
-      document.querySelectorAll('.service-card').forEach(card => {
-        card.classList.remove('selected');
-      });
-    }
-
-    // =================== NAVIGATION ===================
-    function showSection(sectionId) {
-      const sections = document.querySelectorAll('.content-section');
-      sections.forEach(section => {
-        section.classList.remove('active');
-      });
-
-      const menuItems = document.querySelectorAll('.sidebar-menu li');
-      menuItems.forEach(item => {
-        item.classList.remove('active');
-      });
-
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.classList.add('active');
-      }
-
-      event.target.classList.add('active');
-
-      // Close sidebar on mobile after selection
-      if (window.innerWidth <= 768) {
-        toggleSidebar();
-      }
-    }
-
-    function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('active');
-      document.getElementById('sidebarOverlay').classList.toggle('active');
-    }
-
-    // =================== LOAD SERVICES BY CATEGORY ===================
-    function loadServices() {
-      // Load maintenance packages
-      loadServiceCategory('serviceGridMaintenance', servicePackages.maintenance, 'maintenance');
-
-      // Load one-page packages
-      loadServiceCategory('serviceGridOnePage', servicePackages.onePage, 'onePage');
-
-      // Load no maintenance packages
-      loadServiceCategory('serviceGridNoMaintenance', servicePackages.noMaintenance, 'noMaintenance');
-
-      // Load website manager packages
-      loadServiceCategory('serviceGridManager', servicePackages.manager, 'manager');
-
-      // Load renewal packages
-      loadServiceCategory('serviceGridRenewal', servicePackages.renewal, 'renewal');
-
-      // Load app design packages
-      loadServiceCategory('serviceGridAppDesign', servicePackages.appDesign, 'appDesign');
-
-      // Load UI/UX packages
-      loadServiceCategory('serviceGridUiux', servicePackages.uiuxDesign, 'uiuxDesign');
-    }
-
-    function loadServiceCategory(gridId, packages, category) {
-      const grid = document.getElementById(gridId);
-      if (!grid) return;
-
-      grid.innerHTML = '';
-
-      for (const [key, pkg] of Object.entries(packages)) {
-        const card = document.createElement('div');
-        card.className = 'service-card';
-        card.setAttribute('data-category', category);
-        card.setAttribute('data-key', key);
-
-        const featuresHTML = pkg.features.map(f => `<li>${f}</li>`).join('');
-        const excludedHTML = pkg.excluded.map(f => `<li class="excluded">${f}</li>`).join('');
-
-        // Convert prices from PHP (stored) to current currency
-        const priceUSD = convertPHPToUSD(pkg.price);
-        const pricePerPageUSD = convertPHPToUSD(pkg.pricePerPage);
-
-        card.innerHTML = `
-          <h3>${pkg.name}</h3>
-          <div class="price">${formatPrice(priceUSD)}</div>
-          ${pkg.basePages > 0 ? `
-            <p class="price-info">
-              ${pkg.basePages} pages included<br>
-              ${formatPrice(pricePerPageUSD)} per additional page
+<!-- Products and Services Section -->
+<section class="main-section categories-section" id="services">
+    <div class="categories-container">
+        <!-- Section header -->
+        <div class="section-header">
+            <h2 class="section-title">
+                Products & <span class="gradient-text">Services</span>
+            </h2>
+            <p class="section-subtitle">
+                Comprehensive digital solutions tailored to transform your vision into reality
             </p>
-          ` : ''}
-          <ul>
-            ${featuresHTML}
-            ${excludedHTML}
-          </ul>
-          <p class="best-for">
-            💡 Best for: ${pkg.bestFor}
-          </p>
-          <button class="select-btn" onclick="selectService('${category}', '${key}')">Select Package</button>
-        `;
+        </div>
 
-        grid.appendChild(card);
-      }
-    }
+        <!-- Categories grid -->
+        <div class="categories-grid">
+            <!-- Digital Design Card -->
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3 class="category-title">Digital Design and Visual Communication Services</h3>
+                <p class="category-description">
+                    Flexible pricing based on client needs. Visually appealing designs. Meaningful and thoughtful creations. Competitive and affordable rates.
+                </p>
+                <a href="https://nexgenixcreativesolutions.github.io/digital-design-and-visual-communication-services" class="category-link">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <!-- Writing Services Card -->
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-pen-fancy"></i>
+                </div>
+                <h3 class="category-title">Writing Services</h3>
+                <p class="category-description">
+                    Professional and polished. Versatile content. Industry-specific expertise. Error-free and engaging.
+                </p>
+                <a href="https://nexgenixcreativesolutions.github.io/writing-services" class="category-link">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <!-- Education and Training Card -->
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="category-title">Education and Training</h3>
+                <p class="category-description">
+                    Flexible learning. Comprehensive curriculum. Practical and actionable. Includes a certificate with a QR code for easy verification.
+                </p>
+                <a href="https://nexgenixbusinessschool.github.io" class="category-link">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
-    let selectedPackage = null;
-    let selectedCategory = null;
-    let prevInvoiceKeys = new Set();
-    let activeServiceType = '';
+<!-- Reviews Section -->
+<section class="main-section testimonials-section" id="reviews">
+    <div class="testimonials-container">
+        <!-- Section header -->
+        <div class="testimonials-header">
+            <h2 class="testimonials-title">
+                Client <span class="gradient-text">Reviews</span>
+            </h2>
+            <p class="testimonials-subtitle">
+                Hear what our valued clients have to say about their experience
+            </p>
+        </div>
 
-    // Business questionnaire tag state
-    const bizSelections = { type: [], goal: [], stage: [] };
+        <!-- Testimonials grid -->
+        <div class="testimonials-grid" id="testimonials-grid">
+            <!-- Cards will be inserted here by JavaScript -->
+        </div>
+    </div>
+</section>
 
-    function toggleBizTag(el, group, value) {
-      const container = el.closest('.biz-tags');
-      const isSingle = container.dataset.single === 'true';
+<!-- Counter Section -->
+<section class="counter-section">
+    <div class="counter-container">
+        <div class="counter-item">
+            <div class="counter" data-target="48200">0</div>
+            <div class="label">Projects Completed</div>
+        </div>
+        <div class="counter-item">
+            <div class="counter" data-target="13800">0</div>
+            <div class="label">Clients Served</div>
+        </div>
+        <div class="counter-item">
+            <div class="counter" data-target="22500">0</div>
+            <div class="label">Certificates Granted</div>
+        </div>
+        <div class="counter-item">
+            <div class="counter" data-target="9100">0</div>
+            <div class="label">Books Sold</div>
+        </div>
+    </div>
+</section>
 
-      if (isSingle) {
-        // Deselect all siblings first
-        container.querySelectorAll('.biz-tag').forEach(t => t.classList.remove('selected'));
-        bizSelections[group] = [value];
-        el.classList.add('selected');
-      } else {
-        if (el.classList.contains('selected')) {
-          el.classList.remove('selected');
-          bizSelections[group] = bizSelections[group].filter(v => v !== value);
-        } else {
-          el.classList.add('selected');
-          bizSelections[group].push(value);
-        }
-      }
-      updateInvoice();
-    }
+<!-- Contact Section with Formspree Form -->
+<section class="main-section" id="contact">
+    <article>
+        <h2>Contact</h2>
+        <p class="contact-subtitle">Get in touch with us. We'd love to hear from you!</p>
+        
+        <!-- Contact Form with YOUR Formspree Link -->
+        <form action="https://formspree.io/f/maqdqdqw" method="POST" class="contact-form">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your full name">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+            </div>
+            
+            <div class="form-group">
+                <label for="service">Service Interest *</label>
+                <select id="service" name="service" required>
+                    <option value="">Select a service</option>
+                    <option value="Digital Design">Digital Design and Visual Communication</option>
+                    <option value="Writing Services">Writing Services</option>
+                    <option value="Education">Education and Training</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" rows="5" required placeholder="Tell us about your project or inquiry"></textarea>
+            </div>
+            
+            <button type="submit" class="btn-submit">Send Message</button>
+        </form>
+        
+        <div class="contact-divider">
+            <span>OR CONNECT WITH US</span>
+        </div>
+        
+        <div class="contact-buttons">
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
+                <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
+            </a>
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
+                <button class="contact-btn"><i class="fab fa-instagram"></i></button>
+            </a>
+            <!-- Reddit -->
+            <a href="https://www.reddit.com/user/nexgenix" target="_blank">
+                <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
+            </a>
+            <!-- Gmail -->
+            <a href="mailto:nexgenixcreativesolutions@gmail.com">
+                <button class="contact-btn"><i class="fas fa-envelope"></i></button>
+            </a>
+            <!-- WhatsApp -->
+            <a href="https://wa.me/+639171063504" target="_blank">
+                <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
+            </a>
+        </div>
+    </article>
+</section>
 
-    // Toggle feature checkboxes (multi-select card toggles)
-    function toggleFeature(toggleEl, checkboxId) {
-      const cb = document.getElementById(checkboxId);
-      if (!cb) return;
-      cb.checked = !cb.checked;
-      toggleEl.classList.toggle('selected', cb.checked);
-      updateInvoice();
-    }
+<!-- Footer Section -->
+<footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
 
-    // =================== SMART PAGE COUNTER ===================
-    function initPageCounter(inputId) {
-      if (!selectedPackage || !selectedCategory) return;
-      const pkg = servicePackages[selectedCategory][selectedPackage];
+<!-- External JavaScript -->
+<script src="script.js"></script>
 
-      const min = pkg.minPages || 1;
-      const max = pkg.maxPages || 999;
-      const fixed = (min === max);
-      const input = document.getElementById(inputId);
-      const hint  = document.getElementById(inputId + 'Hint');
-      const wrap  = document.getElementById(inputId + 'Counter');
-      const btnMinus = document.getElementById(inputId + 'Minus');
-      const btnPlus  = document.getElementById(inputId + 'Plus');
+<!-- Counter Animation Script -->
+<script>
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200; // Adjust speed of counting
 
-      if (!input) return;
+    const animateCounters = () => {
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText.replace(/,/g, '');
+                const increment = target / speed;
 
-      // Set value to minimum (or fixed value)
-      input.value = min;
-      input.min = min;
-
-      if (fixed) {
-        // Locked — two-page packages
-        if (btnMinus) btnMinus.disabled = true;
-        if (btnPlus)  btnPlus.disabled  = true;
-        if (hint) {
-          hint.textContent = `Fixed at ${min} page${min > 1 ? 's' : ''} — included in package`;
-          hint.className = 'page-counter-hint hint-fixed';
-        }
-        if (wrap) wrap.className = 'page-counter';
-      } else {
-        if (btnMinus) btnMinus.disabled = (min <= min); // starts at min so minus is disabled
-        if (btnPlus)  btnPlus.disabled  = false;
-        if (hint) {
-          hint.textContent = `${min}–${max} pages included • beyond ${max}: +₱${pkg.pricePerPage.toLocaleString()}/page`;
-          hint.className = 'page-counter-hint hint-included';
-        }
-        if (wrap) wrap.className = 'page-counter';
-      }
-
-      updateInvoice();
-    }
-
-    function adjustPages(inputId, delta) {
-      if (!selectedPackage || !selectedCategory) return;
-      const pkg = servicePackages[selectedCategory][selectedPackage];
-
-      const min = pkg.minPages || 1;
-      const max = pkg.maxPages || 999;
-      const input = document.getElementById(inputId);
-      const hint  = document.getElementById(inputId + 'Hint');
-      const wrap  = document.getElementById(inputId + 'Counter');
-      const btnMinus = document.getElementById(inputId + 'Minus');
-      const btnPlus  = document.getElementById(inputId + 'Plus');
-
-      if (!input) return;
-
-      let current = parseInt(input.value) || min;
-      current = Math.max(min, current + delta);  // never go below min
-
-      input.value = current;
-
-      // Update minus button state
-      if (btnMinus) btnMinus.disabled = (current <= min);
-
-      // Update hint and border colour
-      if (current < min) {
-        // shouldn't happen but safety
-        if (hint) { hint.textContent = `Minimum is ${min} pages`; hint.className = 'page-counter-hint hint-extra'; }
-        if (wrap) wrap.className = 'page-counter';
-      } else if (current <= max) {
-        const remaining = max - current;
-        if (remaining === 0) {
-          if (hint) { hint.textContent = `At package maximum (${max} pages) — extra pages cost ₱${pkg.pricePerPage.toLocaleString()}/page`; hint.className = 'page-counter-hint hint-extra'; }
-          if (wrap) wrap.className = 'page-counter at-max';
-        } else {
-          if (hint) { hint.textContent = `${current} page${current>1?'s':''} • ${remaining} more included free`; hint.className = 'page-counter-hint hint-included'; }
-          if (wrap) wrap.className = 'page-counter';
-        }
-      } else {
-        const over = current - max;
-        const overCost = over * pkg.pricePerPage;
-        if (hint) { hint.textContent = `${over} extra page${over>1?'s':''} beyond package → +₱${overCost.toLocaleString()} added to invoice`; hint.className = 'page-counter-hint hint-overage'; }
-        if (wrap) wrap.className = 'page-counter over-max';
-      }
-
-      updateInvoice();
-    }
-
-    // Map category → service type label and icon
-    const categoryServiceMap = {
-      maintenance:    { type: 'web-development', label: '🌐 Web Development', badgeText: '🌐 WEB DEVELOPMENT' },
-      onePage:        { type: 'web-development', label: '🌐 Web Development', badgeText: '🌐 WEB DEVELOPMENT' },
-      noMaintenance:  { type: 'web-development', label: '🌐 Web Development', badgeText: '🌐 WEB DEVELOPMENT' },
-      appDesign:      { type: 'app-design',       label: '📱 App Design',      badgeText: '📱 APP DESIGN' },
-      uiuxDesign:     { type: 'ui-ux-design',     label: '🧩 UI/UX Design',    badgeText: '🧩 UI/UX DESIGN' },
-      manager:        { type: '',                 label: '🔧 Maintenance',     badgeText: '🔧 WEBSITE MANAGER' },
-      renewal:        { type: '',                 label: '📅 Renewal',         badgeText: '📅 ANNUAL RENEWAL' }
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment).toLocaleString();
+                    setTimeout(updateCount, 30);
+                } else {
+                    counter.innerText = target.toLocaleString();
+                }
+            };
+            updateCount();
+        });
     };
 
-    function selectService(category, packageKey) {
-      selectedCategory = category;
-      selectedPackage = packageKey;
-
-      // Update visual selection on cards
-      document.querySelectorAll('.service-card').forEach(card => card.classList.remove('selected'));
-      const selectedCard = document.querySelector(`[data-category="${category}"][data-key="${packageKey}"]`);
-      if (selectedCard) selectedCard.classList.add('selected');
-
-      // Determine and set the service type from the category
-      const mapping = categoryServiceMap[category] || { type: '', badgeText: '⚙️ Service Selected' };
-      activeServiceType = mapping.type;
-
-      // Update the badge
-      document.getElementById('serviceTypeBadge').textContent = mapping.badgeText;
-
-      // Show customization panel
-      document.getElementById('customizationPanel').style.display = 'block';
-      document.getElementById('invoiceSection').style.display = 'block';
-
-      // Hide all service-specific options, then show the right one
-      document.querySelectorAll('.service-type-options').forEach(el => el.style.display = 'none');
-
-      if (activeServiceType === 'app-design') {
-        document.getElementById('appDesignOptions').style.display = 'block';
-        document.getElementById('bizQuestionnaire').style.display = 'block';
-      } else if (activeServiceType === 'web-design') {
-        document.getElementById('webDesignOptions').style.display = 'block';
-        document.getElementById('bizQuestionnaire').style.display = 'block';
-        initPageCounter('numPages');
-      } else if (activeServiceType === 'web-development') {
-        document.getElementById('webDevOptions').style.display = 'block';
-        document.getElementById('bizQuestionnaire').style.display = 'block';
-        initPageCounter('numPagesdev');
-      } else if (activeServiceType === 'ui-ux-design') {
-        document.getElementById('uiuxOptions').style.display = 'block';
-        document.getElementById('bizQuestionnaire').style.display = 'block';
-      } else {
-        // manager / renewal — no biz questionnaire needed
-        document.getElementById('bizQuestionnaire').style.display = 'none';
-      }
-
-      // Always show project details
-      document.getElementById('projectDetailsSection').style.display = 'block';
-
-      // Reset invoice flash tracking
-      prevInvoiceKeys = new Set();
-
-      updateInvoice();
-      document.getElementById('customizationPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    // =================== EDITABLE CLIENT NAME ===================
-    function syncClientName() { /* input is the direct source of truth */ }
-
-    function syncInvoiceEmail() {
-      const val = document.getElementById('invoiceEmailInput').value;
-      const settingsEmail = document.getElementById('emailInput');
-      if (settingsEmail && !settingsEmail.dataset.userEdited) {
-        settingsEmail.value = val;
-      }
-    }
-
-    function syncInvoiceEmailFromSettings() {
-      const val = document.getElementById('emailInput').value;
-      const invoiceEmail = document.getElementById('invoiceEmailInput');
-      if (invoiceEmail) invoiceEmail.value = val;
-      document.getElementById('emailInput').dataset.userEdited = 'true';
-    }
-
-    function syncInvoicePhone() {
-      const code = document.getElementById('invoicePhoneCode').value;
-      const num = document.getElementById('invoicePhoneNumber').value;
-      const settingsCode = document.getElementById('phoneCode');
-      const settingsNum = document.getElementById('phoneNumber');
-      if (settingsCode) settingsCode.value = code;
-      if (settingsNum) settingsNum.value = num;
-    }
-
-    function syncSettingsPhoneToInvoice() {
-      const code = document.getElementById('phoneCode').value;
-      const num = document.getElementById('phoneNumber').value;
-      const invCode = document.getElementById('invoicePhoneCode');
-      const invNum = document.getElementById('invoicePhoneNumber');
-      if (invCode) invCode.value = code;
-      if (invNum) invNum.value = num;
-    }
-
-    function getFullWhatsApp() {
-      const code = document.getElementById('invoicePhoneCode')?.value || '';
-      const num = document.getElementById('invoicePhoneNumber')?.value || '';
-      return num ? `${code}${num.replace(/\s/g, '')}` : '';
-    }
-
-    // =================== COUNTRY PHONE CODES ===================
-    const PHONE_COUNTRIES = [
-      { code: '+1',    flag: '🇺🇸', name: 'US/Canada',       abbr: 'US' },
-      { code: '+44',   flag: '🇬🇧', name: 'United Kingdom',   abbr: 'GB' },
-      { code: '+63',   flag: '🇵🇭', name: 'Philippines',      abbr: 'PH' },
-      { code: '+39',   flag: '🇮🇹', name: 'Italy',            abbr: 'IT' },
-      { code: '+48',   flag: '🇵🇱', name: 'Poland',           abbr: 'PL' },
-      { code: '+61',   flag: '🇦🇺', name: 'Australia',        abbr: 'AU' },
-      { code: '+1',    flag: '🇨🇦', name: 'Canada',           abbr: 'CA' },
-      { code: '+65',   flag: '🇸🇬', name: 'Singapore',        abbr: 'SG' },
-      { code: '+91',   flag: '🇮🇳', name: 'India',            abbr: 'IN' },
-      { code: '+86',   flag: '🇨🇳', name: 'China',            abbr: 'CN' },
-      { code: '+81',   flag: '🇯🇵', name: 'Japan',            abbr: 'JP' },
-      { code: '+82',   flag: '🇰🇷', name: 'South Korea',      abbr: 'KR' },
-      { code: '+49',   flag: '🇩🇪', name: 'Germany',          abbr: 'DE' },
-      { code: '+33',   flag: '🇫🇷', name: 'France',           abbr: 'FR' },
-      { code: '+34',   flag: '🇪🇸', name: 'Spain',            abbr: 'ES' },
-      { code: '+31',   flag: '🇳🇱', name: 'Netherlands',      abbr: 'NL' },
-      { code: '+46',   flag: '🇸🇪', name: 'Sweden',           abbr: 'SE' },
-      { code: '+47',   flag: '🇳🇴', name: 'Norway',           abbr: 'NO' },
-      { code: '+45',   flag: '🇩🇰', name: 'Denmark',          abbr: 'DK' },
-      { code: '+358',  flag: '🇫🇮', name: 'Finland',          abbr: 'FI' },
-      { code: '+7',    flag: '🇷🇺', name: 'Russia',           abbr: 'RU' },
-      { code: '+55',   flag: '🇧🇷', name: 'Brazil',           abbr: 'BR' },
-      { code: '+52',   flag: '🇲🇽', name: 'Mexico',           abbr: 'MX' },
-      { code: '+54',   flag: '🇦🇷', name: 'Argentina',        abbr: 'AR' },
-      { code: '+56',   flag: '🇨🇱', name: 'Chile',            abbr: 'CL' },
-      { code: '+57',   flag: '🇨🇴', name: 'Colombia',         abbr: 'CO' },
-      { code: '+971',  flag: '🇦🇪', name: 'UAE',              abbr: 'AE' },
-      { code: '+966',  flag: '🇸🇦', name: 'Saudi Arabia',     abbr: 'SA' },
-      { code: '+20',   flag: '🇪🇬', name: 'Egypt',            abbr: 'EG' },
-      { code: '+27',   flag: '🇿🇦', name: 'South Africa',     abbr: 'ZA' },
-      { code: '+234',  flag: '🇳🇬', name: 'Nigeria',          abbr: 'NG' },
-      { code: '+254',  flag: '🇰🇪', name: 'Kenya',            abbr: 'KE' },
-      { code: '+62',   flag: '🇮🇩', name: 'Indonesia',        abbr: 'ID' },
-      { code: '+60',   flag: '🇲🇾', name: 'Malaysia',         abbr: 'MY' },
-      { code: '+66',   flag: '🇹🇭', name: 'Thailand',         abbr: 'TH' },
-      { code: '+84',   flag: '🇻🇳', name: 'Vietnam',          abbr: 'VN' },
-      { code: '+880',  flag: '🇧🇩', name: 'Bangladesh',       abbr: 'BD' },
-      { code: '+92',   flag: '🇵🇰', name: 'Pakistan',         abbr: 'PK' },
-      { code: '+94',   flag: '🇱🇰', name: 'Sri Lanka',        abbr: 'LK' },
-      { code: '+64',   flag: '🇳🇿', name: 'New Zealand',      abbr: 'NZ' },
-      { code: '+41',   flag: '🇨🇭', name: 'Switzerland',      abbr: 'CH' },
-      { code: '+43',   flag: '🇦🇹', name: 'Austria',          abbr: 'AT' },
-      { code: '+32',   flag: '🇧🇪', name: 'Belgium',          abbr: 'BE' },
-      { code: '+351',  flag: '🇵🇹', name: 'Portugal',         abbr: 'PT' },
-      { code: '+30',   flag: '🇬🇷', name: 'Greece',           abbr: 'GR' },
-      { code: '+380',  flag: '🇺🇦', name: 'Ukraine',          abbr: 'UA' },
-      { code: '+90',   flag: '🇹🇷', name: 'Turkey',           abbr: 'TR' },
-      { code: '+98',   flag: '🇮🇷', name: 'Iran',             abbr: 'IR' },
-      { code: '+972',  flag: '🇮🇱', name: 'Israel',           abbr: 'IL' },
-      { code: '+852',  flag: '🇭🇰', name: 'Hong Kong',        abbr: 'HK' },
-      { code: '+886',  flag: '🇹🇼', name: 'Taiwan',           abbr: 'TW' },
-    ];
-
-    function populatePhoneDropdowns() {
-      const selects = ['invoicePhoneCode', 'phoneCode'];
-      selects.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.innerHTML = PHONE_COUNTRIES.map(c =>
-          `<option value="${c.code}" data-abbr="${c.abbr}">${c.flag} ${c.abbr} ${c.code}</option>`
-        ).join('');
-        // default to PH
-        el.value = '+63';
-      });
-    }
-
-    // =================== SERVICE TYPE CHANGE (kept for filter-tab pre-setting) ===================
-    function onServiceTypeChange() {
-      updateInvoice();
-    }
-
-    // =================== INVOICE GENERATION ===================
-    function updateInvoice() {
-      if (!selectedPackage || !selectedCategory) return;
-
-      const pkg = servicePackages[selectedCategory][selectedPackage];
-      const serviceType = activeServiceType;
-
-      let total = pkg.price;
-      const items = [];
-
-      // Base package
-      items.push({
-        description: `${pkg.name}${pkg.basePages > 0 ? ` (${pkg.basePages} pages)` : ''}`,
-        amount: pkg.price
-      });
-
-      // Manager/Renewal: no further customization
-      if (selectedCategory === 'manager' || selectedCategory === 'renewal') {
-        renderInvoice(items, total);
-        return;
-      }
-
-      // Business profile notes (informational, ₱0)
-      if (bizSelections.type.length > 0) {
-        items.push({ description: `Business Type: ${bizSelections.type.join(', ')}`, amount: 0 });
-      }
-      if (bizSelections.goal.length > 0) {
-        items.push({ description: `Goals: ${bizSelections.goal.join(', ')}`, amount: 0 });
-      }
-      if (bizSelections.stage.length > 0) {
-        items.push({ description: `Stage: ${bizSelections.stage[0]}`, amount: 0 });
-      }
-
-      // ── APP DESIGN ──
-      if (serviceType === 'app-design') {
-        const platform = document.getElementById('appPlatform');
-        if (platform && platform.value) {
-          const extra = parseInt(platform.options[platform.selectedIndex].dataset.extra || 0);
-          items.push({ description: `Platform: ${platform.value}`, amount: extra });
-          total += extra;
-        }
-        const category = document.getElementById('appCategory');
-        if (category && category.value) items.push({ description: `App Category: ${category.value}`, amount: 0 });
-        const screens = document.getElementById('appScreens');
-        if (screens && screens.value) items.push({ description: `Screens: ${screens.value}`, amount: 0 });
-        const proto = document.getElementById('appPrototype');
-        if (proto && proto.value && proto.value !== 'none') {
-          const extra = parseInt(proto.options[proto.selectedIndex].dataset.extra || 0);
-          if (extra > 0) { items.push({ description: `Prototype: ${proto.value}`, amount: extra }); total += extra; }
-          else if (proto.value) { items.push({ description: `Prototype: ${proto.value}`, amount: 0 }); }
-        }
-        [['app-branding','Branding / Logo Integration'],['app-darkmode','Dark Mode Version'],['app-icon','App Icon Design'],['app-onboarding','Onboarding Screens'],['app-designsystem','Design System / Style Guide'],['app-splash','Splash Screen Design']].forEach(([id, label]) => {
-          const cb = document.getElementById(id);
-          if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                observer.disconnect();
+            }
         });
+    }, { threshold: 0.5 });
 
-      // ── WEB DESIGN ──
-      } else if (serviceType === 'web-design') {
-        const wdType = document.getElementById('wdType');
-        if (wdType && wdType.value) items.push({ description: `Website Type: ${wdType.value}`, amount: 0 });
+    // Wait for DOM to be ready and check if element exists
+    const counterContainer = document.querySelector('.counter-container');
+    if (counterContainer) {
+        observer.observe(counterContainer);
+    }
+</script>
 
-        const numPages = parseInt(document.getElementById('numPages').value) || pkg.minPages || pkg.basePages;
-        const maxPg = pkg.maxPages || pkg.basePages;
-        const minPg = pkg.minPages || 1;
+<!-- Toggle Menu Script -->
+<script>
+    function toggleMenu() {
+        document.querySelector('.nav-list').classList.toggle('active');
+        document.querySelector('.hamburger-menu').classList.toggle('open');
+    }
+</script>
 
-        if (numPages <= maxPg) {
-          items.push({ description: `Pages: ${numPages} of ${maxPg} included`, amount: 0 });
-        } else {
-          const extra = numPages - maxPg;
-          const extraCost = extra * pkg.pricePerPage;
-          items.push({ description: `Pages: ${maxPg} included in package`, amount: 0 });
-          items.push({ description: `Extra Pages: ${extra} × ₱${pkg.pricePerPage.toLocaleString()} (beyond package max)`, amount: extraCost });
-          total += extraCost;
-        }
-        [['wd-responsive','Mobile Responsive Design'],['wd-illustrations','Custom Illustrations'],['wd-logo','Logo Design'],['wd-motion','Animated / Motion Elements'],['wd-brandguide','Brand Style Guide'],['wd-darkmode','Dark Mode Design'],['wd-prototype','Clickable Prototype'],['wd-socialmedia','Social Media Kit']].forEach(([id, label]) => {
-          const cb = document.getElementById(id);
-          if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
-        });
+<!-- Floating Code Background Script -->
+<script>
+  // Floating Code Background
+  const codeSnippets = [
+    'const nexgenix = () => {',
+    'function createSolution() {',
+    'import { Innovation } from "future"',
+    '<div className="digital">',
+    'async function buildDreams() {',
+    'export default Excellence;',
+    'return <Success />;',
+    'const vision = await design();',
+    'npm install creativity',
+    'git commit -m "launch"',
+    'SELECT * FROM solutions;',
+    'CREATE TABLE success;',
+    '{ transform: "ideas" }',
+    '.future { display: flex; }',
+    'onClick={() => innovate()}',
+    'useState(creativity);',
+    'useEffect(() => grow());',
+    'class Digital extends Tech {',
+    'interface Vision { }',
+    'type Success = Promise<Growth>;',
+  ];
+  
+  function createFloatingCodeBackground() {
+    const container = document.createElement('div');
+    container.className = 'floating-code-container';
 
-      // ── WEB DEVELOPMENT ──
-      } else if (serviceType === 'web-development') {
-        const stack = document.getElementById('devStack');
-        if (stack && stack.value) {
-          const extra = parseInt(stack.options[stack.selectedIndex].dataset.extra || 0);
-          items.push({ description: `Tech Stack: ${stack.value}`, amount: extra });
-          total += extra;
-        }
-        const numPagesdev = parseInt(document.getElementById('numPagesdev').value) || pkg.minPages || pkg.basePages;
-        const maxPgDev = pkg.maxPages || pkg.basePages;
+    // Create 15 floating code lines
+    for (let i = 0; i < 15; i++) {
+      const codeLine = document.createElement('div');
+      codeLine.className = 'code-line';
 
-        if (numPagesdev <= maxPgDev) {
-          items.push({ description: `Pages: ${numPagesdev} of ${maxPgDev} included`, amount: 0 });
-        } else {
-          const extra = numPagesdev - maxPgDev;
-          const extraCost = extra * pkg.pricePerPage;
-          items.push({ description: `Pages: ${maxPgDev} included in package`, amount: 0 });
-          items.push({ description: `Extra Pages: ${extra} × ₱${pkg.pricePerPage.toLocaleString()} (beyond package max)`, amount: extraCost });
-          total += extraCost;
-        }
-        const maint = document.getElementById('devMaintenance');
-        if (maint && maint.value && maint.value !== 'none') {
-          const extra = parseInt(maint.options[maint.selectedIndex].dataset.extra || 0);
-          items.push({ description: `Maintenance Plan: ${maint.value}`, amount: extra });
-          total += extra;
-        }
-        [['dev-ecommerce','E-Commerce / Online Store'],['dev-cms','CMS Integration'],['dev-forms','Contact Form / Email Setup'],['dev-seo','SEO Optimization'],['dev-analytics','Analytics Integration'],['dev-ssl','SSL Certificate'],['dev-backup','Automated Backups'],['dev-hosting','Hosting & Domain Setup'],['dev-livechat','Live Chat Integration'],['dev-social','Social Media Integration'],['dev-speed','Speed Optimization']].forEach(([id, label]) => {
-          const cb = document.getElementById(id);
-          if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
-        });
+      const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+      codeLine.textContent = randomSnippet;
 
-      // ── UI/UX DESIGN ──
-      } else if (serviceType === 'ui-ux-design') {
-        const projectType = document.getElementById('uxProjectType');
-        if (projectType && projectType.value) items.push({ description: `Project Type: ${projectType.value}`, amount: 0 });
-        const deliverable = document.getElementById('uxDeliverable');
-        if (deliverable && deliverable.value) {
-          const extra = parseInt(deliverable.options[deliverable.selectedIndex].dataset.extra || 0);
-          items.push({ description: `Deliverable: ${deliverable.value}`, amount: extra });
-          total += extra;
-        }
-        const fidelity = document.getElementById('uxFidelity');
-        if (fidelity && fidelity.value) items.push({ description: `Fidelity: ${fidelity.value}`, amount: 0 });
-        const screens = document.getElementById('uxScreens');
-        if (screens && screens.value) items.push({ description: `Screens: ${screens.value}`, amount: 0 });
-        [['ux-research','User Research & Personas'],['ux-journey','User Journey Mapping'],['ux-ia','Information Architecture'],['ux-usability','Usability Testing Plan'],['ux-accessibility','Accessibility Audit (WCAG)'],['ux-microinteraction','Micro-Interaction Design'],['ux-handoff','Developer Handoff / Specs'],['ux-brand','Brand Integration']].forEach(([id, label]) => {
-          const cb = document.getElementById(id);
-          if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
-        });
+      const yPosition = 5 + (i * 6);
+      const duration = 15 + Math.random() * 10;
+      const delay = Math.random() * 20;
 
-      // ── GENERIC fallback ──
-      } else {
-        const numPages = parseInt((document.getElementById('numPages') || {}).value || 0) || pkg.basePages;
-        if (numPages > pkg.basePages) {
-          const extra = (numPages - pkg.basePages) * pkg.pricePerPage;
-          items.push({ description: `Additional Pages (${numPages - pkg.basePages} × ₱${pkg.pricePerPage.toLocaleString()})`, amount: extra });
-          total += extra;
-        }
-      }
+      codeLine.style.top = `${yPosition}%`;
+      codeLine.style.animationDuration = `${duration}s`;
+      codeLine.style.animationDelay = `${delay}s`;
 
-      renderInvoice(items, total);
+      container.appendChild(codeLine);
     }
 
-    function renderInvoice(items, total) {
-      const invoiceItemsEl = document.getElementById('invoiceItems');
-      const currentKeys = new Set(items.map(i => i.description));
+    // Insert at the beginning of body so it's behind everything
+    document.body.insertBefore(container, document.body.firstChild);
+  }
+  
+  // Initialize when DOM is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', createFloatingCodeBackground);
+  } else {
+    createFloatingCodeBackground();
+  }
+</script>
 
-      // Convert total from PHP to current currency
-      const totalUSD = convertPHPToUSD(total);
-
-      invoiceItemsEl.innerHTML = items.map(item => {
-        const isNew = !prevInvoiceKeys.has(item.description);
-        const rowClass = isNew ? 'invoice-row-new' : '';
-
-        // Convert item amounts from PHP to current currency
-        const itemAmountUSD = convertPHPToUSD(item.amount);
-
-        return `
-          <tr class="${rowClass}">
-            <td>${item.description}</td>
-            <td style="text-align: right; font-weight: 600; color: ${item.amount === 0 ? '#9ca3af' : '#fff'};">
-              ${item.amount === 0 ? 'Included' : formatPrice(itemAmountUSD)}
-            </td>
-          </tr>
-        `;
-      }).join('');
-
-      prevInvoiceKeys = currentKeys;
-
-      // Pulse the total
-      const totalEl = document.getElementById('totalAmount');
-      totalEl.textContent = formatPrice(totalUSD);
-      totalEl.classList.remove('total-updating');
-      void totalEl.offsetWidth; // reflow to restart animation
-      totalEl.classList.add('total-updating');
-
-      document.getElementById('invoiceDate').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-      document.getElementById('invoiceNumber').textContent = 'NGCS-2026-' + String(Math.floor(Math.random() * 9000) + 1000);
-    }
-
-    // =================== ORDER SUBMISSION ===================
-    async function submitOrder(event) {
-      if (!selectedPackage || !selectedCategory) {
-        alert('Please select a service package first.');
-        return;
-      }
-
-      const isManagerOrRenewal = selectedCategory === 'manager' || selectedCategory === 'renewal';
-
-      if (!isManagerOrRenewal && !activeServiceType) {
-        alert('Please select a service package first.');
-        return;
-      }
-
-      if (activeServiceType === 'web-design' && !document.getElementById('numPages').value) {
-        alert('Please enter the Number of Pages for Web Design.');
-        return;
-      }
-
-      if (activeServiceType === 'web-development' && !document.getElementById('numPagesdev').value) {
-        alert('Please enter the Number of Pages for Web Development.');
-        return;
-      }
-
-      // Collect order data
-      const orderData = collectOrderData();
-
-      // Show loading state
-      const btn = document.getElementById('placeOrderBtn');
-      btn.textContent = '⏳ Sending Order...';
-      btn.disabled = true;
-
-      const orderDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-
-      // Build a clean readable order summary for the message body
-      const itemsList = (() => {
-        const rows = document.querySelectorAll('#invoiceItems tr');
-        let lines = '';
-        rows.forEach(row => {
-          const cols = row.querySelectorAll('td');
-          if (cols.length === 2) lines += `  • ${cols[0].textContent.trim()} — ${cols[1].textContent.trim()}\n`;
-        });
-        return lines;
-      })();
-
-      // 1) Notification email to NexGenix
-      const adminEmailParams = {
-        to_name: 'Nex Genix Creative Solutions',
-        to_email: 'nexgenixcreativesolutions@gmail.com',
-        from_name: orderData.clientName,
-        reply_to: orderData.clientEmail || 'no-reply@example.com',
-        subject: `New Order Received — ${orderData.invoiceNumber}`,
-        message:
-`📦 NEW ORDER RECEIVED
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Invoice #:    ${orderData.invoiceNumber}
-Date:         ${orderDate}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-CLIENT DETAILS
-Name:         ${orderData.clientName}
-Email:        ${orderData.clientEmail || 'N/A'}
-WhatsApp:     ${orderData.clientPhone || 'N/A'}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-ORDER DETAILS
-Package:      ${orderData.packageName}
-Service Type: ${activeServiceType || 'N/A'}
-Currency:     ${currentCurrency}
-
-Items:
-${itemsList}
-TOTAL:        ${orderData.totalAmount}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Please follow up with the client to confirm and process payment.`
-      };
-
-      // 2) Confirmation email to client
-      const clientEmailParams = {
-        to_name: orderData.clientName,
-        to_email: orderData.clientEmail,
-        from_name: 'Nex Genix Creative Solutions',
-        reply_to: 'nexgenixcreativesolutions@gmail.com',
-        subject: `Order Confirmation — ${orderData.invoiceNumber}`,
-        message:
-`Dear ${orderData.clientName},
-
-Thank you for placing your order with Nex Genix Creative Solutions! 🎉
-We have received your request and will be in touch shortly to confirm details and process payment.
-
-ORDER SUMMARY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Invoice #:    ${orderData.invoiceNumber}
-Package:      ${orderData.packageName}
-Service Type: ${activeServiceType || 'N/A'}
-Currency:     ${currentCurrency}
-Date:         ${orderDate}
-
-Items:
-${itemsList}
-TOTAL AMOUNT DUE: ${orderData.totalAmount}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Payment Terms: 50% downpayment to start, 50% upon completion
-Payment Methods: GCash, Bank Transfer, PayMaya
-
-If you have any questions, feel free to reply to this email or reach us at nexgenixcreativesolutions@gmail.com.
-
-Best regards,
-Nex Genix Creative Solutions Team`
-      };
-
-      try {
-        // Send notification to NexGenix
-        const adminResponse = await emailjs.send(
-          EMAILJS_CONFIG.serviceID,
-          EMAILJS_CONFIG.adminTemplateID,
-          adminEmailParams,
-          EMAILJS_CONFIG.publicKey
-        );
-        console.log('Admin notification sent:', adminResponse);
-
-        // Send confirmation to client
-        if (orderData.clientEmail && orderData.clientEmail.includes('@')) {
-          try {
-            const clientResponse = await emailjs.send(
-              EMAILJS_CONFIG.serviceID,
-              EMAILJS_CONFIG.clientTemplateID,
-              clientEmailParams,
-              EMAILJS_CONFIG.publicKey
-            );
-            console.log('Client confirmation sent:', clientResponse);
-          } catch (clientErr) {
-            console.warn('Client confirmation email failed (order still submitted):', clientErr);
-          }
-        }
-
-        // Show success state
-        btn.textContent = '✅ Order Placed!';
-        btn.style.background = 'linear-gradient(135deg, rgba(57,255,20,0.3), rgba(57,255,20,0.15))';
-        btn.style.borderColor = 'var(--neon)';
-        btn.style.color = 'var(--neon)';
-        btn.disabled = true;
-        document.getElementById('orderSuccessBanner').style.display = 'block';
-        document.getElementById('newPurchaseBtn').style.display = 'block';
-        document.getElementById('orderSuccessBanner').scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-      } catch (error) {
-        console.error('EmailJS Error:', error);
-
-        // Fallback to mailto if EmailJS fails
-        const subject = encodeURIComponent(`New Order - ${orderData.invoiceNumber}`);
-        const body = encodeURIComponent(`
-Order Details:
-━━━━━━━━━━━━━━━━━━
-Client: ${orderData.clientName}
-Package: ${orderData.packageName}
-Total Amount: ${orderData.totalAmount}
-Currency: ${currentCurrency}
-Invoice #: ${orderData.invoiceNumber}
-Date: ${new Date().toLocaleDateString()}
-
-Please contact this client to process their order.
-
-Full order details:
-${JSON.stringify(orderData, null, 2)}
-        `);
-
-        const mailto = `mailto:nexgenixcreativesolutions@gmail.com?subject=${subject}&body=${body}`;
-        window.open(mailto, '_blank');
-
-        btn.textContent = '⚠️ Retry — Send via Email';
-        btn.disabled = false;
-        btn.style.background = 'rgba(255,64,64,0.15)';
-        btn.style.borderColor = 'var(--red)';
-        btn.style.color = 'var(--red)';
-      }
-    }
-
-    function startNewPurchase() {
-      // Reset invoice section
-      selectedPackage = null;
-      selectedCategory = null;
-      document.getElementById('invoiceSection').style.display = 'none';
-      document.getElementById('orderSuccessBanner').style.display = 'none';
-      document.getElementById('newPurchaseBtn').style.display = 'none';
-      const btn = document.getElementById('placeOrderBtn');
-      btn.textContent = '🛒 Place Order';
-      btn.disabled = false;
-      btn.style.background = '';
-      btn.style.borderColor = '';
-      btn.style.color = '';
-      // Scroll to top of services
-      document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      // Re-highlight no package selected
-      document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
-    }
-
-    function collectOrderData() {
-      const pkg = servicePackages[selectedCategory][selectedPackage];
-
-      // Collect all invoice items
-      const invoiceItems = [];
-      const itemRows = document.querySelectorAll('#invoiceItems tr');
-      itemRows.forEach(row => {
-        const cols = row.querySelectorAll('td');
-        if (cols.length === 2) {
-          invoiceItems.push({
-            description: cols[0].textContent.trim(),
-            amount: cols[1].textContent.trim()
-          });
+<!-- Categories Cards Scroll Animation Script -->
+<script>
+  // Categories cards scroll animation
+  function initCategories() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
         }
       });
+    }, { threshold: 0.1 });
 
-      return {
-        invoiceNumber: document.getElementById('invoiceNumber').textContent,
-        clientName: document.getElementById('clientNameInput').value,
-        clientEmail: document.getElementById('invoiceEmailInput').value || document.getElementById('emailInput').value,
-        clientPhone: getFullWhatsApp(),
-        packageName: pkg.name,
-        packagePrice: formatPrice(convertPHPToUSD(pkg.price)),
-        category: selectedCategory,
-        serviceType: activeServiceType,
-        totalAmount: document.getElementById('totalAmount').textContent,
-        currency: currentCurrency,
-        invoiceItems: invoiceItems,
-        timestamp: new Date().toISOString()
-      };
-    }
-
-    function downloadInvoice() {
-      if (!selectedPackage || !selectedCategory) {
-        alert('Please select a service package first to generate an invoice.');
-        return;
-      }
-
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-      const W = 210; // page width mm
-
-      // ── Color palette (print-friendly) ──────────────────────────────
-      const black      = [15,  20,  30];
-      const darkGray   = [55,  65,  81];
-      const midGray    = [107, 114, 128];
-      const lightGray  = [229, 231, 235];
-      const veryLight  = [248, 249, 250];
-      const accentGreen= [22,  163, 74];   // deep green — readable on white
-      const accentDark = [15,  118, 110];
-      const white      = [255, 255, 255];
-
-      const invoiceNum   = document.getElementById('invoiceNumber').textContent;
-      const invoiceDate  = document.getElementById('invoiceDate').textContent;
-      const clientName   = document.getElementById('clientNameInput').value || 'Valued Client';
-      const clientEmail  = document.getElementById('invoiceEmailInput').value || document.getElementById('emailInput').value || '';
-      const clientPhone  = getFullWhatsApp();
-      const totalAmountText = document.getElementById('totalAmount').textContent;
-
-      // ═══════════════════════════════════════════════════════════════
-      // HEADER BAND
-      // ═══════════════════════════════════════════════════════════════
-      doc.setFillColor(15, 20, 30);
-      doc.rect(0, 0, W, 38, 'F');
-
-      // Company name
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(20);
-      doc.text('NEX GENIX', 16, 17);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9);
-      doc.setTextColor(156, 163, 175);
-      doc.text('CREATIVE SOLUTIONS', 16, 23);
-
-      // Green accent bar under tagline
-      doc.setFillColor(...accentGreen);
-      doc.rect(16, 25.5, 38, 1.2, 'F');
-
-      // INVOICE label (right side)
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(26);
-      doc.text('INVOICE', W - 16, 20, { align: 'right' });
-      doc.setFontSize(8.5);
-      doc.setFont('helvetica', 'normal');
-      doc.setTextColor(156, 163, 175);
-      doc.text(`# ${invoiceNum}`, W - 16, 27, { align: 'right' });
-
-      // ═══════════════════════════════════════════════════════════════
-      // META ROW — date + status badge
-      // ═══════════════════════════════════════════════════════════════
-      doc.setFillColor(...veryLight);
-      doc.rect(0, 38, W, 14, 'F');
-      doc.setTextColor(...midGray);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8.5);
-      doc.text(`Date Issued: ${invoiceDate}`, 16, 46);
-      doc.text(`Currency: ${currencySymbols[currentCurrency]} ${currentCurrency}`, 85, 46);
-
-      // Status badge
-      doc.setFillColor(...accentGreen);
-      doc.roundedRect(W - 46, 40, 30, 9, 2, 2, 'F');
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(8);
-      doc.text('PENDING PAYMENT', W - 31, 45.5, { align: 'center' });
-
-      // ═══════════════════════════════════════════════════════════════
-      // BILL TO / ISSUED BY — two column cards
-      // ═══════════════════════════════════════════════════════════════
-      let y = 62;
-
-      // Left card: Bill To
-      doc.setFillColor(...veryLight);
-      doc.roundedRect(14, y, 84, 34, 2, 2, 'F');
-      doc.setFillColor(...accentGreen);
-      doc.roundedRect(14, y, 84, 8, 2, 2, 'F');
-      doc.rect(14, y + 4, 84, 4, 'F'); // square bottom corners on top band
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(7.5);
-      doc.text('BILL TO', 21, y + 5.5);
-
-      doc.setTextColor(...black);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(10);
-      doc.text(clientName, 21, y + 16);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8.5);
-      doc.setTextColor(...darkGray);
-      if (clientEmail) { doc.text(clientEmail, 21, y + 22); }
-      if (clientPhone) {
-        doc.setTextColor(22, 163, 74);
-        doc.text(`WhatsApp: ${clientPhone}`, 21, y + 28);
-      }
-
-      // Right card: Issued By
-      doc.setFillColor(...veryLight);
-      doc.roundedRect(112, y, 84, 34, 2, 2, 'F');
-      doc.setFillColor(15, 20, 30);
-      doc.roundedRect(112, y, 84, 8, 2, 2, 'F');
-      doc.rect(112, y + 4, 84, 4, 'F');
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(7.5);
-      doc.text('ISSUED BY', 119, y + 5.5);
-
-      doc.setTextColor(...black);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(10);
-      doc.text('Nex Genix Creative Solutions', 119, y + 16);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8.5);
-      doc.setTextColor(...darkGray);
-      doc.text('nexgenixcreativesolutions@gmail.com', 119, y + 22);
-      doc.text('Philippines', 119, y + 28);
-
-      // ═══════════════════════════════════════════════════════════════
-      // ITEMS TABLE
-      // ═══════════════════════════════════════════════════════════════
-      y += 42;
-
-      // Table header
-      doc.setFillColor(15, 20, 30);
-      doc.rect(14, y, 182, 9, 'F');
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(8.5);
-      doc.text('DESCRIPTION', 20, y + 6);
-      doc.text('AMOUNT', W - 18, y + 6, { align: 'right' });
-
-      y += 9;
-      const items = document.querySelectorAll('#invoiceItems tr');
-      let rowIndex = 0;
-
-      items.forEach((row) => {
-        const cols = row.querySelectorAll('td');
-        if (cols.length !== 2) return;
-
-        const desc   = cols[0].textContent.trim();
-        const amount = cols[1].textContent.trim();
-
-        // Alternate row shading
-        if (rowIndex % 2 === 0) {
-          doc.setFillColor(255, 255, 255);
-        } else {
-          doc.setFillColor(248, 250, 248);
-        }
-
-        const splitDesc = doc.splitTextToSize(desc, 140);
-        const rowH = Math.max(8, splitDesc.length * 5 + 3);
-
-        doc.rect(14, y, 182, rowH, 'F');
-
-        // Left border accent
-        doc.setFillColor(...accentGreen);
-        doc.rect(14, y, 1.5, rowH, 'F');
-
-        doc.setTextColor(...darkGray);
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(8.5);
-        doc.text(splitDesc, 20, y + 5.5);
-
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...black);
-        doc.text(amount, W - 18, y + 5.5, { align: 'right' });
-
-        // Bottom border line
-        doc.setDrawColor(...lightGray);
-        doc.setLineWidth(0.3);
-        doc.line(14, y + rowH, 196, y + rowH);
-
-        y += rowH;
-        rowIndex++;
-      });
-
-      // ═══════════════════════════════════════════════════════════════
-      // TOTAL BOX
-      // ═══════════════════════════════════════════════════════════════
-      y += 6;
-
-      // Outer total area
-      doc.setFillColor(15, 20, 30);
-      doc.roundedRect(112, y, 84, 22, 3, 3, 'F');
-
-      doc.setTextColor(156, 163, 175);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(7.5);
-      doc.text('TOTAL AMOUNT DUE', 196, y + 8, { align: 'right' });
-
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(18);
-      doc.text(totalAmountText, 196, y + 18, { align: 'right' });
-
-      // Subtotal label (left side of total row)
-      doc.setTextColor(...midGray);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8);
-      doc.text(`Service: ${document.getElementById('clientNameInput').value || 'Valued Client'}`, 16, y + 10);
-      doc.text(`Package: ${selectedPackage ? servicePackages[selectedCategory][selectedPackage].name : ''}`, 16, y + 16);
-
-      // ═══════════════════════════════════════════════════════════════
-      // PAYMENT INFO BOX
-      // ═══════════════════════════════════════════════════════════════
-      y += 30;
-      doc.setFillColor(240, 253, 244); // very light green
-      doc.setDrawColor(...accentGreen);
-      doc.setLineWidth(0.5);
-      doc.roundedRect(14, y, 182, 22, 2, 2, 'FD');
-
-      doc.setTextColor(...accentDark);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(8.5);
-      doc.text('PAYMENT INFORMATION', 20, y + 7);
-
-      doc.setFont('helvetica', 'normal');
-      doc.setTextColor(...darkGray);
-      doc.setFontSize(8);
-      doc.text('Terms: 50% downpayment to start · 50% upon project completion', 20, y + 13);
-      doc.text('Methods: GCash  ·  Bank Transfer  ·  PayMaya', 20, y + 18.5);
-
-      // ═══════════════════════════════════════════════════════════════
-      // FOOTER
-      // ═══════════════════════════════════════════════════════════════
-      const footerY = 278;
-      doc.setFillColor(...lightGray);
-      doc.rect(0, footerY - 2, W, 0.4, 'F');
-
-      doc.setTextColor(...midGray);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(7.5);
-      doc.text('Thank you for choosing Nex Genix Creative Solutions!', W / 2, footerY + 4, { align: 'center' });
-      doc.text('nexgenixcreativesolutions@gmail.com  ·  Philippines', W / 2, footerY + 9, { align: 'center' });
-      doc.setFontSize(7);
-      doc.text(`© ${new Date().getFullYear()} Nex Genix Creative Solutions. All Rights Reserved.`, W / 2, footerY + 14, { align: 'center' });
-
-      // Save
-      const filename = `NexGenix_Invoice_${invoiceNum.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
-      doc.save(filename);
-    }
-
-    // =================== USER PROFILE ===================
-    async function saveProfile() {
-      const displayName = document.getElementById('displayNameInput').value;
-      const username = document.getElementById('usernameInput').value;
-      const phoneCode = document.getElementById('phoneCode').value;
-      const phoneNum = document.getElementById('phoneNumber').value;
-      const fullPhone = phoneNum ? `${phoneCode}${phoneNum.replace(/\s/g,'')}`  : '';
-
-      // Sync to invoice
-      syncSettingsPhoneToInvoice();
-
-      alert('Profile updated successfully!' + (fullPhone ? `\nWhatsApp: ${fullPhone}` : ''));
-    }
-
-    async function updatePassword() {
-      const newPassword = document.getElementById('passwordInput').value;
-      if (!newPassword || newPassword.length < 6) {
-        alert('Password must be at least 6 characters.');
-        return;
-      }
-
-      alert('Password updated successfully!');
-      document.getElementById('passwordInput').value = '';
-    }
-
-    function logout() {
-      window.location.href = 'https://nexgenixcreativesolutions.github.io/login-signup';
-    }
-
-    // =================== BOTTOM NAV ACTIVE STATE ===================
-    function setBottomActive(el) {
-      document.querySelectorAll('.bottom-nav-item').forEach(btn => btn.classList.remove('active'));
-      el.classList.add('active');
-    }
-
-
-
-    // =================== INITIALIZE ===================
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      document.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      createFloatingCodeBackground();
-      loadServices();
-      populatePhoneDropdowns();
-
-      // Go to top button visibility
-      window.addEventListener('scroll', () => {
-        document.getElementById('goTopBtn').style.display = window.scrollY > 300 ? 'block' : 'none';
-      });
-      const mainContent = document.querySelector('.main-content');
-      if (mainContent) {
-        mainContent.addEventListener('scroll', () => {
-          document.getElementById('goTopBtn').style.display = mainContent.scrollTop > 300 ? 'block' : 'none';
-        });
-      }
-
-      // Set user info
-      document.getElementById('clientNameInput').value = 'Valued Client';
-      document.getElementById('displayNameInput').value = 'Valued Client';
-      document.getElementById('emailInput').value = 'client@example.com';
-      document.getElementById('invoiceEmailInput').value = 'client@example.com';
-
-      // Sync settings phone to invoice whenever settings phone changes
-      document.getElementById('phoneCode').addEventListener('change', syncSettingsPhoneToInvoice);
-      document.getElementById('phoneNumber').addEventListener('input', syncSettingsPhoneToInvoice);
+    document.querySelectorAll('.category-card').forEach(card => {
+      observer.observe(card);
     });
-  </script>
-  <!-- Go to Top Button -->
-  <button id="goTopBtn" onclick="scrollToTop()" title="Back to top" style="
-    display:none; position:fixed; bottom:80px; right:1rem; z-index:999;
-    width:42px; height:42px; border-radius:50%;
-    background:linear-gradient(135deg,rgba(57,255,20,0.25),rgba(57,255,20,0.08));
-    border:1.5px solid var(--neon); color:var(--neon);
-    font-size:1.1rem; cursor:pointer; box-shadow:0 0 14px rgba(57,255,20,0.25);
-    transition:all 0.2s; backdrop-filter:blur(6px);
-  ">▲</button>
+  }
+  
+  // Initialize when DOM is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCategories);
+  } else {
+    initCategories();
+  }
+</script>
 
-</body>
+<!-- Testimonials Script -->
+<script>
+  // Testimonials Data and Animation
+  const testimonials = [
+    {
+      name: 'Jude Trellier',
+      role: 'Digital Design Client',
+      content: "As someone new to the business world, I knew how important it was for my website to make a great first impression. This team made the entire process so easy and stress-free! They really listened to my ideas and delivered a design that looks professional, modern, and exactly how I imagined.",
+      rating: 5
+    },
+    {
+      name: 'Dyanne Tan',
+      role: 'Business Writing Client',
+      content: "I hired Miss Arriane to write a business proposal, and she exceeded my expectations. She was professional, detail-oriented, and took the time to understand my goals. The final proposal was clear, compelling, and well-structured.",
+      rating: 5
+    },
+    {
+      name: 'Gioia Pavan',
+      role: 'Learner',
+      content: "I recently enrolled in International Business Course and received my certification, and it was an excellent experience. The course was well-structured, informative, and provided valuable insights relevant to my field.",
+      rating: 5
+    }
+  ];
+  
+  function createStarIcon() {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'star');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'currentColor');
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z');
+
+    svg.appendChild(path);
+    return svg;
+  }
+  
+  function createQuoteIcon() {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'quote-icon');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2');
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z');
+
+    const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path2.setAttribute('d', 'M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z');
+
+    svg.appendChild(path);
+    svg.appendChild(path2);
+    return svg;
+  }
+  
+  function createTestimonialCard(testimonial, index) {
+    const card = document.createElement('div');
+    card.className = 'testimonial-card';
+    card.style.animationDelay = `${index * 0.2}s`;
+
+    const cardInner = document.createElement('div');
+    cardInner.className = 'testimonial-card-inner';
+
+    // Quote icon
+    cardInner.appendChild(createQuoteIcon());
+
+    // Rating stars
+    const ratingDiv = document.createElement('div');
+    ratingDiv.className = 'rating-stars';
+    for (let i = 0; i < testimonial.rating; i++) {
+      ratingDiv.appendChild(createStarIcon());
+    }
+    cardInner.appendChild(ratingDiv);
+
+    // Content
+    const content = document.createElement('p');
+    content.className = 'testimonial-content';
+    content.textContent = `"${testimonial.content}"`;
+    cardInner.appendChild(content);
+
+    // Author section
+    const authorDiv = document.createElement('div');
+    authorDiv.className = 'testimonial-author';
+
+    const avatar = document.createElement('div');
+    avatar.className = 'author-avatar';
+
+    const initial = document.createElement('span');
+    initial.className = 'author-initial';
+    initial.textContent = testimonial.name.charAt(0);
+    avatar.appendChild(initial);
+
+    const info = document.createElement('div');
+    info.className = 'author-info';
+
+    const name = document.createElement('h4');
+    name.className = 'author-name';
+    name.textContent = testimonial.name;
+
+    const role = document.createElement('p');
+    role.className = 'author-role';
+    role.textContent = testimonial.role;
+
+    info.appendChild(name);
+    info.appendChild(role);
+
+    authorDiv.appendChild(avatar);
+    authorDiv.appendChild(info);
+    cardInner.appendChild(authorDiv);
+
+    card.appendChild(cardInner);
+    return card;
+  }
+  
+  function initTestimonials() {
+    const grid = document.getElementById('testimonials-grid');
+    if (!grid) return;
+
+    testimonials.forEach((testimonial, index) => {
+      const card = createTestimonialCard(testimonial, index);
+      grid.appendChild(card);
+    });
+
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.testimonial-card').forEach(card => {
+      observer.observe(card);
+    });
+  }
+  
+  // Initialize when DOM is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTestimonials);
+  } else {
+    initTestimonials();
+  }
+</script>
+
+  </body>
 </html>
