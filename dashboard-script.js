@@ -1,7 +1,4 @@
     // =================== EMAILJS CONFIGURATION ===================
-    // Initialize EmailJS with your Public Key
-    // IMPORTANT: Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS Public Key
-    // Get it from: https://dashboard.emailjs.com/admin/account
     (function() {
       emailjs.init({
         publicKey: 'coUeJ01I7BiMQ-ABN',
@@ -9,34 +6,33 @@
       });
     })();
 
-    // EmailJS Service Configuration
     const EMAILJS_CONFIG = {
-      serviceID: 'service_ju84tjo',           // Gmail service ID
-      adminTemplateID: 'template_7z9si7j',    // Admin template → notifies NexGenix (auto-reply linked to client template_s8jsvcf)
-      clientTemplateID: 'template_s8jsvcf',   // Client template → confirmation email to client
-      publicKey: 'coUeJ01I7BiMQ-ABN'          // Public key
+      serviceID: 'service_ju84tjo',
+      adminTemplateID: 'template_7z9si7j',
+      clientTemplateID: 'template_s8jsvcf',
+      publicKey: 'coUeJ01I7BiMQ-ABN'
     };
 
     // =================== CURRENCY CONVERSION ===================
     let currentCurrency = 'USD';
     const conversionRates = {
-      'USD': 1,           // US Dollar
-      'PHP': 56.50,       // Philippine Peso
-      'EUR': 0.92,        // Euro (EU incl. Italy)
-      'GBP': 0.79,        // British Pound
-      'JPY': 149.50,      // Japanese Yen
-      'AUD': 1.52,        // Australian Dollar
-      'CAD': 1.39,        // Canadian Dollar
-      'SGD': 1.34,        // Singapore Dollar
-      'INR': 83.20,       // Indian Rupee
-      'CNY': 7.24,        // Chinese Yuan
-      'PLN': 3.98,        // Polish Złoty
-      'MXN': 17.15,       // Mexican Peso
-      'BRL': 4.97,        // Brazilian Real
-      'KRW': 1325.00,     // South Korean Won
-      'CHF': 0.89,        // Swiss Franc
-      'AED': 3.67,        // UAE Dirham
-      'SAR': 3.75         // Saudi Riyal
+      'USD': 1,
+      'PHP': 56.50,
+      'EUR': 0.92,
+      'GBP': 0.79,
+      'JPY': 149.50,
+      'AUD': 1.52,
+      'CAD': 1.39,
+      'SGD': 1.34,
+      'INR': 83.20,
+      'CNY': 7.24,
+      'PLN': 3.98,
+      'MXN': 17.15,
+      'BRL': 4.97,
+      'KRW': 1325.00,
+      'CHF': 0.89,
+      'AED': 3.67,
+      'SAR': 3.75
     };
 
     const currencySymbols = {
@@ -78,8 +74,6 @@
     function formatPrice(usdAmount) {
       const converted = usdAmount * conversionRates[currentCurrency];
       const symbol = currencySymbols[currentCurrency];
-
-      // Format with proper decimal places
       if (['JPY', 'KRW', 'INR'].includes(currentCurrency)) {
         return symbol + Math.round(converted).toLocaleString();
       }
@@ -87,25 +81,16 @@
     }
 
     function convertPHPToUSD(phpAmount) {
-      // All prices in servicePackages are in PHP, convert to USD as base
       return phpAmount / 56.50;
     }
 
     function changeCurrency(currency) {
       currentCurrency = currency;
-
-      // Sync currency meta in invoice
       const metaEl = document.getElementById('invoiceCurrencyMeta');
       if (metaEl) metaEl.textContent = currency;
-
-      // Sync dropdown
       const dropdown = document.getElementById('currencyDropdown');
       if (dropdown) dropdown.value = currency;
-
-      // Reload services to update all prices
       loadServices();
-
-      // Update invoice if visible
       if (selectedPackage) {
         updateInvoice();
       }
@@ -392,6 +377,54 @@
         }
       },
 
+      // CATEGORY 7: UI/UX DESIGN
+      uiuxDesign: {
+        wireframe: {
+          name: 'UI/UX - Wireframes',
+          price: 5000,
+          basePages: 0,
+          pricePerPage: 0,
+          features: [
+            'Up to 10 screens',
+            'Low to mid-fidelity',
+            'User flow diagrams',
+            'Figma deliverables',
+            'Revision rounds included'
+          ],
+          excluded: ['No visual design', 'No prototype'],
+          bestFor: 'early-stage planning, concept validation'
+        },
+        prototype: {
+          name: 'UI/UX - Full Prototype',
+          price: 14000,
+          basePages: 0,
+          pricePerPage: 0,
+          features: [
+            'Up to 25 screens',
+            'High-fidelity design',
+            'Clickable prototype',
+            'User journey mapping',
+            'Information architecture'
+          ],
+          excluded: [],
+          bestFor: 'investor demos, usability testing, pitches'
+        },
+        system: {
+          name: 'UI/UX - Design System',
+          price: 28000,
+          basePages: 0,
+          pricePerPage: 0,
+          features: [
+            'Complete component library',
+            'Design tokens & variables',
+            'Accessibility audit (WCAG)',
+            'Developer handoff specs',
+            'Documentation included'
+          ],
+          excluded: [],
+          bestFor: 'product teams, SaaS platforms, enterprises'
+        }
+      },
 
       // CATEGORY 8: LOGO DESIGN
       logoDesign: {
@@ -507,54 +540,6 @@
           excluded: [],
           bestFor: 'brand films, company profiles, major campaigns'
         }
-      },
-      // CATEGORY 7: UI/UX DESIGN
-      uiuxDesign: {
-        wireframe: {
-          name: 'UI/UX - Wireframes',
-          price: 5000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Up to 10 screens',
-            'Low to mid-fidelity',
-            'User flow diagrams',
-            'Figma deliverables',
-            'Revision rounds included'
-          ],
-          excluded: ['No visual design', 'No prototype'],
-          bestFor: 'early-stage planning, concept validation'
-        },
-        prototype: {
-          name: 'UI/UX - Full Prototype',
-          price: 14000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Up to 25 screens',
-            'High-fidelity design',
-            'Clickable prototype',
-            'User journey mapping',
-            'Information architecture'
-          ],
-          excluded: [],
-          bestFor: 'investor demos, usability testing, pitches'
-        },
-        system: {
-          name: 'UI/UX - Design System',
-          price: 28000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Complete component library',
-            'Design tokens & variables',
-            'Accessibility audit (WCAG)',
-            'Developer handoff specs',
-            'Documentation included'
-          ],
-          excluded: [],
-          bestFor: 'product teams, SaaS platforms, enterprises'
-        }
       }
     };
 
@@ -602,10 +587,10 @@
     // =================== DATE TIME UPDATE ===================
     function updateDateTime() {
       const now = new Date();
-      const options = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
@@ -623,11 +608,9 @@
     function filterByServiceType(type, btn) {
       activeServiceFilter = type;
 
-      // Update tab active states
       document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
+      if (btn) btn.classList.add('active');
 
-      // Show/hide package categories based on data-service-types attribute
       document.querySelectorAll('#newWebsitePackages .package-category').forEach(cat => {
         const types = (cat.dataset.serviceTypes || '').split(' ');
         if (type === 'all' || types.includes(type)) {
@@ -637,7 +620,6 @@
         }
       });
 
-      // Reset any selected package when filter changes
       if (selectedPackage) {
         selectedPackage = null;
         selectedCategory = null;
@@ -646,14 +628,13 @@
         document.getElementById('invoiceSection').style.display = 'none';
       }
 
-      // Pre-set activeServiceType to match the filter tab so when a card is clicked it's consistent
       const serviceTypeMap = {
-        'app-design':     'app-design',
-        'web-design':     'web-design',
-        'web-development':'web-development',
-        'ui-ux-design':   'ui-ux-design',
-        'logo-design':    'logo-design',
-        'video-ads':      'video-ads'
+        'app-design':      'app-design',
+        'web-design':      'web-design',
+        'web-development': 'web-development',
+        'ui-ux-design':    'ui-ux-design',
+        'logo-design':     'logo-design',
+        'video-ads':       'video-ads'
       };
       if (type !== 'all' && serviceTypeMap[type]) {
         activeServiceType = serviceTypeMap[type];
@@ -668,20 +649,16 @@
     function selectOrderType(type) {
       currentOrderType = type;
 
-      // Update button states
       document.getElementById('newWebsiteBtn').classList.toggle('active', type === 'new');
       document.getElementById('renewalBtn').classList.toggle('active', type === 'renewal');
 
-      // Show/hide package sections
       document.getElementById('newWebsitePackages').style.display = type === 'new' ? 'block' : 'none';
       document.getElementById('renewalPackages').style.display = type === 'renewal' ? 'block' : 'none';
       document.getElementById('serviceFilterBar').style.display = type === 'new' ? 'flex' : 'none';
 
-      // Hide customization and invoice
       document.getElementById('customizationPanel').style.display = 'none';
       document.getElementById('invoiceSection').style.display = 'none';
 
-      // Clear selection
       selectedPackage = null;
       selectedCategory = null;
       document.querySelectorAll('.service-card').forEach(card => {
@@ -694,7 +671,6 @@
       document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
       const section = document.getElementById(sectionId);
       if (section) section.classList.add('active');
-      // Close sidebar on mobile
       if (window.innerWidth <= 768) {
         const sb = document.getElementById('sidebar');
         if (sb) sb.classList.remove('active');
@@ -710,25 +686,12 @@
 
     // =================== LOAD SERVICES BY CATEGORY ===================
     function loadServices() {
-      // Load maintenance packages
       loadServiceCategory('serviceGridMaintenance', servicePackages.maintenance, 'maintenance');
-
-      // Load one-page packages
       loadServiceCategory('serviceGridOnePage', servicePackages.onePage, 'onePage');
-
-      // Load no maintenance packages
       loadServiceCategory('serviceGridNoMaintenance', servicePackages.noMaintenance, 'noMaintenance');
-
-      // Load website manager packages
       loadServiceCategory('serviceGridManager', servicePackages.manager, 'manager');
-
-      // Load renewal packages
       loadServiceCategory('serviceGridRenewal', servicePackages.renewal, 'renewal');
-
-      // Load app design packages
       loadServiceCategory('serviceGridAppDesign', servicePackages.appDesign, 'appDesign');
-
-      // Load UI/UX packages
       loadServiceCategory('serviceGridUiux', servicePackages.uiuxDesign, 'uiuxDesign');
       loadServiceCategory('serviceGridLogoDesign', servicePackages.logoDesign, 'logoDesign');
       loadServiceCategory('serviceGridVideoAds', servicePackages.videoAds, 'videoAds');
@@ -749,7 +712,6 @@
         const featuresHTML = pkg.features.map(f => `<li>${f}</li>`).join('');
         const excludedHTML = pkg.excluded.map(f => `<li class="excluded">${f}</li>`).join('');
 
-        // Convert prices from PHP (stored) to current currency
         const priceUSD = convertPHPToUSD(pkg.price);
         const pricePerPageUSD = convertPHPToUSD(pkg.pricePerPage);
 
@@ -802,7 +764,6 @@
       const isSingle = container.dataset.single === 'true';
 
       if (isSingle) {
-        // Deselect all siblings first
         container.querySelectorAll('.biz-tag').forEach(t => t.classList.remove('selected'));
         bizSelections[group] = [value];
         el.classList.add('selected');
@@ -818,7 +779,6 @@
       updateInvoice();
     }
 
-    // Toggle feature checkboxes (multi-select card toggles)
     function toggleFeature(toggleEl, checkboxId) {
       const cb = document.getElementById(checkboxId);
       if (!cb) return;
@@ -843,12 +803,10 @@
 
       if (!input) return;
 
-      // Set value to minimum (or fixed value)
       input.value = min;
       input.min = min;
 
       if (fixed) {
-        // Locked — two-page packages
         if (btnMinus) btnMinus.disabled = true;
         if (btnPlus)  btnPlus.disabled  = true;
         if (hint) {
@@ -857,7 +815,7 @@
         }
         if (wrap) wrap.className = 'page-counter';
       } else {
-        if (btnMinus) btnMinus.disabled = (min <= min); // starts at min so minus is disabled
+        if (btnMinus) btnMinus.disabled = true;
         if (btnPlus)  btnPlus.disabled  = false;
         if (hint) {
           hint.textContent = `${min}–${max} pages included • beyond ${max}: +₱${pkg.pricePerPage.toLocaleString()}/page`;
@@ -884,16 +842,13 @@
       if (!input) return;
 
       let current = parseInt(input.value) || min;
-      current = Math.max(min, current + delta);  // never go below min
+      current = Math.max(min, current + delta);
 
       input.value = current;
 
-      // Update minus button state
       if (btnMinus) btnMinus.disabled = (current <= min);
 
-      // Update hint and border colour
       if (current < min) {
-        // shouldn't happen but safety
         if (hint) { hint.textContent = `Minimum is ${min} pages`; hint.className = 'page-counter-hint hint-extra'; }
         if (wrap) wrap.className = 'page-counter';
       } else if (current <= max) {
@@ -915,6 +870,10 @@
       updateInvoice();
     }
 
+    function updatePageCount(inputId) {
+      adjustPages(inputId, 0);
+    }
+
     // Map category → service type label and icon
     const categoryServiceMap = {
       maintenance:    { type: 'web-development', label: '🌐 Web Development', badgeText: '🌐 WEB DEVELOPMENT' },
@@ -924,31 +883,26 @@
       uiuxDesign:     { type: 'ui-ux-design',     label: '🧩 UI/UX Design',    badgeText: '🧩 UI/UX DESIGN' },
       manager:        { type: '',                 label: '🔧 Maintenance',     badgeText: '🔧 WEBSITE MANAGER' },
       renewal:        { type: '',                 label: '📅 Renewal',         badgeText: '📅 ANNUAL RENEWAL' },
-      logoDesign:     { type: 'logo-design',    label: '🎨 Logo Design',    badgeText: '🎨 LOGO DESIGN' },
-      videoAds:       { type: 'video-ads',      label: '🎬 Video Ads',      badgeText: '🎬 VIDEO ADS' }
+      logoDesign:     { type: 'logo-design',      label: '🎨 Logo Design',     badgeText: '🎨 LOGO DESIGN' },
+      videoAds:       { type: 'video-ads',        label: '🎬 Video Ads',       badgeText: '🎬 VIDEO ADS' }
     };
 
     function selectService(category, packageKey) {
       selectedCategory = category;
       selectedPackage = packageKey;
 
-      // Update visual selection on cards
       document.querySelectorAll('.service-card').forEach(card => card.classList.remove('selected'));
       const selectedCard = document.querySelector(`[data-category="${category}"][data-key="${packageKey}"]`);
       if (selectedCard) selectedCard.classList.add('selected');
 
-      // Determine and set the service type from the category
       const mapping = categoryServiceMap[category] || { type: '', badgeText: '⚙️ Service Selected' };
       activeServiceType = mapping.type;
 
-      // Update the badge
       document.getElementById('serviceTypeBadge').textContent = mapping.badgeText;
 
-      // Show customization panel
       document.getElementById('customizationPanel').style.display = 'block';
       document.getElementById('invoiceSection').style.display = 'block';
 
-      // ── Hide ALL panels first ──────────────────────────────────────────
       const allPanels = [
         'appDesignOptions','webDesignOptions','webDevOptions','uiuxOptions',
         'logoDesignOptions','videoAdsOptions','bizQuestionnaire','projectDetailsSection'
@@ -958,14 +912,11 @@
         if (el) el.style.display = 'none';
       });
 
-      // ── Show only what's needed for this service type ──────────────────
       if (activeServiceType === 'logo-design') {
         document.getElementById('logoDesignOptions').style.display = 'block';
-        // projectDetailsSection and videoAdsOptions stay hidden
 
       } else if (activeServiceType === 'video-ads') {
         document.getElementById('videoAdsOptions').style.display = 'block';
-        // projectDetailsSection and logoDesignOptions stay hidden
 
       } else if (activeServiceType === 'app-design') {
         document.getElementById('appDesignOptions').style.display = 'block';
@@ -990,11 +941,9 @@
         document.getElementById('projectDetailsSection').style.display = 'block';
 
       } else {
-        // manager / renewal — just show project details (notes/deadline)
         document.getElementById('projectDetailsSection').style.display = 'block';
       }
 
-      // Reset invoice flash tracking
       prevInvoiceKeys = new Set();
 
       updateInvoice();
@@ -1013,8 +962,8 @@
     }
 
     function syncInvoiceEmailFromSettings() {
-    const profileEmail = document.getElementById('profileEmail');
-    if (profileEmail) { const inv = document.getElementById('invoiceEmailInput'); if (inv) inv.value = profileEmail.value; return; }
+      const profileEmail = document.getElementById('profileEmail');
+      if (profileEmail) { const inv = document.getElementById('invoiceEmailInput'); if (inv) inv.value = profileEmail.value; return; }
       const val = document.getElementById('profileEmail').value;
       const invoiceEmail = document.getElementById('invoiceEmailInput');
       if (invoiceEmail) invoiceEmail.value = val;
@@ -1108,12 +1057,11 @@
         el.innerHTML = PHONE_COUNTRIES.map(c =>
           `<option value="${c.code}" data-abbr="${c.abbr}">${c.flag} ${c.abbr} ${c.code}</option>`
         ).join('');
-        // default to PH
         el.value = '+63';
       });
     }
 
-    // =================== SERVICE TYPE CHANGE (kept for filter-tab pre-setting) ===================
+    // =================== SERVICE TYPE CHANGE ===================
     function onServiceTypeChange() {
       updateInvoice();
     }
@@ -1128,19 +1076,16 @@
       let total = pkg.price;
       const items = [];
 
-      // Base package
       items.push({
         description: `${pkg.name}${pkg.basePages > 0 ? ` (${pkg.basePages} pages)` : ''}`,
         amount: pkg.price
       });
 
-      // Manager/Renewal: no further customization
       if (selectedCategory === 'manager' || selectedCategory === 'renewal') {
         renderInvoice(items, total);
         return;
       }
 
-      // Business profile notes (informational, ₱0)
       if (bizSelections.type.length > 0) {
         items.push({ description: `Business Type: ${bizSelections.type.join(', ')}`, amount: 0 });
       }
@@ -1181,7 +1126,6 @@
 
         const numPages = parseInt(document.getElementById('numPages').value) || pkg.minPages || pkg.basePages;
         const maxPg = pkg.maxPages || pkg.basePages;
-        const minPg = pkg.minPages || 1;
 
         if (numPages <= maxPg) {
           items.push({ description: `Pages: ${numPages} of ${maxPg} included`, amount: 0 });
@@ -1248,7 +1192,7 @@
         });
 
       // ── LOGO DESIGN ──
-      if (activeServiceType === 'logo-design') {
+      } else if (activeServiceType === 'logo-design') {
         const bizName   = (document.getElementById('logoBizName')?.value || '').trim();
         const industry  = (document.getElementById('logoBizIndustry')?.value || '').trim();
         const colors    = (document.getElementById('logoColorScheme')?.value || '').trim();
@@ -1257,10 +1201,9 @@
         if (industry)  items.push({ description: `Industry: ${industry}`, amount: 0 });
         if (colors)    items.push({ description: `Color Scheme: ${colors}`, amount: 0 });
         if (deadline)  items.push({ description: `Deadline: ${deadline}`, amount: 0 });
-      }
 
       // ── VIDEO ADS ──
-      if (activeServiceType === 'video-ads') {
+      } else if (activeServiceType === 'video-ads') {
         const bizName   = (document.getElementById('videoBizName')?.value || '').trim();
         const industry  = (document.getElementById('videoBizIndustry')?.value || '').trim();
         const colors    = (document.getElementById('videoColorScheme')?.value || '').trim();
@@ -1275,7 +1218,6 @@
         if (res)              items.push({ description: `Resolution: ${res}`, amount: 0 });
         if (duration)         items.push({ description: `Duration: ${duration}`, amount: 0 });
         if (deadline)         items.push({ description: `Deadline: ${deadline}`, amount: 0 });
-      }
 
       // ── GENERIC fallback ──
       } else {
@@ -1294,14 +1236,11 @@
       const invoiceItemsEl = document.getElementById('invoiceItems');
       const currentKeys = new Set(items.map(i => i.description));
 
-      // Convert total from PHP to current currency
       const totalUSD = convertPHPToUSD(total);
 
       invoiceItemsEl.innerHTML = items.map(item => {
         const isNew = !prevInvoiceKeys.has(item.description);
         const rowClass = isNew ? 'invoice-row-new' : '';
-
-        // Convert item amounts from PHP to current currency
         const itemAmountUSD = convertPHPToUSD(item.amount);
 
         return `
@@ -1316,11 +1255,10 @@
 
       prevInvoiceKeys = currentKeys;
 
-      // Pulse the total
       const totalEl = document.getElementById('totalAmount');
       totalEl.textContent = formatPrice(totalUSD);
       totalEl.classList.remove('total-updating');
-      void totalEl.offsetWidth; // reflow to restart animation
+      void totalEl.offsetWidth;
       totalEl.classList.add('total-updating');
 
       document.getElementById('invoiceDate').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -1351,17 +1289,14 @@
         return;
       }
 
-      // Collect order data
       const orderData = collectOrderData();
 
-      // Show loading state
       const btn = document.getElementById('placeOrderBtn');
       btn.textContent = '⏳ Sending Order...';
       btn.disabled = true;
 
       const orderDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-      // Build a clean readable order summary for the message body
       const itemsList = (() => {
         const rows = document.querySelectorAll('#invoiceItems tr');
         let lines = '';
@@ -1372,20 +1307,13 @@
         return lines;
       })();
 
-      // ── Single email to NexGenix (free plan only allows sending to verified address)
-      // Variable names MUST match the EmailJS template exactly: {{email}}, {{from_name}}, {{subject}}, {{message}}
       const emailParams = {
-        // ── To NexGenix (matches {{email}} in template To Email field) ──
         email:      'nexgenixcreativesolutions@gmail.com',
         from_name:  orderData.clientName,
         reply_to:   orderData.clientEmail || 'nexgenixcreativesolutions@gmail.com',
         subject:    `New Order — ${orderData.invoiceNumber} | ${orderData.clientName}`,
-
-        // ── Client fields used by EmailJS Auto-Reply tab ──
         client_name:  orderData.clientName,
-        client_email: orderData.clientEmail || '',   // Auto-Reply sends to this address
-
-        // ── Admin notification message body ──
+        client_email: orderData.clientEmail || '',
         message:
 `📦 NEW ORDER RECEIVED
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1409,7 +1337,6 @@ TOTAL:        ${orderData.totalAmount}
 ACTION REQUIRED: Follow up with client to confirm and process payment.
 Reply-to client at: ${orderData.clientEmail || 'N/A'}`,
 
-        // ── Auto-Reply message body (sent to client) ──
         auto_reply_message:
 `Dear ${orderData.clientName},
 
@@ -1438,7 +1365,6 @@ nexgenixcreativesolutions@gmail.com`
       };
 
       try {
-        // Send order notification to NexGenix
         const response = await emailjs.send(
           EMAILJS_CONFIG.serviceID,
           EMAILJS_CONFIG.adminTemplateID,
@@ -1447,7 +1373,6 @@ nexgenixcreativesolutions@gmail.com`
         );
         console.log('Order notification sent:', response);
 
-        // Show success state
         btn.textContent = '✅ Order Placed!';
         btn.style.background = 'linear-gradient(135deg, rgba(57,255,20,0.3), rgba(57,255,20,0.15))';
         btn.style.borderColor = 'var(--neon)';
@@ -1460,7 +1385,6 @@ nexgenixcreativesolutions@gmail.com`
       } catch (error) {
         console.error('EmailJS Error:', error);
 
-        // Fallback to mailto if EmailJS fails
         const subject = encodeURIComponent(`New Order - ${orderData.invoiceNumber}`);
         const body = encodeURIComponent(`
 Order Details:
@@ -1490,7 +1414,6 @@ ${JSON.stringify(orderData, null, 2)}
     }
 
     function startNewPurchase() {
-      // Reset invoice section
       selectedPackage = null;
       selectedCategory = null;
       document.getElementById('invoiceSection').style.display = 'none';
@@ -1502,17 +1425,14 @@ ${JSON.stringify(orderData, null, 2)}
       btn.style.background = '';
       btn.style.borderColor = '';
       btn.style.color = '';
-      // Scroll to top of services
       document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      // Re-highlight no package selected
       document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
     }
 
     function collectOrderData() {
       const pkg = servicePackages[selectedCategory][selectedPackage];
 
-      // Collect all invoice items
       const invoiceItems = [];
       const itemRows = document.querySelectorAll('#invoiceItems tr');
       itemRows.forEach(row => {
@@ -1553,7 +1473,6 @@ ${JSON.stringify(orderData, null, 2)}
       const margin = 14;
       const contentW = W - margin * 2;
 
-      // ── Palette ───────────────────────────────────────────────────
       const C = {
         bg:          [6,   8,  14],
         surface:     [13,  18,  28],
@@ -1570,7 +1489,6 @@ ${JSON.stringify(orderData, null, 2)}
         rowOdd:      [11,  16,  26],
       };
 
-      // ── Data ──────────────────────────────────────────────────────
       const invNum      = document.getElementById('invoiceNumber')?.textContent || 'NGCS-' + Date.now();
       const invDate     = document.getElementById('invoiceDate')?.textContent   || new Date().toLocaleDateString();
       const clientName  = document.getElementById('clientNameInput')?.value     || 'Valued Client';
@@ -1580,7 +1498,6 @@ ${JSON.stringify(orderData, null, 2)}
       const currSymbol  = currencySymbols[currentCurrency] || '$';
       const currLabel   = currentCurrency;
 
-      // Collect invoice table rows
       const rows = [];
       document.querySelectorAll('#invoiceItems tr').forEach(tr => {
         const cols = tr.querySelectorAll('td');
@@ -1592,7 +1509,6 @@ ${JSON.stringify(orderData, null, 2)}
 
       let y = 0;
 
-      // ── Helper: filled rounded rect ───────────────────────────────
       const fillRound = (x, ry, w, h, r, color) => {
         doc.setFillColor(...color);
         doc.roundedRect(x, ry, w, h, r, r, 'F');
@@ -1605,21 +1521,14 @@ ${JSON.stringify(orderData, null, 2)}
         doc.text(String(text), x, ry, opts);
       };
 
-      // ══════════════════════════════════════════════════════════════
       // 1. BACKGROUND
-      // ══════════════════════════════════════════════════════════════
       fillRect(0, 0, W, H, C.bg);
 
-      // ══════════════════════════════════════════════════════════════
-      // 2. HEADER — logo area + INVOICE badge
-      // ══════════════════════════════════════════════════════════════
+      // 2. HEADER
       const headerH = 42;
       fillRect(0, 0, W, headerH, C.surface);
-
-      // Neon bottom border
       fillRect(0, headerH - 1, W, 1.5, C.neon);
 
-      // Load logos side by side (centered)
       const logoBaseUrl = 'https://nexgenixcreativesolutions.github.io/assets/images/';
       const logoUrls = [logoBaseUrl + 'logo.png', logoBaseUrl + 'dashboard-logo-no-bg.png'];
 
@@ -1638,13 +1547,12 @@ ${JSON.stringify(orderData, null, 2)}
       });
 
       const [logo1, logo2] = await Promise.all(logoUrls.map(loadImg));
-      const logoH = 18, logoGap = 4;
+      const logoH = 18;
 
       let logoX = margin;
       if (logo1) { doc.addImage(logo1, 'PNG', logoX, (headerH - logoH) / 2, 28, logoH); logoX += 32; }
       if (logo2) { doc.addImage(logo2, 'PNG', logoX, (headerH - logoH) / 2, 40, logoH); logoX += 44; }
 
-      // "CREATIVE SOLUTIONS" text below logos
       doc.setTextColor(...C.neon);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(6.5);
@@ -1656,7 +1564,6 @@ ${JSON.stringify(orderData, null, 2)}
       }
       doc.setCharSpace(0);
 
-      // INVOICE badge — top right
       doc.setDrawColor(...C.neon);
       doc.setLineWidth(0.8);
       doc.roundedRect(W - 50, 8, 34, 10, 2, 2, 'D');
@@ -1667,20 +1574,15 @@ ${JSON.stringify(orderData, null, 2)}
       txt('INVOICE', W - 33, 14.5, { align: 'center' });
       doc.setCharSpace(0);
 
-      // Invoice number under badge
       doc.setTextColor(...C.muted);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(7);
       txt('# ' + invNum, W - 33, 22, { align: 'center' });
 
-      // ══════════════════════════════════════════════════════════════
-      // 3. META ROW — invoice no / date / status / currency
-      // ══════════════════════════════════════════════════════════════
+      // 3. META ROW
       y = headerH + 1;
       const metaH = 22;
       fillRect(0, y, W, metaH, C.surface2);
-
-      // Border bottom
       fillRect(0, y + metaH - 0.5, W, 0.5, C.border);
 
       const metaCells = [
@@ -1708,7 +1610,6 @@ ${JSON.stringify(orderData, null, 2)}
         doc.setFontSize(8.5);
         txt(cell.value, cx + cellW / 2, y + 15, { align: 'center' });
 
-        // Divider
         if (i < 3) {
           doc.setDrawColor(...C.border);
           doc.setLineWidth(0.3);
@@ -1716,20 +1617,15 @@ ${JSON.stringify(orderData, null, 2)}
         }
       });
 
-      // ══════════════════════════════════════════════════════════════
       // 4. BILL TO / ISSUED BY
-      // ══════════════════════════════════════════════════════════════
       y += metaH + 5;
       const cardH = 34;
       const cardW = (contentW - 6) / 2;
 
-      // ── BILL TO ──
       fillRound(margin, y, cardW, cardH, 3, C.surface);
       doc.setDrawColor(...C.neonDim);
       doc.setLineWidth(0.5);
       doc.roundedRect(margin, y, cardW, cardH, 3, 3, 'D');
-
-      // Header band
       fillRound(margin, y, cardW, 9, 3, C.neonDim);
       fillRect(margin, y + 5, cardW, 4, C.neonDim);
       doc.setTextColor(...C.white);
@@ -1738,24 +1634,20 @@ ${JSON.stringify(orderData, null, 2)}
       doc.setCharSpace(1);
       txt('👤  BILL TO', margin + 6, y + 6);
       doc.setCharSpace(0);
-
       doc.setTextColor(...C.white);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(10);
       txt(clientName, margin + 6, y + 18);
-
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8);
       doc.setTextColor(...C.light);
       if (clientEmail) txt(clientEmail, margin + 6, y + 25);
 
-      // ── ISSUED BY ──
       const ibX = margin + cardW + 6;
       fillRound(ibX, y, cardW, cardH, 3, C.surface);
       doc.setDrawColor(...C.border);
       doc.setLineWidth(0.5);
       doc.roundedRect(ibX, y, cardW, cardH, 3, 3, 'D');
-
       fillRound(ibX, y, cardW, 9, 3, C.surface2);
       fillRect(ibX, y + 5, cardW, 4, C.surface2);
       doc.setTextColor(...C.muted);
@@ -1764,12 +1656,10 @@ ${JSON.stringify(orderData, null, 2)}
       doc.setCharSpace(1);
       txt('🏢  ISSUED BY', ibX + 6, y + 6);
       doc.setCharSpace(0);
-
       doc.setTextColor(...C.white);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(9);
       txt('Nex Genix Creative Solutions', ibX + 6, y + 18);
-
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8);
       doc.setTextColor(...C.neon);
@@ -1777,18 +1667,13 @@ ${JSON.stringify(orderData, null, 2)}
       doc.setTextColor(...C.muted);
       txt('Philippines', ibX + 6, y + 31);
 
-      // ══════════════════════════════════════════════════════════════
       // 5. ITEMS TABLE
-      // ══════════════════════════════════════════════════════════════
       y += cardH + 6;
-
-      // Table header
       fillRound(margin, y, contentW, 9, 2, C.surface2);
       fillRect(margin, y + 5, contentW, 4, C.surface2);
       doc.setDrawColor(...C.neon);
       doc.setLineWidth(0.5);
       doc.line(margin, y + 9, margin + contentW, y + 9);
-
       doc.setTextColor(...C.neon);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(7.5);
@@ -1796,7 +1681,6 @@ ${JSON.stringify(orderData, null, 2)}
       txt('DESCRIPTION', margin + 5, y + 6);
       txt('AMOUNT', margin + contentW - 5, y + 6, { align: 'right' });
       doc.setCharSpace(0);
-
       y += 9;
 
       rows.forEach((row, i) => {
@@ -1805,8 +1689,6 @@ ${JSON.stringify(orderData, null, 2)}
         const rowH       = Math.max(9, splitDesc.length * 5 + 4);
 
         fillRect(margin, y, contentW, rowH, i % 2 === 0 ? C.rowEven : C.rowOdd);
-
-        // Neon left accent
         fillRect(margin, y, 2, rowH, C.neon);
 
         doc.setTextColor(...C.light);
@@ -1824,17 +1706,13 @@ ${JSON.stringify(orderData, null, 2)}
           txt(row.amount, margin + contentW - 5, y + 6, { align: 'right' });
         }
 
-        // Row border
         doc.setDrawColor(...C.border);
         doc.setLineWidth(0.2);
         doc.line(margin, y + rowH, margin + contentW, y + rowH);
-
         y += rowH;
       });
 
-      // ══════════════════════════════════════════════════════════════
       // 6. TOTAL BOX
-      // ══════════════════════════════════════════════════════════════
       y += 5;
       const totalBoxW = 90;
       const totalBoxH = 22;
@@ -1844,20 +1722,16 @@ ${JSON.stringify(orderData, null, 2)}
       doc.setDrawColor(...C.neon);
       doc.setLineWidth(0.8);
       doc.roundedRect(totalBoxX, y, totalBoxW, totalBoxH, 3, 3, 'D');
-
       doc.setTextColor(...C.muted);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(7);
       doc.setCharSpace(0.8);
       txt('TOTAL AMOUNT DUE', totalBoxX + totalBoxW - 5, y + 7, { align: 'right' });
       doc.setCharSpace(0);
-
       doc.setTextColor(...C.neon);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(18);
       txt(totalText, totalBoxX + totalBoxW - 5, y + 18, { align: 'right' });
-
-      // Package label left of total
       doc.setTextColor(...C.muted);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(7.5);
@@ -1867,26 +1741,20 @@ ${JSON.stringify(orderData, null, 2)}
       doc.setFont('helvetica', 'bold');
       txt(clientName, margin, y + 18);
 
-      // ══════════════════════════════════════════════════════════════
       // 7. PAYMENT INFO BOX
-      // ══════════════════════════════════════════════════════════════
       y += totalBoxH + 6;
       const payH = 28;
       fillRound(margin, y, contentW, payH, 3, C.surface);
       doc.setDrawColor(...C.neonDim);
       doc.setLineWidth(0.5);
       doc.roundedRect(margin, y, contentW, payH, 3, 3, 'D');
-
-      // Left accent bar
       fillRound(margin, y, 3, payH, 2, C.neonDim);
-
       doc.setTextColor(...C.neon);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(8);
       doc.setCharSpace(0.8);
       txt('PAYMENT INFORMATION', margin + 8, y + 7);
       doc.setCharSpace(0);
-
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(7.8);
       doc.setTextColor(...C.light);
@@ -1895,13 +1763,10 @@ ${JSON.stringify(orderData, null, 2)}
       txt('Local: GCash  ·  Bank Transfer  ·  PayMaya', margin + 8, y + 20);
       txt('International: PayPal  ·  Stripe', margin + 8, y + 26);
 
-      // ══════════════════════════════════════════════════════════════
       // 8. FOOTER
-      // ══════════════════════════════════════════════════════════════
       const footY = H - 16;
       fillRect(0, footY - 3, W, 0.5, C.border);
-      fillRect(0, footY - 3, W, 0.5, C.neon); // neon line
-
+      fillRect(0, footY - 3, W, 0.5, C.neon);
       doc.setTextColor(...C.muted);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(7);
@@ -1920,11 +1785,9 @@ ${JSON.stringify(orderData, null, 2)}
       const username = document.getElementById('usernameInput').value;
       const phoneCode = document.getElementById('phoneCode').value;
       const phoneNum = document.getElementById('phoneNumber').value;
-      const fullPhone = phoneNum ? `${phoneCode}${phoneNum.replace(/\s/g,'')}`  : '';
+      const fullPhone = phoneNum ? `${phoneCode}${phoneNum.replace(/\s/g,'')}` : '';
 
-      // Sync to invoice
       syncSettingsPhoneToInvoice();
-
       alert('Profile updated successfully!' + (fullPhone ? `\nWhatsApp: ${fullPhone}` : ''));
     }
 
@@ -1934,7 +1797,6 @@ ${JSON.stringify(orderData, null, 2)}
         alert('Password must be at least 6 characters.');
         return;
       }
-
       alert('Password updated successfully!');
       document.getElementById('passwordInput').value = '';
     }
@@ -1949,16 +1811,13 @@ ${JSON.stringify(orderData, null, 2)}
       el.classList.add('active');
     }
 
-
-
-    // =================== INITIALIZE ===================
+    // =================== SCROLL TO TOP ===================
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       document.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-
-    // =================== PAYMENT METHOD ICON ========================
+    // =================== PAYMENT METHOD ICON ===================
     function updateDurationLimit() {
       updateInvoice();
       if (!selectedCategory || !selectedPackage) return;
@@ -2027,6 +1886,24 @@ ${JSON.stringify(orderData, null, 2)}
       } catch(e) { /* ignore */ }
     }
 
+    // =================== MULTI-SELECT DROPDOWNS ===================
+    function toggleMultiDrop(id) {
+      const drop = document.getElementById(id);
+      if (drop) drop.classList.toggle('open');
+    }
+
+    function updateMultiSelect(id) {
+      updateInvoice();
+    }
+
+    // =================== PASSWORD TOGGLE ===================
+    function togglePw(inputId) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    // =================== INITIALIZE ===================
     document.addEventListener('DOMContentLoaded', function() {
       createFloatingCodeBackground();
       loadServices();
@@ -2044,7 +1921,7 @@ ${JSON.stringify(orderData, null, 2)}
         });
       }
 
-      // Set user info
+      // Set default user info
       document.getElementById('clientNameInput').value = 'Valued Client';
       document.getElementById('displayNameInput').value = 'Valued Client';
       document.getElementById('profileEmail').value = 'client@example.com';
@@ -2053,33 +1930,79 @@ ${JSON.stringify(orderData, null, 2)}
       // Sync settings phone to invoice whenever settings phone changes
       document.getElementById('phoneCode').addEventListener('change', syncSettingsPhoneToInvoice);
       document.getElementById('phoneNumber').addEventListener('input', syncSettingsPhoneToInvoice);
+
+      // =================== URL PARAM: AUTO-SELECT SERVICE CATEGORY ===================
+      // Reads ?service=web-design (or any valid type) from the URL
+      // and automatically activates the correct filter tab on the dashboard.
+      // This is triggered when redirected from the Digital Services page.
+      const urlParams = new URLSearchParams(window.location.search);
+      const serviceParam = urlParams.get('service');
+
+      if (serviceParam && serviceParam !== 'all') {
+        // Make sure we're on the "New Website" order view
+        selectOrderType('new');
+
+        // Navigate to the services section
+        showSection('servicesSection');
+
+        // Find the matching filter tab by checking its onclick attribute
+        const allTabs = document.querySelectorAll('.filter-tab');
+        let matchedTab = null;
+        allTabs.forEach(tab => {
+          const onclickVal = tab.getAttribute('onclick') || '';
+          if (onclickVal.includes(`'${serviceParam}'`) || onclickVal.includes(`"${serviceParam}"`)) {
+            matchedTab = tab;
+          }
+        });
+
+        if (matchedTab) {
+          // Click the matching tab to trigger its full behavior
+          matchedTab.click();
+        } else {
+          // Fallback: call filterByServiceType directly with a dummy button element
+          const dummy = document.createElement('button');
+          dummy.classList.add('filter-tab');
+          filterByServiceType(serviceParam, dummy);
+        }
+
+        // Scroll the filter bar into view smoothly so the user sees the result
+        const filterBar = document.getElementById('serviceFilterBar');
+        if (filterBar) {
+          setTimeout(() => {
+            filterBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 150);
+        }
+      }
     });
+
     // ── GLOBAL EXPORTS — ensure onclick= attributes can always reach these ──
-    window.filterByServiceType   = filterByServiceType;
-    window.selectOrderType       = selectOrderType;
-    window.selectService         = selectService;
-    window.showSection           = showSection;
-    window.toggleSidebar         = toggleSidebar;
-    window.updateInvoice         = updateInvoice;
-    window.adjustPages           = adjustPages;
-    window.updatePageCount       = updatePageCount;
-    window.changeCurrencyFromDropdown = changeCurrencyFromDropdown;
-    window.submitOrder           = submitOrder;
-    window.downloadInvoice       = downloadInvoice;
-    window.startNewPurchase      = startNewPurchase;
-    window.saveClientInfo        = saveClientInfo;
-    window.syncClientName        = syncClientName;
-    window.syncInvoiceEmail      = syncInvoiceEmail;
-    window.syncInvoicePhone      = syncInvoicePhone;
+    window.filterByServiceType         = filterByServiceType;
+    window.selectOrderType             = selectOrderType;
+    window.selectService               = selectService;
+    window.showSection                 = showSection;
+    window.toggleSidebar               = toggleSidebar;
+    window.updateInvoice               = updateInvoice;
+    window.adjustPages                 = adjustPages;
+    window.updatePageCount             = updatePageCount;
+    window.changeCurrencyFromDropdown  = changeCurrencyFromDropdown;
+    window.submitOrder                 = submitOrder;
+    window.downloadInvoice             = downloadInvoice;
+    window.startNewPurchase            = startNewPurchase;
+    window.saveClientInfo              = saveClientInfo;
+    window.syncClientName              = syncClientName;
+    window.syncInvoiceEmail            = syncInvoiceEmail;
+    window.syncInvoicePhone            = syncInvoicePhone;
     window.syncInvoiceEmailFromSettings = syncInvoiceEmailFromSettings;
-    window.updatePaymentIcon     = updatePaymentIcon;
-    window.logout                = logout;
-    window.setBottomActive       = setBottomActive;
-    window.scrollToTop           = scrollToTop;
-    window.updateDurationLimit   = updateDurationLimit;
-    window.filterOrders          = typeof filterOrders === 'function' ? filterOrders : function(){};
-    window.saveProfile           = saveProfile;
-    window.updatePassword        = updatePassword;
-    window.toggleMultiDrop       = toggleMultiDrop;
-    window.updateMultiSelect     = updateMultiSelect;
-    window.togglePw              = togglePw;
+    window.updatePaymentIcon           = updatePaymentIcon;
+    window.logout                      = logout;
+    window.setBottomActive             = setBottomActive;
+    window.scrollToTop                 = scrollToTop;
+    window.updateDurationLimit         = updateDurationLimit;
+    window.filterOrders                = typeof filterOrders === 'function' ? filterOrders : function(){};
+    window.saveProfile                 = saveProfile;
+    window.updatePassword              = updatePassword;
+    window.toggleMultiDrop             = toggleMultiDrop;
+    window.updateMultiSelect           = updateMultiSelect;
+    window.togglePw                    = togglePw;
+    window.toggleBizTag                = toggleBizTag;
+    window.toggleFeature               = toggleFeature;
