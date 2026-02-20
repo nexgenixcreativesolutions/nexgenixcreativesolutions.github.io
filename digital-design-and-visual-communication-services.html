@@ -150,12 +150,13 @@
     }
 
     @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
       to {
         opacity: 1;
         transform: translateY(0);
-      }
-      from {
-        transform: translateY(30px);
       }
     }
 
@@ -389,7 +390,6 @@
       <button class="hero-read-more" onclick="toggleHeroDescription(this)">
         Read More <i class="fas fa-chevron-down"></i>
       </button>
-
     </div>
   </section>
 
@@ -397,6 +397,7 @@
   <section class="services-section">
     <div class="services-container">
       <div class="services-grid">
+
         <div class="service-card">
           <img src="assets/images/app design.png" class="service-image" alt="App Design">
           <div class="service-content">
@@ -510,6 +511,7 @@
             <button class="cta-button">Select Service</button>
           </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -530,7 +532,8 @@
 
   <!-- JavaScript -->
   <script>
-    // Floating Code Background
+
+    // =================== FLOATING CODE BACKGROUND ===================
     const codeSnippets = [
       'const nexgenix = () => {',
       'function createSolution() {',
@@ -556,34 +559,26 @@
 
     function createFloatingCodeBackground() {
       const container = document.getElementById('floatingCodeContainer');
-
       for (let i = 0; i < 15; i++) {
         const codeLine = document.createElement('div');
         codeLine.className = 'code-line';
-
         const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
         codeLine.textContent = randomSnippet;
-
         const yPosition = 5 + (i * 6);
         const duration = 15 + Math.random() * 10;
         const delay = Math.random() * 20;
-
         codeLine.style.top = `${yPosition}%`;
         codeLine.style.animationDuration = `${duration}s`;
         codeLine.style.animationDelay = `${delay}s`;
-
         container.appendChild(codeLine);
       }
     }
 
-    // Toggle Hero Description
+    // =================== TOGGLE HERO DESCRIPTION ===================
     function toggleHeroDescription(button) {
       const fullDescription = document.querySelector('.hero-subtitle-full');
-      const icon = button.querySelector('i');
-
       fullDescription.classList.toggle('expanded');
       button.classList.toggle('expanded');
-
       if (fullDescription.classList.contains('expanded')) {
         button.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
       } else {
@@ -591,15 +586,12 @@
       }
     }
 
-    // Toggle Service Description
+    // =================== TOGGLE SERVICE DESCRIPTION ===================
     function toggleDescription(button) {
       const card = button.closest('.service-content');
       const fullDescription = card.querySelector('.description-full');
-      const icon = button.querySelector('i');
-
       fullDescription.classList.toggle('expanded');
       button.classList.toggle('expanded');
-
       if (fullDescription.classList.contains('expanded')) {
         button.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
       } else {
@@ -607,7 +599,7 @@
       }
     }
 
-    // Intersection Observer for scroll animations
+    // =================== SCROLL ANIMATIONS ===================
     function initScrollAnimations() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -622,42 +614,48 @@
       });
     }
 
-/ Service Button Click Handler — redirects to dashboard with selected service
-const serviceTypeMap = {
-  'App Design':       'app-design',
-  'Web Design':       'web-design',
-  'Web Development':  'web-development',
-  'UI/UX Design':     'ui-ux-design',
-  'Logo Design':      'logo-design',
-  'Video Ads':        'video-ads'
-};
-
-const serviceButtons = document.querySelectorAll('.cta-button');
-serviceButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const serviceName = button.closest('.service-card').querySelector('.service-title').innerText.trim();
-    const serviceType = serviceTypeMap[serviceName] || 'all';
-    window.location.href = `https://nexgenixcreativesolutions.github.io/dashboard?service=${serviceType}`;
-  });
-});
-
-    // Toggle Menu
+    // =================== TOGGLE MENU ===================
     function toggleMenu() {
       document.querySelector('.nav-list').classList.toggle('active');
       document.querySelector('.hamburger-menu').classList.toggle('open');
     }
 
-    // Logout Handler
+    // =================== LOGOUT HANDLER ===================
     function handleLogout() {
       alert('Logging out...');
       window.location.href = 'https://nexgenixcreativesolutions.github.io/login-signup';
     }
 
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', function() {
+    // =================== INITIALIZE ===================
+    document.addEventListener('DOMContentLoaded', function () {
       createFloatingCodeBackground();
       initScrollAnimations();
+
+      // ── Service Button Click Handler ──
+      // Maps each service card title to its dashboard filter type,
+      // then redirects to the dashboard with ?service= in the URL.
+      const serviceTypeMap = {
+        'App Design':      'app-design',
+        'Web Design':      'web-design',
+        'Web Development': 'web-development',
+        'UI/UX Design':    'ui-ux-design',
+        'Logo Design':     'logo-design',
+        'Video Ads':       'video-ads'
+      };
+
+      document.querySelectorAll('.cta-button').forEach(button => {
+        button.addEventListener('click', () => {
+          const serviceName = button
+            .closest('.service-card')
+            .querySelector('.service-title')
+            .innerText.trim();
+          const serviceType = serviceTypeMap[serviceName] || 'all';
+          window.location.href =
+            `https://nexgenixcreativesolutions.github.io/dashboard?service=${serviceType}`;
+        });
+      });
     });
+
   </script>
 </body>
 </html>
