@@ -622,17 +622,24 @@
       });
     }
 
-    // Service Button Click Handler
-    const serviceButtons = document.querySelectorAll('.cta-button');
-    serviceButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const serviceName = button.closest('.service-card').querySelector('.service-title').innerText;
-        const messengerLink = `https://m.me/nexgenix.creative.solutions?text=${encodeURIComponent(
-          `Hi, I am interested in your ${serviceName} service.`
-        )}`;
-        window.open(messengerLink, '_blank');
-      });
-    });
+/ Service Button Click Handler — redirects to dashboard with selected service
+const serviceTypeMap = {
+  'App Design':       'app-design',
+  'Web Design':       'web-design',
+  'Web Development':  'web-development',
+  'UI/UX Design':     'ui-ux-design',
+  'Logo Design':      'logo-design',
+  'Video Ads':        'video-ads'
+};
+
+const serviceButtons = document.querySelectorAll('.cta-button');
+serviceButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const serviceName = button.closest('.service-card').querySelector('.service-title').innerText.trim();
+    const serviceType = serviceTypeMap[serviceName] || 'all';
+    window.location.href = `https://nexgenixcreativesolutions.github.io/dashboard?service=${serviceType}`;
+  });
+});
 
     // Toggle Menu
     function toggleMenu() {
