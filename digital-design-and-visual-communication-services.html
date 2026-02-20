@@ -3,11 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Digital Design Services | Nex Genix Creative Solutions</title>
+  <title>Nex Genix Creative Solutions</title>
   <link rel="stylesheet" href="assets/css/styles.css" />
   <link rel="stylesheet" href="assets/css/responsive.css" />
   <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-  <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,20 +35,10 @@
     }
 
     @keyframes floatCode {
-      0% {
-        transform: translateX(100vw);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(-100%);
-        opacity: 0;
-      }
+      0%   { transform: translateX(100vw); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateX(-100%); opacity: 0; }
     }
 
     /* =================== HERO SECTION =================== */
@@ -96,6 +85,7 @@
       line-height: 1.7;
       opacity: 0;
       animation: fadeInUp 0.8s ease 0.2s forwards;
+      text-align: justify;
     }
 
     .hero-subtitle-preview {
@@ -106,6 +96,7 @@
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.4s ease;
+      text-align: justify;
     }
 
     .hero-subtitle-full.expanded {
@@ -128,17 +119,9 @@
       margin-bottom: 1.5rem;
     }
 
-    .hero-read-more:hover {
-      color: #2ecc71;
-    }
-
-    .hero-read-more i {
-      transition: transform 0.3s ease;
-    }
-
-    .hero-read-more.expanded i {
-      transform: rotate(180deg);
-    }
+    .hero-read-more:hover { color: #2ecc71; }
+    .hero-read-more i { transition: transform 0.3s ease; }
+    .hero-read-more.expanded i { transform: rotate(180deg); }
 
     .hero-image {
       max-width: 600px;
@@ -150,14 +133,8 @@
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* =================== SERVICES SECTION =================== */
@@ -212,32 +189,35 @@
     }
 
     .service-content {
-      padding: 2rem;
+      padding: 1.5rem;
     }
 
     .service-title {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: white;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .service-description {
       color: #9ca3af;
-      line-height: 1.7;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
+      line-height: 1.65;
+      margin-bottom: 0.875rem;
+      font-size: 0.875rem;
+      text-align: justify;
     }
 
     .description-preview {
       display: block;
+      text-align: justify;
     }
 
     .description-full {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.4s ease;
+      text-align: justify;
     }
 
     .description-full.expanded {
@@ -249,32 +229,24 @@
       border: none;
       color: #39FF14;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
-      padding: 0.5rem 0;
+      padding: 0.4rem 0;
       display: flex;
       align-items: center;
       gap: 0.5rem;
       transition: all 0.3s ease;
       font-family: 'Montserrat Alternates', sans-serif;
-      margin-bottom: 1rem;
+      margin-bottom: 0.875rem;
     }
 
-    .read-more-btn:hover {
-      color: #2ecc71;
-    }
-
-    .read-more-btn i {
-      transition: transform 0.3s ease;
-    }
-
-    .read-more-btn.expanded i {
-      transform: rotate(180deg);
-    }
+    .read-more-btn:hover { color: #2ecc71; }
+    .read-more-btn i { transition: transform 0.3s ease; }
+    .read-more-btn.expanded i { transform: rotate(180deg); }
 
     .cta-button {
       width: 100%;
-      padding: 0.875rem 1.5rem;
+      padding: 0.75rem 1.25rem;
       background: transparent;
       color: #39FF14;
       border: 1px solid #39FF14;
@@ -282,7 +254,7 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-family: 'Montserrat Alternates', sans-serif;
     }
 
@@ -318,22 +290,115 @@
       color: #9ca3af;
       line-height: 1.8;
       margin-bottom: 2rem;
+      text-align: justify;
     }
 
-    /* =================== RESPONSIVE DESIGN =================== */
+    /* =================== RESPONSIVE — MOBILE OPTIMIZATIONS =================== */
     @media (max-width: 768px) {
+      .hero-section {
+        padding: 80px 16px 40px;
+        min-height: auto;
+      }
+
       .hero-title {
-        font-size: 2.5rem;
+        font-size: 1.85rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1.25rem;
+        line-height: 1.65;
+      }
+
+      .hero-image {
+        margin: 1rem auto;
+        border-radius: 0.75rem;
+      }
+
+      .hero-read-more {
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+      }
+
+      .services-section {
+        padding: 2rem 0.875rem;
       }
 
       .services-grid {
         grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+      }
+
+      .service-image {
+        height: 160px;
+      }
+
+      .service-content {
+        padding: 1.1rem;
+      }
+
+      .service-title {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .service-description {
+        font-size: 0.82rem;
+        line-height: 1.6;
+        margin-bottom: 0.6rem;
+      }
+
+      .read-more-btn {
+        font-size: 0.8rem;
+        margin-bottom: 0.6rem;
+        padding: 0.3rem 0;
+      }
+
+      .cta-button {
+        padding: 0.65rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .info-section {
+        padding: 2.5rem 1rem;
+      }
+
+      .info-title {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+      }
+
+      .info-text {
+        font-size: 0.9rem;
+        line-height: 1.7;
       }
     }
 
     @media (max-width: 480px) {
       .hero-title {
-        font-size: 1.75rem;
+        font-size: 1.45rem;
+      }
+
+      .hero-subtitle {
+        font-size: 0.85rem;
+      }
+
+      .service-title {
+        font-size: 0.95rem;
+      }
+
+      .service-description {
+        font-size: 0.8rem;
+      }
+
+      .info-title {
+        font-size: 1.2rem;
+      }
+
+      .info-text {
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -350,7 +415,6 @@
       <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
     </div>
 
-    <!-- Hamburger Menu Icon -->
     <div class="hamburger-menu" onclick="toggleMenu()">
       <div class="bar"></div>
       <div class="bar"></div>
