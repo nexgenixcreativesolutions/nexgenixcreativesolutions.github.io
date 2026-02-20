@@ -353,6 +353,126 @@
     .bottom-nav a, .bottom-nav a:visited, .bottom-nav a:hover {
       text-decoration: none !important;
     }
+
+    /* ── INVOICE CUSTOM HEADER ── */
+    .invoice-header-custom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem 1rem 0.75rem;
+      background: linear-gradient(135deg, #060609 0%, #0c1018 100%);
+      border-bottom: 2px solid var(--neon);
+      position: relative;
+      gap: 0.4rem;
+    }
+    .invoice-header-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .inv-logo-main {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+    }
+    .inv-logo-nobg {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+    .inv-header-brand {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: var(--neon);
+      text-align: center;
+    }
+    .invoice-badge-inline {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.875rem;
+      background: transparent;
+      border: 1.5px solid var(--neon);
+      color: var(--neon);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 3px;
+    }
+
+    /* ── MULTI-SELECT DROPDOWN ── */
+    .multi-select-wrap {
+      position: relative;
+      width: 100%;
+    }
+    .multi-select-display {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0.875rem;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: border-color 0.2s;
+      user-select: none;
+    }
+    .multi-select-display:hover,
+    .multi-select-display.open { border-color: var(--neon); }
+    .multi-select-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .multi-select-text.has-value { color: var(--text); }
+    .multi-arrow {
+      font-size: 0.65rem;
+      color: var(--neon);
+      transition: transform 0.2s;
+      margin-left: 0.5rem;
+    }
+    .multi-select-display.open .multi-arrow { transform: rotate(180deg); }
+    .multi-select-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #0c1018;
+      border: 1px solid var(--neon);
+      border-radius: var(--radius-sm);
+      z-index: 500;
+      max-height: 220px;
+      overflow-y: auto;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .multi-select-dropdown.open { display: block; }
+    .multi-opt {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.875rem;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      transition: background 0.15s, color 0.15s;
+    }
+    .multi-opt:hover { background: var(--neon-dim); color: var(--text); }
+    .multi-opt input[type="checkbox"] {
+      accent-color: var(--neon);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .multi-opt:has(input:checked) { color: var(--neon); background: rgba(57,255,20,0.05); }
   </style>
 </head>
 
@@ -493,18 +613,67 @@
           <!-- Business Questionnaire -->
           <div class="biz-questionnaire" id="bizQuestionnaire">
             <h3>📋 Tell Us About Your Business</h3>
+
             <div class="form-group">
-              <div class="biz-tags-label">Business Type</div>
-              <div class="biz-tags" id="bizTypeTags"></div>
+              <label class="biz-tags-label">Business Type <span style="font-size:0.65rem;color:var(--text-muted);">(select all that apply)</span></label>
+              <div class="multi-select-wrap" id="bizTypeTags">
+                <div class="multi-select-display" onclick="toggleMultiDrop('bizTypeDropdown', this)">
+                  <span class="multi-select-text" id="bizTypeText">Select business type…</span>
+                  <span class="multi-arrow">▾</span>
+                </div>
+                <div class="multi-select-dropdown" id="bizTypeDropdown">
+                  <label class="multi-opt"><input type="checkbox" value="Retail / E-Commerce" onchange="updateMultiSelect('bizTypeText','type',this)"> Retail / E-Commerce</label>
+                  <label class="multi-opt"><input type="checkbox" value="Restaurant / Food" onchange="updateMultiSelect('bizTypeText','type',this)"> Restaurant / Food</label>
+                  <label class="multi-opt"><input type="checkbox" value="Services / Freelance" onchange="updateMultiSelect('bizTypeText','type',this)"> Services / Freelance</label>
+                  <label class="multi-opt"><input type="checkbox" value="Tech / SaaS" onchange="updateMultiSelect('bizTypeText','type',this)"> Tech / SaaS</label>
+                  <label class="multi-opt"><input type="checkbox" value="Healthcare" onchange="updateMultiSelect('bizTypeText','type',this)"> Healthcare</label>
+                  <label class="multi-opt"><input type="checkbox" value="Education" onchange="updateMultiSelect('bizTypeText','type',this)"> Education</label>
+                  <label class="multi-opt"><input type="checkbox" value="Real Estate" onchange="updateMultiSelect('bizTypeText','type',this)"> Real Estate</label>
+                  <label class="multi-opt"><input type="checkbox" value="Portfolio / Personal Brand" onchange="updateMultiSelect('bizTypeText','type',this)"> Portfolio / Personal Brand</label>
+                  <label class="multi-opt"><input type="checkbox" value="Non-profit / NGO" onchange="updateMultiSelect('bizTypeText','type',this)"> Non-profit / NGO</label>
+                  <label class="multi-opt"><input type="checkbox" value="Entertainment / Events" onchange="updateMultiSelect('bizTypeText','type',this)"> Entertainment / Events</label>
+                  <label class="multi-opt"><input type="checkbox" value="Other" onchange="updateMultiSelect('bizTypeText','type',this)"> Other</label>
+                </div>
+              </div>
             </div>
+
             <div class="form-group">
-              <div class="biz-tags-label">Business Goals</div>
-              <div class="biz-tags" id="bizGoalTags"></div>
+              <label class="biz-tags-label">Business Goals <span style="font-size:0.65rem;color:var(--text-muted);">(select all that apply)</span></label>
+              <div class="multi-select-wrap" id="bizGoalTags">
+                <div class="multi-select-display" onclick="toggleMultiDrop('bizGoalDropdown', this)">
+                  <span class="multi-select-text" id="bizGoalText">Select business goals…</span>
+                  <span class="multi-arrow">▾</span>
+                </div>
+                <div class="multi-select-dropdown" id="bizGoalDropdown">
+                  <label class="multi-opt"><input type="checkbox" value="Generate Leads" onchange="updateMultiSelect('bizGoalText','goal',this)"> Generate Leads</label>
+                  <label class="multi-opt"><input type="checkbox" value="Sell Products Online" onchange="updateMultiSelect('bizGoalText','goal',this)"> Sell Products Online</label>
+                  <label class="multi-opt"><input type="checkbox" value="Build Brand Awareness" onchange="updateMultiSelect('bizGoalText','goal',this)"> Build Brand Awareness</label>
+                  <label class="multi-opt"><input type="checkbox" value="Showcase Portfolio" onchange="updateMultiSelect('bizGoalText','goal',this)"> Showcase Portfolio</label>
+                  <label class="multi-opt"><input type="checkbox" value="Provide Information" onchange="updateMultiSelect('bizGoalText','goal',this)"> Provide Information</label>
+                  <label class="multi-opt"><input type="checkbox" value="Accept Bookings / Appointments" onchange="updateMultiSelect('bizGoalText','goal',this)"> Accept Bookings / Appointments</label>
+                  <label class="multi-opt"><input type="checkbox" value="Customer Support" onchange="updateMultiSelect('bizGoalText','goal',this)"> Customer Support</label>
+                  <label class="multi-opt"><input type="checkbox" value="Expand Online Presence" onchange="updateMultiSelect('bizGoalText','goal',this)"> Expand Online Presence</label>
+                </div>
+              </div>
             </div>
+
             <div class="form-group">
-              <div class="biz-tags-label">Business Stage</div>
-              <div class="biz-tags" id="bizStageTags"></div>
+              <label class="biz-tags-label">Business Stage <span style="font-size:0.65rem;color:var(--text-muted);">(select all that apply)</span></label>
+              <div class="multi-select-wrap" id="bizStageTags">
+                <div class="multi-select-display" onclick="toggleMultiDrop('bizStageDropdown', this)">
+                  <span class="multi-select-text" id="bizStageText">Select business stage…</span>
+                  <span class="multi-arrow">▾</span>
+                </div>
+                <div class="multi-select-dropdown" id="bizStageDropdown">
+                  <label class="multi-opt"><input type="checkbox" value="Just Starting Out" onchange="updateMultiSelect('bizStageText','stage',this)"> Just Starting Out</label>
+                  <label class="multi-opt"><input type="checkbox" value="Already Operating" onchange="updateMultiSelect('bizStageText','stage',this)"> Already Operating</label>
+                  <label class="multi-opt"><input type="checkbox" value="Rebranding / Redesign" onchange="updateMultiSelect('bizStageText','stage',this)"> Rebranding / Redesign</label>
+                  <label class="multi-opt"><input type="checkbox" value="Scaling Up" onchange="updateMultiSelect('bizStageText','stage',this)"> Scaling Up</label>
+                  <label class="multi-opt"><input type="checkbox" value="Established Brand" onchange="updateMultiSelect('bizStageText','stage',this)"> Established Brand</label>
+                </div>
+              </div>
             </div>
+
           </div>
 
           <!-- App Design Options -->
@@ -617,11 +786,15 @@
         <div class="content-box" id="invoiceSection" style="display:none;">
           <div class="invoice-preview">
 
-            <div class="invoice-banner-wrap">
-              <img src="https://nexgenixcreativesolutions.github.io/assets/images/banner.png" alt="Nex Genix Creative Solutions"
-                   onerror="this.onerror=null;this.src='assets/images/dashboard-logo-no-bg.png';this.style.maxHeight='80px';this.style.objectFit='contain';this.style.padding='1rem';" />
-              <div class="invoice-banner-overlay"></div>
-              <div class="invoice-badge">INVOICE</div>
+            <div class="invoice-header-custom">
+              <div class="invoice-header-logos">
+                <img src="assets/images/logo.png" alt="Logo" class="inv-logo-main"
+                     onerror="this.style.display='none'">
+                <img src="assets/images/dashboard-logo-no-bg.png" alt="Nex Genix" class="inv-logo-nobg"
+                     onerror="this.style.display='none'">
+              </div>
+              <div class="inv-header-brand">CREATIVE SOLUTIONS</div>
+              <div class="invoice-badge-inline">INVOICE</div>
             </div>
 
             <div class="invoice-meta-bar">
@@ -661,8 +834,7 @@
                         <span class="edit-icon">✏️</span>
                       </span>
                     </div>
-                    <div class="p-detail green" style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    <div class="p-detail" style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
                       <span class="phone-input-group">
                         <select id="invoicePhoneCode" class="phone-country-select" oninput="syncInvoicePhone()"></select>
                         <input type="tel" id="invoicePhoneNumber" class="phone-number-input" placeholder="9XX XXX XXXX" oninput="syncInvoicePhone()" maxlength="15" />
@@ -910,6 +1082,45 @@
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="dashboard-script.js"></script>
   <script>
+
+    // ── MULTI-SELECT DROPDOWN ──────────────────────────────────────────
+    function toggleMultiDrop(dropdownId, displayEl) {
+      // Close all other open dropdowns first
+      document.querySelectorAll('.multi-select-dropdown.open').forEach(d => {
+        if (d.id !== dropdownId) {
+          d.classList.remove('open');
+          d.previousElementSibling.classList.remove('open');
+        }
+      });
+      const dropdown = document.getElementById(dropdownId);
+      const display  = displayEl || dropdown.previousElementSibling;
+      dropdown.classList.toggle('open');
+      display.classList.toggle('open');
+    }
+
+    function updateMultiSelect(textId, group, checkbox) {
+      // Collect all checked values in this dropdown
+      const dropdown = checkbox.closest('.multi-select-dropdown');
+      const checked  = Array.from(dropdown.querySelectorAll('input:checked')).map(i => i.value);
+      bizSelections[group] = checked;
+      const textEl = document.getElementById(textId);
+      if (textEl) {
+        textEl.textContent = checked.length ? checked.join(', ') : ('Select ' + group + '…');
+        textEl.classList.toggle('has-value', checked.length > 0);
+      }
+      updateInvoice();
+    }
+
+    // Close multi-select dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.multi-select-wrap')) {
+        document.querySelectorAll('.multi-select-dropdown.open').forEach(d => {
+          d.classList.remove('open');
+          if (d.previousElementSibling) d.previousElementSibling.classList.remove('open');
+        });
+      }
+    });
+
     // ── SIDEBAR ACTIVE STATE ──────────────────────────────────────────
     function setSidebarActive(sectionId) {
       document.querySelectorAll('.sidebar-top-item').forEach(li => li.classList.remove('active'));
