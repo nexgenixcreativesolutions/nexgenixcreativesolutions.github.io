@@ -976,8 +976,9 @@
         document.getElementById('bizQuestionnaire').style.display = 'none';
       }
 
-      // Always show project details
-      document.getElementById('projectDetailsSection').style.display = 'block';
+      // Show project details only for web/app services, not logo/video (they have their own forms)
+      const hideProjectDetails = activeServiceType === 'logo-design' || activeServiceType === 'video-ads';
+      document.getElementById('projectDetailsSection').style.display = hideProjectDetails ? 'none' : 'block';
 
       // Reset invoice flash tracking
       prevInvoiceKeys = new Set();
