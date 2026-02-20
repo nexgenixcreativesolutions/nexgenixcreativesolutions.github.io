@@ -1931,6 +1931,14 @@ ${JSON.stringify(orderData, null, 2)}
       document.getElementById('phoneCode').addEventListener('change', syncSettingsPhoneToInvoice);
       document.getElementById('phoneNumber').addEventListener('input', syncSettingsPhoneToInvoice);
 
+      // =================== DEFAULT ACTIVE TAB: SERVICES =================== 
+      // The dashboard always opens on the "order" (Services) section.
+      // Mark the Services bottom-nav button as active immediately on load
+      // so the user always sees a green highlighted Services tab — whether
+      // they arrived directly or were redirected from the digital services page.
+      const servicesNavBtn = document.querySelector('.bottom-nav-item[onclick*="order"]');
+      if (servicesNavBtn) setBottomActive(servicesNavBtn);
+
       // =================== URL PARAM: AUTO-SELECT SERVICE CATEGORY ===================
       // Reads ?service=web-design (or any valid type) from the URL
       // and automatically activates the correct filter tab on the dashboard.
@@ -1939,11 +1947,11 @@ ${JSON.stringify(orderData, null, 2)}
       const serviceParam = urlParams.get('service');
 
       if (serviceParam && serviceParam !== 'all') {
-        // Make sure we're on the "New Website" order view
+        // Make sure we're on the "New Website" order view (section ID is 'order')
         selectOrderType('new');
 
-        // Navigate to the services section
-        showSection('servicesSection');
+        // Show the order/services section — the correct section ID is 'order'
+        showSection('order');
 
         // Find the matching filter tab by checking its onclick attribute
         const allTabs = document.querySelectorAll('.filter-tab');
@@ -1956,16 +1964,16 @@ ${JSON.stringify(orderData, null, 2)}
         });
 
         if (matchedTab) {
-          // Click the matching tab to trigger its full behavior
+          // Click the matching tab — this triggers filterByServiceType with the right button ref
           matchedTab.click();
         } else {
-          // Fallback: call filterByServiceType directly with a dummy button element
+          // Fallback: call filterByServiceType directly
           const dummy = document.createElement('button');
           dummy.classList.add('filter-tab');
           filterByServiceType(serviceParam, dummy);
         }
 
-        // Scroll the filter bar into view smoothly so the user sees the result
+        // Scroll the filter bar into view so the user immediately sees the filtered result
         const filterBar = document.getElementById('serviceFilterBar');
         if (filterBar) {
           setTimeout(() => {
