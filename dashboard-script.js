@@ -573,26 +573,15 @@
 
     // =================== NAVIGATION ===================
     function showSection(sectionId) {
-      const sections = document.querySelectorAll('.content-section');
-      sections.forEach(section => {
-        section.classList.remove('active');
-      });
-
-      const menuItems = document.querySelectorAll('.sidebar-menu li');
-      menuItems.forEach(item => {
-        item.classList.remove('active');
-      });
-
+      document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
       const section = document.getElementById(sectionId);
-      if (section) {
-        section.classList.add('active');
-      }
-
-      event.target.classList.add('active');
-
-      // Close sidebar on mobile after selection
+      if (section) section.classList.add('active');
+      // Close sidebar on mobile
       if (window.innerWidth <= 768) {
-        toggleSidebar();
+        const sb = document.getElementById('sidebar');
+        if (sb) sb.classList.remove('active');
+        const ov = document.getElementById('sidebarOverlay');
+        if (ov) ov.classList.remove('active');
       }
     }
 
