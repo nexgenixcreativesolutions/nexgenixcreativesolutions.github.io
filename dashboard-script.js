@@ -948,37 +948,51 @@
       document.getElementById('customizationPanel').style.display = 'block';
       document.getElementById('invoiceSection').style.display = 'block';
 
-      // Hide all service-specific options, then show the right one
-      document.querySelectorAll('.service-type-options').forEach(el => el.style.display = 'none');
+      // ── Hide ALL panels first ──────────────────────────────────────────
+      const allPanels = [
+        'appDesignOptions','webDesignOptions','webDevOptions','uiuxOptions',
+        'logoDesignOptions','videoAdsOptions','bizQuestionnaire','projectDetailsSection'
+      ];
+      allPanels.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
 
-      if (activeServiceType === 'app-design') {
+      // ── Show only what's needed for this service type ──────────────────
+      if (activeServiceType === 'logo-design') {
+        document.getElementById('logoDesignOptions').style.display = 'block';
+        // projectDetailsSection and videoAdsOptions stay hidden
+
+      } else if (activeServiceType === 'video-ads') {
+        document.getElementById('videoAdsOptions').style.display = 'block';
+        // projectDetailsSection and logoDesignOptions stay hidden
+
+      } else if (activeServiceType === 'app-design') {
         document.getElementById('appDesignOptions').style.display = 'block';
         document.getElementById('bizQuestionnaire').style.display = 'block';
+        document.getElementById('projectDetailsSection').style.display = 'block';
+
       } else if (activeServiceType === 'web-design') {
         document.getElementById('webDesignOptions').style.display = 'block';
         document.getElementById('bizQuestionnaire').style.display = 'block';
+        document.getElementById('projectDetailsSection').style.display = 'block';
         initPageCounter('numPages');
+
       } else if (activeServiceType === 'web-development') {
         document.getElementById('webDevOptions').style.display = 'block';
         document.getElementById('bizQuestionnaire').style.display = 'block';
+        document.getElementById('projectDetailsSection').style.display = 'block';
         initPageCounter('numPagesdev');
+
       } else if (activeServiceType === 'ui-ux-design') {
         document.getElementById('uiuxOptions').style.display = 'block';
         document.getElementById('bizQuestionnaire').style.display = 'block';
-      } else if (activeServiceType === 'logo-design') {
-        document.getElementById('logoDesignOptions').style.display = 'block';
-        document.getElementById('bizQuestionnaire').style.display = 'none';
-      } else if (activeServiceType === 'video-ads') {
-        document.getElementById('videoAdsOptions').style.display = 'block';
-        document.getElementById('bizQuestionnaire').style.display = 'none';
-      } else {
-        // manager / renewal — no biz questionnaire needed
-        document.getElementById('bizQuestionnaire').style.display = 'none';
-      }
+        document.getElementById('projectDetailsSection').style.display = 'block';
 
-      // Show project details only for web/app services, not logo/video (they have their own forms)
-      const hideProjectDetails = activeServiceType === 'logo-design' || activeServiceType === 'video-ads';
-      document.getElementById('projectDetailsSection').style.display = hideProjectDetails ? 'none' : 'block';
+      } else {
+        // manager / renewal — just show project details (notes/deadline)
+        document.getElementById('projectDetailsSection').style.display = 'block';
+      }
 
       // Reset invoice flash tracking
       prevInvoiceKeys = new Set();
@@ -1529,289 +1543,375 @@ ${JSON.stringify(orderData, null, 2)}
 
     async function downloadInvoice() {
       if (!selectedPackage || !selectedCategory) {
-        alert('Please select a service package first to generate an invoice.');
+        alert('Please select a service package first.');
         return;
       }
 
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-      const W = 210; // page width mm
+      const W = 210, H = 297;
+      const margin = 14;
+      const contentW = W - margin * 2;
 
-      // ── Color palette (print-friendly) ──────────────────────────────
-      const black      = [15,  20,  30];
-      const darkGray   = [55,  65,  81];
-      const midGray    = [107, 114, 128];
-      const lightGray  = [229, 231, 235];
-      const veryLight  = [248, 249, 250];
-      const accentGreen= [22,  163, 74];   // deep green — readable on white
-      const accentDark = [15,  118, 110];
-      const white      = [255, 255, 255];
-
-      const invoiceNum   = document.getElementById('invoiceNumber').textContent;
-      const invoiceDate  = document.getElementById('invoiceDate').textContent;
-      const clientName   = document.getElementById('clientNameInput').value || 'Valued Client';
-      const clientEmail  = document.getElementById('invoiceEmailInput').value || document.getElementById('profileEmail').value || '';
-      const clientPhone  = getFullWhatsApp();
-      const totalAmountText = document.getElementById('totalAmount').textContent;
-
-      // ═══════════════════════════════════════════════════════════════
-      // HEADER BAND
-      // ═══════════════════════════════════════════════════════════════
-      // HEADER — Banner image with fallback to text
-      // ═══════════════════════════════════════════════════════════════
-      const bannerUrl = 'https://nexgenixcreativesolutions.github.io/assets/images/banner.png';
-      const headerH = 38;
-
-      const drawHeader = (imgDataUrl) => {
-        if (imgDataUrl) {
-          // Draw banner image across full width
-          doc.addImage(imgDataUrl, 'PNG', 0, 0, W, headerH, '', 'FAST');
-          // Dark overlay for readability
-          doc.setFillColor(6, 6, 9);
-          doc.setGState(new doc.GState({ opacity: 0.45 }));
-          doc.rect(0, 0, W, headerH, 'F');
-          doc.setGState(new doc.GState({ opacity: 1 }));
-        } else {
-          // Fallback: dark band with text
-          doc.setFillColor(15, 20, 30);
-          doc.rect(0, 0, W, headerH, 'F');
-          doc.setTextColor(...white);
-          doc.setFont('helvetica', 'bold');
-          doc.setFontSize(20);
-          doc.text('NEX GENIX', 16, 17);
-          doc.setFont('helvetica', 'normal');
-          doc.setFontSize(9);
-          doc.setTextColor(156, 163, 175);
-          doc.text('CREATIVE SOLUTIONS', 16, 23);
-          doc.setFillColor(...accentGreen);
-          doc.rect(16, 25.5, 38, 1.2, 'F');
-        }
-        // INVOICE label always shown on top
-        doc.setTextColor(...white);
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(26);
-        doc.text('INVOICE', W - 16, 20, { align: 'right' });
-        doc.setFontSize(8.5);
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(200, 220, 200);
-        doc.text(`# ${invoiceNum}`, W - 16, 27, { align: 'right' });
-
-        // Neon bottom border on header
-        doc.setFillColor(...accentGreen);
-        doc.rect(0, headerH - 1, W, 1.5, 'F');
+      // ── Palette ───────────────────────────────────────────────────
+      const C = {
+        bg:          [6,   8,  14],
+        surface:     [13,  18,  28],
+        surface2:    [20,  28,  42],
+        neon:        [57, 255,  20],
+        neonDim:     [22, 163,  74],
+        yellow:      [232,212,  77],
+        white:       [255,255, 255],
+        light:       [200,210, 220],
+        muted:       [120,130, 145],
+        border:      [35,  50,  70],
+        red:         [255,  80,  80],
+        rowEven:     [16,  22,  34],
+        rowOdd:      [11,  16,  26],
       };
 
-      // Try loading banner image; always render synchronously with fallback
-      try {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        await new Promise((resolve) => {
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width; canvas.height = img.height;
-            canvas.getContext('2d').drawImage(img, 0, 0);
-            drawHeader(canvas.toDataURL('image/png'));
-            resolve();
-          };
-          img.onerror = () => { drawHeader(null); resolve(); };
-          img.src = bannerUrl;
-          setTimeout(() => { if (!img.complete) { drawHeader(null); resolve(); } }, 3000);
+      // ── Data ──────────────────────────────────────────────────────
+      const invNum      = document.getElementById('invoiceNumber')?.textContent || 'NGCS-' + Date.now();
+      const invDate     = document.getElementById('invoiceDate')?.textContent   || new Date().toLocaleDateString();
+      const clientName  = document.getElementById('clientNameInput')?.value     || 'Valued Client';
+      const clientEmail = document.getElementById('invoiceEmailInput')?.value   || '';
+      const pkg         = servicePackages[selectedCategory][selectedPackage];
+      const totalText   = document.getElementById('totalAmount')?.textContent   || formatPrice(convertPHPToUSD(pkg.price));
+      const currSymbol  = currencySymbols[currentCurrency] || '$';
+      const currLabel   = currentCurrency;
+
+      // Collect invoice table rows
+      const rows = [];
+      document.querySelectorAll('#invoiceItems tr').forEach(tr => {
+        const cols = tr.querySelectorAll('td');
+        if (cols.length === 2) rows.push({
+          desc:   cols[0].textContent.trim(),
+          amount: cols[1].textContent.trim()
         });
-      } catch(e) { drawHeader(null); }
-
-      // ═══════════════════════════════════════════════════════════════
-      // META ROW — date + status badge
-      // ═══════════════════════════════════════════════════════════════
-      doc.setFillColor(...veryLight);
-      doc.rect(0, 38, W, 14, 'F');
-      doc.setTextColor(...midGray);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8.5);
-      doc.text(`Date Issued: ${invoiceDate}`, 16, 46);
-      doc.text(`Currency: ${currencySymbols[currentCurrency]} ${currentCurrency}`, 85, 46);
-
-      // Status badge
-      doc.setFillColor(...accentGreen);
-      doc.roundedRect(W - 46, 40, 30, 9, 2, 2, 'F');
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(8);
-      doc.text('PENDING PAYMENT', W - 31, 45.5, { align: 'center' });
-
-      // ═══════════════════════════════════════════════════════════════
-      // BILL TO / ISSUED BY — two column cards
-      // ═══════════════════════════════════════════════════════════════
-      let y = 62;
-
-      // Left card: Bill To
-      doc.setFillColor(...veryLight);
-      doc.roundedRect(14, y, 84, 34, 2, 2, 'F');
-      doc.setFillColor(...accentGreen);
-      doc.roundedRect(14, y, 84, 8, 2, 2, 'F');
-      doc.rect(14, y + 4, 84, 4, 'F'); // square bottom corners on top band
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(7.5);
-      doc.text('BILL TO', 21, y + 5.5);
-
-      doc.setTextColor(...black);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(10);
-      doc.text(clientName, 21, y + 16);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8.5);
-      doc.setTextColor(...darkGray);
-      if (clientEmail) { doc.text(clientEmail, 21, y + 22); }
-      if (clientPhone) {
-        doc.setTextColor(22, 163, 74);
-        doc.text(`WhatsApp: ${clientPhone}`, 21, y + 28);
-      }
-
-      // Right card: Issued By
-      doc.setFillColor(...veryLight);
-      doc.roundedRect(112, y, 84, 34, 2, 2, 'F');
-      doc.setFillColor(15, 20, 30);
-      doc.roundedRect(112, y, 84, 8, 2, 2, 'F');
-      doc.rect(112, y + 4, 84, 4, 'F');
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(7.5);
-      doc.text('ISSUED BY', 119, y + 5.5);
-
-      doc.setTextColor(...black);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(10);
-      doc.text('Nex Genix Creative Solutions', 119, y + 16);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8.5);
-      doc.setTextColor(...darkGray);
-      doc.text('nexgenixcreativesolutions@gmail.com', 119, y + 22);
-      doc.text('Philippines', 119, y + 28);
-
-      // ═══════════════════════════════════════════════════════════════
-      // ITEMS TABLE
-      // ═══════════════════════════════════════════════════════════════
-      y += 42;
-
-      // Table header
-      doc.setFillColor(15, 20, 30);
-      doc.rect(14, y, 182, 9, 'F');
-      doc.setTextColor(...white);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(8.5);
-      doc.text('DESCRIPTION', 20, y + 6);
-      doc.text('AMOUNT', W - 18, y + 6, { align: 'right' });
-
-      y += 9;
-      const items = document.querySelectorAll('#invoiceItems tr');
-      let rowIndex = 0;
-
-      items.forEach((row) => {
-        const cols = row.querySelectorAll('td');
-        if (cols.length !== 2) return;
-
-        const desc   = cols[0].textContent.trim();
-        const amount = cols[1].textContent.trim();
-
-        // Alternate row shading
-        if (rowIndex % 2 === 0) {
-          doc.setFillColor(255, 255, 255);
-        } else {
-          doc.setFillColor(248, 250, 248);
-        }
-
-        const splitDesc = doc.splitTextToSize(desc, 140);
-        const rowH = Math.max(8, splitDesc.length * 5 + 3);
-
-        doc.rect(14, y, 182, rowH, 'F');
-
-        // Left border accent
-        doc.setFillColor(...accentGreen);
-        doc.rect(14, y, 1.5, rowH, 'F');
-
-        doc.setTextColor(...darkGray);
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(8.5);
-        doc.text(splitDesc, 20, y + 5.5);
-
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...black);
-        doc.text(amount, W - 18, y + 5.5, { align: 'right' });
-
-        // Bottom border line
-        doc.setDrawColor(...lightGray);
-        doc.setLineWidth(0.3);
-        doc.line(14, y + rowH, 196, y + rowH);
-
-        y += rowH;
-        rowIndex++;
       });
 
-      // ═══════════════════════════════════════════════════════════════
-      // TOTAL BOX
-      // ═══════════════════════════════════════════════════════════════
-      y += 6;
+      let y = 0;
 
-      // Outer total area
-      doc.setFillColor(15, 20, 30);
-      doc.roundedRect(112, y, 84, 22, 3, 3, 'F');
+      // ── Helper: filled rounded rect ───────────────────────────────
+      const fillRound = (x, ry, w, h, r, color) => {
+        doc.setFillColor(...color);
+        doc.roundedRect(x, ry, w, h, r, r, 'F');
+      };
+      const fillRect = (x, ry, w, h, color) => {
+        doc.setFillColor(...color);
+        doc.rect(x, ry, w, h, 'F');
+      };
+      const txt = (text, x, ry, opts = {}) => {
+        doc.text(String(text), x, ry, opts);
+      };
 
-      doc.setTextColor(156, 163, 175);
+      // ══════════════════════════════════════════════════════════════
+      // 1. BACKGROUND
+      // ══════════════════════════════════════════════════════════════
+      fillRect(0, 0, W, H, C.bg);
+
+      // ══════════════════════════════════════════════════════════════
+      // 2. HEADER — logo area + INVOICE badge
+      // ══════════════════════════════════════════════════════════════
+      const headerH = 42;
+      fillRect(0, 0, W, headerH, C.surface);
+
+      // Neon bottom border
+      fillRect(0, headerH - 1, W, 1.5, C.neon);
+
+      // Load logos side by side (centered)
+      const logoBaseUrl = 'https://nexgenixcreativesolutions.github.io/assets/images/';
+      const logoUrls = [logoBaseUrl + 'logo.png', logoBaseUrl + 'dashboard-logo-no-bg.png'];
+
+      const loadImg = (url) => new Promise(resolve => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          const c = document.createElement('canvas');
+          c.width = img.width; c.height = img.height;
+          c.getContext('2d').drawImage(img, 0, 0);
+          resolve(c.toDataURL('image/png'));
+        };
+        img.onerror = () => resolve(null);
+        img.src = url;
+        setTimeout(() => resolve(null), 3000);
+      });
+
+      const [logo1, logo2] = await Promise.all(logoUrls.map(loadImg));
+      const logoH = 18, logoGap = 4;
+
+      let logoX = margin;
+      if (logo1) { doc.addImage(logo1, 'PNG', logoX, (headerH - logoH) / 2, 28, logoH); logoX += 32; }
+      if (logo2) { doc.addImage(logo2, 'PNG', logoX, (headerH - logoH) / 2, 40, logoH); logoX += 44; }
+
+      // "CREATIVE SOLUTIONS" text below logos
+      doc.setTextColor(...C.neon);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(6.5);
+      doc.setCharSpace(2.5);
+      if (!logo1 && !logo2) {
+        doc.setFontSize(14);
+        doc.setCharSpace(0);
+        txt('NEX GENIX CREATIVE SOLUTIONS', margin, 22);
+      }
+      doc.setCharSpace(0);
+
+      // INVOICE badge — top right
+      doc.setDrawColor(...C.neon);
+      doc.setLineWidth(0.8);
+      doc.roundedRect(W - 50, 8, 34, 10, 2, 2, 'D');
+      doc.setTextColor(...C.neon);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setCharSpace(1.5);
+      txt('INVOICE', W - 33, 14.5, { align: 'center' });
+      doc.setCharSpace(0);
+
+      // Invoice number under badge
+      doc.setTextColor(...C.muted);
       doc.setFont('helvetica', 'normal');
-      doc.setFontSize(7.5);
-      doc.text('TOTAL AMOUNT DUE', 196, y + 8, { align: 'right' });
+      doc.setFontSize(7);
+      txt('# ' + invNum, W - 33, 22, { align: 'center' });
 
-      doc.setTextColor(...white);
+      // ══════════════════════════════════════════════════════════════
+      // 3. META ROW — invoice no / date / status / currency
+      // ══════════════════════════════════════════════════════════════
+      y = headerH + 1;
+      const metaH = 22;
+      fillRect(0, y, W, metaH, C.surface2);
+
+      // Border bottom
+      fillRect(0, y + metaH - 0.5, W, 0.5, C.border);
+
+      const metaCells = [
+        { label: 'INVOICE NO',  value: invNum },
+        { label: 'DATE',        value: invDate },
+        { label: 'STATUS',      value: '⏳ PENDING' },
+        { label: 'CURRENCY',    value: currSymbol + ' ' + currLabel },
+      ];
+      const cellW = contentW / 4;
+      metaCells.forEach((cell, i) => {
+        const cx = margin + i * cellW;
+        doc.setTextColor(...C.muted);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(6.5);
+        doc.setCharSpace(0.8);
+        txt(cell.label, cx + cellW / 2, y + 7, { align: 'center' });
+        doc.setCharSpace(0);
+
+        let valColor = C.neon;
+        if (cell.label === 'STATUS') valColor = C.yellow;
+        if (cell.label === 'CURRENCY') valColor = C.light;
+
+        doc.setTextColor(...valColor);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8.5);
+        txt(cell.value, cx + cellW / 2, y + 15, { align: 'center' });
+
+        // Divider
+        if (i < 3) {
+          doc.setDrawColor(...C.border);
+          doc.setLineWidth(0.3);
+          doc.line(margin + (i + 1) * cellW, y + 3, margin + (i + 1) * cellW, y + metaH - 3);
+        }
+      });
+
+      // ══════════════════════════════════════════════════════════════
+      // 4. BILL TO / ISSUED BY
+      // ══════════════════════════════════════════════════════════════
+      y += metaH + 5;
+      const cardH = 34;
+      const cardW = (contentW - 6) / 2;
+
+      // ── BILL TO ──
+      fillRound(margin, y, cardW, cardH, 3, C.surface);
+      doc.setDrawColor(...C.neonDim);
+      doc.setLineWidth(0.5);
+      doc.roundedRect(margin, y, cardW, cardH, 3, 3, 'D');
+
+      // Header band
+      fillRound(margin, y, cardW, 9, 3, C.neonDim);
+      fillRect(margin, y + 5, cardW, 4, C.neonDim);
+      doc.setTextColor(...C.white);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7);
+      doc.setCharSpace(1);
+      txt('👤  BILL TO', margin + 6, y + 6);
+      doc.setCharSpace(0);
+
+      doc.setTextColor(...C.white);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
+      txt(clientName, margin + 6, y + 18);
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(...C.light);
+      if (clientEmail) txt(clientEmail, margin + 6, y + 25);
+
+      // ── ISSUED BY ──
+      const ibX = margin + cardW + 6;
+      fillRound(ibX, y, cardW, cardH, 3, C.surface);
+      doc.setDrawColor(...C.border);
+      doc.setLineWidth(0.5);
+      doc.roundedRect(ibX, y, cardW, cardH, 3, 3, 'D');
+
+      fillRound(ibX, y, cardW, 9, 3, C.surface2);
+      fillRect(ibX, y + 5, cardW, 4, C.surface2);
+      doc.setTextColor(...C.muted);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7);
+      doc.setCharSpace(1);
+      txt('🏢  ISSUED BY', ibX + 6, y + 6);
+      doc.setCharSpace(0);
+
+      doc.setTextColor(...C.white);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      txt('Nex Genix Creative Solutions', ibX + 6, y + 18);
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(...C.neon);
+      txt('nexgenixcreativesolutions@gmail.com', ibX + 6, y + 25);
+      doc.setTextColor(...C.muted);
+      txt('Philippines', ibX + 6, y + 31);
+
+      // ══════════════════════════════════════════════════════════════
+      // 5. ITEMS TABLE
+      // ══════════════════════════════════════════════════════════════
+      y += cardH + 6;
+
+      // Table header
+      fillRound(margin, y, contentW, 9, 2, C.surface2);
+      fillRect(margin, y + 5, contentW, 4, C.surface2);
+      doc.setDrawColor(...C.neon);
+      doc.setLineWidth(0.5);
+      doc.line(margin, y + 9, margin + contentW, y + 9);
+
+      doc.setTextColor(...C.neon);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.setCharSpace(0.8);
+      txt('DESCRIPTION', margin + 5, y + 6);
+      txt('AMOUNT', margin + contentW - 5, y + 6, { align: 'right' });
+      doc.setCharSpace(0);
+
+      y += 9;
+
+      rows.forEach((row, i) => {
+        const isZero     = row.amount === 'Included' || row.amount === '$0.00' || row.amount === '—' || row.amount === '';
+        const splitDesc  = doc.splitTextToSize(row.desc, contentW - 55);
+        const rowH       = Math.max(9, splitDesc.length * 5 + 4);
+
+        fillRect(margin, y, contentW, rowH, i % 2 === 0 ? C.rowEven : C.rowOdd);
+
+        // Neon left accent
+        fillRect(margin, y, 2, rowH, C.neon);
+
+        doc.setTextColor(...C.light);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        txt(splitDesc, margin + 7, y + 6);
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8.5);
+        if (isZero) {
+          doc.setTextColor(...C.muted);
+          txt('Included', margin + contentW - 5, y + 6, { align: 'right' });
+        } else {
+          doc.setTextColor(...C.neon);
+          txt(row.amount, margin + contentW - 5, y + 6, { align: 'right' });
+        }
+
+        // Row border
+        doc.setDrawColor(...C.border);
+        doc.setLineWidth(0.2);
+        doc.line(margin, y + rowH, margin + contentW, y + rowH);
+
+        y += rowH;
+      });
+
+      // ══════════════════════════════════════════════════════════════
+      // 6. TOTAL BOX
+      // ══════════════════════════════════════════════════════════════
+      y += 5;
+      const totalBoxW = 90;
+      const totalBoxH = 22;
+      const totalBoxX = margin + contentW - totalBoxW;
+
+      fillRound(totalBoxX, y, totalBoxW, totalBoxH, 3, C.surface2);
+      doc.setDrawColor(...C.neon);
+      doc.setLineWidth(0.8);
+      doc.roundedRect(totalBoxX, y, totalBoxW, totalBoxH, 3, 3, 'D');
+
+      doc.setTextColor(...C.muted);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7);
+      doc.setCharSpace(0.8);
+      txt('TOTAL AMOUNT DUE', totalBoxX + totalBoxW - 5, y + 7, { align: 'right' });
+      doc.setCharSpace(0);
+
+      doc.setTextColor(...C.neon);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(18);
-      doc.text(totalAmountText, 196, y + 18, { align: 'right' });
+      txt(totalText, totalBoxX + totalBoxW - 5, y + 18, { align: 'right' });
 
-      // Subtotal label (left side of total row)
-      doc.setTextColor(...midGray);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8);
-      doc.text(`Service: ${document.getElementById('clientNameInput').value || 'Valued Client'}`, 16, y + 10);
-      doc.text(`Package: ${selectedPackage ? servicePackages[selectedCategory][selectedPackage].name : ''}`, 16, y + 16);
-
-      // ═══════════════════════════════════════════════════════════════
-      // PAYMENT INFO BOX
-      // ═══════════════════════════════════════════════════════════════
-      y += 30;
-      doc.setFillColor(240, 253, 244); // very light green
-      doc.setDrawColor(...accentGreen);
-      doc.setLineWidth(0.5);
-      doc.roundedRect(14, y, 182, 30, 2, 2, 'FD');
-
-      doc.setTextColor(...accentDark);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(8.5);
-      doc.text('PAYMENT INFORMATION', 20, y + 7);
-
-      doc.setFont('helvetica', 'normal');
-      doc.setTextColor(...darkGray);
-      doc.setFontSize(8);
-      doc.text('Terms: 50% downpayment to start · 50% upon project completion', 20, y + 14);
-      doc.text('Local: GCash  ·  Bank Transfer  ·  PayMaya', 20, y + 21);
-      doc.text('International: PayPal  ·  Stripe', 20, y + 27);
-
-      // ═══════════════════════════════════════════════════════════════
-      // FOOTER
-      // ═══════════════════════════════════════════════════════════════
-      const footerY = 278;
-      doc.setFillColor(...lightGray);
-      doc.rect(0, footerY - 2, W, 0.4, 'F');
-
-      doc.setTextColor(...midGray);
+      // Package label left of total
+      doc.setTextColor(...C.muted);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(7.5);
-      doc.text('Thank you for choosing Nex Genix Creative Solutions!', W / 2, footerY + 4, { align: 'center' });
-      doc.text('nexgenixcreativesolutions@gmail.com  ·  Philippines', W / 2, footerY + 9, { align: 'center' });
-      doc.setFontSize(7);
-      doc.text(`© ${new Date().getFullYear()} Nex Genix Creative Solutions. All Rights Reserved.`, W / 2, footerY + 14, { align: 'center' });
+      txt(pkg.name, margin, y + 10);
+      doc.setTextColor(...C.light);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'bold');
+      txt(clientName, margin, y + 18);
 
-      // Save
-      const filename = `NexGenix_Invoice_${invoiceNum.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
-      doc.save(filename);
+      // ══════════════════════════════════════════════════════════════
+      // 7. PAYMENT INFO BOX
+      // ══════════════════════════════════════════════════════════════
+      y += totalBoxH + 6;
+      const payH = 28;
+      fillRound(margin, y, contentW, payH, 3, C.surface);
+      doc.setDrawColor(...C.neonDim);
+      doc.setLineWidth(0.5);
+      doc.roundedRect(margin, y, contentW, payH, 3, 3, 'D');
+
+      // Left accent bar
+      fillRound(margin, y, 3, payH, 2, C.neonDim);
+
+      doc.setTextColor(...C.neon);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.setCharSpace(0.8);
+      txt('PAYMENT INFORMATION', margin + 8, y + 7);
+      doc.setCharSpace(0);
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.8);
+      doc.setTextColor(...C.light);
+      txt('Terms: 50% downpayment to start  ·  50% upon project completion', margin + 8, y + 14);
+      doc.setTextColor(...C.muted);
+      txt('Local: GCash  ·  Bank Transfer  ·  PayMaya', margin + 8, y + 20);
+      txt('International: PayPal  ·  Stripe', margin + 8, y + 26);
+
+      // ══════════════════════════════════════════════════════════════
+      // 8. FOOTER
+      // ══════════════════════════════════════════════════════════════
+      const footY = H - 16;
+      fillRect(0, footY - 3, W, 0.5, C.border);
+      fillRect(0, footY - 3, W, 0.5, C.neon); // neon line
+
+      doc.setTextColor(...C.muted);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7);
+      txt('Thank you for choosing Nex Genix Creative Solutions!', W / 2, footY + 2, { align: 'center' });
+      txt('nexgenixcreativesolutions@gmail.com  ·  Philippines', W / 2, footY + 7, { align: 'center' });
+      doc.setTextColor(...C.border);
+      doc.setFontSize(6.5);
+      txt(`© ${new Date().getFullYear()} Nex Genix Creative Solutions. All Rights Reserved.`, W / 2, footY + 13, { align: 'center' });
+
+      doc.save(`NexGenix_Invoice_${invNum.replace(/[^a-zA-Z0-9]/g,'_')}.pdf`);
     }
 
     // =================== USER PROFILE ===================
