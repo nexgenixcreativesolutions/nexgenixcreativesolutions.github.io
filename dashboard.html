@@ -270,6 +270,34 @@
     .pw-toggle:hover { color: var(--neon); }
     .pw-toggle .eye-icon { width: 16px; height: 16px; }
     .pw-toggle.visible { color: var(--neon); }
+
+    /* ── SIMPLE SIDEBAR ITEMS ── */
+    .sidebar-top-item {
+      padding: 0.65rem 0.875rem;
+      margin-bottom: 0.25rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: all 0.22s ease;
+      list-style: none;
+    }
+    .sidebar-top-item:hover {
+      background: var(--neon-dim);
+      border-color: var(--border);
+      color: var(--neon);
+      transform: translateX(4px);
+    }
+    .sidebar-top-item.active {
+      background: var(--neon-dim);
+      border-color: var(--neon);
+      color: var(--neon);
+      box-shadow: inset 3px 0 0 var(--neon);
+    }
   </style>
 </head>
 
@@ -287,37 +315,9 @@
       <div>
         <img src="assets/images/dashboard-logo-no-bg.png" class="sidebar-logo" alt="Nex Genix">
         <ul class="sidebar-menu">
-
-          <!-- 1. VIEW PROFILE -->
-          <li class="sidebar-group-header" id="hdr-profile" onclick="toggleSidebarGroup('grp-profile','hdr-profile')">
-            <span>👤 View Profile</span>
-            <span class="sidebar-arrow">▾</span>
-          </li>
-          <ul class="sidebar-submenu" id="grp-profile">
-            <li class="sidebar-subheader">Account Settings</li>
-            <li class="sidebar-subitem" onclick="showSection('profile'); sidebarScrollTo('avatarSection')">📷 Upload / Replace Avatar</li>
-            <li class="sidebar-subitem" onclick="showSection('profile'); sidebarScrollTo('emailSection')">✉️ Change Email</li>
-            <li class="sidebar-subitem" onclick="showSection('profile'); sidebarScrollTo('phoneSection')">📱 Change Phone Number</li>
-            <li class="sidebar-subheader">Change Password</li>
-            <li class="sidebar-subitem" onclick="showSection('profile'); sidebarScrollTo('passwordSection')">🔒 Update Password</li>
-          </ul>
-
-          <!-- 2. SERVICES PURCHASED -->
-          <li class="sidebar-group-header" id="hdr-orders" onclick="toggleSidebarGroup('grp-orders','hdr-orders')">
-            <span>🛍️ Services Purchased</span>
-            <span class="sidebar-arrow">▾</span>
-          </li>
-          <ul class="sidebar-submenu" id="grp-orders">
-            <li class="sidebar-subitem" onclick="showSection('my-orders'); setOrdersFilter('in-progress')">⚙️ In Progress</li>
-            <li class="sidebar-subitem" onclick="showSection('my-orders'); setOrdersFilter('finished')">✅ Finished</li>
-            <li class="sidebar-subitem" onclick="showSection('my-orders'); setOrdersFilter('receipts')">🧾 View Receipts</li>
-          </ul>
-
-          <!-- 3. CONTACT SUPPORT -->
-          <li class="sidebar-group-header" onclick="showSection('support')" style="justify-content:flex-start;gap:0.4rem;">
-            <span>💬 Contact Support</span>
-          </li>
-
+          <li onclick="showSection('profile')" class="sidebar-top-item">👤 View Profile</li>
+          <li onclick="showSection('my-orders')" class="sidebar-top-item">🛍️ Services Purchased</li>
+          <li onclick="showSection('support')" class="sidebar-top-item">💬 Contact Support</li>
         </ul>
       </div>
       <p class="sidebar-footer">&copy; 2023–2026 Nex Genix Creative Solutions<br>All rights reserved.</p>
@@ -491,11 +491,11 @@
               <div class="page-counter-wrap">
                 <div class="page-counter">
                   <button class="page-counter-btn" onclick="adjustPages(-1)">−</button>
-                  <input type="number" id="pageCountInput" class="page-counter-input" value="1" min="1" max="50" oninput="updatePageCount()">
+                  <input type="number" id="pageCountInput2" class="page-counter-input" value="1" min="1" max="50" oninput="updatePageCount()">
                   <button class="page-counter-btn" onclick="adjustPages(1)">+</button>
                 </div>
               </div>
-              <div class="page-counter-hint" id="pageCounterHint"></div>
+              <div class="page-counter-hint" id="pageCounterHint2"></div>
             </div>
             <div class="form-group">
               <label>Maintenance Plan</label>
@@ -608,7 +608,7 @@
                   <div class="invoice-party-head issuer">🏢 Issued By</div>
                   <div class="invoice-party-body">
                     <div class="p-name">Nex Genix Creative Solutions</div>
-                    <div class="p-detail neon">nexgenixcreativesolutions@gmail.com</div>
+                    <div class="p-detail neon"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="38565d405f5d5651405b4a5d594c514e5d4b57544d4c5157564b785f55595154165b5755">[email&#160;protected]</a></div>
                     <div class="p-detail">Philippines</div>
                     <div class="p-detail" style="color:var(--text-muted);font-size:0.75rem;">nexgenixcreativesolutions.github.io</div>
                   </div>
@@ -769,11 +769,11 @@
                 <div class="support-sub">Chat with us directly — fastest response</div>
               </div>
             </a>
-            <a class="support-card" href="mailto:nexgenixcreativesolutions@gmail.com">
+            <a class="support-card" href="/cdn-cgi/l/email-protection#2749425f4042494e5f44554246534e514254484b52534e48495467404a464e4b0944484a">
               <span class="support-icon">✉️</span>
               <div>
                 <div class="support-label">Email Support</div>
-                <div class="support-sub">nexgenixcreativesolutions@gmail.com</div>
+                <div class="support-sub"><span class="__cf_email__" data-cfemail="8be5eef3eceee5e2f3e8f9eeeaffe2fdeef8e4e7feffe2e4e5f8cbece6eae2e7a5e8e4e6">[email&#160;protected]</span></div>
               </div>
             </a>
             <a class="support-card" href="https://nexgenixcreativesolutions.github.io" target="_blank">
@@ -841,30 +841,24 @@
     </button>
   </nav>
 
-  <script src="dashboard-script.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="dashboard-script.js"></script>
   <script>
-    // ── SIDEBAR ACCORDION ──────────────────────────────────────────────
-    function toggleSidebarGroup(groupId, headerId) {
-      const submenu = document.getElementById(groupId);
-      const header  = document.getElementById(headerId);
-      const isOpen  = submenu.classList.contains('open');
-      // Close all
-      document.querySelectorAll('.sidebar-submenu').forEach(s => s.classList.remove('open'));
-      document.querySelectorAll('.sidebar-group-header').forEach(h => h.classList.remove('open'));
-      // Open this one if it was closed
-      if (!isOpen) {
-        submenu.classList.add('open');
-        header.classList.add('open');
+    // ── SIDEBAR ACTIVE STATE ──────────────────────────────────────────
+    function setSidebarActive(sectionId) {
+      document.querySelectorAll('.sidebar-top-item').forEach(li => li.classList.remove('active'));
+      const map = { 'profile': 0, 'my-orders': 1, 'support': 2 };
+      const items = document.querySelectorAll('.sidebar-top-item');
+      if (map[sectionId] !== undefined && items[map[sectionId]]) {
+        items[map[sectionId]].classList.add('active');
       }
     }
 
-    // ── SCROLL TO ANCHOR INSIDE PROFILE ───────────────────────────────
-    function sidebarScrollTo(id) {
-      setTimeout(() => {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 80);
-    }
+    // Patch showSection to also update sidebar highlight
+    const _origShowSection = window.showSection;
+    window.showSection = function(id) {
+      if (typeof _origShowSection === 'function') _origShowSection(id);
+      setSidebarActive(id);
+    };
 
     // ── ORDERS FILTER TABS ─────────────────────────────────────────────
     function setOrdersFilter(filter) {
