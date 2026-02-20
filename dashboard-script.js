@@ -861,17 +861,19 @@
 
     function syncInvoiceEmail() {
       const val = document.getElementById('invoiceEmailInput').value;
-      const settingsEmail = document.getElementById('emailInput');
+      const settingsEmail = document.getElementById('profileEmail');
       if (settingsEmail && !settingsEmail.dataset.userEdited) {
         settingsEmail.value = val;
       }
     }
 
     function syncInvoiceEmailFromSettings() {
-      const val = document.getElementById('emailInput').value;
+    const profileEmail = document.getElementById('profileEmail');
+    if (profileEmail) { const inv = document.getElementById('invoiceEmailInput'); if (inv) inv.value = profileEmail.value; return; }
+      const val = document.getElementById('profileEmail').value;
       const invoiceEmail = document.getElementById('invoiceEmailInput');
       if (invoiceEmail) invoiceEmail.value = val;
-      document.getElementById('emailInput').dataset.userEdited = 'true';
+      document.getElementById('profileEmail').dataset.userEdited = 'true';
     }
 
     function syncInvoicePhone() {
@@ -1351,7 +1353,7 @@ ${JSON.stringify(orderData, null, 2)}
       return {
         invoiceNumber: document.getElementById('invoiceNumber').textContent,
         clientName: document.getElementById('clientNameInput').value,
-        clientEmail: document.getElementById('invoiceEmailInput').value || document.getElementById('emailInput').value,
+        clientEmail: document.getElementById('invoiceEmailInput').value || document.getElementById('profileEmail').value,
         clientPhone: getFullWhatsApp(),
         packageName: pkg.name,
         packagePrice: formatPrice(convertPHPToUSD(pkg.price)),
@@ -1387,7 +1389,7 @@ ${JSON.stringify(orderData, null, 2)}
       const invoiceNum   = document.getElementById('invoiceNumber').textContent;
       const invoiceDate  = document.getElementById('invoiceDate').textContent;
       const clientName   = document.getElementById('clientNameInput').value || 'Valued Client';
-      const clientEmail  = document.getElementById('invoiceEmailInput').value || document.getElementById('emailInput').value || '';
+      const clientEmail  = document.getElementById('invoiceEmailInput').value || document.getElementById('profileEmail').value || '';
       const clientPhone  = getFullWhatsApp();
       const totalAmountText = document.getElementById('totalAmount').textContent;
 
@@ -1758,7 +1760,7 @@ ${JSON.stringify(orderData, null, 2)}
       // Set user info
       document.getElementById('clientNameInput').value = 'Valued Client';
       document.getElementById('displayNameInput').value = 'Valued Client';
-      document.getElementById('emailInput').value = 'client@example.com';
+      document.getElementById('profileEmail').value = 'client@example.com';
       document.getElementById('invoiceEmailInput').value = 'client@example.com';
 
       // Sync settings phone to invoice whenever settings phone changes
