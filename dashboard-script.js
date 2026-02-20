@@ -648,10 +648,12 @@
 
       // Pre-set activeServiceType to match the filter tab so when a card is clicked it's consistent
       const serviceTypeMap = {
-        'app-design': 'app-design',
-        'web-design': 'web-design',
-        'web-development': 'web-development',
-        'ui-ux-design': 'ui-ux-design'
+        'app-design':     'app-design',
+        'web-design':     'web-design',
+        'web-development':'web-development',
+        'ui-ux-design':   'ui-ux-design',
+        'logo-design':    'logo-design',
+        'video-ads':      'video-ads'
       };
       if (type !== 'all' && serviceTypeMap[type]) {
         activeServiceType = serviceTypeMap[type];
