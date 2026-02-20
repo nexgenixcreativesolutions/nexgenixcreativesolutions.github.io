@@ -392,6 +392,122 @@
         }
       },
 
+
+      // CATEGORY 8: LOGO DESIGN
+      logoDesign: {
+        basic: {
+          name: 'LOGO - Basic',
+          price: 2500,
+          basePages: 0, pricePerPage: 0,
+          tier: 'basic',
+          tagline: 'Simple & clean logo to get started',
+          features: [
+            '2 logo concepts to choose from',
+            'PNG & JPG formats only',
+            '2 revision rounds',
+            'Color & black-and-white versions',
+            '5–7 business day delivery'
+          ],
+          excluded: [
+            'No vector file (AI / EPS / SVG)',
+            'No brand guide or style sheet',
+            'No business card mockup',
+            'No social media kit',
+            'No reversed / transparent versions'
+          ],
+          bestFor: 'startups, solo entrepreneurs, sari-sari stores'
+        },
+        pro: {
+          name: 'LOGO - Pro',
+          price: 5500,
+          basePages: 0, pricePerPage: 0,
+          tier: 'pro',
+          tagline: 'Professional quality with vector files',
+          features: [
+            '4 logo concepts to choose from',
+            'PNG, JPG & SVG (vector) formats',
+            '4 revision rounds',
+            'Color, B&W & reversed versions',
+            'Business card mockup preview',
+            '3–5 business day delivery'
+          ],
+          excluded: [
+            'No full brand guide',
+            'No social media kit',
+            'No AI / EPS source files'
+          ],
+          bestFor: 'growing businesses, clinics, restaurants'
+        },
+        premium: {
+          name: 'LOGO - Premium Brand Identity',
+          price: 12000,
+          basePages: 0, pricePerPage: 0,
+          tier: 'premium',
+          tagline: 'Complete brand identity — everything included',
+          features: [
+            'Unlimited logo concepts',
+            'Full vector package: AI, EPS, SVG, PNG, JPG',
+            'Unlimited revision rounds',
+            'Complete mini brand guide (colors, fonts, usage rules)',
+            'Social media profile kit (FB, IG, LinkedIn covers)',
+            'Business card mockup',
+            'Transparent / reversed versions for all backgrounds',
+            'Priority 2–3 business day delivery'
+          ],
+          excluded: [],
+          bestFor: 'corporations, franchises, rebrands, serious businesses'
+        }
+      },
+
+      // CATEGORY 9: VIDEO ADS
+      videoAds: {
+        short: {
+          name: 'VIDEO AD - Short (up to 30s)',
+          price: 4500,
+          basePages: 0, pricePerPage: 0,
+          features: [
+            'Up to 30 seconds',
+            'Script consultation',
+            'Motion graphics & text overlays',
+            'Background music (licensed)',
+            '2 revision rounds',
+            'HD 1080p export'
+          ],
+          excluded: [],
+          bestFor: 'social media stories, reels, quick promos'
+        },
+        standard: {
+          name: 'VIDEO AD - Standard (up to 60s)',
+          price: 8000,
+          basePages: 0, pricePerPage: 0,
+          features: [
+            'Up to 60 seconds',
+            'Script & storyboard',
+            'Custom motion graphics',
+            'Voiceover ready (client provides)',
+            '3 revision rounds',
+            'HD 1080p / 4K export'
+          ],
+          excluded: [],
+          bestFor: 'YouTube ads, Facebook campaigns, product launches'
+        },
+        premium: {
+          name: 'VIDEO AD - Premium (up to 120s)',
+          price: 15000,
+          basePages: 0, pricePerPage: 0,
+          features: [
+            'Up to 120 seconds',
+            'Full script & storyboard',
+            'Advanced animation & effects',
+            'Custom music / SFX',
+            'Multiple format exports',
+            'Unlimited revisions',
+            'Priority 3-day turnaround'
+          ],
+          excluded: [],
+          bestFor: 'brand films, company profiles, major campaigns'
+        }
+      },
       // CATEGORY 7: UI/UX DESIGN
       uiuxDesign: {
         wireframe: {
@@ -612,6 +728,8 @@
 
       // Load UI/UX packages
       loadServiceCategory('serviceGridUiux', servicePackages.uiuxDesign, 'uiuxDesign');
+      loadServiceCategory('serviceGridLogoDesign', servicePackages.logoDesign, 'logoDesign');
+      loadServiceCategory('serviceGridVideoAds', servicePackages.videoAds, 'videoAds');
     }
 
     function loadServiceCategory(gridId, packages, category) {
@@ -633,8 +751,16 @@
         const priceUSD = convertPHPToUSD(pkg.price);
         const pricePerPageUSD = convertPHPToUSD(pkg.pricePerPage);
 
+        const isLogoOrVideo = category === 'logoDesign' || category === 'videoAds';
+        const tierColors = { basic: 'var(--text-muted)', pro: 'var(--neon)', premium: 'var(--yellow)' };
+        const tierIcons  = { basic: '🥉', pro: '🥈', premium: '🏆' };
+        const tierColor  = (pkg.tier && tierColors[pkg.tier]) || 'var(--text-muted)';
+        const tierIcon   = (pkg.tier && tierIcons[pkg.tier]) || '';
+
         card.innerHTML = `
+          ${pkg.tier ? `<div class="card-tier-badge" style="color:${tierColor};border-color:${tierColor};">${tierIcon} ${pkg.tier.toUpperCase()}</div>` : ''}
           <h3>${pkg.name}</h3>
+          ${pkg.tagline ? `<p class="card-tagline">${pkg.tagline}</p>` : ''}
           <div class="price">${formatPrice(priceUSD)}</div>
           ${pkg.basePages > 0 ? `
             <p class="price-info">
@@ -644,8 +770,13 @@
           ` : ''}
           <ul>
             ${featuresHTML}
-            ${excludedHTML}
           </ul>
+          ${pkg.excluded && pkg.excluded.length ? `
+            ${isLogoOrVideo ? '<div class="card-not-included-label">Not included:</div>' : ''}
+            <ul class="excluded-list">
+              ${excludedHTML}
+            </ul>
+          ` : ''}
           <p class="best-for">
             💡 Best for: ${pkg.bestFor}
           </p>
@@ -790,7 +921,9 @@
       appDesign:      { type: 'app-design',       label: '📱 App Design',      badgeText: '📱 APP DESIGN' },
       uiuxDesign:     { type: 'ui-ux-design',     label: '🧩 UI/UX Design',    badgeText: '🧩 UI/UX DESIGN' },
       manager:        { type: '',                 label: '🔧 Maintenance',     badgeText: '🔧 WEBSITE MANAGER' },
-      renewal:        { type: '',                 label: '📅 Renewal',         badgeText: '📅 ANNUAL RENEWAL' }
+      renewal:        { type: '',                 label: '📅 Renewal',         badgeText: '📅 ANNUAL RENEWAL' },
+      logoDesign:     { type: 'logo-design',    label: '🎨 Logo Design',    badgeText: '🎨 LOGO DESIGN' },
+      videoAds:       { type: 'video-ads',      label: '🎬 Video Ads',      badgeText: '🎬 VIDEO ADS' }
     };
 
     function selectService(category, packageKey) {
@@ -830,6 +963,12 @@
       } else if (activeServiceType === 'ui-ux-design') {
         document.getElementById('uiuxOptions').style.display = 'block';
         document.getElementById('bizQuestionnaire').style.display = 'block';
+      } else if (activeServiceType === 'logo-design') {
+        document.getElementById('logoDesignOptions').style.display = 'block';
+        document.getElementById('bizQuestionnaire').style.display = 'none';
+      } else if (activeServiceType === 'video-ads') {
+        document.getElementById('videoAdsOptions').style.display = 'block';
+        document.getElementById('bizQuestionnaire').style.display = 'none';
       } else {
         // manager / renewal — no biz questionnaire needed
         document.getElementById('bizQuestionnaire').style.display = 'none';
@@ -1090,6 +1229,36 @@
           const cb = document.getElementById(id);
           if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
         });
+
+      // ── LOGO DESIGN ──
+      if (activeServiceType === 'logo-design') {
+        const bizName   = (document.getElementById('logoBizName')?.value || '').trim();
+        const industry  = (document.getElementById('logoBizIndustry')?.value || '').trim();
+        const colors    = (document.getElementById('logoColorScheme')?.value || '').trim();
+        const deadline  = (document.getElementById('logoDeadline')?.value || '');
+        if (bizName)   items.push({ description: `Business Name: ${bizName}`, amount: 0 });
+        if (industry)  items.push({ description: `Industry: ${industry}`, amount: 0 });
+        if (colors)    items.push({ description: `Color Scheme: ${colors}`, amount: 0 });
+        if (deadline)  items.push({ description: `Deadline: ${deadline}`, amount: 0 });
+      }
+
+      // ── VIDEO ADS ──
+      if (activeServiceType === 'video-ads') {
+        const bizName   = (document.getElementById('videoBizName')?.value || '').trim();
+        const industry  = (document.getElementById('videoBizIndustry')?.value || '').trim();
+        const colors    = (document.getElementById('videoColorScheme')?.value || '').trim();
+        const formats   = Array.from(document.querySelectorAll('#videoFormats input:checked')).map(i=>i.value);
+        const res       = (document.getElementById('videoResolution')?.value || '');
+        const duration  = (document.getElementById('videoDuration')?.value || '');
+        const deadline  = (document.getElementById('videoDeadline')?.value || '');
+        if (bizName)          items.push({ description: `Business Name: ${bizName}`, amount: 0 });
+        if (industry)         items.push({ description: `Industry: ${industry}`, amount: 0 });
+        if (colors)           items.push({ description: `Color Scheme: ${colors}`, amount: 0 });
+        if (formats.length)   items.push({ description: `File Format: ${formats.join(', ')}`, amount: 0 });
+        if (res)              items.push({ description: `Resolution: ${res}`, amount: 0 });
+        if (duration)         items.push({ description: `Duration: ${duration}`, amount: 0 });
+        if (deadline)         items.push({ description: `Deadline: ${deadline}`, amount: 0 });
+      }
 
       // ── GENERIC fallback ──
       } else {
@@ -1687,6 +1856,32 @@ ${JSON.stringify(orderData, null, 2)}
 
 
     // =================== PAYMENT METHOD ICON ========================
+    function updateDurationLimit() {
+      updateInvoice();
+      if (!selectedCategory || !selectedPackage) return;
+      const sel     = document.getElementById('videoDuration');
+      const warning = document.getElementById('durationWarning');
+      const maxLabel = document.getElementById('durationMaxLabel');
+      if (!sel || !warning) return;
+      const secMap = {
+        '15 seconds': 15,
+        '30 seconds': 30,
+        '60 seconds (1 min)': 60,
+        '90 seconds': 90,
+        '120 seconds (2 min)': 120
+      };
+      const chosen = secMap[sel.value] || 0;
+      const limits = { short: 30, standard: 60, premium: 120 };
+      const limitLabels = { short: '30 seconds', standard: '60 seconds', premium: '120 seconds' };
+      const limit = limits[selectedPackage] || 120;
+      if (chosen > limit) {
+        warning.style.display = 'block';
+        if (maxLabel) maxLabel.textContent = limitLabels[selectedPackage] || '120 seconds';
+      } else {
+        warning.style.display = 'none';
+      }
+    }
+
     function updatePaymentIcon() {
       const sel = document.getElementById('invPaymentMethod');
       if (!sel) return;
@@ -1756,3 +1951,32 @@ ${JSON.stringify(orderData, null, 2)}
       document.getElementById('phoneCode').addEventListener('change', syncSettingsPhoneToInvoice);
       document.getElementById('phoneNumber').addEventListener('input', syncSettingsPhoneToInvoice);
     });
+    // ── GLOBAL EXPORTS — ensure onclick= attributes can always reach these ──
+    window.filterByServiceType   = filterByServiceType;
+    window.selectOrderType       = selectOrderType;
+    window.selectService         = selectService;
+    window.showSection           = showSection;
+    window.toggleSidebar         = toggleSidebar;
+    window.updateInvoice         = updateInvoice;
+    window.adjustPages           = adjustPages;
+    window.updatePageCount       = updatePageCount;
+    window.changeCurrencyFromDropdown = changeCurrencyFromDropdown;
+    window.submitOrder           = submitOrder;
+    window.downloadInvoice       = downloadInvoice;
+    window.startNewPurchase      = startNewPurchase;
+    window.saveClientInfo        = saveClientInfo;
+    window.syncClientName        = syncClientName;
+    window.syncInvoiceEmail      = syncInvoiceEmail;
+    window.syncInvoicePhone      = syncInvoicePhone;
+    window.syncInvoiceEmailFromSettings = syncInvoiceEmailFromSettings;
+    window.updatePaymentIcon     = updatePaymentIcon;
+    window.logout                = logout;
+    window.setBottomActive       = setBottomActive;
+    window.scrollToTop           = scrollToTop;
+    window.updateDurationLimit   = updateDurationLimit;
+    window.filterOrders          = typeof filterOrders === 'function' ? filterOrders : function(){};
+    window.saveProfile           = saveProfile;
+    window.updatePassword        = updatePassword;
+    window.toggleMultiDrop       = toggleMultiDrop;
+    window.updateMultiSelect     = updateMultiSelect;
+    window.togglePw              = togglePw;
