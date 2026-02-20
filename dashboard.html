@@ -473,6 +473,81 @@
       flex-shrink: 0;
     }
     .multi-opt:has(input:checked) { color: var(--neon); background: rgba(57,255,20,0.05); }
+
+    /* ── VIDEO FORMAT CHECKBOXES ── */
+    .fmt-opt {
+      padding: 0.45rem 0.75rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.18s;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .fmt-opt:has(input:checked) {
+      border-color: var(--neon);
+      background: var(--neon-dim);
+      color: var(--neon);
+    }
+    /* ── DEADLINE DATE INPUT ── */
+    input[type="date"].input {
+      cursor: pointer;
+    }
+    input[type="date"].input::-webkit-calendar-picker-indicator {
+      filter: invert(1) sepia(1) saturate(5) hue-rotate(70deg);
+      cursor: pointer;
+    }
+
+    /* ── SERVICE CARD TIER BADGES ── */
+    .card-tier-badge {
+      display: inline-block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      border: 1px solid;
+      border-radius: 3px;
+      padding: 0.2rem 0.55rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+    .card-tagline {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin: 0 0 0.5rem;
+      font-style: italic;
+      line-height: 1.3;
+    }
+    .card-not-included-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: #e05252;
+      text-transform: uppercase;
+      margin: 0.6rem 0 0.25rem;
+      border-top: 1px solid rgba(224,82,82,0.25);
+      padding-top: 0.5rem;
+    }
+    .excluded-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 0.6rem;
+    }
+    .excluded-list .excluded {
+      font-size: 0.74rem;
+      color: #e05252;
+      padding: 0.18rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.35rem;
+    }
+    .excluded-list .excluded::before {
+      content: '✕';
+      font-size: 0.65rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
   </style>
 </head>
 
@@ -564,6 +639,8 @@
           <button class="filter-tab" id="tab-web-design" onclick="filterByServiceType('web-design', this)"><span class="tab-icon">🎨</span> Web Design</button>
           <button class="filter-tab" id="tab-web-development" onclick="filterByServiceType('web-development', this)"><span class="tab-icon">🌐</span> Web Development</button>
           <button class="filter-tab" id="tab-ui-ux" onclick="filterByServiceType('ui-ux-design', this)"><span class="tab-icon">🧩</span> UI/UX Design</button>
+          <button class="filter-tab" id="tab-logo" onclick="filterByServiceType('logo-design', this)"><span class="tab-icon">🎨</span> Logo Design</button>
+          <button class="filter-tab" id="tab-video" onclick="filterByServiceType('video-ads', this)"><span class="tab-icon">🎬</span> Video Ads</button>
         </div>
 
         <!-- NEW WEBSITE PACKAGES -->
@@ -587,6 +664,14 @@
           <div class="package-category hidden" id="cat-uiux" data-service-types="ui-ux-design">
             <div class="category-header"><h3>🧩 UI/UX Design Packages</h3><p>Wireframes, prototypes, user research, and full design systems</p></div>
             <div class="content-box"><div class="service-grid" id="serviceGridUiux"></div></div>
+          </div>
+          <div class="package-category hidden" id="cat-logo-design" data-service-types="logo-design">
+            <div class="category-header"><h3>🎨 Logo Design Packages</h3><p>Professional logo design and brand identity for every business size</p></div>
+            <div class="content-box"><div class="service-grid" id="serviceGridLogoDesign"></div></div>
+          </div>
+          <div class="package-category hidden" id="cat-video-ads" data-service-types="video-ads">
+            <div class="category-header"><h3>🎬 Video Ads Packages</h3><p>High-impact promotional video ads for social media, web, and campaigns</p></div>
+            <div class="content-box"><div class="service-grid" id="serviceGridVideoAds"></div></div>
           </div>
         </div>
 
@@ -754,9 +839,97 @@
             </div>
           </div>
 
+
+          <!-- Logo Design Options -->
+          <div id="logoDesignOptions" style="display:none;">
+            <div class="panel-section-title">🎨 LOGO DESIGN DETAILS</div>
+            <div class="form-group">
+              <label>Name of Business *</label>
+              <input type="text" id="logoBizName" class="input" placeholder="e.g. Nex Genix Creative Solutions" oninput="updateInvoice()">
+            </div>
+            <div class="form-group">
+              <label>Business Type / Industry *</label>
+              <input type="text" id="logoBizIndustry" class="input" placeholder="e.g. Technology, Restaurant, Retail..." oninput="updateInvoice()">
+            </div>
+            <div class="form-group">
+              <label>Color Scheme / Preference</label>
+              <input type="text" id="logoColorScheme" class="input" placeholder="e.g. Dark green & gold, Minimalist black & white..." oninput="updateInvoice()">
+            </div>
+            <div class="form-group">
+              <label>📅 Preferred Deadline</label>
+              <input type="date" id="logoDeadline" class="input" oninput="updateInvoice()" style="color-scheme:dark;">
+            </div>
+            <div class="form-group">
+              <label>Additional Notes</label>
+              <textarea id="logoNotes" class="input" rows="3" placeholder="Style references, symbols, words to include or avoid..."></textarea>
+            </div>
+          </div>
+          <!-- Video Ads Options -->
+          <div id="videoAdsOptions" style="display:none;">
+            <div class="panel-section-title">🎬 VIDEO ADS DETAILS</div>
+            <div class="form-group">
+              <label>Name of Business *</label>
+              <input type="text" id="videoBizName" class="input" placeholder="e.g. Nex Genix Creative Solutions" oninput="updateInvoice()">
+            </div>
+            <div class="form-group">
+              <label>Business Type / Industry *</label>
+              <input type="text" id="videoBizIndustry" class="input" placeholder="e.g. Food & Beverage, Tech, Fashion..." oninput="updateInvoice()">
+            </div>
+            <div class="form-group">
+              <label>Color Scheme / Brand Colors</label>
+              <input type="text" id="videoColorScheme" class="input" placeholder="e.g. Red & white, Corporate blue..." oninput="updateInvoice()">
+            </div>
+            <div class="form-group">
+              <label>File Format <span style="font-size:0.65rem;color:var(--text-muted);">(select all needed)</span></label>
+              <div class="toggle-group" id="videoFormats" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr));">
+                <label class="multi-opt fmt-opt"><input type="checkbox" value=".mp4" onchange="updateInvoice()"> .mp4</label>
+                <label class="multi-opt fmt-opt"><input type="checkbox" value=".mov" onchange="updateInvoice()"> .mov</label>
+                <label class="multi-opt fmt-opt"><input type="checkbox" value=".avi" onchange="updateInvoice()"> .avi</label>
+                <label class="multi-opt fmt-opt"><input type="checkbox" value=".mkv" onchange="updateInvoice()"> .mkv</label>
+                <label class="multi-opt fmt-opt"><input type="checkbox" value=".webm" onchange="updateInvoice()"> .webm</label>
+                <label class="multi-opt fmt-opt"><input type="checkbox" value=".gif" onchange="updateInvoice()"> .gif (animated)</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Resolution *</label>
+              <select id="videoResolution" class="select" onchange="updateInvoice()">
+                <option value="">Select resolution</option>
+                <option value="720p HD (1280×720)">720p HD (1280×720)</option>
+                <option value="1080p Full HD (1920×1080)">1080p Full HD (1920×1080)</option>
+                <option value="1440p 2K (2560×1440)">1440p 2K (2560×1440)</option>
+                <option value="2160p 4K (3840×2160)">2160p 4K (3840×2160)</option>
+                <option value="Square 1080×1080 (Instagram)">Square 1080×1080 (Instagram)</option>
+                <option value="Vertical 1080×1920 (Reels/TikTok)">Vertical 1080×1920 (Reels/TikTok)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Video Duration *</label>
+              <select id="videoDuration" class="select" onchange="updateDurationLimit()">
+                <option value="">Select duration</option>
+                <option value="15 seconds">15 seconds</option>
+                <option value="30 seconds">30 seconds</option>
+                <option value="60 seconds (1 min)">60 seconds (1 min)</option>
+                <option value="90 seconds">90 seconds</option>
+                <option value="120 seconds (2 min)">120 seconds (2 min) — Max for Short/Standard</option>
+              </select>
+              <div id="durationWarning" style="display:none;margin-top:0.35rem;font-size:0.72rem;color:var(--yellow);">⚠️ This package supports up to <span id="durationMaxLabel"></span>. Upgrade to Premium for longer videos.</div>
+            </div>
+            <div class="form-group">
+              <label>📅 Preferred Deadline</label>
+              <input type="date" id="videoDeadline" class="input" oninput="updateInvoice()" style="color-scheme:dark;">
+            </div>
+            <div class="form-group">
+              <label>Additional Notes</label>
+              <textarea id="videoNotes" class="input" rows="3" placeholder="Target audience, tone (fun/formal/emotional), reference videos..."></textarea>
+            </div>
+          </div>
           <!-- Project Details -->
           <div id="projectDetailsSection">
           <div class="panel-section-title">📝 PROJECT DETAILS</div>
+          <div class="form-group">
+            <label>📅 Preferred Deadline</label>
+            <input type="date" id="projectDeadline" class="input" oninput="updateInvoice()" style="color-scheme:dark;">
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label>Business Name *</label>
@@ -1080,7 +1253,7 @@
     </button>
   </nav>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="dashboard-script.js"></script>
+  <script src="dashboard-script.js"></script>
   <script>
 
     // ── MULTI-SELECT DROPDOWN ──────────────────────────────────────────
@@ -1202,12 +1375,24 @@
       const meta = document.getElementById('invoiceCurrencyMeta');
       if (sel && meta) meta.textContent = sel.value;
     });
-    if (profileEmailEl) {
-      profileEmailEl.addEventListener('input', function() {
-        const inv = document.getElementById('invoiceEmailInput');
-        if (inv) inv.value = this.value;
-      });
-    }
+    // Sync profile email → invoice email
+    (function() {
+      const profileEmailEl = document.getElementById('profileEmail');
+      if (profileEmailEl) {
+        profileEmailEl.addEventListener('input', function() {
+          const inv = document.getElementById('invoiceEmailInput');
+          if (inv) inv.value = this.value;
+        });
+      }
+    })();
+
+    // ── EXPOSE INLINE FUNCTIONS TO GLOBAL SCOPE ──────────────────────────
+    window.togglePw           = togglePw;
+    window.toggleMultiDrop    = toggleMultiDrop;
+    window.updateMultiSelect  = updateMultiSelect;
+    window.setOrdersFilter    = setOrdersFilter;
+    window.handleAvatarUpload = handleAvatarUpload;
+    window.setSidebarActive   = setSidebarActive;
 
     // ── KEEP emailInput alias for old JS references ────────────────────
     // The script.js may reference emailInput — mirror it
