@@ -93,14 +93,32 @@
   text-align: center;
 }
 
-/* Counter Section with Buttons */
+/* =================== STATS SECTION (NGBS Style) =================== */
 .counter-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 3rem 1rem;
+  padding: 4rem 1rem;
   background-color: black;
+  position: relative;
+}
+
+.counter-section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  letter-spacing: 1px;
+}
+
+.counter-section-title span {
+  background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .counter-container {
@@ -125,6 +143,13 @@
   text-align: center;
   flex: 1;
   max-width: 200px;
+  border: 1px solid rgba(57, 255, 20, 0.15);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.counter-item:hover {
+  border-color: rgba(57, 255, 20, 0.5);
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.15);
 }
 
 .counter {
@@ -145,6 +170,7 @@
   margin-top: 5px;
   line-height: 1.2;
 }
+
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -382,141 +408,6 @@
     display: block;
 }
 
-/* Contact Section Styles */
-#contact {
-    padding: 6rem 1rem;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-#contact h2 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: white;
-    text-align: center;
-    margin-bottom: 1rem;
-    font-family: 'Montserrat Alternates', sans-serif;
-}
-
-.contact-subtitle {
-    text-align: center;
-    color: #9ca3af;
-    font-size: 1.1rem;
-    margin-bottom: 3rem;
-}
-
-/* Contact Form */
-.contact-form {
-    background: linear-gradient(to bottom, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.5));
-    backdrop-filter: blur(8px);
-    border: 1px solid #1f2937;
-    border-radius: 1rem;
-    padding: 2.5rem;
-    margin-bottom: 3rem;
-    transition: border-color 0.3s ease;
-}
-
-.contact-form:hover {
-    border-color: #39FF14;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    color: white;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 0.875rem 1rem;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid #374151;
-    border-radius: 0.5rem;
-    color: white;
-    font-size: 0.95rem;
-    font-family: 'Montserrat Alternates', sans-serif;
-    transition: all 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: #39FF14;
-    box-shadow: 0 0 0 3px rgba(57, 255, 20, 0.1);
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: #6b7280;
-}
-
-.form-group select {
-    cursor: pointer;
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 120px;
-}
-
-/* Submit Button */
-.btn-submit {
-    width: 100%;
-    padding: 1rem;
-    background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
-    border: none;
-    border-radius: 0.5rem;
-    color: black;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Montserrat Alternates', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(57, 255, 20, 0.3);
-}
-
-.btn-submit:active {
-    transform: translateY(0);
-}
-
-/* Contact Divider */
-.contact-divider {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 3rem 0 2rem 0;
-}
-
-.contact-divider::before,
-.contact-divider::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #374151;
-}
-
-.contact-divider span {
-    color: #9ca3af;
-    padding: 0 1rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
 /* Responsive Design - Tablet */
 @media (min-width: 768px) {
     .categories-section,
@@ -569,6 +460,9 @@
     }
     .counter {
         font-size: 3rem;
+    }
+    .counter-section-title {
+        font-size: 2.5rem;
     }
 }
 /* Responsive Design - Desktop */
@@ -690,60 +584,12 @@
         font-size: 10px;
         margin-top: 5px;
     }
-    
-    /* Contact Form Mobile */
-    #contact {
-        padding: 4rem 1rem;
-    }
-    
-    #contact h2 {
-        font-size: 2rem;
-    }
-    
-    .contact-form {
-        padding: 1.5rem;
-    }
-    
-    .form-group label {
-        font-size: 0.875rem;
-    }
-    
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        font-size: 0.875rem;
-        padding: 0.75rem;
-    }
-    
-    .btn-submit {
-        font-size: 0.9rem;
+    .counter-section-title {
+        font-size: 1.4rem;
     }
 }
 
 @media (max-width: 768px) {
-    #contact {
-        padding: 4rem 1rem;
-    }
-    
-    #contact h2 {
-        font-size: 2rem;
-    }
-    
-    .contact-form {
-        padding: 1.5rem;
-    }
-    
-    .form-group label {
-        font-size: 0.875rem;
-    }
-    
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        font-size: 0.875rem;
-        padding: 0.75rem;
-    }
-    
     /* Mobile Products & Services adjustments */
     .categories-section {
         padding: 3rem 1rem;
@@ -810,7 +656,7 @@
         <li><a href="#services">Services</a></li>
         <li><a href="#reviews">Reviews</a></li>
         <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="contact.html">Contact</a></li>
     </ul>
 <div class="auth-buttons" id="auth-buttons">
     <button onclick="handleLogout()" class="logout-btn">Logout</button>
@@ -828,7 +674,7 @@
         <p class="services-description">App Design | Web Design | Web Development | UI/UX Design</p>
         <!-- ONLY Get Started button for DESKTOP view -->
         <div class="hero-buttons">
-            <a href="#contact" class="btn-get-started">Get Started</a>
+            <a href="contact.html" class="btn-get-started">Get Started</a>
         </div>
     </main>
 </section>
@@ -841,7 +687,7 @@
     <h5 class="responsive-description">App Design | Web Design | Web Development | UI/UX Design</h5>
     <!-- ONLY Get Started button for MOBILE view -->
     <div class="hero-buttons-mobile">
-        <a href="#contact" class="btn-get-started">Get Started</a>
+        <a href="contact.html" class="btn-get-started">Get Started</a>
     </div>
 </section>
 
@@ -925,8 +771,9 @@
     </div>
 </section>
 
-<!-- Counter Section -->
+<!-- Counter / Stats Section (NGBS Style) -->
 <section class="counter-section">
+    <h2 class="counter-section-title">Our Impact <span>in Numbers</span></h2>
     <div class="counter-container">
         <div class="counter-item">
             <div class="counter" data-target="48200">0</div>
@@ -947,87 +794,34 @@
     </div>
 </section>
 
-<!-- Contact Section with Formspree Form -->
-<section class="main-section" id="contact">
-    <article>
-        <h2>Contact</h2>
-        <p class="contact-subtitle">Get in touch with us. We'd love to hear from you!</p>
-        
-        <!-- Contact Form with YOUR Formspree Link -->
-        <form action="https://formspree.io/f/maqdqdqw" method="POST" class="contact-form">
-            <div class="form-group">
-                <label for="name">Full Name *</label>
-                <input type="text" id="name" name="name" required placeholder="Enter your full name">
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email Address *</label>
-                <input type="email" id="email" name="email" required placeholder="Enter your email">
-            </div>
-            
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
-            </div>
-            
-            <div class="form-group">
-                <label for="service">Service Interest *</label>
-                <select id="service" name="service" required>
-                    <option value="">Select a service</option>
-                    <option value="Digital Design">Digital Design and Visual Communication</option>
-                    <option value="Writing Services">Writing Services</option>
-                    <option value="Education">Education and Training</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="message">Message *</label>
-                <textarea id="message" name="message" rows="5" required placeholder="Tell us about your project or inquiry"></textarea>
-            </div>
-            
-            <button type="submit" class="btn-submit">Send Message</button>
-        </form>
-        
-        <div class="contact-divider">
-            <span>OR CONNECT WITH US</span>
-        </div>
-        
-        <div class="contact-buttons">
-            <!-- Facebook -->
-            <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
-                <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
-            </a>
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
-                <button class="contact-btn"><i class="fab fa-instagram"></i></button>
-            </a>
-            <!-- Reddit -->
-            <a href="https://www.reddit.com/user/nexgenix" target="_blank">
-                <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
-            </a>
-            <!-- Gmail -->
-            <a href="mailto:nexgenixcreativesolutions@gmail.com">
-                <button class="contact-btn"><i class="fas fa-envelope"></i></button>
-            </a>
-            <!-- WhatsApp -->
-            <a href="https://wa.me/+639171063504" target="_blank">
-                <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
-            </a>
-        </div>
-    </article>
-</section>
+    <div class="contact-buttons">
+              <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
+                  <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
+              </a>
+              <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
+                  <button class="contact-btn"><i class="fab fa-instagram"></i></button>
+              </a>
+              <a href="https://www.reddit.com/user/nexgenix" target="_blank">
+                  <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
+              </a>
+              <a href="/cdn-cgi/l/email-protection#4628233e2123282f3e25342327322f302335292a33322f29283506212b272f2a6825292b">
+                  <button class="contact-btn"><i class="fas fa-envelope"></i></button>
+              </a>
+              <a href="https://wa.me/+639171063504" target="_blank">
+                  <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
+              </a>
+    </div>
 
 <!-- Footer Section -->
 <footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
 
 <!-- External JavaScript -->
-<script src="script.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
 
 <!-- Counter Animation Script -->
 <script>
     const counters = document.querySelectorAll('.counter');
-    const speed = 200; // Adjust speed of counting
+    const speed = 200;
 
     const animateCounters = () => {
         counters.forEach(counter => {
@@ -1056,7 +850,6 @@
         });
     }, { threshold: 0.5 });
 
-    // Wait for DOM to be ready and check if element exists
     const counterContainer = document.querySelector('.counter-container');
     if (counterContainer) {
         observer.observe(counterContainer);
@@ -1073,7 +866,6 @@
 
 <!-- Floating Code Background Script -->
 <script>
-  // Floating Code Background
   const codeSnippets = [
     'const nexgenix = () => {',
     'function createSolution() {',
@@ -1101,7 +893,6 @@
     const container = document.createElement('div');
     container.className = 'floating-code-container';
 
-    // Create 15 floating code lines
     for (let i = 0; i < 15; i++) {
       const codeLine = document.createElement('div');
       codeLine.className = 'code-line';
@@ -1120,11 +911,9 @@
       container.appendChild(codeLine);
     }
 
-    // Insert at the beginning of body so it's behind everything
     document.body.insertBefore(container, document.body.firstChild);
   }
   
-  // Initialize when DOM is loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', createFloatingCodeBackground);
   } else {
@@ -1134,7 +923,6 @@
 
 <!-- Categories Cards Scroll Animation Script -->
 <script>
-  // Categories cards scroll animation
   function initCategories() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1149,7 +937,6 @@
     });
   }
   
-  // Initialize when DOM is loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initCategories);
   } else {
@@ -1159,7 +946,6 @@
 
 <!-- Testimonials Script -->
 <script>
-  // Testimonials Data and Animation
   const testimonials = [
     {
       name: 'Jude Trellier',
@@ -1186,10 +972,8 @@
     svg.setAttribute('class', 'star');
     svg.setAttribute('viewBox', '0 0 24 24');
     svg.setAttribute('fill', 'currentColor');
-
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z');
-
     svg.appendChild(path);
     return svg;
   }
@@ -1201,13 +985,10 @@
     svg.setAttribute('fill', 'none');
     svg.setAttribute('stroke', 'currentColor');
     svg.setAttribute('stroke-width', '2');
-
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', 'M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z');
-
     const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path2.setAttribute('d', 'M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z');
-
     svg.appendChild(path);
     svg.appendChild(path2);
     return svg;
@@ -1217,57 +998,40 @@
     const card = document.createElement('div');
     card.className = 'testimonial-card';
     card.style.animationDelay = `${index * 0.2}s`;
-
     const cardInner = document.createElement('div');
     cardInner.className = 'testimonial-card-inner';
-
-    // Quote icon
     cardInner.appendChild(createQuoteIcon());
-
-    // Rating stars
     const ratingDiv = document.createElement('div');
     ratingDiv.className = 'rating-stars';
     for (let i = 0; i < testimonial.rating; i++) {
       ratingDiv.appendChild(createStarIcon());
     }
     cardInner.appendChild(ratingDiv);
-
-    // Content
     const content = document.createElement('p');
     content.className = 'testimonial-content';
     content.textContent = `"${testimonial.content}"`;
     cardInner.appendChild(content);
-
-    // Author section
     const authorDiv = document.createElement('div');
     authorDiv.className = 'testimonial-author';
-
     const avatar = document.createElement('div');
     avatar.className = 'author-avatar';
-
     const initial = document.createElement('span');
     initial.className = 'author-initial';
     initial.textContent = testimonial.name.charAt(0);
     avatar.appendChild(initial);
-
     const info = document.createElement('div');
     info.className = 'author-info';
-
     const name = document.createElement('h4');
     name.className = 'author-name';
     name.textContent = testimonial.name;
-
     const role = document.createElement('p');
     role.className = 'author-role';
     role.textContent = testimonial.role;
-
     info.appendChild(name);
     info.appendChild(role);
-
     authorDiv.appendChild(avatar);
     authorDiv.appendChild(info);
     cardInner.appendChild(authorDiv);
-
     card.appendChild(cardInner);
     return card;
   }
@@ -1275,13 +1039,10 @@
   function initTestimonials() {
     const grid = document.getElementById('testimonials-grid');
     if (!grid) return;
-
     testimonials.forEach((testimonial, index) => {
       const card = createTestimonialCard(testimonial, index);
       grid.appendChild(card);
     });
-
-    // Intersection Observer for scroll animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1289,13 +1050,11 @@
         }
       });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.testimonial-card').forEach(card => {
       observer.observe(card);
     });
   }
   
-  // Initialize when DOM is loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initTestimonials);
   } else {
@@ -1303,5 +1062,5 @@
   }
 </script>
 
-  </body>
+</body>
 </html>
