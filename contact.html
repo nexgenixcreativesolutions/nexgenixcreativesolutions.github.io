@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | Nex Genix Creative Solutions</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  </head>
+
+<style>
+/* =================== FLOATING ELEMENTS BACKGROUND =================== */
+.floating-bg-container {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Floating code lines */
+.float-code {
+  position: absolute;
+  white-space: nowrap;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: rgba(57, 255, 20, 0.25);
+  text-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
+  animation: driftCode linear infinite;
+  opacity: 0;
+}
+
+@keyframes driftCode {
+  0%   { transform: translateX(110vw); opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateX(-110%); opacity: 0; }
+}
+
+/* Floating geometric shapes */
+.float-shape {
+  position: absolute;
+  border: 1px solid rgba(57, 255, 20, 0.12);
+  animation: floatShape ease-in-out infinite alternate;
+}
+
+.float-shape.circle {
+  border-radius: 50%;
+}
+
+.float-shape.diamond {
+  transform: rotate(45deg);
+  border-color: rgba(255, 255, 0, 0.08);
+}
+
+@keyframes floatShape {
+  0%   { transform: translateY(0px) rotate(0deg); opacity: 0.4; }
+  100% { transform: translateY(-30px) rotate(10deg); opacity: 0.1; }
+}
+
+.float-shape.diamond {
+  animation: floatShapeDiamond ease-in-out infinite alternate;
+}
+
+@keyframes floatShapeDiamond {
+  0%   { transform: rotate(45deg) translateY(0px); opacity: 0.3; }
+  100% { transform: rotate(55deg) translateY(-20px); opacity: 0.08; }
+}
+
+/* Glowing orbs */
+.float-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: orbPulse ease-in-out infinite alternate;
+}
+
+@keyframes orbPulse {
+  0%   { opacity: 0.04; transform: scale(1); }
+  100% { opacity: 0.09; transform: scale(1.15); }
+}
+
+/* =================== PAGE LAYOUT =================== */
+.contact-page-wrapper {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =================== CONTACT HERO =================== */
+.contact-hero {
+  text-align: center;
+  padding: 6rem 1rem 3rem 1rem;
+  position: relative;
+}
+
+.contact-hero-eyebrow {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: #39FF14;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease 0.1s forwards;
+}
+
+.contact-hero-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+  opacity: 0;
+  animation: fadeInUp 0.7s ease 0.2s forwards;
+}
+
+.contact-hero-title .gradient-text {
+  background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.contact-hero-subtitle {
+  color: #9ca3af;
+  font-size: 1.1rem;
+  max-width: 550px;
+  margin: 0 auto;
+  line-height: 1.7;
+  opacity: 0;
+  animation: fadeInUp 0.7s ease 0.3s forwards;
+}
+
+/* =================== CONTACT SECTION BODY =================== */
+#contact {
+  padding: 2rem 1rem 6rem 1rem;
+  max-width: 820px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Contact Form */
+.contact-form {
+  background: linear-gradient(to bottom, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.5));
+  backdrop-filter: blur(8px);
+  border: 1px solid #1f2937;
+  border-radius: 1rem;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  transition: border-color 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 0.4s forwards;
+}
+
+.contact-form:hover {
+  border-color: rgba(57, 255, 20, 0.4);
+  box-shadow: 0 0 30px rgba(57, 255, 20, 0.06);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #374151;
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 0.95rem;
+  font-family: 'Montserrat Alternates', sans-serif;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #39FF14;
+  box-shadow: 0 0 0 3px rgba(57, 255, 20, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #6b7280;
+}
+
+.form-group select {
+  cursor: pointer;
+}
+
+.form-group select option {
+  background: #111827;
+  color: white;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Submit Button */
+.btn-submit {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+  border: none;
+  border-radius: 0.5rem;
+  color: black;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat Alternates', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(57, 255, 20, 0.3);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+/* Contact Divider */
+.contact-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 3rem 0 2rem 0;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 0.5s forwards;
+}
+
+.contact-divider::before,
+.contact-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #374151;
+}
+
+.contact-divider span {
+  color: #9ca3af;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Social buttons */
+.contact-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 0.6s forwards;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =================== RESPONSIVE =================== */
+@media (min-width: 768px) {
+  .contact-hero-title {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-hero {
+    padding: 5rem 1rem 2rem 1rem;
+  }
+  .contact-hero-title {
+    font-size: 2rem;
+  }
+  #contact {
+    padding: 1rem 1rem 4rem 1rem;
+  }
+  .contact-form {
+    padding: 1.5rem;
+  }
+  .form-group label {
+    font-size: 0.875rem;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 0.875rem;
+    padding: 0.75rem;
+  }
+  .btn-submit {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #contact {
+    padding: 1.5rem 1rem 4rem 1rem;
+  }
+  .contact-hero-title {
+    font-size: 2.25rem;
+  }
+  .contact-form {
+    padding: 1.75rem;
+  }
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+</style>
+
+  <body>
+
+<!-- =================== FLOATING BG =================== -->
+<div class="floating-bg-container" id="floating-bg"></div>
+
+<!-- =================== NAVBAR (Universal) =================== -->
+<nav id="navbar">
+    <div class="logo">
+        <img src="assets/images/logo.png" alt="logo" class="logo">
+        <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
+        <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
+    </div>
+    <div class="hamburger-menu" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+    <ul class="nav-list">
+        <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
+        <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
+        <li><a href="https://nexgenixcreativesolutions.github.io/#services">Services</a></li>
+        <li><a href="https://nexgenixcreativesolutions.github.io/#reviews">Reviews</a></li>
+        <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="auth-buttons" id="auth-buttons">
+        <button onclick="handleLogout()" class="logout-btn">Logout</button>
+        <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
+    </div>
+</nav>
+
+<!-- =================== CONTACT HERO =================== -->
+<div class="contact-page-wrapper">
+  <div class="contact-hero">
+    <p class="contact-hero-eyebrow">Get In Touch</p>
+    <h1 class="contact-hero-title">Let's Build Something <span class="gradient-text">Great Together</span></h1>
+    <p class="contact-hero-subtitle">Have a project in mind or want to learn more about our services? We'd love to hear from you.</p>
+  </div>
+
+  <!-- =================== CONTACT FORM =================== -->
+  <section class="main-section" id="contact">
+      <article>
+          <!-- Contact Form with Formspree -->
+          <form action="https://formspree.io/f/maqdqdqw" method="POST" class="contact-form">
+              <div class="form-group">
+                  <label for="name">Full Name *</label>
+                  <input type="text" id="name" name="name" required placeholder="Enter your full name">
+              </div>
+              
+              <div class="form-group">
+                  <label for="email">Email Address *</label>
+                  <input type="email" id="email" name="email" required placeholder="Enter your email">
+              </div>
+              
+              <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+              </div>
+              
+              <div class="form-group">
+                  <label for="service">Service Interest *</label>
+                  <select id="service" name="service" required>
+                      <option value="">Select a service</option>
+                      <option value="Digital Design">Digital Design and Visual Communication</option>
+                      <option value="Writing Services">Writing Services</option>
+                      <option value="Education">Education and Training</option>
+                      <option value="Other">Other</option>
+                  </select>
+              </div>
+              
+              <div class="form-group">
+                  <label for="message">Message *</label>
+                  <textarea id="message" name="message" rows="5" required placeholder="Tell us about your project or inquiry"></textarea>
+              </div>
+              
+              <button type="submit" class="btn-submit">Send Message</button>
+          </form>
+          
+          <div class="contact-divider">
+              <span>OR CONNECT WITH US</span>
+          </div>
+          
+          <div class="contact-buttons">
+              <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
+                  <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
+              </a>
+              <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
+                  <button class="contact-btn"><i class="fab fa-instagram"></i></button>
+              </a>
+              <a href="https://www.reddit.com/user/nexgenix" target="_blank">
+                  <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
+              </a>
+              <a href="/cdn-cgi/l/email-protection#4628233e2123282f3e25342327322f302335292a33322f29283506212b272f2a6825292b">
+                  <button class="contact-btn"><i class="fas fa-envelope"></i></button>
+              </a>
+              <a href="https://wa.me/+639171063504" target="_blank">
+                  <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
+              </a>
+          </div>
+      </article>
+  </section>
+</div>
+
+<!-- =================== FOOTER (Universal) =================== -->
+<footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
+
+<!-- External JavaScript -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="script.js"></script>
+
+<!-- Toggle Menu Script -->
+<script>
+    function toggleMenu() {
+        document.querySelector('.nav-list').classList.toggle('active');
+        document.querySelector('.hamburger-menu').classList.toggle('open');
+    }
+</script>
+
+<!-- Floating Dark-Themed Background Script -->
+<script>
+(function() {
+  const bg = document.getElementById('floating-bg');
+
+  // --- Floating code lines ---
+  const snippets = [
+    'const nexgenix = () => {',
+    'function createSolution() {',
+    'import { Innovation } from "future"',
+    '<div className="digital">',
+    'async function buildDreams() {',
+    'export default Excellence;',
+    'return <Success />;',
+    'const vision = await design();',
+    'npm install creativity',
+    'git commit -m "launch"',
+    'SELECT * FROM solutions;',
+    '{ transform: "ideas" }',
+    '.future { display: flex; }',
+    'type Success = Promise<Growth>;',
+    'interface Vision extends Brand {}',
+  ];
+
+  for (let i = 0; i < 14; i++) {
+    const el = document.createElement('div');
+    el.className = 'float-code';
+    el.textContent = snippets[Math.floor(Math.random() * snippets.length)];
+    el.style.top = `${4 + i * 6.5}%`;
+    el.style.animationDuration = `${18 + Math.random() * 14}s`;
+    el.style.animationDelay = `${Math.random() * 22}s`;
+    bg.appendChild(el);
+  }
+
+  // --- Floating geometric shapes ---
+  const shapes = [
+    { type: 'square', w: 60,  h: 60,  top: '12%', left: '5%',  dur: '7s',  delay: '0s' },
+    { type: 'circle', w: 80,  h: 80,  top: '30%', left: '88%', dur: '9s',  delay: '1s' },
+    { type: 'square', w: 40,  h: 40,  top: '55%', left: '10%', dur: '11s', delay: '2s' },
+    { type: 'diamond',w: 70,  h: 70,  top: '70%', left: '80%', dur: '8s',  delay: '3s' },
+    { type: 'circle', w: 50,  h: 50,  top: '80%', left: '45%', dur: '10s', delay: '1.5s' },
+    { type: 'square', w: 35,  h: 35,  top: '20%', left: '60%', dur: '13s', delay: '4s' },
+    { type: 'diamond',w: 55,  h: 55,  top: '45%', left: '92%', dur: '9s',  delay: '0.5s' },
+    { type: 'circle', w: 100, h: 100, top: '5%',  left: '75%', dur: '15s', delay: '6s' },
+  ];
+
+  shapes.forEach(s => {
+    const el = document.createElement('div');
+    el.className = `float-shape ${s.type === 'circle' ? 'circle' : s.type === 'diamond' ? 'diamond' : ''}`;
+    el.style.width  = `${s.w}px`;
+    el.style.height = `${s.h}px`;
+    el.style.top    = s.top;
+    el.style.left   = s.left;
+    el.style.animationDuration = s.dur;
+    el.style.animationDelay   = s.delay;
+    bg.appendChild(el);
+  });
+
+  // --- Glowing orbs ---
+  const orbs = [
+    { size: 350, top: '10%',  left: '-8%',  color: 'rgba(57,255,20,0.6)',  dur: '8s',  delay: '0s' },
+    { size: 300, top: '60%',  left: '85%',  color: 'rgba(255,255,0,0.5)',  dur: '11s', delay: '3s' },
+    { size: 250, top: '40%',  left: '40%',  color: 'rgba(255,0,0,0.4)',    dur: '14s', delay: '6s' },
+    { size: 200, top: '85%',  left: '20%',  color: 'rgba(57,255,20,0.5)',  dur: '9s',  delay: '1s' },
+  ];
+
+  orbs.forEach(o => {
+    const el = document.createElement('div');
+    el.className = 'float-orb';
+    el.style.width  = `${o.size}px`;
+    el.style.height = `${o.size}px`;
+    el.style.top    = o.top;
+    el.style.left   = o.left;
+    el.style.background = o.color;
+    el.style.animationDuration = o.dur;
+    el.style.animationDelay   = o.delay;
+    bg.appendChild(el);
+  });
+})();
+</script>
+
+</body>
+</html>
+
