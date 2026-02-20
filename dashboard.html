@@ -10,8 +10,267 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
   <link rel="stylesheet" href="dashboard-style.css">
+  <style>
+    /* ── SIDEBAR ACCORDION ── */
+    .sidebar-group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0.875rem;
+      margin-bottom: 0.15rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      border: 1px solid transparent;
+      transition: all 0.22s ease;
+      list-style: none;
+    }
+    .sidebar-group-header:hover {
+      background: var(--neon-dim);
+      border-color: var(--border);
+      color: var(--neon);
+    }
+    .sidebar-group-header.open {
+      color: var(--neon);
+      background: var(--neon-dim);
+      border-color: var(--border);
+    }
+    .sidebar-arrow {
+      font-size: 0.75rem;
+      transition: transform 0.22s ease;
+      opacity: 0.7;
+    }
+    .sidebar-group-header.open .sidebar-arrow { transform: rotate(180deg); }
+
+    .sidebar-submenu {
+      list-style: none;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding-left: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+    .sidebar-submenu.open { max-height: 400px; }
+
+    .sidebar-subheader {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: var(--neon);
+      padding: 0.5rem 0.75rem 0.2rem;
+      text-transform: uppercase;
+      opacity: 0.75;
+      list-style: none;
+    }
+    .sidebar-subitem {
+      padding: 0.45rem 0.875rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      transition: all 0.18s ease;
+      list-style: none;
+      border: 1px solid transparent;
+    }
+    .sidebar-subitem:hover {
+      background: rgba(57,255,20,0.07);
+      color: var(--text);
+      border-color: var(--border-dim);
+      transform: translateX(3px);
+    }
+
+    /* ── PROFILE SECTION ── */
+    .profile-avatar-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-dim);
+    }
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--neon);
+      box-shadow: 0 0 16px rgba(57,255,20,0.25);
+      background: var(--surface-2);
+    }
+    .avatar-initials {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid var(--neon);
+      box-shadow: 0 0 16px rgba(57,255,20,0.25);
+      background: var(--neon-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--neon);
+    }
+    .avatar-upload-btn {
+      padding: 0.4rem 0.875rem;
+      background: var(--neon-dim);
+      border: 1px solid var(--neon);
+      border-radius: var(--radius-sm);
+      color: var(--neon);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .avatar-upload-btn:hover { background: var(--neon); color: #000; }
+
+    .profile-section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--neon);
+      text-transform: uppercase;
+      padding: 0.75rem 0 0.5rem;
+      border-bottom: 1px solid var(--border-dim);
+      margin-bottom: 0.875rem;
+    }
+
+    /* ── ORDERS FILTER TABS ── */
+    .orders-filter-tabs {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .orders-tab {
+      padding: 0.4rem 0.875rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-dim);
+      background: var(--surface-2);
+      color: var(--text-muted);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .orders-tab:hover, .orders-tab.active {
+      background: var(--neon-dim);
+      border-color: var(--neon);
+      color: var(--neon);
+    }
+
+    /* ── REVIEW / RATING ── */
+    .review-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin-top: 0.75rem;
+    }
+    .star-rating {
+      display: flex;
+      gap: 0.3rem;
+      margin-bottom: 0.6rem;
+    }
+    .star {
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--border-dim);
+      transition: color 0.15s;
+    }
+    .star.active, .star:hover { color: var(--yellow); }
+    .review-textarea {
+      width: 100%;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 0.8rem;
+      padding: 0.5rem 0.75rem;
+      resize: vertical;
+      min-height: 70px;
+      margin-bottom: 0.5rem;
+    }
+    .review-textarea:focus { outline: none; border-color: var(--neon); }
+
+    /* ── SUPPORT SECTION ── */
+    .support-options {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .support-card {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 0.875rem 1rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.22s;
+    }
+    .support-card:hover {
+      border-color: var(--neon);
+      background: var(--neon-dim);
+    }
+    .support-icon { font-size: 1.4rem; }
+    .support-label { font-family: 'Orbitron', sans-serif; font-size: 0.72rem; color: var(--text); letter-spacing: 0.04em; }
+    .support-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+    /* ── BOTTOM NAV LOGOUT ── */
+    .bottom-nav-item.logout-item { color: var(--red) !important; }
+    .bottom-nav-item.logout-item svg { stroke: var(--red) !important; }
+    .bottom-nav-item.logout-item:hover,
+    .bottom-nav-item.logout-item.active { background: rgba(255,64,64,0.1) !important; }
+
+    /* ── HIDE + BUTTON STYLE ── */
+    .bottom-nav-plus { display: none !important; }
+
+    /* ── TOP NAV — clock only ── */
+    .top-nav-buttons-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ── PASSWORD TOGGLE ── */
+    .pw-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .pw-wrap .pw-input {
+      padding-right: 2.5rem;
+      flex: 1;
+    }
+    .pw-toggle {
+      position: absolute;
+      right: 0.6rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 0;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+    }
+    .pw-toggle:hover { color: var(--neon); }
+    .pw-toggle .eye-icon { width: 16px; height: 16px; }
+    .pw-toggle.visible { color: var(--neon); }
+  </style>
 </head>
 
 <body>
@@ -22,64 +281,72 @@
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
   <div class="dashboard-wrapper">
-    <!-- Sidebar -->
+
+    <!-- =================== SIDEBAR =================== -->
     <aside class="sidebar" id="sidebar">
       <div>
         <img src="assets/images/dashboard-logo-no-bg.png" class="sidebar-logo" alt="Nex Genix">
         <ul class="sidebar-menu">
-          <li onclick="showSection('order')" class="active">Order Service</li>
-          <li onclick="showSection('my-orders')">My Orders</li>
-          <li onclick="showSection('settings')">Account Settings</li>
+
+          <!-- 1. VIEW PROFILE -->
+          <li class="sidebar-group-header" id="hdr-profile" onclick="toggleSidebarGroup('grp-profile','hdr-profile')">
+            <span>👤 View Profile</span>
+            <span class="sidebar-arrow">▾</span>
+          </li>
+          <ul class="sidebar-submenu" id="grp-profile">
+            <li class="sidebar-subheader">Account Settings</li>
+            <li class="sidebar-subitem" onclick="showSection('profile'); sidebarScrollTo('avatarSection')">📷 Upload / Replace Avatar</li>
+            <li class="sidebar-subitem" onclick="showSection('profile'); sidebarScrollTo('emailSection')">✉️ Change Email</li>
+            <li class="sidebar-subitem" onclick="showSection('profile'); sidebarScrollTo('phoneSection')">📱 Change Phone Number</li>
+            <li class="sidebar-subheader">Change Password</li>
+            <li class="sidebar-subitem" onclick="showSection('profile'); sidebarScrollTo('passwordSection')">🔒 Update Password</li>
+          </ul>
+
+          <!-- 2. SERVICES PURCHASED -->
+          <li class="sidebar-group-header" id="hdr-orders" onclick="toggleSidebarGroup('grp-orders','hdr-orders')">
+            <span>🛍️ Services Purchased</span>
+            <span class="sidebar-arrow">▾</span>
+          </li>
+          <ul class="sidebar-submenu" id="grp-orders">
+            <li class="sidebar-subitem" onclick="showSection('my-orders'); setOrdersFilter('in-progress')">⚙️ In Progress</li>
+            <li class="sidebar-subitem" onclick="showSection('my-orders'); setOrdersFilter('finished')">✅ Finished</li>
+            <li class="sidebar-subitem" onclick="showSection('my-orders'); setOrdersFilter('receipts')">🧾 View Receipts</li>
+          </ul>
+
+          <!-- 3. CONTACT SUPPORT -->
+          <li class="sidebar-group-header" onclick="showSection('support')" style="justify-content:flex-start;gap:0.4rem;">
+            <span>💬 Contact Support</span>
+          </li>
+
         </ul>
       </div>
-      <p class="sidebar-footer">&copy; 2026 NEX GENIX Creative Solutions</p>
+      <p class="sidebar-footer">&copy; 2023–2026 Nex Genix Creative Solutions<br>All rights reserved.</p>
     </aside>
 
-    <!-- Main Content -->
+    <!-- =================== MAIN CONTENT =================== -->
     <main class="main-content">
-      <!-- Top Navigation -->
+
+      <!-- Top Navigation — clock only -->
       <nav class="top-nav">
         <div id="datetime" class="datetime"></div>
-
-        <div class="top-nav-buttons">
-          <div class="dropdown">
-            <button class="nav-btn home-btn">
-              <span>🏠</span>
-              <span>Home</span>
-            </button>
-            <div class="dropdown-menu">
-              <a href="https://nexgenixbusinessschool.github.io" target="_blank">Nex Genix Business School</a>
-              <a href="https://nexgenixcreativesolutions.github.io" target="_blank">Nex Genix Creative Solutions</a>
-            </div>
-          </div>
-
-          <button onclick="logout()" class="nav-btn logout-btn">
-            <span>🚪</span>
-            <span>Logout</span>
-          </button>
+        <div class="top-nav-buttons-right">
+          <!-- hamburger on mobile -->
+          <button class="nav-btn" id="sidebarToggleBtn" onclick="toggleSidebar()" style="display:none;">☰</button>
         </div>
       </nav>
 
-      <!-- Order Service Section -->
+      <!-- ── ORDER SERVICE SECTION ── -->
       <div id="order" class="content-section active">
         <h1 class="welcome-title">Order Your Service</h1>
 
-        <!-- Order Type Selector -->
         <div class="order-type-selector">
-          <button class="order-type-btn active" id="newWebsiteBtn" onclick="selectOrderType('new')">
-            🆕 New Website Order
-          </button>
-          <button class="order-type-btn" id="renewalBtn" onclick="selectOrderType('renewal')">
-            🔄 Renewal Service
-          </button>
+          <button class="order-type-btn active" id="newWebsiteBtn" onclick="selectOrderType('new')">🆕 New Website Order</button>
+          <button class="order-type-btn" id="renewalBtn" onclick="selectOrderType('renewal')">🔄 Renewal Service</button>
         </div>
 
-        <!-- ★ CURRENCY SELECTOR ★ -->
+        <!-- CURRENCY SELECTOR -->
         <div class="currency-selector-standalone">
-          <div class="currency-selector-label">
-            <span>💱</span>
-            <span>View Prices In:</span>
-          </div>
+          <div class="currency-selector-label"><span>💱</span><span>View Prices In:</span></div>
           <div class="currency-dropdown-wrap">
             <select id="currencyDropdown" onchange="changeCurrencyFromDropdown(this)" class="currency-dropdown">
               <option value="USD" data-flag="💵">💵 USD — US Dollar ($)</option>
@@ -104,479 +371,192 @@
           </div>
         </div>
 
-        <!-- ★ SERVICE TYPE FILTER BAR (only for new orders) -->
+        <!-- SERVICE TYPE FILTER BAR -->
         <div class="service-filter-bar" id="serviceFilterBar">
           <div class="filter-label">Filter packages by service type</div>
-          <button class="filter-tab active" id="tab-all" onclick="filterByServiceType('all', this)">
-            <span class="tab-icon">🗂️</span> All Packages
-          </button>
-          <button class="filter-tab" id="tab-app-design" onclick="filterByServiceType('app-design', this)">
-            <span class="tab-icon">📱</span> App Design
-          </button>
-          <button class="filter-tab" id="tab-web-design" onclick="filterByServiceType('web-design', this)">
-            <span class="tab-icon">🎨</span> Web Design
-          </button>
-          <button class="filter-tab" id="tab-web-development" onclick="filterByServiceType('web-development', this)">
-            <span class="tab-icon">🌐</span> Web Development
-          </button>
-          <button class="filter-tab" id="tab-ui-ux" onclick="filterByServiceType('ui-ux-design', this)">
-            <span class="tab-icon">🧩</span> UI/UX Design
-          </button>
+          <button class="filter-tab active" id="tab-all" onclick="filterByServiceType('all', this)"><span class="tab-icon">🗂️</span> All Packages</button>
+          <button class="filter-tab" id="tab-app-design" onclick="filterByServiceType('app-design', this)"><span class="tab-icon">📱</span> App Design</button>
+          <button class="filter-tab" id="tab-web-design" onclick="filterByServiceType('web-design', this)"><span class="tab-icon">🎨</span> Web Design</button>
+          <button class="filter-tab" id="tab-web-development" onclick="filterByServiceType('web-development', this)"><span class="tab-icon">🌐</span> Web Development</button>
+          <button class="filter-tab" id="tab-ui-ux" onclick="filterByServiceType('ui-ux-design', this)"><span class="tab-icon">🧩</span> UI/UX Design</button>
         </div>
 
         <!-- NEW WEBSITE PACKAGES -->
         <div id="newWebsitePackages">
-          <!-- MULTI-PAGE WEBSITES WITH MAINTENANCE -->
           <div class="package-category" id="cat-maintenance" data-service-types="web-design web-development">
-            <div class="category-header">
-              <h3>📱 Multi-Page Websites (With Maintenance)</h3>
-              <p>Professional websites with ongoing support and maintenance - Perfect for growing businesses</p>
-            </div>
-            <div class="content-box">
-              <div class="service-grid" id="serviceGridMaintenance">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
+            <div class="category-header"><h3>📱 Multi-Page Websites (With Maintenance)</h3><p>Professional websites with ongoing support and maintenance - Perfect for growing businesses</p></div>
+            <div class="content-box"><div class="service-grid" id="serviceGridMaintenance"></div></div>
           </div>
-
-          <!-- TWO-PAGE WEBSITES -->
           <div class="package-category" id="cat-onepage" data-service-types="web-design web-development">
-            <div class="category-header">
-              <h3>⚡ Two-Page Websites (Fast Launch)</h3>
-              <p>Quick and efficient single-page solutions - Best for new businesses, promos, and landing pages</p>
-            </div>
-            <div class="content-box">
-              <div class="service-grid" id="serviceGridOnePage">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
+            <div class="category-header"><h3>⚡ Two-Page Websites (Fast Launch)</h3><p>Quick and efficient single-page solutions - Best for new businesses, promos, and landing pages</p></div>
+            <div class="content-box"><div class="service-grid" id="serviceGridOnePage"></div></div>
           </div>
-
-          <!-- MULTI-PAGE WEBSITES WITHOUT MAINTENANCE -->
           <div class="package-category" id="cat-nomaintenance" data-service-types="web-design web-development">
-            <div class="category-header">
-              <h3>🌐 Multi-Page Websites (No Maintenance)</h3>
-              <p>One-time development with no ongoing costs - For businesses wanting a simple online presence</p>
-            </div>
-            <div class="content-box">
-              <div class="service-grid" id="serviceGridNoMaintenance">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
+            <div class="category-header"><h3>🌐 Multi-Page Websites (No Maintenance)</h3><p>One-time development with no ongoing costs - For businesses wanting a simple online presence</p></div>
+            <div class="content-box"><div class="service-grid" id="serviceGridNoMaintenance"></div></div>
           </div>
-
-          <!-- APP DESIGN PACKAGES (shown only when App Design is filtered) -->
           <div class="package-category hidden" id="cat-app-design" data-service-types="app-design">
-            <div class="category-header">
-              <h3>📱 App Design Packages</h3>
-              <p>Mobile app UI/UX design for iOS, Android, and cross-platform applications</p>
-            </div>
-            <div class="content-box">
-              <div class="service-grid" id="serviceGridAppDesign">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
+            <div class="category-header"><h3>📱 App Design Packages</h3><p>Mobile app UI/UX design for iOS, Android, and cross-platform applications</p></div>
+            <div class="content-box"><div class="service-grid" id="serviceGridAppDesign"></div></div>
           </div>
-
-          <!-- UI/UX DESIGN PACKAGES (shown only when UI/UX is filtered) -->
           <div class="package-category hidden" id="cat-uiux" data-service-types="ui-ux-design">
-            <div class="category-header">
-              <h3>🧩 UI/UX Design Packages</h3>
-              <p>Wireframes, prototypes, user research, and full design systems</p>
-            </div>
-            <div class="content-box">
-              <div class="service-grid" id="serviceGridUiux">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
+            <div class="category-header"><h3>🧩 UI/UX Design Packages</h3><p>Wireframes, prototypes, user research, and full design systems</p></div>
+            <div class="content-box"><div class="service-grid" id="serviceGridUiux"></div></div>
           </div>
         </div>
 
-        <!-- RENEWAL SERVICES -->
-        <div id="renewalPackages" style="display: none;">
-          <!-- WEBSITE MANAGER SERVICES -->
+        <!-- RENEWAL PACKAGES -->
+        <div id="renewalPackages" style="display:none;">
           <div class="package-category">
-            <div class="category-header">
-              <h3>🔧 Website Manager Services</h3>
-              <p>Monthly or annual website maintenance and support</p>
-            </div>
-            <div class="content-box">
-              <div style="background: var(--neon-dim); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.25rem; margin-bottom: 1.5rem;">
-                <h4 style="color: var(--neon); font-size: 0.95rem; margin-bottom: 0.875rem; font-family: 'Orbitron', sans-serif; letter-spacing: 0.04em;">Website Manager Includes:</h4>
-                <ul style="list-style: none; padding: 0;">
-                  <li style="padding: 0.4rem 0; color: #b0bec5; font-size: 0.88rem;">✓ Content updates (text/images)</li>
-                  <li style="padding: 0.4rem 0; color: #b0bec5; font-size: 0.88rem;">✓ Minor design changes</li>
-                  <li style="padding: 0.4rem 0; color: #b0bec5; font-size: 0.88rem;">✓ Plugin & security checks</li>
-                  <li style="padding: 0.4rem 0; color: #b0bec5; font-size: 0.88rem;">✓ Backup monitoring</li>
-                  <li style="padding: 0.4rem 0; color: #b0bec5; font-size: 0.88rem;">✓ Basic performance checks</li>
-                </ul>
-              </div>
-              <div class="service-grid" id="serviceGridManager">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
+            <div class="category-header"><h3>🔧 Website Manager Services</h3><p>Keep your website running smoothly with professional management</p></div>
+            <div class="content-box"><div class="service-grid" id="serviceGridManager"></div></div>
           </div>
-
-          <!-- ANNUAL RENEWAL INVOICE -->
           <div class="package-category">
-            <div class="category-header">
-              <h3>📅 Annual Website Renewal</h3>
-              <p>Keep your website running with hosting, domain, and essential services</p>
-            </div>
-            <div class="content-box">
-              <div class="service-grid" id="serviceGridRenewal">
-                <!-- Loaded dynamically -->
-              </div>
-            </div>
+            <div class="category-header"><h3>🔄 Annual Renewal</h3><p>Renew your existing Nex Genix website for another year</p></div>
+            <div class="content-box"><div class="service-grid" id="serviceGridRenewal"></div></div>
           </div>
         </div>
 
-        <!-- Customization Panel -->
-        <div class="customization-panel" id="customizationPanel" style="display: none;">
-          <h2>Customize Your Order</h2>
+        <!-- CUSTOMIZATION PANEL (hidden until card selected) -->
+        <div class="customization-panel" id="customizationPanel" style="display:none;">
+          <h2>⚙️ CUSTOMIZE YOUR ORDER</h2>
 
-          <!-- AUTO-DETECTED SERVICE TYPE BADGE -->
-          <div style="text-align:center; margin-bottom:1.5rem;">
-            <span class="service-type-badge" id="serviceTypeBadge">⚙️ Select a package above</span>
+          <div class="service-type-badge-wrap">
+            <span class="service-type-badge" id="selectedServiceBadge">SERVICE</span>
           </div>
 
-          <!-- ★ BUSINESS QUESTIONNAIRE (universal, always shown first) -->
+          <!-- Business Questionnaire -->
           <div class="biz-questionnaire" id="bizQuestionnaire">
-            <h3>🏢 Tell us about your business</h3>
-
-            <span class="biz-tags-label">What type of business or project is this for? <em style="color:#6b7280;">(select all that apply)</em></span>
-            <div class="biz-tags" id="bizTypeTagsEl">
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Startup')">🚀 Startup</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Small Business')">🏪 Small Business</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Corporate / Enterprise')">🏢 Corporate / Enterprise</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Freelancer / Personal')">👤 Freelancer / Personal</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Non-Profit / Organization')">🤝 Non-Profit / Organization</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','E-Commerce / Online Store')">🛒 E-Commerce / Online Store</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Restaurant / Food & Beverage')">🍽️ Restaurant / F&B</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Health & Wellness')">💊 Health & Wellness</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Education / E-Learning')">📚 Education / E-Learning</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Real Estate')">🏠 Real Estate</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Events / Entertainment')">🎉 Events / Entertainment</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'type','Technology / SaaS')">💻 Technology / SaaS</span>
-            </div>
-
-            <span class="biz-tags-label">What is your goal with this project? <em style="color:#6b7280;">(select all that apply)</em></span>
-            <div class="biz-tags" id="bizGoalTagsEl">
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Generate Leads / Inquiries')">📩 Generate Leads</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Sell Products / Services Online')">💳 Sell Online</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Build Brand Awareness')">✨ Brand Awareness</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Showcase Portfolio / Work')">🖼️ Showcase Portfolio</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Provide Information / Blog')">📰 Information / Blog</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','User Login & Dashboard')">🔐 User Login / Dashboard</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Booking / Appointments')">📅 Booking / Appointments</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'goal','Community / Social')">👥 Community / Social</span>
-            </div>
-
-            <span class="biz-tags-label">What stage is your business/project currently in?</span>
-            <div class="biz-tags" id="bizStageTagsEl" data-single="true">
-              <span class="biz-tag" onclick="toggleBizTag(this,'stage','Just Starting Out')">🌱 Just Starting Out</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'stage','Already Operating')">🔄 Already Operating</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'stage','Rebranding / Redesign')">🔁 Rebranding / Redesign</span>
-              <span class="biz-tag" onclick="toggleBizTag(this,'stage','Scaling Up')">📈 Scaling Up</span>
-            </div>
-          </div>
-
-          <!-- ===== APP DESIGN OPTIONS ===== -->
-          <div id="appDesignOptions" class="service-type-options" style="display:none;">
-            <div class="panel-section-title">📱 App Design Configuration</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Platform *</label>
-                <select id="appPlatform" class="select" onchange="updateInvoice()">
-                  <option value="">Select platform</option>
-                  <option value="iOS">iOS Only</option>
-                  <option value="Android">Android Only</option>
-                  <option value="Cross-Platform" data-extra="500">Cross-Platform (iOS + Android) +₱500</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>App Category *</label>
-                <select id="appCategory" class="select" onchange="updateInvoice()">
-                  <option value="">Select category</option>
-                  <option value="Business / Corporate">Business / Corporate</option>
-                  <option value="E-Commerce / Shopping">E-Commerce / Shopping</option>
-                  <option value="Social / Community">Social / Community</option>
-                  <option value="Utility / Productivity">Utility / Productivity</option>
-                  <option value="Food & Delivery">Food & Delivery</option>
-                  <option value="Health & Fitness">Health & Fitness</option>
-                  <option value="Education / E-Learning">Education / E-Learning</option>
-                  <option value="Entertainment / Media">Entertainment / Media</option>
-                  <option value="Finance / Banking">Finance / Banking</option>
-                  <option value="Travel & Booking">Travel & Booking</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Number of Screens *</label>
-                <select id="appScreens" class="select" onchange="updateInvoice()">
-                  <option value="">Select range</option>
-                  <option value="1–5 Screens">1–5 Screens</option>
-                  <option value="6–10 Screens">6–10 Screens</option>
-                  <option value="11–20 Screens">11–20 Screens</option>
-                  <option value="20+ Screens">20+ Screens</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Prototype Type</label>
-                <select id="appPrototype" class="select" onchange="updateInvoice()">
-                  <option value="none">No prototype needed</option>
-                  <option value="Static Mockup">Static Mockup (Figma Frames)</option>
-                  <option value="Clickable Prototype" data-extra="800">Clickable Prototype +₱800</option>
-                  <option value="Animated Prototype" data-extra="1500">Animated / Motion Prototype +₱1,500</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Design Tool Preference</label>
-                <select id="appTool" class="select">
-                  <option value="Figma">Figma (Recommended)</option>
-                  <option value="Adobe XD">Adobe XD</option>
-                  <option value="Sketch">Sketch</option>
-                  <option value="No Preference">No Preference</option>
-                </select>
-              </div>
+            <h3>📋 Tell Us About Your Business</h3>
+            <div class="form-group">
+              <div class="biz-tags-label">Business Type</div>
+              <div class="biz-tags" id="bizTypeTags"></div>
             </div>
             <div class="form-group">
-              <label>Additional App Features <span style="color:#6b7280;font-size:0.8rem;">(select multiple)</span></label>
-              <div class="toggle-group">
-                <div class="toggle-item" onclick="toggleFeature(this,'app-branding')"><input type="checkbox" id="app-branding" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Branding / Logo Integration</span><span class="toggle-price">+₱500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'app-darkmode')"><input type="checkbox" id="app-darkmode" data-price="400" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Dark Mode Version</span><span class="toggle-price">+₱400</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'app-icon')"><input type="checkbox" id="app-icon" data-price="300" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">App Icon Design</span><span class="toggle-price">+₱300</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'app-onboarding')"><input type="checkbox" id="app-onboarding" data-price="600" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Onboarding Screens</span><span class="toggle-price">+₱600</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'app-designsystem')"><input type="checkbox" id="app-designsystem" data-price="900" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Design System / Style Guide</span><span class="toggle-price">+₱900</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'app-splash')"><input type="checkbox" id="app-splash" data-price="250" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Splash Screen Design</span><span class="toggle-price">+₱250</span></div></div>
-              </div>
+              <div class="biz-tags-label">Business Goals</div>
+              <div class="biz-tags" id="bizGoalTags"></div>
+            </div>
+            <div class="form-group">
+              <div class="biz-tags-label">Business Stage</div>
+              <div class="biz-tags" id="bizStageTags"></div>
             </div>
           </div>
 
-          <!-- ===== WEB DESIGN OPTIONS ===== -->
-          <div id="webDesignOptions" class="service-type-options" style="display:none;">
-            <div class="panel-section-title">🎨 Web Design Configuration</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Website Type *</label>
-                <select id="wdType" class="select" onchange="updateInvoice()">
-                  <option value="">Select type</option>
-                  <option value="Portfolio / Personal">Portfolio / Personal</option>
-                  <option value="Corporate / Company">Corporate / Company</option>
-                  <option value="Landing Page">Landing Page</option>
-                  <option value="Blog / Magazine">Blog / Magazine</option>
-                  <option value="E-Commerce">E-Commerce</option>
-                  <option value="Non-Profit / Organization">Non-Profit / Organization</option>
-                  <option value="Restaurant / Food">Restaurant / Food</option>
-                  <option value="Event / Promo Site">Event / Promo Site</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="numPages">Number of Pages *</label>
-                <div class="page-counter-wrap">
-                  <div class="page-counter" id="numPagesCounter">
-                    <button type="button" class="page-counter-btn" id="numPagesMinus" onclick="adjustPages('numPages',-1)">−</button>
-                    <input type="number" id="numPages" class="page-counter-input" min="1" readonly onchange="updateInvoice()">
-                    <button type="button" class="page-counter-btn" id="numPagesPlus" onclick="adjustPages('numPages',1)">+</button>
-                  </div>
-                  <span class="page-counter-hint" id="numPagesHint">Select a package first</span>
+          <!-- App Design Options -->
+          <div id="appDesignOptions" style="display:none;">
+            <div class="panel-section-title">📱 APP DESIGN CONFIGURATION</div>
+            <div class="form-group">
+              <label>Platform *</label>
+              <select id="appPlatform" class="select"><option value="">Select platform</option><option>iOS</option><option>Android</option><option>Both (Cross-platform)</option></select>
+            </div>
+            <div class="form-group">
+              <label>Number of Screens *</label>
+              <select id="appScreens" class="select"><option value="">Select range</option><option>1–5 screens</option><option>6–10 screens</option><option>11–20 screens</option><option>20+ screens</option></select>
+            </div>
+            <div class="form-group">
+              <label>Prototype Required?</label>
+              <select id="appPrototype" class="select"><option value="no">No prototype needed</option><option value="low">Low-fidelity wireframes</option><option value="high">High-fidelity prototype</option></select>
+            </div>
+          </div>
+
+          <!-- Web Design Options -->
+          <div id="webDesignOptions" style="display:none;">
+            <div class="panel-section-title">🎨 WEB DESIGN CONFIGURATION</div>
+            <div class="form-group">
+              <label>Number of Pages *</label>
+              <div class="page-counter-wrap">
+                <div class="page-counter">
+                  <button class="page-counter-btn" onclick="adjustPages(-1)">−</button>
+                  <input type="number" id="pageCountInput" class="page-counter-input" value="1" min="1" max="50" oninput="updatePageCount()">
+                  <button class="page-counter-btn" onclick="adjustPages(1)">+</button>
                 </div>
               </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Design Tool Preference</label>
-                <select id="wdTool" class="select">
-                  <option value="Figma">Figma (Recommended)</option>
-                  <option value="Adobe XD">Adobe XD</option>
-                  <option value="Photoshop">Photoshop</option>
-                  <option value="No Preference">No Preference</option>
-                </select>
-              </div>
+              <div class="page-counter-hint" id="pageCounterHint"></div>
             </div>
             <div class="form-group">
-              <label>Additional Design Features <span style="color:#6b7280;font-size:0.8rem;">(select multiple)</span></label>
-              <div class="toggle-group">
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-responsive')"><input type="checkbox" id="wd-responsive" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Mobile Responsive Design</span><span class="toggle-price">+₱500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-illustrations')"><input type="checkbox" id="wd-illustrations" data-price="800" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Custom Illustrations</span><span class="toggle-price">+₱800</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-logo')"><input type="checkbox" id="wd-logo" data-price="600" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Logo Design</span><span class="toggle-price">+₱600</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-motion')"><input type="checkbox" id="wd-motion" data-price="700" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Animated / Motion Elements</span><span class="toggle-price">+₱700</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-brandguide')"><input type="checkbox" id="wd-brandguide" data-price="900" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Brand Style Guide</span><span class="toggle-price">+₱900</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-darkmode')"><input type="checkbox" id="wd-darkmode" data-price="400" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Dark Mode Design</span><span class="toggle-price">+₱400</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-prototype')"><input type="checkbox" id="wd-prototype" data-price="800" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Clickable Prototype</span><span class="toggle-price">+₱800</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'wd-socialmedia')"><input type="checkbox" id="wd-socialmedia" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Social Media Kit</span><span class="toggle-price">+₱500</span></div></div>
-              </div>
+              <label>Design Features (Select Multiple)</label>
+              <div class="toggle-group" id="webDesignFeatures"></div>
             </div>
           </div>
 
-          <!-- ===== WEB DEVELOPMENT OPTIONS ===== -->
-          <div id="webDevOptions" class="service-type-options" style="display:none;">
-            <div class="panel-section-title">🌐 Web Development Configuration</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Tech Stack / Platform *</label>
-                <select id="devStack" class="select" onchange="updateInvoice()">
-                  <option value="">Select stack</option>
-                  <option value="Custom HTML/CSS/JS">Custom HTML / CSS / JS</option>
-                  <option value="WordPress" data-extra="500">WordPress +₱500</option>
-                  <option value="React / Next.js" data-extra="1500">React / Next.js +₱1,500</option>
-                  <option value="Vue.js / Nuxt" data-extra="1500">Vue.js / Nuxt +₱1,500</option>
-                  <option value="Webflow" data-extra="800">Webflow +₱800</option>
-                  <option value="Shopify" data-extra="2000">Shopify +₱2,000</option>
-                  <option value="Laravel / PHP" data-extra="2000">Laravel / PHP Backend +₱2,000</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="numPagesdev">Number of Pages *</label>
-                <div class="page-counter-wrap">
-                  <div class="page-counter" id="numPagesdevCounter">
-                    <button type="button" class="page-counter-btn" id="numPagesdevMinus" onclick="adjustPages('numPagesdev',-1)">−</button>
-                    <input type="number" id="numPagesdev" class="page-counter-input" min="1" readonly onchange="updateInvoice()">
-                    <button type="button" class="page-counter-btn" id="numPagesdevPlus" onclick="adjustPages('numPagesdev',1)">+</button>
-                  </div>
-                  <span class="page-counter-hint" id="numPagesdevHint">Select a package first</span>
+          <!-- Web Development Options -->
+          <div id="webDevOptions" style="display:none;">
+            <div class="panel-section-title">🌐 WEB DEVELOPMENT CONFIGURATION</div>
+            <div class="form-group">
+              <label>Tech Stack / Platform *</label>
+              <select id="techStack" class="select"><option value="">Select stack</option><option>HTML/CSS/JS (Static)</option><option>React / Next.js</option><option>WordPress</option><option>Webflow</option><option>Shopify</option><option>Laravel / PHP</option><option>Node.js / Express</option><option>Other</option></select>
+            </div>
+            <div class="form-group">
+              <label>Number of Pages *</label>
+              <div class="page-counter-wrap">
+                <div class="page-counter">
+                  <button class="page-counter-btn" onclick="adjustPages(-1)">−</button>
+                  <input type="number" id="pageCountInput" class="page-counter-input" value="1" min="1" max="50" oninput="updatePageCount()">
+                  <button class="page-counter-btn" onclick="adjustPages(1)">+</button>
                 </div>
               </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Maintenance Plan</label>
-                <select id="devMaintenance" class="select" onchange="updateInvoice()">
-                  <option value="none">No maintenance needed</option>
-                  <option value="Monthly" data-extra="1500">Monthly Plan +₱1,500/mo</option>
-                  <option value="Annual" data-extra="15000">Annual Plan +₱15,000/yr</option>
-                </select>
-              </div>
+              <div class="page-counter-hint" id="pageCounterHint"></div>
             </div>
             <div class="form-group">
-              <label>Additional Development Features <span style="color:#6b7280;font-size:0.8rem;">(select multiple)</span></label>
-              <div class="toggle-group">
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-ecommerce')"><input type="checkbox" id="dev-ecommerce" data-price="3000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">E-Commerce / Online Store</span><span class="toggle-price">+₱3,000</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-cms')"><input type="checkbox" id="dev-cms" data-price="1500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">CMS Integration</span><span class="toggle-price">+₱1,500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-forms')"><input type="checkbox" id="dev-forms" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Contact Form / Email Setup</span><span class="toggle-price">+₱500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-seo')"><input type="checkbox" id="dev-seo" data-price="3000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">SEO Optimization</span><span class="toggle-price">+₱3,000</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-analytics')"><input type="checkbox" id="dev-analytics" data-price="2000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Analytics Integration</span><span class="toggle-price">+₱2,000</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-ssl')"><input type="checkbox" id="dev-ssl" data-price="1500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">SSL Certificate</span><span class="toggle-price">+₱1,500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-backup')"><input type="checkbox" id="dev-backup" data-price="2500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Automated Backups</span><span class="toggle-price">+₱2,500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-hosting')"><input type="checkbox" id="dev-hosting" data-price="1000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Hosting & Domain Setup</span><span class="toggle-price">+₱1,000</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-livechat')"><input type="checkbox" id="dev-livechat" data-price="400" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Live Chat Integration</span><span class="toggle-price">+₱400</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-social')"><input type="checkbox" id="dev-social" data-price="350" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Social Media Integration</span><span class="toggle-price">+₱350</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'dev-speed')"><input type="checkbox" id="dev-speed" data-price="600" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Speed Optimization</span><span class="toggle-price">+₱600</span></div></div>
-              </div>
+              <label>Maintenance Plan</label>
+              <select id="maintenancePlan" class="select"><option value="none">No maintenance needed</option><option value="monthly">Monthly (₱800/mo)</option><option value="annual">Annual (₱8,000/yr)</option></select>
+            </div>
+            <div class="form-group">
+              <label>Additional Development Features (Select Multiple)</label>
+              <div class="toggle-group" id="webDevFeatures"></div>
             </div>
           </div>
 
-          <!-- ===== UI/UX DESIGN OPTIONS ===== -->
-          <div id="uiuxOptions" class="service-type-options" style="display:none;">
-            <div class="panel-section-title">🧩 UI/UX Design Configuration</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Project Type *</label>
-                <select id="uxProjectType" class="select" onchange="updateInvoice()">
-                  <option value="">Select type</option>
-                  <option value="Web App">Web App</option>
-                  <option value="Mobile App">Mobile App</option>
-                  <option value="Desktop Software">Desktop Software</option>
-                  <option value="Dashboard / Admin Panel">Dashboard / Admin Panel</option>
-                  <option value="SaaS Product">SaaS Product</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Deliverable Type *</label>
-                <select id="uxDeliverable" class="select" onchange="updateInvoice()">
-                  <option value="">Select deliverable</option>
-                  <option value="Wireframes Only" data-extra="2000">Wireframes Only +₱2,000</option>
-                  <option value="Wireframes + Hi-Fi Design" data-extra="5000">Wireframes + Hi-Fi Design +₱5,000</option>
-                  <option value="Full Clickable Prototype" data-extra="7500">Full Clickable Prototype +₱7,500</option>
-                  <option value="Design System" data-extra="9000">Design System / Component Library +₱9,000</option>
-                  <option value="Complete UX Package" data-extra="12000">Complete UX Package +₱12,000</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Wireframe Fidelity</label>
-                <select id="uxFidelity" class="select" onchange="updateInvoice()">
-                  <option value="">Select fidelity</option>
-                  <option value="Low-Fidelity (Sketch)">Low-Fidelity (Sketch)</option>
-                  <option value="Mid-Fidelity (Greyscale)">Mid-Fidelity (Greyscale)</option>
-                  <option value="High-Fidelity (Full Color)">High-Fidelity (Full Color)</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Number of Screens / Views *</label>
-                <select id="uxScreens" class="select" onchange="updateInvoice()">
-                  <option value="">Select range</option>
-                  <option value="1–5 Screens">1–5 Screens</option>
-                  <option value="6–15 Screens">6–15 Screens</option>
-                  <option value="16–30 Screens">16–30 Screens</option>
-                  <option value="30+ Screens">30+ Screens</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Design Tool Preference</label>
-                <select id="uxTool" class="select">
-                  <option value="Figma">Figma (Recommended)</option>
-                  <option value="Adobe XD">Adobe XD</option>
-                  <option value="Sketch">Sketch</option>
-                  <option value="No Preference">No Preference</option>
-                </select>
-              </div>
+          <!-- UI/UX Options -->
+          <div id="uiuxOptions" style="display:none;">
+            <div class="panel-section-title">🧩 UI/UX DESIGN CONFIGURATION</div>
+            <div class="form-group">
+              <label>Deliverables</label>
+              <div class="toggle-group" id="uiuxDeliverables"></div>
             </div>
             <div class="form-group">
-              <label>Additional UI/UX Features <span style="color:#6b7280;font-size:0.8rem;">(select multiple)</span></label>
-              <div class="toggle-group">
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-research')"><input type="checkbox" id="ux-research" data-price="2000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">User Research & Personas</span><span class="toggle-price">+₱2,000</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-journey')"><input type="checkbox" id="ux-journey" data-price="1500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">User Journey Mapping</span><span class="toggle-price">+₱1,500</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-ia')"><input type="checkbox" id="ux-ia" data-price="1000" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Information Architecture</span><span class="toggle-price">+₱1,000</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-usability')"><input type="checkbox" id="ux-usability" data-price="1800" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Usability Testing Plan</span><span class="toggle-price">+₱1,800</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-accessibility')"><input type="checkbox" id="ux-accessibility" data-price="1200" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Accessibility Audit (WCAG)</span><span class="toggle-price">+₱1,200</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-microinteraction')"><input type="checkbox" id="ux-microinteraction" data-price="900" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Micro-Interaction Design</span><span class="toggle-price">+₱900</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-handoff')"><input type="checkbox" id="ux-handoff" data-price="600" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Developer Handoff / Specs</span><span class="toggle-price">+₱600</span></div></div>
-                <div class="toggle-item" onclick="toggleFeature(this,'ux-brand')"><input type="checkbox" id="ux-brand" data-price="500" onchange="updateInvoice()"><div class="toggle-check"></div><div class="toggle-text"><span class="toggle-name">Brand Integration</span><span class="toggle-price">+₱500</span></div></div>
-              </div>
+              <label>Fidelity Level</label>
+              <select id="uiuxFidelity" class="select"><option value="low">Low-fidelity (Wireframes)</option><option value="mid">Mid-fidelity (Detailed Wireframes)</option><option value="high">High-fidelity (Pixel-perfect)</option></select>
             </div>
           </div>
 
-          <!-- PROJECT DETAILS (always shown) -->
-          <div id="projectDetailsSection" style="display:none;">
-            <div class="panel-section-title">📋 Project Details</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="projectName">Project Name</label>
-                <input type="text" id="projectName" class="input" placeholder="Enter project name">
-              </div>
-              <div class="form-group">
-                <label for="deadline">Preferred Deadline</label>
-                <input type="date" id="deadline" class="input">
-              </div>
+          <!-- Project Details -->
+          <div class="panel-section-title">📝 PROJECT DETAILS</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Business Name *</label>
+              <input type="text" id="businessName" class="input" placeholder="Your business name">
             </div>
             <div class="form-group">
-              <label for="specialRequests">Special Requests / Notes</label>
-              <textarea id="specialRequests" class="input" placeholder="Any special requirements or notes..."></textarea>
+              <label>Website/App Purpose *</label>
+              <input type="text" id="websitePurpose" class="input" placeholder="e.g. Online store, portfolio...">
             </div>
+          </div>
+          <div class="form-group">
+            <label>Color Preference</label>
+            <input type="text" id="colorPreference" class="input" placeholder="e.g. Blue & white, dark theme...">
+          </div>
+          <div class="form-group">
+            <label>Reference Websites (optional)</label>
+            <input type="text" id="referenceWebsites" class="input" placeholder="Links to sites you like...">
+          </div>
+          <div class="form-group">
+            <label>Special Requests / Notes</label>
+            <textarea id="specialRequests" class="input" placeholder="Any special requirements or notes..."></textarea>
           </div>
         </div>
 
         <!-- Invoice Preview -->
-        <div class="content-box" id="invoiceSection" style="display: none;">
+        <div class="content-box" id="invoiceSection" style="display:none;">
           <div class="invoice-preview">
 
-            <!-- ── BANNER HEADER ── -->
             <div class="invoice-banner-wrap">
-              <img src="https://nexgenixcreativesolutions.github.io/assets/images/banner.png"
-                   alt="Nex Genix Creative Solutions"
+              <img src="https://nexgenixcreativesolutions.github.io/assets/images/banner.png" alt="Nex Genix Creative Solutions"
                    onerror="this.onerror=null;this.src='assets/images/dashboard-logo-no-bg.png';this.style.maxHeight='80px';this.style.objectFit='contain';this.style.padding='1rem';" />
               <div class="invoice-banner-overlay"></div>
               <div class="invoice-badge">INVOICE</div>
             </div>
 
-            <!-- ── META BAR ── -->
             <div class="invoice-meta-bar">
               <div class="invoice-meta-cell">
                 <div class="invoice-meta-label">Invoice No</div>
@@ -592,14 +572,11 @@
               </div>
               <div class="invoice-meta-cell">
                 <div class="invoice-meta-label">Currency</div>
-                <div class="invoice-meta-value" id="invoiceCurrencyMeta" style="font-size:0.78rem;">PHP</div>
+                <div class="invoice-meta-value" id="invoiceCurrencyMeta" style="font-size:0.78rem;">USD</div>
               </div>
             </div>
 
-            <!-- ── BODY ── -->
             <div class="invoice-body">
-
-              <!-- Bill To / Issued By -->
               <div class="invoice-parties">
                 <div class="invoice-party-card">
                   <div class="invoice-party-head bill">👤 Bill To</div>
@@ -631,33 +608,25 @@
                   <div class="invoice-party-head issuer">🏢 Issued By</div>
                   <div class="invoice-party-body">
                     <div class="p-name">Nex Genix Creative Solutions</div>
-                    <div class="p-detail neon"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e9878c918e8c8780918a9b8c889d809f8c9a86859c9d8086879aa98e84888085c78a8684">[email&#160;protected]</a></div>
+                    <div class="p-detail neon">nexgenixcreativesolutions@gmail.com</div>
                     <div class="p-detail">Philippines</div>
                     <div class="p-detail" style="color:var(--text-muted);font-size:0.75rem;">nexgenixcreativesolutions.github.io</div>
                   </div>
                 </div>
               </div>
 
-              <!-- Items Table -->
               <div class="invoice-table">
                 <table>
-                  <thead>
-                    <tr>
-                      <th>Description</th>
-                      <th style="text-align:right;">Amount</th>
-                    </tr>
-                  </thead>
+                  <thead><tr><th>Description</th><th style="text-align:right;">Amount</th></tr></thead>
                   <tbody id="invoiceItems"></tbody>
                 </table>
               </div>
 
-              <!-- Total -->
               <div class="invoice-total">
                 <div class="total-label">💰 Total Amount Due</div>
                 <div class="total-amount" id="totalAmount">₱0.00</div>
               </div>
 
-              <!-- Payment Method Dropdown -->
               <div class="inv-pay-section">
                 <div class="inv-pay-label">Payment Method</div>
                 <div class="inv-pay-dropdown-wrap">
@@ -678,115 +647,303 @@
                 <div class="inv-pay-terms">50% downpayment required to start · 50% upon project completion</div>
               </div>
 
-            <!-- Order Success Banner (hidden until order placed) -->
-            <div id="orderSuccessBanner" style="display:none; margin-bottom:1rem; padding:1.1rem 1.25rem; background:rgba(57,255,20,0.10); border:1.5px solid var(--neon); border-radius:var(--radius); text-align:center;">
-              <div style="font-family:'Orbitron',sans-serif; font-size:1rem; color:var(--neon); letter-spacing:0.06em; margin-bottom:0.4rem;">✅ ORDER PLACED!</div>
-              <div style="font-size:0.88rem; color:var(--text-muted);">Your order has been received. A confirmation email is on its way. Nex Genix will reach out shortly to process your payment.</div>
-            </div>
+              <div id="orderSuccessBanner" style="display:none;margin-bottom:1rem;padding:1.1rem 1.25rem;background:rgba(57,255,20,0.10);border:1.5px solid var(--neon);border-radius:var(--radius);text-align:center;">
+                <div style="font-family:'Orbitron',sans-serif;font-size:1rem;color:var(--neon);letter-spacing:0.06em;margin-bottom:0.4rem;">✅ ORDER PLACED!</div>
+                <div style="font-size:0.88rem;color:var(--text-muted);">Your order has been received. A confirmation email is on its way. Nex Genix will reach out shortly to process your payment.</div>
+              </div>
 
-            <div class="button-group">
-              <button class="button" id="placeOrderBtn" onclick="submitOrder(event)">🛒 Place Order</button>
-              <button class="button button-secondary" onclick="downloadInvoice()">⬇️ Download Invoice</button>
-            </div>
-            <div style="margin-top:0.75rem; text-align:center;">
-              <button class="button button-secondary" id="newPurchaseBtn" style="display:none; width:100%; background:rgba(232,212,77,0.12); border-color:var(--yellow); color:var(--yellow);" onclick="startNewPurchase()">✨ Make Another Purchase</button>
+              <div class="button-group">
+                <button class="button" id="placeOrderBtn" onclick="submitOrder(event)">🛒 Place Order</button>
+                <button class="button button-secondary" onclick="downloadInvoice()">⬇️ Download Invoice</button>
+              </div>
+              <div style="margin-top:0.75rem;text-align:center;">
+                <button class="button button-secondary" id="newPurchaseBtn" style="display:none;width:100%;background:rgba(232,212,77,0.12);border-color:var(--yellow);color:var(--yellow);" onclick="startNewPurchase()">✨ Make Another Purchase</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- My Orders Section -->
+      <!-- ── MY ORDERS SECTION ── -->
       <div id="my-orders" class="content-section">
-        <h1 class="welcome-title">My Orders</h1>
+        <h1 class="welcome-title">Services Purchased</h1>
         <div class="content-box">
+          <div class="orders-filter-tabs">
+            <button class="orders-tab active" id="otab-all"         onclick="setOrdersFilter('all')">📦 All</button>
+            <button class="orders-tab"        id="otab-in-progress" onclick="setOrdersFilter('in-progress')">⚙️ In Progress</button>
+            <button class="orders-tab"        id="otab-finished"    onclick="setOrdersFilter('finished')">✅ Finished</button>
+            <button class="orders-tab"        id="otab-receipts"    onclick="setOrdersFilter('receipts')">🧾 Receipts</button>
+          </div>
           <div id="ordersContent">
-            <p style="color: var(--text-muted); text-align: center; padding: 2.5rem; font-size: 0.95rem; letter-spacing: 0.02em;">No orders yet. Start by ordering a service!</p>
+            <p style="color:var(--text-muted);text-align:center;padding:2.5rem;font-size:0.95rem;letter-spacing:0.02em;">No orders yet. Start by ordering a service!</p>
           </div>
         </div>
       </div>
 
-      <!-- Settings Section -->
-      <div id="settings" class="content-section">
-        <h1 class="welcome-title">Account Settings</h1>
-        <div class="content-box">
+      <!-- ── PROFILE SECTION ── -->
+      <div id="profile" class="content-section">
+        <h1 class="welcome-title">View Profile</h1>
+
+        <!-- Account Settings -->
+        <div class="content-box" id="avatarSection">
+          <div class="profile-section-title">👤 Account Settings</div>
+
+          <!-- Avatar -->
+          <div class="profile-avatar-wrap">
+            <div class="avatar-initials" id="avatarInitials">NG</div>
+            <img src="" alt="Avatar" id="avatarImg" class="profile-avatar" style="display:none;">
+            <label class="avatar-upload-btn">
+              📷 Upload / Replace Avatar
+              <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
+            </label>
+          </div>
+
+          <div class="form-group" id="emailSection">
+            <label for="profileEmail">Email Address</label>
+            <input id="profileEmail" class="input" placeholder="your@email.com" type="email" oninput="syncInvoiceEmailFromSettings()">
+          </div>
+
+          <div class="form-group" id="phoneSection">
+            <label>WhatsApp Number
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="#25D366" style="vertical-align:middle;margin-left:3px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </label>
+            <div class="settings-phone-group">
+              <select id="phoneCode" class="input" style="flex:0 0 155px;padding:0.6rem 0.5rem;font-size:0.8rem;"></select>
+              <input id="phoneNumber" class="input" placeholder="9XX XXX XXXX" type="tel" maxlength="15" style="flex:1;">
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="displayNameInput">Display Name</label>
             <input id="displayNameInput" class="input" placeholder="Display Name" type="text">
           </div>
+
+          <button class="button" onclick="saveProfile()" style="width:100%;">💾 Save Changes</button>
+        </div>
+
+        <!-- Change Password -->
+        <div class="content-box" id="passwordSection">
+          <div class="profile-section-title">🔒 Change Password</div>
+
           <div class="form-group">
-            <label for="usernameInput">Username</label>
-            <input id="usernameInput" class="input" placeholder="Username" type="text">
-          </div>
-          <div class="form-group">
-            <label for="phoneNumber">WhatsApp Number <span class="whatsapp-badge" style="font-size:0.68rem;vertical-align:middle;"><svg width="10" height="10" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</span></label>
-            <div class="settings-phone-group">
-              <select id="phoneCode" class="input" style="flex:0 0 170px;padding:0.6rem 0.5rem;font-size:0.83rem;">
-                <!-- populated by JS -->
-              </select>
-              <input id="phoneNumber" class="input" placeholder="9XX XXX XXXX" type="tel" maxlength="15" style="flex:1;">
+            <label for="currentPasswordInput">Current Password</label>
+            <div class="pw-wrap">
+              <input id="currentPasswordInput" class="input pw-input" type="password" placeholder="Enter current password">
+              <button type="button" class="pw-toggle" onclick="togglePw('currentPasswordInput', this)" title="Show/hide">
+                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
             </div>
           </div>
           <div class="form-group">
-            <label for="emailInput">Email Address</label>
-            <input id="emailInput" class="input" placeholder="your@email.com" type="email" oninput="syncInvoiceEmailFromSettings()">
+            <label for="newPasswordInput">New Password</label>
+            <div class="pw-wrap">
+              <input id="newPasswordInput" class="input pw-input" type="password" placeholder="New password">
+              <button type="button" class="pw-toggle" onclick="togglePw('newPasswordInput', this)" title="Show/hide">
+                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
           </div>
-
-          <hr class="divider">
-
           <div class="form-group">
-            <label for="passwordInput">New Password</label>
-            <input id="passwordInput" class="input" type="password" placeholder="New Password">
+            <label for="confirmPasswordInput">Confirm New Password</label>
+            <div class="pw-wrap">
+              <input id="confirmPasswordInput" class="input pw-input" type="password" placeholder="Confirm new password">
+              <button type="button" class="pw-toggle" onclick="togglePw('confirmPasswordInput', this)" title="Show/hide">
+                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
           </div>
-          <button class="button" onclick="updatePassword()">Update Password</button>
+          <button class="button" onclick="updatePassword()" style="width:100%;">🔐 Change Password</button>
+        </div>
+      </div>
 
-          <div style="margin-top: 1rem;">
-            <button class="button button-secondary" onclick="saveProfile()">Save Profile</button>
+      <!-- ── CONTACT SUPPORT SECTION ── -->
+      <div id="support" class="content-section">
+        <h1 class="welcome-title">Contact Support</h1>
+        <div class="content-box">
+          <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.25rem;">Need help? Reach out to us through any of the channels below.</p>
+          <div class="support-options">
+            <a class="support-card" href="https://wa.me/639XXXXXXXXX" target="_blank">
+              <span class="support-icon">💬</span>
+              <div>
+                <div class="support-label">WhatsApp</div>
+                <div class="support-sub">Chat with us directly — fastest response</div>
+              </div>
+            </a>
+            <a class="support-card" href="mailto:nexgenixcreativesolutions@gmail.com">
+              <span class="support-icon">✉️</span>
+              <div>
+                <div class="support-label">Email Support</div>
+                <div class="support-sub">nexgenixcreativesolutions@gmail.com</div>
+              </div>
+            </a>
+            <a class="support-card" href="https://nexgenixcreativesolutions.github.io" target="_blank">
+              <span class="support-icon">🌐</span>
+              <div>
+                <div class="support-label">Visit Our Website</div>
+                <div class="support-sub">nexgenixcreativesolutions.github.io</div>
+              </div>
+            </a>
+            <a class="support-card" href="https://www.facebook.com" target="_blank">
+              <span class="support-icon">📘</span>
+              <div>
+                <div class="support-label">Facebook Page</div>
+                <div class="support-sub">Message us on Facebook</div>
+              </div>
+            </a>
           </div>
         </div>
       </div>
+
     </main>
   </div>
 
   <!-- =================== BOTTOM NAVIGATION BAR =================== -->
   <nav class="bottom-nav">
-    <button class="bottom-nav-item active" onclick="showSection('order'); setBottomActive(this)" title="Order">
+    <!-- Home → external site -->
+    <a class="bottom-nav-item" href="https://nexgenixcreativesolutions.github.io" title="Home">
       <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
       </svg>
       <span>Home</span>
-    </button>
+    </a>
 
-    <button class="bottom-nav-item" onclick="showSection('order'); selectOrderType('new'); setBottomActive(this)" title="Services">
+    <!-- Services → Order section -->
+    <button class="bottom-nav-item" onclick="showSection('order'); setBottomActive(this)" title="Services">
       <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
       </svg>
       <span>Services</span>
     </button>
 
-    <button class="bottom-nav-item bottom-nav-plus" onclick="showSection('order'); setBottomActive(this)" title="New Order">
-      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-      </svg>
-    </button>
-
+    <!-- Orders → My Orders -->
     <button class="bottom-nav-item" onclick="showSection('my-orders'); setBottomActive(this)" title="My Orders">
       <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+        <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
       </svg>
       <span>Orders</span>
     </button>
 
-    <button class="bottom-nav-item" onclick="showSection('settings'); setBottomActive(this)" title="Profile">
+    <!-- Profile → View Profile -->
+    <button class="bottom-nav-item" onclick="showSection('profile'); setBottomActive(this)" title="Profile">
       <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
       </svg>
       <span>Profile</span>
     </button>
+
+    <!-- Logout -->
+    <button class="bottom-nav-item logout-item" onclick="logout()" title="Logout">
+      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      <span>Logout</span>
+    </button>
   </nav>
 
-  <!-- =================== AI CHAT WIDGET =================== -->
-
   <script src="dashboard-script.js"></script>
+  <script>
+    // ── SIDEBAR ACCORDION ──────────────────────────────────────────────
+    function toggleSidebarGroup(groupId, headerId) {
+      const submenu = document.getElementById(groupId);
+      const header  = document.getElementById(headerId);
+      const isOpen  = submenu.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.sidebar-submenu').forEach(s => s.classList.remove('open'));
+      document.querySelectorAll('.sidebar-group-header').forEach(h => h.classList.remove('open'));
+      // Open this one if it was closed
+      if (!isOpen) {
+        submenu.classList.add('open');
+        header.classList.add('open');
+      }
+    }
+
+    // ── SCROLL TO ANCHOR INSIDE PROFILE ───────────────────────────────
+    function sidebarScrollTo(id) {
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 80);
+    }
+
+    // ── ORDERS FILTER TABS ─────────────────────────────────────────────
+    function setOrdersFilter(filter) {
+      document.querySelectorAll('.orders-tab').forEach(t => t.classList.remove('active'));
+      const tab = document.getElementById('otab-' + filter);
+      if (tab) tab.classList.add('active');
+      // TODO: hook into actual orders list filtering when orders are added
+    }
+
+    // ── AVATAR UPLOAD ─────────────────────────────────────────────────
+    function handleAvatarUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.getElementById('avatarImg');
+        const initials = document.getElementById('avatarInitials');
+        img.src = e.target.result;
+        img.style.display = 'block';
+        initials.style.display = 'none';
+        localStorage.setItem('ngcs_avatar', e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Load saved avatar on start
+    (function loadAvatar() {
+      const saved = localStorage.getItem('ngcs_avatar');
+      if (saved) {
+        const img = document.getElementById('avatarImg');
+        const initials = document.getElementById('avatarInitials');
+        if (img) { img.src = saved; img.style.display = 'block'; }
+        if (initials) initials.style.display = 'none';
+      }
+    })();
+
+    // ── STAR RATING (used in review cards) ────────────────────────────
+    function setRating(stars, rating) {
+      stars.forEach((s, i) => {
+        s.classList.toggle('active', i < rating);
+        s.dataset.rating = rating;
+      });
+    }
+
+    // ── PASSWORD SHOW / HIDE TOGGLE ───────────────────────────────────
+    function togglePw(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const isHidden = input.type === 'password';
+      input.type = isHidden ? 'text' : 'password';
+      btn.classList.toggle('visible', isHidden);
+      // Swap eye icon: open eye when visible, slashed eye when hidden
+      btn.querySelector('svg').innerHTML = isHidden
+        ? '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
+        : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    }
+
+    // ── SYNC CURRENCY DROPDOWN → INVOICE META BAR ─────────────────────
+    // The main script's changeCurrency() already updates invoiceCurrencyMeta.
+    // This just ensures it's correct on initial load.
+    document.addEventListener('DOMContentLoaded', function() {
+      const sel = document.getElementById('currencyDropdown');
+      const meta = document.getElementById('invoiceCurrencyMeta');
+      if (sel && meta) meta.textContent = sel.value;
+    });
+    if (profileEmailEl) {
+      profileEmailEl.addEventListener('input', function() {
+        const inv = document.getElementById('invoiceEmailInput');
+        if (inv) inv.value = this.value;
+      });
+    }
+
+    // ── KEEP emailInput alias for old JS references ────────────────────
+    // The script.js may reference emailInput — mirror it
+    Object.defineProperty(window, 'emailInput', {
+      get() { return document.getElementById('profileEmail'); }
+    });
+  </script>
+
   <!-- Go to Top Button -->
   <button id="goTopBtn" onclick="scrollToTop()" title="Back to top" style="
     display:none; position:fixed; bottom:80px; right:1rem; z-index:999;
