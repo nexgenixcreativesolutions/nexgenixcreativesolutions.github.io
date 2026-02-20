@@ -298,6 +298,61 @@
       color: var(--neon);
       box-shadow: inset 3px 0 0 var(--neon);
     }
+
+    /* ── SIDEBAR BOTTOM ACTIONS (Home + Logout) ── */
+    .sidebar-bottom-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      padding-top: 0.875rem;
+      border-top: 1px solid var(--border-dim);
+    }
+    .sidebar-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.875rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      text-decoration: none !important;
+      border: 1px solid transparent;
+      width: 100%;
+      text-align: left;
+      background: none;
+    }
+    .sidebar-home-btn {
+      color: var(--yellow);
+      border-color: rgba(232,212,77,0.3);
+      background: rgba(232,212,77,0.06);
+    }
+    .sidebar-home-btn:hover {
+      background: var(--yellow);
+      color: #000;
+      border-color: var(--yellow);
+    }
+    .sidebar-home-btn svg { stroke: currentColor; }
+    .sidebar-logout-btn {
+      color: var(--red);
+      border-color: rgba(255,64,64,0.3);
+      background: rgba(255,64,64,0.06);
+    }
+    .sidebar-logout-btn:hover {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red);
+    }
+    .sidebar-logout-btn svg { stroke: currentColor; }
+
+    /* ── NO UNDERLINE ON BOTTOM NAV LINKS ── */
+    .bottom-nav a, .bottom-nav a:visited, .bottom-nav a:hover {
+      text-decoration: none !important;
+    }
   </style>
 </head>
 
@@ -319,6 +374,16 @@
           <li onclick="showSection('my-orders')" class="sidebar-top-item">🛍️ Services Purchased</li>
           <li onclick="showSection('support')" class="sidebar-top-item">💬 Contact Support</li>
         </ul>
+        <div class="sidebar-bottom-actions">
+          <a href="https://nexgenixcreativesolutions.github.io" class="sidebar-action-btn sidebar-home-btn" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Home
+          </a>
+          <button onclick="logout()" class="sidebar-action-btn sidebar-logout-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Logout
+          </button>
+        </div>
       </div>
       <p class="sidebar-footer">&copy; 2023–2026 Nex Genix Creative Solutions<br>All rights reserved.</p>
     </aside>
@@ -422,7 +487,7 @@
           <h2>⚙️ CUSTOMIZE YOUR ORDER</h2>
 
           <div class="service-type-badge-wrap">
-            <span class="service-type-badge" id="selectedServiceBadge">SERVICE</span>
+            <span class="service-type-badge" id="serviceTypeBadge">SERVICE</span>
           </div>
 
           <!-- Business Questionnaire -->
@@ -467,7 +532,7 @@
               <div class="page-counter-wrap">
                 <div class="page-counter">
                   <button class="page-counter-btn" onclick="adjustPages(-1)">−</button>
-                  <input type="number" id="pageCountInput" class="page-counter-input" value="1" min="1" max="50" oninput="updatePageCount()">
+                  <input type="number" id="numPages" class="page-counter-input" value="1" min="1" max="50" oninput="updatePageCount()">
                   <button class="page-counter-btn" onclick="adjustPages(1)">+</button>
                 </div>
               </div>
@@ -491,7 +556,7 @@
               <div class="page-counter-wrap">
                 <div class="page-counter">
                   <button class="page-counter-btn" onclick="adjustPages(-1)">−</button>
-                  <input type="number" id="pageCountInput2" class="page-counter-input" value="1" min="1" max="50" oninput="updatePageCount()">
+                  <input type="number" id="numPagesdev" class="page-counter-input" value="1" min="1" max="50" oninput="updatePageCount()">
                   <button class="page-counter-btn" onclick="adjustPages(1)">+</button>
                 </div>
               </div>
@@ -521,6 +586,7 @@
           </div>
 
           <!-- Project Details -->
+          <div id="projectDetailsSection">
           <div class="panel-section-title">📝 PROJECT DETAILS</div>
           <div class="form-row">
             <div class="form-group">
@@ -544,6 +610,7 @@
             <label>Special Requests / Notes</label>
             <textarea id="specialRequests" class="input" placeholder="Any special requirements or notes..."></textarea>
           </div>
+          </div><!-- /projectDetailsSection -->
         </div>
 
         <!-- Invoice Preview -->
@@ -800,7 +867,7 @@
   <!-- =================== BOTTOM NAVIGATION BAR =================== -->
   <nav class="bottom-nav">
     <!-- Home → external site -->
-    <a class="bottom-nav-item" href="https://nexgenixcreativesolutions.github.io" title="Home">
+    <a class="bottom-nav-item" href="https://nexgenixcreativesolutions.github.io" title="Home" style="text-decoration:none;">
       <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
       </svg>
