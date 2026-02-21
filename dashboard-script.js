@@ -1650,31 +1650,25 @@ ${JSON.stringify(orderData, null, 2)}
       // Neon bottom strip
       fr(0, hH - 1.5, W, 1.5, C.neon);
 
-      // ── INVOICE badge — top-right, tight box ─────────────────────
-      // Measure text first to size the box correctly
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(8);
-      doc.setCharSpace(1.5);
-      const badgeLabelW = doc.getTextWidth('INVOICE') + 8; // padding 4mm each side
-      const badgeW = Math.max(30, badgeLabelW);
-      const badgeH = 10;
-      const badgeX = W - mg - badgeW;   // right-aligned within margin
-      const badgeY = 8;
-      // filled background + neon border
+      // ── INVOICE badge — top-right, hardcoded safe dimensions ─────
+      const badgeW = 38, badgeH = 10;
+      const badgeX = W - mg - badgeW;   // = 210 - 12 - 38 = 160mm
+      const badgeY = 9;
       doc.setFillColor(...C.surface2);
       doc.roundedRect(badgeX, badgeY, badgeW, badgeH, 2, 2, 'F');
       doc.setDrawColor(...C.neon);
       doc.setLineWidth(0.7);
       doc.roundedRect(badgeX, badgeY, badgeW, badgeH, 2, 2, 'D');
-      // text — centered inside box
       doc.setTextColor(...C.neon);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.setCharSpace(0);   // NO charSpace — prevents overflow
       t('INVOICE', badgeX + badgeW / 2, badgeY + 7, { align: 'center' });
-      doc.setCharSpace(0);
       // invoice number below badge
       doc.setFont('helvetica', 'normal');
-      doc.setFontSize(6.5);
+      doc.setFontSize(6);
       doc.setTextColor(...C.muted);
-      t('# ' + invNum, badgeX + badgeW / 2, badgeY + badgeH + 4, { align: 'center' });
+      t('# ' + invNum, badgeX + badgeW / 2, badgeY + badgeH + 4.5, { align: 'center' });
 
       y = hH + 1;
 
@@ -1782,62 +1776,50 @@ ${JSON.stringify(orderData, null, 2)}
       y += 6;
 
       // ══════════════════════════════════════════════════════════════
-      // 6. TOTAL BOX — sized to content, right-aligned
+      // 6. TOTAL BOX — right-aligned, hardcoded safe width
       // ══════════════════════════════════════════════════════════════
-      // Measure the total amount text to size box correctly
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(18);
-      const totalTxtW = doc.getTextWidth(totalText);
-
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(6.5);
-      doc.setCharSpace(0.4);
-      const labelTxtW = doc.getTextWidth('TOTAL AMOUNT DUE');
-      doc.setCharSpace(0);
-
-      // Box is as wide as the wider of the two texts + 10mm padding each side
-      const tbW  = Math.max(totalTxtW, labelTxtW) + 20;
+      // Box: 80mm wide, right edge flush with content (W - mg = 198)
+      const tbW  = 80;
       const tbH  = 28;
-      const tbX  = W - mg - tbW;   // flush to right margin
-      const tbY  = y;
+      const tbX  = W - mg - tbW;   // 210 - 12 - 80 = 118mm left edge
+      const tbRightEdge = tbX + tbW;  // = 198mm = W - mg
 
-      // Package info to the LEFT of the box (only if space allows)
-      if (tbX > mg + 5) {
+      // Package info to the LEFT (capped so it never overlaps the box)
+      const infoMaxW = tbX - mg - 4;  // available space left of box
+      if (infoMaxW > 20) {
         doc.setTextColor(...C.muted);
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(7.5);
-        // clip text to available width
-        const maxInfoW = tbX - mg - 4;
-        const pkgName = doc.splitTextToSize(pkg.name, maxInfoW)[0];
-        t(pkgName, mg, tbY + 10);
+        const pkgLine = doc.splitTextToSize(pkg.name, infoMaxW)[0];
+        t(pkgLine, mg, y + 10);
         doc.setTextColor(...C.light);
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(8.5);
-        const cliName = doc.splitTextToSize(clientName, maxInfoW)[0];
-        t(cliName, mg, tbY + 20);
+        const cliLine = doc.splitTextToSize(clientName, infoMaxW)[0];
+        t(cliLine, mg, y + 20);
       }
 
-      // Draw box
-      rr(tbX, tbY, tbW, tbH, 3, C.surface2);
+      // Draw box fill + border
+      doc.setFillColor(...C.surface2);
+      doc.roundedRect(tbX, y, tbW, tbH, 3, 3, 'F');
       doc.setDrawColor(...C.neon);
       doc.setLineWidth(0.8);
-      doc.roundedRect(tbX, tbY, tbW, tbH, 3, 3, 'D');
+      doc.roundedRect(tbX, y, tbW, tbH, 3, 3, 'D');
 
-      // "TOTAL AMOUNT DUE" label — inside, top-right, 5mm from right edge
+      // "TOTAL AMOUNT DUE" — right-aligned, 5mm inside right edge
       doc.setTextColor(...C.muted);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(6.5);
-      doc.setCharSpace(0.4);
-      t('TOTAL AMOUNT DUE', tbX + tbW - 5, tbY + 9, { align: 'right' });
       doc.setCharSpace(0);
+      t('TOTAL AMOUNT DUE', tbRightEdge - 5, y + 9, { align: 'right' });
 
-      // Total amount — inside, bottom-right, 5mm from right edge
+      // Total amount value — right-aligned, 5mm inside right edge
       doc.setTextColor(...C.neon);
       doc.setFont('helvetica', 'bold');
-      doc.setFontSize(18);
-      t(totalText, tbX + tbW - 5, tbY + 23, { align: 'right' });
+      doc.setFontSize(17);
+      t(totalText, tbRightEdge - 5, y + 23, { align: 'right' });
 
-      y = tbY + tbH + 6;
+      y = y + tbH + 6;
 
       // ══════════════════════════════════════════════════════════════
       // 7. PAYMENT INFO
