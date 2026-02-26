@@ -244,6 +244,140 @@
         font-size: 1.75rem;
       }
     }
+
+    /* =================== OUR TEAM SECTION =================== */
+    .team-section {
+      padding: 50px 20px;
+      position: relative;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      max-width: 1200px;
+      margin: 30px auto;
+    }
+
+    .team-card {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.7), rgba(0, 0, 0, 0.8));
+      border: 1px solid #1f2937;
+      border-radius: 14px;
+      padding: 28px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .team-card:hover {
+      border-color: #39FF14;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 28px rgba(57, 255, 20, 0.15);
+    }
+
+    .team-image-placeholder {
+      width: 115px;
+      height: 115px;
+      min-width: 115px;
+      min-height: 115px;
+      border-radius: 16px; /* square with rounded corners instead of 50% circle */
+      background-color: rgba(57, 255, 20, 0.06);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center top;
+      border: 2px solid #39FF14;
+      display: block;
+      margin: 0 auto 18px auto;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .team-card:hover .team-image-placeholder {
+      border-color: #ffcc00;
+      box-shadow: 0 0 18px rgba(255, 204, 0, 0.4);
+    }
+
+    .team-image-placeholder i {
+      font-size: 48px;
+      color: #39FF14;
+      opacity: 0.4;
+    }
+
+    .team-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 19px;
+      color: #39FF14;
+      margin: 0 0 7px 0;
+      text-align: center;
+    }
+
+    .team-role {
+      font-size: 13.5px;
+      color: #9ca3af;
+      font-style: italic;
+      margin: 0 0 14px 0;
+      text-align: center;
+    }
+
+    .team-description {
+      font-size: 13px;
+      color: #d1d5db;
+      line-height: 1.65;
+      margin: 14px 0;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    .team-expertise {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .expertise-tag {
+      background: rgba(57, 255, 20, 0.07);
+      border: 1px solid #1f2937;
+      padding: 4px 11px;
+      border-radius: 14px;
+      font-size: 11px;
+      color: #39FF14;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .expertise-tag i {
+      font-size: 9px;
+    }
+
+    .team-section-intro {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .team-section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .team-section-title {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .team-section-title {
+        font-size: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -357,6 +491,92 @@
         <p class="content-text">
           Whether it's a complex web development project, an academic paper, or an online business course, quality is at the core of everything we do. Our team is committed to maintaining high standards, delivering polished, professional, and result-oriented outcomes every time.
         </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Team Section -->
+  <section class="team-section" id="team">
+    <h2 class="team-section-title">Our <span class="gradient-text">Team</span></h2>
+    <p class="team-section-intro">Meet the dedicated professionals behind your success</p>
+
+    <div class="team-grid">
+      <!-- Team Member 1 -->
+      <div class="team-card">
+        <div class="team-image-placeholder" style="background-image: url('assets/images/cs-person1.png'); background-size: cover; background-position: center top;"></div>
+        <h3 class="team-name">Arriane Doris Nuevo</h3>
+        <p class="team-role">Founder & Chief Executive Officer</p>
+        <p class="team-description">Visionary founder who established Nex Genix Business School to democratize business education globally. Drives strategic direction, institutional growth, and overall organizational excellence.</p>
+        <div class="team-expertise">
+          <span class="expertise-tag"><i class="fas fa-check"></i> Executive Leadership</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Strategy</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Innovation</span>
+        </div>
+      </div>
+
+      <!-- Team Member 2 -->
+      <div class="team-card">
+        <div class="team-image-placeholder" style="background-image: url('assets/images/cs-person2.png'); background-size: cover; background-position: center top;"></div>
+        <h3 class="team-name">Irene Clemenz</h3>
+        <p class="team-role">Chief Operating Officer</p>
+        <p class="team-description">Oversees all operational functions and ensures seamless, high-quality delivery of educational programs. Leads cross-functional teams and drives process excellence across the institution.</p>
+        <div class="team-expertise">
+          <span class="expertise-tag"><i class="fas fa-check"></i> Operations</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Leadership</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Process Excellence</span>
+        </div>
+      </div>
+
+      <!-- Team Member 3 -->
+      <div class="team-card">
+        <div class="team-image-placeholder" style="background-image: url('assets/images/cs-person3.png'); background-size: cover; background-position: center top;"></div>
+        <h3 class="team-name">Gioia Pavan</h3>
+        <p class="team-role">Chief Marketing Officer</p>
+        <p class="team-description">Leads brand strategy, digital marketing initiatives, and global outreach campaigns. Drives awareness and engagement that connects learners worldwide with Nex Genix's transformative programs.</p>
+        <div class="team-expertise">
+          <span class="expertise-tag"><i class="fas fa-check"></i> Brand Strategy</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Digital Marketing</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Growth</span>
+        </div>
+      </div>
+
+      <!-- Team Member 4 -->
+      <div class="team-card">
+        <div class="team-image-placeholder" style="background-image: url('assets/images/cs-person4.png'); background-size: cover; background-position: center top;"></div>
+        <h3 class="team-name">Monica Ann Lao</h3>
+        <p class="team-role">Chief Sales Officer</p>
+        <p class="team-description">Directs all sales strategy, revenue generation, and enrollment growth initiatives. Builds lasting partnerships and ensures every prospective student finds the right program to achieve their goals.</p>
+        <div class="team-expertise">
+          <span class="expertise-tag"><i class="fas fa-check"></i> Sales Strategy</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Revenue Growth</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Partnerships</span>
+        </div>
+      </div>
+
+      <!-- Team Member 5 -->
+      <div class="team-card">
+        <div class="team-image-placeholder" style="background-image: url('assets/images/cs-person5.png'); background-size: cover; background-position: center top;"></div>
+        <h3 class="team-name">Carissa Jade Mariano-Mondia</h3>
+        <p class="team-role">VP of Student Success</p>
+        <p class="team-description">Champions the complete student journey from enrollment to career placement. Develops and oversees support frameworks that ensure every learner achieves their academic and professional objectives.</p>
+        <div class="team-expertise">
+          <span class="expertise-tag"><i class="fas fa-check"></i> Student Experience</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Career Development</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Retention</span>
+        </div>
+      </div>
+
+      <!-- Team Member 6 -->
+      <div class="team-card">
+        <div class="team-image-placeholder" style="background-image: url('assets/images/cs-person6.png'); background-size: cover; background-position: center top;"></div>
+        <h3 class="team-name">Kathrine Mendez</h3>
+        <p class="team-role">Chief Financial Officer</p>
+        <p class="team-description">Leads all financial planning, budgeting, and fiscal governance for the institution. Ensures the school's financial health and sustainability to support its mission of accessible, high-quality education.</p>
+        <div class="team-expertise">
+          <span class="expertise-tag"><i class="fas fa-check"></i> Financial Strategy</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Budgeting</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Governance</span>
+        </div>
       </div>
     </div>
   </section>
