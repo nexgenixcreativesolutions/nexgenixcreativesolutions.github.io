@@ -114,10 +114,14 @@ function getPostLoginURL(role, originSite) {
 }
 
 /* ── SESSION CHECK — already logged in? ── */
-(async () => {
-  const { data: { session } } = await _sb.auth.getSession();
+// Use onAuthStateChange so we wait for session to fully restore
+// before deciding to redirect. Avoids flash-redirect on slow connections.
+let _loginChecked = false;
+_sb.auth.onAuthStateChange(async (event, session) => {
+  if (_loginChecked) return;
+  _loginChecked = true;
+
   if (session) {
-    // Fetch profile to determine where to send them
     const { data: profile } = await _sb
       .from('profiles').select('role, origin_site')
       .eq('id', session.user.id).single();
@@ -127,7 +131,7 @@ function getPostLoginURL(role, originSite) {
     );
     window.location.href = dest;
   }
-})();
+});
 
 /* ── LOADING STATE ── */
 const submitBtn = document.getElementById('submitBtn');
