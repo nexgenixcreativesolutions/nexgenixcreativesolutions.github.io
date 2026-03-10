@@ -2078,21 +2078,34 @@ ${JSON.stringify(orderData, null, 2)}
       document.getElementById('phoneCode').addEventListener('change', syncSettingsPhoneToInvoice);
       document.getElementById('phoneNumber').addEventListener('input', syncSettingsPhoneToInvoice);
     });
-    // ── GLOBAL EXPORTS — ensure onclick= attributes can always reach these ──
-    window.filterByServiceType   = filterByServiceType;
-    window.selectOrderType       = selectOrderType;
-    window.selectService         = selectService;
-    window.showSection           = showSection;
-    window.toggleSidebar         = toggleSidebar;
-    window.updateInvoice         = updateInvoice;
-    window.adjustPages           = adjustPages;
-    window.updatePageCount       = updatePageCount;
-    window.changeCurrencyFromDropdown = changeCurrencyFromDropdown;
-    window.submitOrder           = submitOrder;
-    window.downloadInvoice       = downloadInvoice;
-    window.startNewPurchase      = startNewPurchase;
-    window.saveClientInfo        = saveClientInfo;
-    window.syncClientName        = syncClientName;
+
+// ── GLOBAL EXPORTS — outside DOMContentLoaded so they are available immediately
+// The inline script in dashboard.html patches window.showSection right away,
+// so these must be assigned at parse time, not deferred inside an event listener.
+window.filterByServiceType        = filterByServiceType;
+window.selectOrderType            = selectOrderType;
+window.selectService              = selectService;
+window.showSection                = showSection;
+window.toggleSidebar              = toggleSidebar;
+window.updateInvoice              = updateInvoice;
+window.adjustPages                = adjustPages;
+window.updatePageCount            = updatePageCount;
+window.changeCurrencyFromDropdown = changeCurrencyFromDropdown;
+window.submitOrder                = submitOrder;
+window.downloadInvoice            = downloadInvoice;
+window.startNewPurchase           = startNewPurchase;
+window.saveClientInfo             = saveClientInfo;
+window.syncClientName             = syncClientName;
+window.saveProfile                = saveProfile;
+window.updatePassword             = updatePassword;
+window.logout                     = logout;
+window.scrollToTop                = scrollToTop;
+window.updateDurationLimit        = updateDurationLimit;
+window.updatePaymentIcon          = updatePaymentIcon;
+window.changeCurrency             = changeCurrency;
+window.changeCurrencyStandalone   = changeCurrencyStandalone;
+window.syncSettingsPhoneToInvoice = syncSettingsPhoneToInvoice;
+
     window.syncInvoiceEmail      = syncInvoiceEmail;
     window.syncInvoicePhone      = syncInvoicePhone;
     window.syncInvoiceEmailFromSettings = syncInvoiceEmailFromSettings;
