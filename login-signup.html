@@ -12,78 +12,42 @@
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Style -->
   <style>
-  /* Smooth reveal for signup-only field */
   .animate-field {
-    transition: 
-      opacity 0.25s ease,
-      transform 0.25s ease,
-      filter 0.25s ease;
+    transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
   }
-
   .hidden-field {
-    opacity: 0;
-    transform: translateY(-6px);
-    filter: blur(2px);
-    pointer-events: none;
+    opacity: 0; transform: translateY(-6px); filter: blur(2px);
+    pointer-events: none; height: 0; margin: 0; padding: 0; overflow: hidden;
   }
-
   .visible-field {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-    pointer-events: auto;
+    opacity: 1; transform: translateY(0); filter: blur(0);
+    pointer-events: auto; height: auto;
   }
-    
-    /* Floating Code Background */
-    .floating-code-container {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-.code-line {
-  position: absolute;
-  white-space: nowrap;
-  font-family: 'Courier New', monospace;
-  font-size: 14px;
-  color: rgba(57, 255, 20, 0.4);
-  text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
-  animation: floatCode linear infinite;
-  opacity: 0;
-}
-
-@keyframes floatCode {
-  0% {
-    transform: translateX(100vw);
-    opacity: 0;
+  .floating-code-container {
+    position: fixed; inset: 0; overflow: hidden;
+    pointer-events: none; z-index: 0;
   }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-}
-
-@media (min-width: 768px) {
   .code-line {
-    font-size: 16px;
+    position: absolute; white-space: nowrap;
+    font-family: 'Courier New', monospace; font-size: 14px;
+    color: rgba(57,255,20,0.4);
+    text-shadow: 0 0 10px rgba(57,255,20,0.3);
+    animation: floatCode linear infinite; opacity: 0;
   }
-}
-</style>
+  @keyframes floatCode {
+    0%   { transform: translateX(100vw); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateX(-100%); opacity: 0; }
+  }
+  @media (min-width: 768px) { .code-line { font-size: 16px; } }
+  </style>
 </head>
 
 <body class="bg-black text-white flex items-center justify-center min-h-screen">
 
-<div class="bg-zinc-900 border border-green-500 rounded-xl p-6 w-full max-w-md shadow-xl">
+<div class="bg-zinc-900 border border-green-500 rounded-xl p-6 w-full max-w-md shadow-xl relative z-10">
 
   <!-- LOGO -->
   <div class="flex justify-center mb-4">
@@ -94,22 +58,29 @@
 
   <form id="authForm" class="space-y-3">
     <input id="email" type="email" placeholder="Email"
-      class="w-full p-2 bg-transparent border rounded" required>
+      class="w-full p-2 bg-transparent border border-zinc-600 rounded focus:border-green-500 outline-none transition" required>
 
     <input id="password" type="password" placeholder="Password"
-      class="w-full p-2 bg-transparent border rounded" required>
+      class="w-full p-2 bg-transparent border border-zinc-600 rounded focus:border-green-500 outline-none transition" required>
 
-    <input id="fullname" type="text" placeholder="Full Name (for signup)"
-      class="w-full p-2 bg-transparent border rounded animate-field hidden-field">
+    <!-- Signup-only fields -->
+    <div id="signupFields" class="space-y-3 animate-field hidden-field">
+      <input id="fullname" type="text" placeholder="Full Name"
+        class="w-full p-2 bg-transparent border border-zinc-600 rounded focus:border-green-500 outline-none transition">
+      <select id="originSite"
+        class="w-full p-2 bg-zinc-800 border border-zinc-600 rounded focus:border-green-500 outline-none transition text-sm">
+        <option value="ngcs">I am a Nex Genix Creative Solutions client</option>
+        <option value="ngbs">I am a Nex Genix Business School student</option>
+      </select>
+    </div>
 
     <button id="submitBtn" type="submit"
       class="w-full bg-green-600 p-2 rounded font-semibold hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
-    Continue
+      Continue
     </button>
   </form>
 
   <p id="msg" class="text-center text-sm mt-3"></p>
-
 
   <div class="text-center mt-4 text-sm">
     <span id="toggleText">New here?</span>
@@ -117,251 +88,206 @@
   </div>
 
   <div class="text-center mt-2 text-sm">
-    <button id="forgotBtn" class="text-gray-400 underline">
-      Forgot password?
-    </button>
+    <button id="forgotBtn" class="text-gray-400 underline">Forgot password?</button>
   </div>
 
 </div>
 
 <script>
- /* =========================
-   CONTINUE BUTTON
-========================= */ 
-const submitBtn = document.getElementById("submitBtn");
+/* ── SUPABASE ── */
+const SUPABASE_URL  = 'https://rranivozhrsldhapzwqc.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyYW5pdm96aHJzbGRoYXB6d3FjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAxNzIxMzcsImV4cCI6MjA4NTc0ODEzN30.0wOlQErCvNbf9LhhWzecDINB6523BHqgc2G2v0wURGQ';
+const _sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-function setLoading(isLoading) {
-  submitBtn.disabled = isLoading;
-  submitBtn.textContent = isLoading ? "Please wait…" : "Continue";
+/* ── REDIRECT HELPER ── */
+// Read ?redirect= param — where to go after successful login
+const urlParams   = new URLSearchParams(window.location.search);
+const redirectURL = urlParams.get('redirect');
+
+function getPostLoginURL(role, originSite) {
+  // If a specific redirect was requested, honour it
+  if (redirectURL) return decodeURIComponent(redirectURL);
+  // Otherwise route by role / origin
+  if (role === 'admin') return 'https://nexgenixcreativesolutions.github.io/admin';
+  if (originSite === 'ngbs') return 'https://nexgenixbusinessschool.github.io/ngbs-student-dashboard.html';
+  return 'https://nexgenixcreativesolutions.github.io/dashboard';
 }
 
-/* =========================
-   🔐 SUPABASE SETUP
-========================= */
-
-const SUPABASE_URL = "https://rranivozhrsldhapzwqc.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_bdfuminbwIZn_S1DPfB7bg_ogP5mUVi";
-
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-
-console.log("Supabase initialized");
-
-/* =========================
-   🔁 MODE TOGGLE
-========================= */
-
-let isSignup = false;
-
-const title = document.getElementById("title");
-const fullnameInput = document.getElementById("fullname");
-const toggleText = document.getElementById("toggleText");
-const toggleBtn = document.getElementById("toggleBtn");
-const msg = document.getElementById("msg");
-
-toggleBtn.addEventListener("click", () => {
-  isSignup = !isSignup;
-  fullnameInput.classList.toggle("hidden-field");
-  fullnameInput.classList.toggle("visible-field");
-
-
-  if (isSignup) {
-    title.textContent = "Sign Up";
-    toggleText.textContent = "Already have an account?";
-    toggleBtn.textContent = "Sign in";
-  } else {
-    title.textContent = "Sign In";
-    toggleText.textContent = "New here?";
-    toggleBtn.textContent = "Create account";
+/* ── SESSION CHECK — already logged in? ── */
+(async () => {
+  const { data: { session } } = await _sb.auth.getSession();
+  if (session) {
+    // Fetch profile to determine where to send them
+    const { data: profile } = await _sb
+      .from('profiles').select('role, origin_site')
+      .eq('id', session.user.id).single();
+    const dest = getPostLoginURL(
+      profile?.role || 'student',
+      profile?.origin_site || 'ngcs'
+    );
+    window.location.href = dest;
   }
+})();
 
-  msg.textContent = "";
+/* ── LOADING STATE ── */
+const submitBtn = document.getElementById('submitBtn');
+function setLoading(on) {
+  submitBtn.disabled = on;
+  submitBtn.textContent = on ? 'Please wait…' : 'Continue';
+}
+
+/* ── MODE TOGGLE ── */
+let isSignup = false;
+const titleEl      = document.getElementById('title');
+const signupFields = document.getElementById('signupFields');
+const toggleText   = document.getElementById('toggleText');
+const toggleBtn    = document.getElementById('toggleBtn');
+const msg          = document.getElementById('msg');
+
+toggleBtn.addEventListener('click', () => {
+  isSignup = !isSignup;
+  if (isSignup) {
+    signupFields.classList.remove('hidden-field');
+    signupFields.classList.add('visible-field');
+    titleEl.textContent       = 'Create Account';
+    toggleText.textContent    = 'Already have an account?';
+    toggleBtn.textContent     = 'Sign in';
+  } else {
+    signupFields.classList.add('hidden-field');
+    signupFields.classList.remove('visible-field');
+    titleEl.textContent       = 'Sign In';
+    toggleText.textContent    = 'New here?';
+    toggleBtn.textContent     = 'Create account';
+  }
+  msg.textContent = '';
 });
 
-/* =========================
-   🔐 AUTH HANDLER
-========================= */
-
-document.getElementById("authForm").addEventListener("submit", async (e) => {
+/* ── AUTH HANDLER ── */
+document.getElementById('authForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const fullName = fullnameInput.value.trim();
-
-  msg.textContent = "";
+  msg.textContent = '';
   setLoading(true);
 
-  try {
-    /* ---------- SIGN UP ---------- */
-    if (isSignup) {
-      console.log("Signing up user…");
+  const email      = document.getElementById('email').value.trim();
+  const password   = document.getElementById('password').value.trim();
+  const fullName   = document.getElementById('fullname').value.trim();
+  const originSite = document.getElementById('originSite').value;
 
-      const { data, error } = await supabaseClient.auth.signUp({
-        email,
-        password,
+  try {
+    if (isSignup) {
+      /* ── SIGN UP ── */
+      if (!fullName) {
+        msg.textContent = 'Please enter your full name.';
+        msg.className = 'text-center text-sm mt-3 text-red-400';
+        setLoading(false); return;
+      }
+
+      const { data, error } = await _sb.auth.signUp({
+        email, password,
         options: {
-          emailRedirectTo: "https://nexgenixcreativesolutions.github.io/dashboard"
+          data: { full_name: fullName, origin_site: originSite },
+          emailRedirectTo: getPostLoginURL('student', originSite)
         }
       });
 
       if (error) throw error;
 
-      // If email confirmation is required, user may be null
       if (!data.user) {
-        msg.textContent = "Check your email to confirm your account.";
-        setLoading(false);
-        return;
+        msg.textContent = 'Check your email to confirm your account.';
+        msg.className = 'text-center text-sm mt-3 text-yellow-400';
+        setLoading(false); return;
       }
 
-      // Split full name into first & last
-      const nameParts = fullName.split(" ");
-      const first_name = nameParts.shift() || "";
-      const last_name = nameParts.join(" ") || "";
+      // Profile is auto-created by Supabase trigger (handle_new_user)
+      // but we also upsert here to ensure origin_site is set correctly
+      await _sb.from('profiles').upsert({
+        id:          data.user.id,
+        email:       email,
+        full_name:   fullName,
+        origin_site: originSite,
+        role:        'student'
+      });
 
-      console.log("Creating profile for:", data.user.id);
-      console.log("First name:", first_name);
-      console.log("Last name:", last_name);
+      msg.textContent = 'Account created! Signing you in…';
+      msg.className = 'text-center text-sm mt-3 text-green-400';
 
-      // Insert the profile data into your profiles table
-      const { error: profileError } = await supabaseClient
-        .from('profiles')
-        .insert({
-          id: data.user.id,
-          email: email,
-          first_name: first_name,
-          last_name: last_name
-        });
-
-      if (profileError) {
-        console.error("Profile creation error:", profileError);
-        // Don't throw - account is created, profile insert failed
-        msg.textContent = "Account created! Profile setup pending. Check your email to confirm.";
-        msg.className = "text-center text-sm mt-3 text-yellow-400";
-      } else {
-        console.log("Profile created successfully");
-        msg.textContent = "Account created! Check your email to confirm.";
-        msg.className = "text-center text-sm mt-3 text-green-400";
+      // Auto sign-in after signup (email confirm is off during dev)
+      const { error: signInErr } = await _sb.auth.signInWithPassword({ email, password });
+      if (signInErr) {
+        msg.textContent = 'Account created! Please sign in.';
+        isSignup = false;
+        signupFields.classList.add('hidden-field');
+        signupFields.classList.remove('visible-field');
+        titleEl.textContent = 'Sign In';
+        setLoading(false); return;
       }
 
-      // Reset form to sign-in mode
-      isSignup = false;
-      fullnameInput.classList.add("hidden-field");
-      fullnameInput.classList.remove("visible-field");
-      title.textContent = "Sign In";
-      toggleText.textContent = "New here?";
-      toggleBtn.textContent = "Create account";
-      
-      setLoading(false);
+      window.location.href = getPostLoginURL('student', originSite);
       return;
     }
 
-    /* ---------- SIGN IN ---------- */
-    console.log("Signing in user…");
-
-    const { error } = await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
-
+    /* ── SIGN IN ── */
+    const { data, error } = await _sb.auth.signInWithPassword({ email, password });
     if (error) throw error;
 
-    console.log("Login success — redirecting");
-    setLoading(false);
-    window.location.href = "/dashboard";
+    // Fetch profile for role-based routing
+    const { data: profile } = await _sb
+      .from('profiles').select('role, origin_site')
+      .eq('id', data.user.id).single();
+
+    window.location.href = getPostLoginURL(
+      profile?.role || 'student',
+      profile?.origin_site || 'ngcs'
+    );
 
   } catch (err) {
     console.error(err);
-    msg.textContent = err.message || "Something went wrong";
-    msg.className = "text-center text-sm mt-3 text-red-400";
+    msg.textContent = err.message || 'Something went wrong.';
+    msg.className = 'text-center text-sm mt-3 text-red-400';
     setLoading(false);
   }
 });
 
-/* =========================
-   🔑 FORGOT PASSWORD
-========================= */
+/* ── FORGOT PASSWORD ── */
+document.getElementById('forgotBtn').addEventListener('click', async () => {
+  const email = document.getElementById('email').value.trim();
+  if (!email) { alert('Please enter your email first.'); return; }
 
-document.getElementById("forgotBtn").addEventListener("click", async () => {
-  const email = document.getElementById("email").value.trim();
-
-  if (!email) {
-    alert("Please enter your email first.");
-    return;
-  }
-
-  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-    redirectTo: "https://nexgenixcreativesolutions.github.io"
+  const { error } = await _sb.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://nexgenixcreativesolutions.github.io/login-signup'
   });
 
-  if (error) {
-    alert(error.message);
-    return;
-  }
-
-  alert("Password reset email sent.");
+  if (error) { alert(error.message); return; }
+  alert('Password reset email sent. Check your inbox.');
 });
-</script>
-<script>
-  // Floating Code Background
-  const codeSnippets = [
-    'const nexgenix = () => {',
-    'function createSolution() {',
-    'import { Innovation } from "future"',
-    '<div className="digital">',
-    'async function buildDreams() {',
-    'export default Excellence;',
-    'return <Success />;',
-    'const vision = await design();',
-    'npm install creativity',
-    'git commit -m "launch"',
-    'SELECT * FROM solutions;',
-    'CREATE TABLE success;',
-    '{ transform: "ideas" }',
-    '.future { display: flex; }',
-    'onClick={() => innovate()}',
-    'useState(creativity);',
-    'useEffect(() => grow());',
-    'class Digital extends Tech {',
-    'interface Vision { }',
-    'type Success = Promise<Growth>;',
-  ];
 
-  function createFloatingCodeBackground() {
-    const container = document.createElement('div');
-    container.className = 'floating-code-container';
-    
-    // Create 15 floating code lines
-    for (let i = 0; i < 15; i++) {
-      const codeLine = document.createElement('div');
-      codeLine.className = 'code-line';
-      
-      const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-      codeLine.textContent = randomSnippet;
-      
-      const yPosition = 5 + (i * 6);
-      const duration = 15 + Math.random() * 10;
-      const delay = Math.random() * 20;
-      
-      codeLine.style.top = `${yPosition}%`;
-      codeLine.style.animationDuration = `${duration}s`;
-      codeLine.style.animationDelay = `${delay}s`;
-      
-      container.appendChild(codeLine);
-    }
-    
-    // Insert at the beginning of body so it's behind everything
-    document.body.insertBefore(container, document.body.firstChild);
+/* ── FLOATING CODE BACKGROUND ── */
+const codeSnippets = [
+  'const nexgenix = () => {','function createSolution() {',
+  'import { Innovation } from "future"','<div className="digital">',
+  'async function buildDreams() {','export default Excellence;',
+  'return <Success />;','const vision = await design();',
+  'npm install creativity','git commit -m "launch"',
+  'SELECT * FROM solutions;','CREATE TABLE success;',
+  '{ transform: "ideas" }','.future { display: flex; }',
+  'onClick={() => innovate()}','useState(creativity);',
+  'useEffect(() => grow());','class Digital extends Tech {',
+  'interface Vision { }','type Success = Promise<Growth>;'
+];
+(function createFloatingCodeBackground() {
+  const container = document.createElement('div');
+  container.className = 'floating-code-container';
+  for (let i = 0; i < 15; i++) {
+    const line = document.createElement('div');
+    line.className = 'code-line';
+    line.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+    line.style.top              = `${5 + i * 6}%`;
+    line.style.animationDuration = `${15 + Math.random() * 10}s`;
+    line.style.animationDelay   = `${Math.random() * 20}s`;
+    container.appendChild(line);
   }
-
-  // Initialize when DOM is loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', createFloatingCodeBackground);
-  } else {
-    createFloatingCodeBackground();
-  }
+  document.body.insertBefore(container, document.body.firstChild);
+})();
 </script>
 </body>
 </html>
