@@ -926,7 +926,11 @@ function loadProfileIntoUI(profile) {
       const min = pkg.minPages || 1;
       const max = pkg.maxPages || 999;
       const input = document.getElementById(inputId);
-      const hint  = document.getElementById(inputId + 'Hint');
+
+      // Hint element IDs: numPages → pageCounterHint, numPagesdev → pageCounterHint2
+      const hintIdMap = { 'numPages': 'pageCounterHint', 'numPagesdev': 'pageCounterHint2' };
+      const hintId = hintIdMap[inputId] || (inputId + 'Hint');
+      const hint  = document.getElementById(hintId);
       const wrap  = document.getElementById(inputId + 'Counter');
       const btnMinus = document.getElementById(inputId + 'Minus');
       const btnPlus  = document.getElementById(inputId + 'Plus');
@@ -934,7 +938,8 @@ function loadProfileIntoUI(profile) {
       if (!input) return;
 
       let current = parseInt(input.value) || min;
-      current = Math.max(min, current + delta);  // never go below min
+      if (delta !== 0) current = current + delta;  // 0 = manual input, just validate
+      current = Math.max(min, current);  // never go below min
 
       input.value = current;
 
