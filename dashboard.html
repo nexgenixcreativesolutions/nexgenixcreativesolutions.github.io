@@ -786,9 +786,9 @@
               <label>Number of Pages *</label>
               <div class="page-counter-wrap">
                 <div class="page-counter">
-                  <button class="page-counter-btn" onclick="adjustPages(-1)">−</button>
-                  <input type="number" id="numPages" class="page-counter-input" value="1" min="1" max="50" oninput="updatePageCount()">
-                  <button class="page-counter-btn" onclick="adjustPages(1)">+</button>
+                  <button class="page-counter-btn" id="numPagesMinus" onclick="adjustPages('numPages', -1)">−</button>
+                  <input type="number" id="numPages" class="page-counter-input" value="1" min="1" max="50" oninput="adjustPages('numPages', 0)">
+                  <button class="page-counter-btn" id="numPagesPlus" onclick="adjustPages('numPages', 1)">+</button>
                 </div>
               </div>
               <div class="page-counter-hint" id="pageCounterHint"></div>
@@ -810,9 +810,9 @@
               <label>Number of Pages *</label>
               <div class="page-counter-wrap">
                 <div class="page-counter">
-                  <button class="page-counter-btn" onclick="adjustPages(-1)">−</button>
-                  <input type="number" id="numPagesdev" class="page-counter-input" value="1" min="1" max="50" oninput="updatePageCount()">
-                  <button class="page-counter-btn" onclick="adjustPages(1)">+</button>
+                  <button class="page-counter-btn" id="numPagesdevMinus" onclick="adjustPages('numPagesdev', -1)">−</button>
+                  <input type="number" id="numPagesdev" class="page-counter-input" value="1" min="1" max="50" oninput="adjustPages('numPagesdev', 0)">
+                  <button class="page-counter-btn" id="numPagesdevPlus" onclick="adjustPages('numPagesdev', 1)">+</button>
                 </div>
               </div>
               <div class="page-counter-hint" id="pageCounterHint2"></div>
