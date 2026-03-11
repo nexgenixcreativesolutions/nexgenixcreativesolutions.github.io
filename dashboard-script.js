@@ -5,13 +5,10 @@ const SUPABASE_URL  = 'https://rranivozhrsldhapzwqc.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyYW5pdm96aHJzbGRoYXB6d3FjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAxNzIxMzcsImV4cCI6MjA4NTc0ODEzN30.0wOlQErCvNbf9LhhWzecDINB6523BHqgc2G2v0wURGQ';
 const _sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-// Session guard — wait for Supabase to restore session before deciding to redirect
-// Using onAuthStateChange avoids the race condition where getSession() returns null
-// on first load even though the user is still logged in.
+// Session guard — uses onAuthStateChange to avoid redirect loop
 let _sessionResolved = false;
-
 _sb.auth.onAuthStateChange(async (event, session) => {
-  if (_sessionResolved) return; // only run once on initial load
+  if (_sessionResolved) return;
   _sessionResolved = true;
 
   if (!session) {
@@ -20,8 +17,6 @@ _sb.auth.onAuthStateChange(async (event, session) => {
       '?redirect=' + encodeURIComponent(window.location.href);
     return;
   }
-
-  // Load profile into UI
   const { data: profile } = await _sb
     .from('profiles').select('*').eq('id', session.user.id).single();
   if (profile) loadProfileIntoUI(profile);
@@ -32,30 +27,25 @@ function loadProfileIntoUI(profile) {
   const email       = profile.email || '';
   const phone       = profile.phone || '';
 
-  const dnEl = document.getElementById('displayNameInput');
-  const emEl = document.getElementById('profileEmail');
+  const dnEl       = document.getElementById('displayNameInput');
+  const emEl       = document.getElementById('profileEmail');
   const invNameEl  = document.getElementById('clientNameInput');
   const invEmailEl = document.getElementById('invoiceEmailInput');
 
   if (dnEl)      dnEl.value      = displayName;
   if (emEl)      emEl.value      = email;
   if (invNameEl) invNameEl.value = displayName;
-  if (invEmailEl && !(invEmailEl.dataset.userEdited)) invEmailEl.value = email;
+  if (invEmailEl && !invEmailEl.dataset.userEdited) invEmailEl.value = email;
 
-  // Parse phone into code + number if stored as full string
   if (phone) {
     const codeEl = document.getElementById('phoneCode');
     const numEl  = document.getElementById('phoneNumber');
     if (codeEl && numEl) {
-      // Try to match a leading + country code
-      const match = phone.match(/^(\+\d{1,3})(.*)$/);
+      const match = phone.match(/^(\+\d{1,3})\s*(.*)$/);
       if (match) { codeEl.value = match[1]; numEl.value = match[2].trim(); }
       else { numEl.value = phone; }
     }
   }
-
-  // Clear localStorage fallback now that we have real data
-  localStorage.removeItem('ngcs_client_v1');
 }
 
     // =================== EMAILJS CONFIGURATION ===================
@@ -1925,17 +1915,14 @@ ${JSON.stringify(orderData, null, 2)}
       try {
         const { data: { session } } = await _sb.auth.getSession();
         if (!session) throw new Error('Not logged in');
-
         const { error } = await _sb.from('profiles').update({
           display_name: displayName,
           phone:        fullPhone || null,
           updated_at:   new Date().toISOString()
         }).eq('id', session.user.id);
-
         if (error) throw error;
         alert('Profile updated successfully!' + (fullPhone ? `\nWhatsApp: ${fullPhone}` : ''));
       } catch(err) {
-        console.error('saveProfile error:', err);
         alert('Could not save profile: ' + err.message);
       }
     }
@@ -1952,7 +1939,6 @@ ${JSON.stringify(orderData, null, 2)}
         alert('Password updated successfully!');
         document.getElementById('passwordInput').value = '';
       } catch(err) {
-        console.error('updatePassword error:', err);
         alert('Could not update password: ' + err.message);
       }
     }
@@ -2015,29 +2001,21 @@ ${JSON.stringify(orderData, null, 2)}
     // =================== LOCALSTORAGE CLIENT INFO ===================
     const LS_KEY = 'ngcs_client_v1';
 
-    async function saveClientInfo() {
-      const name  = document.getElementById('clientNameInput')?.value.trim() || '';
-      const email = document.getElementById('invoiceEmailInput')?.value.trim() || '';
-      const phone = document.getElementById('invoicePhoneNumber')?.value.trim() || '';
-      if (!name && !email) {
+    function saveClientInfo() {
+      const data = {
+        name:  document.getElementById('clientNameInput')?.value || '',
+        email: document.getElementById('invoiceEmailInput')?.value || '',
+        phone: document.getElementById('invoicePhoneNumber')?.value || '',
+        code:  document.getElementById('invoicePhoneCode')?.value || '+63'
+      };
+      if (!data.name && !data.email) {
         alert('Please enter at least a name or email before saving.');
         return;
       }
-      try {
-        const { data: { session } } = await _sb.auth.getSession();
-        if (session) {
-          await _sb.from('profiles').update({
-            display_name: name || undefined,
-            phone: phone || undefined,
-            updated_at: new Date().toISOString()
-          }).eq('id', session.user.id);
-        }
-        const banner = document.getElementById('invSavedBanner');
-        if (banner) { banner.textContent = '💾 Profile saved'; banner.classList.add('visible'); }
-        setTimeout(() => { if (banner) banner.textContent = '✅ Auto-filled from saved profile'; }, 2000);
-      } catch(err) {
-        console.error('saveClientInfo error:', err);
-      }
+      localStorage.setItem(LS_KEY, JSON.stringify(data));
+      const banner = document.getElementById('invSavedBanner');
+      if (banner) { banner.textContent = '💾 Profile saved to this device'; banner.classList.add('visible'); }
+      setTimeout(() => { if (banner) banner.textContent = '✅ Auto-filled from saved profile'; }, 2000);
     }
 
     function loadClientInfo() {
@@ -2060,18 +2038,11 @@ ${JSON.stringify(orderData, null, 2)}
       populatePhoneDropdowns();
       loadClientInfo();
 
-      // ── AUTO-SELECT SERVICE TAB FROM URL PARAM ──────────────────────
-      // Any page can link to the dashboard with ?service=app-design etc.
-      // and the matching filter tab will be auto-clicked on load.
-      // Valid values: app-design, web-design, web-development,
-      //               ui-ux-design, logo-design, video-ads
-      // Example: dashboard.html?service=app-design
+      // Auto-select service tab from URL ?service= param
       (function autoSelectServiceFromURL() {
         const params  = new URLSearchParams(window.location.search);
         const service = params.get('service');
         if (!service) return;
-
-        // Map param value → tab element ID
         const tabIdMap = {
           'app-design':      'tab-app-design',
           'web-design':      'tab-web-design',
@@ -2080,16 +2051,10 @@ ${JSON.stringify(orderData, null, 2)}
           'logo-design':     'tab-logo',
           'video-ads':       'tab-video'
         };
-
-        const tabId = tabIdMap[service.toLowerCase()];
-        if (!tabId) return;
-
-        const tabBtn = document.getElementById(tabId);
+        const tabBtn = document.getElementById(tabIdMap[service.toLowerCase()]);
         if (tabBtn) {
-          // Small delay to ensure loadServices() has finished rendering cards
           setTimeout(() => {
             tabBtn.click();
-            // Scroll smoothly to the filter bar
             const filterBar = document.getElementById('serviceFilterBar');
             if (filterBar) filterBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 150);
@@ -2107,41 +2072,27 @@ ${JSON.stringify(orderData, null, 2)}
         });
       }
 
-      // User info is loaded by loadProfileIntoUI() called from the session guard above
-      // No hardcoded placeholder values needed
+      // User info loaded by loadProfileIntoUI() via onAuthStateChange above
 
       // Sync settings phone to invoice whenever settings phone changes
       document.getElementById('phoneCode').addEventListener('change', syncSettingsPhoneToInvoice);
       document.getElementById('phoneNumber').addEventListener('input', syncSettingsPhoneToInvoice);
     });
-
-// ── GLOBAL EXPORTS — outside DOMContentLoaded so they are available immediately
-// The inline script in dashboard.html patches window.showSection right away,
-// so these must be assigned at parse time, not deferred inside an event listener.
-window.filterByServiceType        = filterByServiceType;
-window.selectOrderType            = selectOrderType;
-window.selectService              = selectService;
-window.showSection                = showSection;
-window.toggleSidebar              = toggleSidebar;
-window.updateInvoice              = updateInvoice;
-window.adjustPages                = adjustPages;
-window.updatePageCount            = updatePageCount;
-window.changeCurrencyFromDropdown = changeCurrencyFromDropdown;
-window.submitOrder                = submitOrder;
-window.downloadInvoice            = downloadInvoice;
-window.startNewPurchase           = startNewPurchase;
-window.saveClientInfo             = saveClientInfo;
-window.syncClientName             = syncClientName;
-window.saveProfile                = saveProfile;
-window.updatePassword             = updatePassword;
-window.logout                     = logout;
-window.scrollToTop                = scrollToTop;
-window.updateDurationLimit        = updateDurationLimit;
-window.updatePaymentIcon          = updatePaymentIcon;
-window.changeCurrency             = changeCurrency;
-window.changeCurrencyStandalone   = changeCurrencyStandalone;
-window.syncSettingsPhoneToInvoice = syncSettingsPhoneToInvoice;
-
+    // ── GLOBAL EXPORTS — ensure onclick= attributes can always reach these ──
+    window.filterByServiceType   = filterByServiceType;
+    window.selectOrderType       = selectOrderType;
+    window.selectService         = selectService;
+    window.showSection           = showSection;
+    window.toggleSidebar         = toggleSidebar;
+    window.updateInvoice         = updateInvoice;
+    window.adjustPages           = adjustPages;
+    window.updatePageCount       = updatePageCount;
+    window.changeCurrencyFromDropdown = changeCurrencyFromDropdown;
+    window.submitOrder           = submitOrder;
+    window.downloadInvoice       = downloadInvoice;
+    window.startNewPurchase      = startNewPurchase;
+    window.saveClientInfo        = saveClientInfo;
+    window.syncClientName        = syncClientName;
     window.syncInvoiceEmail      = syncInvoiceEmail;
     window.syncInvoicePhone      = syncInvoicePhone;
     window.syncInvoiceEmailFromSettings = syncInvoiceEmailFromSettings;
