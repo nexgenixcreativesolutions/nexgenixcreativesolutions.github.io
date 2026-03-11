@@ -2060,6 +2060,42 @@ ${JSON.stringify(orderData, null, 2)}
       populatePhoneDropdowns();
       loadClientInfo();
 
+      // ── AUTO-SELECT SERVICE TAB FROM URL PARAM ──────────────────────
+      // Any page can link to the dashboard with ?service=app-design etc.
+      // and the matching filter tab will be auto-clicked on load.
+      // Valid values: app-design, web-design, web-development,
+      //               ui-ux-design, logo-design, video-ads
+      // Example: dashboard.html?service=app-design
+      (function autoSelectServiceFromURL() {
+        const params  = new URLSearchParams(window.location.search);
+        const service = params.get('service');
+        if (!service) return;
+
+        // Map param value → tab element ID
+        const tabIdMap = {
+          'app-design':      'tab-app-design',
+          'web-design':      'tab-web-design',
+          'web-development': 'tab-web-development',
+          'ui-ux-design':    'tab-ui-ux',
+          'logo-design':     'tab-logo',
+          'video-ads':       'tab-video'
+        };
+
+        const tabId = tabIdMap[service.toLowerCase()];
+        if (!tabId) return;
+
+        const tabBtn = document.getElementById(tabId);
+        if (tabBtn) {
+          // Small delay to ensure loadServices() has finished rendering cards
+          setTimeout(() => {
+            tabBtn.click();
+            // Scroll smoothly to the filter bar
+            const filterBar = document.getElementById('serviceFilterBar');
+            if (filterBar) filterBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 150);
+        }
+      })();
+
       // Go to top button visibility
       window.addEventListener('scroll', () => {
         document.getElementById('goTopBtn').style.display = window.scrollY > 300 ? 'block' : 'none';
