@@ -408,9 +408,7 @@
       <li><a href="https://nexgenixcreativesolutions.github.io/contact">Contact</a></li>
     </ul>
 
-    <div class="auth-buttons" id="auth-buttons">
-      <button onclick="handleLogout()" class="logout-btn">Logout</button>
-      <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
+    <div class="auth-buttons" id="auth-buttons">      <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
     </div>
   </nav>
 
@@ -646,12 +644,6 @@
     function toggleMenu() {
       document.querySelector('.nav-list').classList.toggle('active');
       document.querySelector('.hamburger-menu').classList.toggle('open');
-    }
-
-    // Logout Handler
-    function handleLogout() {
-      alert('Logging out...');
-      window.location.href = 'https://nexgenixcreativesolutions.github.io/login-signup';
     }
 
     // Initialize on page load
