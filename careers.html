@@ -7,14 +7,38 @@
   <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
   <link rel="stylesheet" href="assets/css/styles.css" />
   <link rel="stylesheet" href="assets/css/responsive.css" />
-  <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Silkscreen:wght@400;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
   <style>
-    /* Floating Code Background */
+    /* ─── CSS Variables ─── */
+    :root {
+      --neon: #39FF14;
+      --neon-dim: rgba(57,255,20,0.15);
+      --neon-glow: 0 0 18px rgba(57,255,20,0.55);
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface2: #161616;
+      --border: rgba(57,255,20,0.18);
+      --text: #e5e5e5;
+      --muted: #6b7280;
+      --danger: #ff4444;
+      --font-head: 'Montserrat Alternates', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-head);
+      overflow-x: hidden;
+    }
+
+    /* ─── Floating Code Background ─── */
     .floating-code-container {
       position: fixed;
       inset: 0;
@@ -25,223 +49,1041 @@
     .code-line {
       position: absolute;
       white-space: nowrap;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      color: rgba(57, 255, 20, 0.4);
-      text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: rgba(57,255,20,0.25);
+      text-shadow: 0 0 8px rgba(57,255,20,0.2);
       animation: floatCode linear infinite;
       opacity: 0;
     }
     @keyframes floatCode {
-      0% {
-        transform: translateX(100vw);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(-100%);
-        opacity: 0;
-      }
+      0%   { transform: translateX(100vw); opacity: 0; }
+      8%   { opacity: 1; }
+      92%  { opacity: 1; }
+      100% { transform: translateX(-100%); opacity: 0; }
     }
-    @media (min-width: 768px) {
-      .code-line {
-        font-size: 16px;
-      }
-    }
-    
-    /* Careers Section Styling */
-    .careers-section {
-      position: relative;
-      min-height: calc(100vh - 150px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 6rem 2rem;
+
+    /* ─── Page Wrapper ─── */
+    .page-content { position: relative; z-index: 1; }
+
+    /* ─── Hero ─── */
+    .careers-hero {
+      padding: 8rem 2rem 4rem;
       text-align: center;
     }
-    
-    .careers-content {
-      max-width: 700px;
-      margin: 0 auto;
+    .careers-hero .label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: var(--neon);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
     }
-    
-    .careers-emoji {
-      font-size: 5rem;
-      margin-bottom: 2rem;
-      animation: bounce 2s infinite;
+    .careers-hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: #fff;
     }
-    
-    @keyframes bounce {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-20px);
-      }
-    }
-    
-    .careers-title {
-      font-family: 'Montserrat Alternates', sans-serif;
-      font-size: 3rem;
-      font-weight: bold;
-      color: white;
-      margin-bottom: 1.5rem;
-    }
-    
-    .gradient-text {
-      background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+    .careers-hero h1 .gradient-text {
+      background: linear-gradient(90deg, #ff4500, #ffcc00, #39FF14);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    
-    .careers-message {
-      font-size: 1.25rem;
-      color: #9ca3af;
+    .careers-hero p {
+      max-width: 600px;
+      margin: 1.5rem auto 0;
+      font-size: 1.05rem;
+      color: var(--muted);
       line-height: 1.8;
-      margin-bottom: 2rem;
     }
-    
-    .careers-submessage {
-      font-size: 1.1rem;
-      color: #6b7280;
-      font-style: italic;
-    }
-    
-    .contact-link {
-      display: inline-block;
-      margin-top: 2rem;
-      padding: 1rem 2.5rem;
-      background: #39FF14;
-      color: #000;
-      text-decoration: none;
+
+    /* ─── Section Titles ─── */
+    .section-title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
       font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+    .section-subtitle {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      margin-bottom: 2.5rem;
+    }
+    .neon { color: var(--neon); }
+
+    /* ─── Divider ─── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ─── Job Listings ─── */
+    .jobs-section {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .job-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.6rem;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .job-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--neon), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .job-card:hover {
+      border-color: var(--neon);
+      box-shadow: var(--neon-glow);
+      transform: translateY(-4px);
+    }
+    .job-card:hover::before { opacity: 1; }
+
+    .job-card.active {
+      border-color: var(--neon);
+      box-shadow: var(--neon-glow);
+    }
+    .job-card.active::before { opacity: 1; }
+
+    .job-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .job-icon {
+      width: 42px; height: 42px;
+      background: var(--neon-dim);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--neon);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .job-title {
       font-size: 1rem;
-      border-radius: 0.5rem;
-      transition: all 0.3s ease;
-      font-family: 'Montserrat Alternates', sans-serif;
-      box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+    .job-department {
+      font-size: 0.75rem;
+      color: var(--neon);
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
-    
-    .contact-link:hover {
-      background: #2ee80f;
+    .job-type-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      background: var(--neon-dim);
+      color: var(--neon);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.18rem 0.7rem;
+      margin-bottom: 0.9rem;
+    }
+
+    /* Qualifications accordion */
+    .qualifications {
+      display: none;
+      margin-top: 0.8rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--border);
+      animation: fadeSlide 0.25s ease;
+    }
+    .qualifications.open { display: block; }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .qualifications h4 {
+      font-size: 0.78rem;
+      color: var(--neon);
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .qualifications ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .qualifications ul li {
+      font-size: 0.83rem;
+      color: #ccc;
+      line-height: 1.5;
+      padding-left: 1rem;
+      position: relative;
+    }
+    .qualifications ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--neon);
+    }
+
+    .job-toggle-btn {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--neon);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      letter-spacing: 0.05em;
+    }
+    .job-toggle-btn i { font-size: 0.75rem; transition: transform 0.2s; }
+    .job-toggle-btn.open i { transform: rotate(180deg); }
+
+    .apply-btn {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.6rem 1rem;
+      background: var(--neon);
+      color: #000;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .apply-btn:hover {
+      background: #52ff2a;
+      box-shadow: var(--neon-glow);
+    }
+
+    /* ─── Application Form ─── */
+    .apply-section {
+      padding: 4rem 2rem 6rem;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: 0 0 60px rgba(57,255,20,0.05);
+    }
+
+    .form-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-header .label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--neon);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .form-header h2 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .form-header p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      line-height: 1.6;
+    }
+
+    /* Selected Position Banner */
+    #selected-position-banner {
+      display: none;
+      background: var(--neon-dim);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.8rem 1.2rem;
+      margin-bottom: 1.8rem;
+      font-size: 0.88rem;
+      color: var(--neon);
+      font-family: var(--font-mono);
+    }
+    #selected-position-banner.visible { display: flex; align-items: center; gap: 0.6rem; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1.3rem;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--neon);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    label span.req { color: var(--danger); margin-left: 2px; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      background: var(--surface2);
+      border: 1px solid rgba(57,255,20,0.22);
+      border-radius: 8px;
+      padding: 0.72rem 1rem;
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--neon);
+      box-shadow: 0 0 0 3px rgba(57,255,20,0.12);
+    }
+    input::placeholder, textarea::placeholder {
+      color: rgba(255,255,255,0.25);
+    }
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2339FF14' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      background-size: 12px;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+    select option {
+      background: var(--surface2);
+      color: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.6;
+    }
+
+    /* Phone with area code */
+    .phone-row {
+      display: flex;
+      gap: 0.6rem;
+    }
+    .phone-row select {
+      flex: 0 0 145px;
+    }
+    .phone-row input {
+      flex: 1;
+    }
+
+    /* File Upload */
+    .file-upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 1.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.25s, background 0.25s;
+      position: relative;
+    }
+    .file-upload-area:hover, .file-upload-area.dragover {
+      border-color: var(--neon);
+      background: var(--neon-dim);
+    }
+    .file-upload-area input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding: 0;
+      background: none;
+    }
+    .file-upload-area i {
+      font-size: 2rem;
+      color: var(--neon);
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+    .file-upload-area p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .file-upload-area .file-name {
+      margin-top: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--neon);
+    }
+
+    /* Submit */
+    .submit-btn {
+      width: 100%;
+      padding: 1rem 2rem;
+      background: var(--neon);
+      color: #000;
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+      margin-top: 0.5rem;
+    }
+    .submit-btn:hover {
+      background: #52ff2a;
+      box-shadow: var(--neon-glow), 0 8px 30px rgba(57,255,20,0.25);
       transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(57, 255, 20, 0.8),
-                  0 5px 20px rgba(57, 255, 20, 0.4);
     }
-    
+    .submit-btn:active { transform: translateY(0); }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.76rem;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+    .form-note a { color: var(--neon); text-decoration: none; }
+
+    /* Success / Error toast */
+    #toast {
+      display: none;
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      background: var(--surface);
+      border: 1px solid var(--neon);
+      border-radius: 10px;
+      padding: 1rem 1.4rem;
+      font-size: 0.88rem;
+      color: #fff;
+      box-shadow: var(--neon-glow);
+      animation: slideUp 0.3s ease;
+      max-width: 320px;
+    }
+    #toast.error { border-color: var(--danger); box-shadow: 0 0 18px rgba(255,68,68,0.4); }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+    footer span { color: var(--neon); }
+
+    /* ─── Responsive ─── */
     @media (max-width: 768px) {
-      .careers-emoji {
-        font-size: 4rem;
-      }
-      
-      .careers-title {
-        font-size: 2rem;
-      }
-      
-      .careers-message {
-        font-size: 1.1rem;
-      }
-      
-      .careers-submessage {
-        font-size: 1rem;
-      }
-      
-      .careers-section {
-        padding: 4rem 1.5rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .careers-emoji {
-        font-size: 3rem;
-      }
-      
-      .careers-title {
-        font-size: 1.75rem;
-      }
-      
-      .careers-message {
-        font-size: 1rem;
-      }
-      
-      .careers-submessage {
-        font-size: 0.95rem;
-      }
+      .form-card { padding: 1.5rem; }
+      .form-header h2 { font-size: 1.35rem; }
     }
   </style>
 </head>
 <body>
 
+<!-- Floating Code Background -->
+<div class="floating-code-container" id="floatingCodeBg"></div>
+
 <!-- Navigation Bar -->
 <nav id="navbar">
-    <div class="logo">
-        <img src="assets/images/logo.png" alt="logo" class="logo">
-        <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
-        <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
-    </div>
-    <!-- Hamburger Menu Icon -->
-    <div class="hamburger-menu" onclick="toggleMenu()">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    </div>
-    <ul class="nav-list">
-        <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io#services">Services</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io#reviews">Reviews</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/contact">Contact</a></li>
-    </ul>
-    <div class="auth-buttons" id="auth-buttons">
-        <button onclick="handleLogout()" class="logout-btn">Logout</button>
-        <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
-    </div>
+  <div class="logo">
+    <img src="assets/images/logo.png" alt="logo" class="logo">
+    <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
+    <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
+  </div>
+  <div class="hamburger-menu" onclick="toggleMenu()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+  <ul class="nav-list">
+    <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io#services">Services</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io#reviews">Reviews</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/careers" class="active">Careers</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/contact">Contact</a></li>
+  </ul>
+  <div class="auth-buttons" id="auth-buttons">
+    <button onclick="handleLogout()" class="logout-btn">Logout</button>
+    <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
+  </div>
 </nav>
 
-<!-- Careers Section -->
-<section class="careers-section">
-    <div class="careers-content">
-        <div class="careers-emoji">😅</div>
-        <h1 class="careers-title">
-            <span class="gradient-text">Careers</span>
-        </h1>
-        <p class="careers-message">
-            We appreciate your interest in joining our team! Unfortunately, we don't have any open positions at the moment.
-        </p>
-        <p class="careers-submessage">
-            But hey, keep checking back! Great opportunities might pop up when you least expect them. 
-        </p>
-        <a href="https://nexgenixcreativesolutions.github.io#contact" class="contact-link">Stay in Touch</a>
+<div class="page-content">
+
+  <!-- Hero -->
+  <section class="careers-hero">
+    <p class="label">// we're hiring</p>
+    <h1>Build the Future<br>with <span class="gradient-text">Nex Genix</span></h1>
+    <p>Join a team of digital builders, strategists, and creatives pushing boundaries in web design, branding, and digital education. Explore open roles below.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- Job Listings -->
+  <section class="jobs-section">
+    <p class="section-title">Open <span class="neon">Positions</span></p>
+    <p class="section-subtitle">// Click a role to view qualifications, then hit Apply</p>
+
+    <div class="jobs-grid" id="jobsGrid">
+
+      <!-- 1. HR Manager -->
+      <div class="job-card" id="card-hr-manager">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-users-cog"></i></div>
+          <div>
+            <div class="job-title">Human Resource Manager</div>
+            <div class="job-department">People & Culture</div>
+          </div>
+        </div>
+        <span class="job-type-badge">Full-Time</span>
+        <div class="qualifications" id="qual-hr-manager">
+          <h4>Qualifications</h4>
+          <ul>
+            <li>Bachelor's degree in Human Resources, Psychology, or related field</li>
+            <li>3+ years of HR management experience</li>
+            <li>Strong knowledge of labor laws and compliance</li>
+            <li>Experience with recruitment, onboarding, and talent development</li>
+            <li>Excellent interpersonal and conflict-resolution skills</li>
+            <li>Proficient in HR software and Microsoft Office</li>
+          </ul>
+        </div>
+        <button class="job-toggle-btn" onclick="toggleQual('hr-manager', this)">
+          <i class="fas fa-chevron-down"></i> View Qualifications
+        </button>
+        <button class="apply-btn" onclick="selectJob('Human Resource Manager', 'hr-manager')">Apply Now</button>
+      </div>
+
+      <!-- 2. Recruiter -->
+      <div class="job-card" id="card-recruiter">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-search"></i></div>
+          <div>
+            <div class="job-title">Recruiter</div>
+            <div class="job-department">People & Culture</div>
+          </div>
+        </div>
+        <span class="job-type-badge">Full-Time</span>
+        <div class="qualifications" id="qual-recruiter">
+          <h4>Qualifications</h4>
+          <ul>
+            <li>Bachelor's degree in HR, Business Administration, or related field</li>
+            <li>2+ years of recruitment or talent acquisition experience</li>
+            <li>Familiarity with applicant tracking systems (ATS)</li>
+            <li>Strong sourcing skills — LinkedIn, job boards, referrals</li>
+            <li>Ability to assess candidates effectively and communicate feedback</li>
+            <li>Highly organized with excellent follow-through</li>
+          </ul>
+        </div>
+        <button class="job-toggle-btn" onclick="toggleQual('recruiter', this)">
+          <i class="fas fa-chevron-down"></i> View Qualifications
+        </button>
+        <button class="apply-btn" onclick="selectJob('Recruiter', 'recruiter')">Apply Now</button>
+      </div>
+
+      <!-- 3. Web Developer -->
+      <div class="job-card" id="card-web-dev">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-code"></i></div>
+          <div>
+            <div class="job-title">Web Developer</div>
+            <div class="job-department">Technology</div>
+          </div>
+        </div>
+        <span class="job-type-badge">Full-Time / Contract</span>
+        <div class="qualifications" id="qual-web-dev">
+          <h4>Qualifications</h4>
+          <ul>
+            <li>Bachelor's degree in Computer Science, IT, or equivalent experience</li>
+            <li>Proficient in HTML, CSS, JavaScript, and at least one JS framework (React, Vue)</li>
+            <li>Experience with CMS platforms (WordPress, Wix, Webflow)</li>
+            <li>Familiarity with version control (Git/GitHub)</li>
+            <li>Understanding of responsive design and web performance best practices</li>
+            <li>Experience with REST APIs and backend integration is a plus</li>
+          </ul>
+        </div>
+        <button class="job-toggle-btn" onclick="toggleQual('web-dev', this)">
+          <i class="fas fa-chevron-down"></i> View Qualifications
+        </button>
+        <button class="apply-btn" onclick="selectJob('Web Developer', 'web-dev')">Apply Now</button>
+      </div>
+
+      <!-- 4. Web Designer -->
+      <div class="job-card" id="card-web-designer">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-paint-brush"></i></div>
+          <div>
+            <div class="job-title">Web Designer</div>
+            <div class="job-department">Creative</div>
+          </div>
+        </div>
+        <span class="job-type-badge">Full-Time / Contract</span>
+        <div class="qualifications" id="qual-web-designer">
+          <h4>Qualifications</h4>
+          <ul>
+            <li>Bachelor's degree in Graphic Design, Multimedia Arts, or related field</li>
+            <li>Proficient in Figma, Adobe XD, or similar design tools</li>
+            <li>Strong portfolio demonstrating UI/UX design capabilities</li>
+            <li>Understanding of user-centered design principles</li>
+            <li>Basic knowledge of HTML/CSS to collaborate with developers</li>
+            <li>Eye for typography, color theory, and visual composition</li>
+          </ul>
+        </div>
+        <button class="job-toggle-btn" onclick="toggleQual('web-designer', this)">
+          <i class="fas fa-chevron-down"></i> View Qualifications
+        </button>
+        <button class="apply-btn" onclick="selectJob('Web Designer', 'web-designer')">Apply Now</button>
+      </div>
+
+      <!-- 5. Finance -->
+      <div class="job-card" id="card-finance">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-chart-line"></i></div>
+          <div>
+            <div class="job-title">Finance Officer</div>
+            <div class="job-department">Finance & Admin</div>
+          </div>
+        </div>
+        <span class="job-type-badge">Full-Time</span>
+        <div class="qualifications" id="qual-finance">
+          <h4>Qualifications</h4>
+          <ul>
+            <li>Bachelor's degree in Accountancy, Finance, or related field</li>
+            <li>CPA license is an advantage</li>
+            <li>2+ years of experience in bookkeeping or financial management</li>
+            <li>Proficient in accounting software (QuickBooks, Xero, or similar)</li>
+            <li>Detail-oriented with strong analytical and reporting skills</li>
+            <li>Understanding of BIR compliance and Philippine taxation is a plus</li>
+          </ul>
+        </div>
+        <button class="job-toggle-btn" onclick="toggleQual('finance', this)">
+          <i class="fas fa-chevron-down"></i> View Qualifications
+        </button>
+        <button class="apply-btn" onclick="selectJob('Finance Officer', 'finance')">Apply Now</button>
+      </div>
+
+      <!-- 6. Social Media Manager -->
+      <div class="job-card" id="card-socmed">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-share-alt"></i></div>
+          <div>
+            <div class="job-title">Social Media Manager</div>
+            <div class="job-department">Marketing & Growth</div>
+          </div>
+        </div>
+        <span class="job-type-badge">Full-Time</span>
+        <div class="qualifications" id="qual-socmed">
+          <h4>Qualifications</h4>
+          <ul>
+            <li>Bachelor's degree in Marketing, Communications, or related field</li>
+            <li>2+ years managing social media accounts for a brand or agency</li>
+            <li>Strong copywriting and content creation skills</li>
+            <li>Proficient in Canva, Adobe Express, or similar graphic tools</li>
+            <li>Experience with Meta Ads, TikTok Ads, or similar platforms</li>
+            <li>Analytical mindset — comfortable reading insights and KPIs</li>
+          </ul>
+        </div>
+        <button class="job-toggle-btn" onclick="toggleQual('socmed', this)">
+          <i class="fas fa-chevron-down"></i> View Qualifications
+        </button>
+        <button class="apply-btn" onclick="selectJob('Social Media Manager', 'socmed')">Apply Now</button>
+      </div>
+
+      <!-- 7. Marketing Staff -->
+      <div class="job-card" id="card-mkt-staff">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-bullhorn"></i></div>
+          <div>
+            <div class="job-title">Marketing Staff</div>
+            <div class="job-department">Marketing & Growth</div>
+          </div>
+        </div>
+        <span class="job-type-badge">Full-Time</span>
+        <div class="qualifications" id="qual-mkt-staff">
+          <h4>Qualifications</h4>
+          <ul>
+            <li>Bachelor's degree in Marketing, Business, or related field</li>
+            <li>1+ year in a marketing or digital communications role</li>
+            <li>Familiarity with email marketing tools and campaign management</li>
+            <li>Good understanding of SEO and content marketing basics</li>
+            <li>Creative thinker with strong written communication skills</li>
+            <li>Team player who can work under minimal supervision</li>
+          </ul>
+        </div>
+        <button class="job-toggle-btn" onclick="toggleQual('mkt-staff', this)">
+          <i class="fas fa-chevron-down"></i> View Qualifications
+        </button>
+        <button class="apply-btn" onclick="selectJob('Marketing Staff', 'mkt-staff')">Apply Now</button>
+      </div>
+
+      <!-- 8. Marketing Manager -->
+      <div class="job-card" id="card-mkt-mgr">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-funnel-dollar"></i></div>
+          <div>
+            <div class="job-title">Marketing Manager</div>
+            <div class="job-department">Marketing & Growth</div>
+          </div>
+        </div>
+        <span class="job-type-badge">Full-Time</span>
+        <div class="qualifications" id="qual-mkt-mgr">
+          <h4>Qualifications</h4>
+          <ul>
+            <li>Bachelor's degree in Marketing, Business Administration, or related field</li>
+            <li>4+ years of marketing experience, with at least 2 in a managerial role</li>
+            <li>Proven track record in developing and executing marketing strategies</li>
+            <li>Strong leadership and team management capabilities</li>
+            <li>Experience with digital marketing channels, analytics, and ROI tracking</li>
+            <li>Excellent presentation and stakeholder communication skills</li>
+          </ul>
+        </div>
+        <button class="job-toggle-btn" onclick="toggleQual('mkt-mgr', this)">
+          <i class="fas fa-chevron-down"></i> View Qualifications
+        </button>
+        <button class="apply-btn" onclick="selectJob('Marketing Manager', 'mkt-mgr')">Apply Now</button>
+      </div>
+
+      <!-- 9. Sales Representative -->
+      <div class="job-card" id="card-sales">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-handshake"></i></div>
+          <div>
+            <div class="job-title">Sales Representative</div>
+            <div class="job-department">Sales</div>
+          </div>
+        </div>
+        <span class="job-type-badge">Full-Time</span>
+        <div class="qualifications" id="qual-sales">
+          <h4>Qualifications</h4>
+          <ul>
+            <li>Bachelor's degree in Business, Marketing, or related field (preferred)</li>
+            <li>1–3 years of experience in sales or business development</li>
+            <li>Excellent verbal communication and persuasion skills</li>
+            <li>Self-motivated with a drive to hit and exceed targets</li>
+            <li>Experience with CRM tools (HubSpot, Salesforce, or similar)</li>
+            <li>Comfortable with cold outreach, client calls, and virtual meetings</li>
+          </ul>
+        </div>
+        <button class="job-toggle-btn" onclick="toggleQual('sales', this)">
+          <i class="fas fa-chevron-down"></i> View Qualifications
+        </button>
+        <button class="apply-btn" onclick="selectJob('Sales Representative', 'sales')">Apply Now</button>
+      </div>
+
+      <!-- 10. Trainer -->
+      <div class="job-card" id="card-trainer">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+          <div>
+            <div class="job-title">Trainer</div>
+            <div class="job-department">Learning & Development</div>
+          </div>
+        </div>
+        <span class="job-type-badge">Full-Time / Part-Time</span>
+        <div class="qualifications" id="qual-trainer">
+          <h4>Qualifications</h4>
+          <ul>
+            <li>Bachelor's degree in Education, Business, or a relevant field</li>
+            <li>2+ years of experience delivering training programs</li>
+            <li>Strong facilitation and presentation skills</li>
+            <li>Ability to design engaging training materials and modules</li>
+            <li>Knowledge of adult learning principles and instructional design</li>
+            <li>Experience with e-learning platforms is an advantage</li>
+          </ul>
+        </div>
+        <button class="job-toggle-btn" onclick="toggleQual('trainer', this)">
+          <i class="fas fa-chevron-down"></i> View Qualifications
+        </button>
+        <button class="apply-btn" onclick="selectJob('Trainer', 'trainer')">Apply Now</button>
+      </div>
+
+      <!-- 11. Online Tutor (K-12) -->
+      <div class="job-card" id="card-tutor">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-graduation-cap"></i></div>
+          <div>
+            <div class="job-title">Online Tutor (K-12 Series)</div>
+            <div class="job-department">NexGenix Business School</div>
+          </div>
+        </div>
+        <span class="job-type-badge">Part-Time / Remote</span>
+        <div class="qualifications" id="qual-tutor">
+          <h4>Qualifications</h4>
+          <ul>
+            <li>Bachelor's degree in Education or a subject-matter field (Math, Science, English, etc.)</li>
+            <li>Licensed Professional Teacher (LPT) is strongly preferred</li>
+            <li>1+ year of teaching or tutoring experience (K-12 level)</li>
+            <li>Comfortable with online teaching tools (Zoom, Google Meet, LMS)</li>
+            <li>Patient, encouraging, and adept at adapting lessons to different learning styles</li>
+            <li>Reliable internet connection and suitable home teaching environment</li>
+          </ul>
+        </div>
+        <button class="job-toggle-btn" onclick="toggleQual('tutor', this)">
+          <i class="fas fa-chevron-down"></i> View Qualifications
+        </button>
+        <button class="apply-btn" onclick="selectJob('Online Tutor (K-12 Series)', 'tutor')">Apply Now</button>
+      </div>
+
     </div>
-</section>
+  </section>
 
-<!-- Footer Section -->
-<footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
+  <hr class="section-divider">
 
-<!-- External JavaScript -->
+  <!-- Application Form -->
+  <section class="apply-section" id="applySection">
+    <div class="form-card">
+      <div class="form-header">
+        <p class="label">// submit application</p>
+        <h2>Apply to <span class="neon">NGCS</span></h2>
+        <p>Fill out the form below completely and attach your CV. Applications are reviewed on a rolling basis. We'll reach out within 5–7 business days.</p>
+      </div>
+
+      <div id="selected-position-banner">
+        <i class="fas fa-briefcase"></i>
+        <span id="banner-text">No position selected</span>
+      </div>
+
+      <form id="applicationForm" novalidate>
+
+        <!-- Position Select -->
+        <div class="form-group">
+          <label for="position">Position Applying For <span class="req">*</span></label>
+          <select id="position" name="position" required>
+            <option value="" disabled selected>— Select a position —</option>
+            <option value="Human Resource Manager">Human Resource Manager</option>
+            <option value="Recruiter">Recruiter</option>
+            <option value="Web Developer">Web Developer</option>
+            <option value="Web Designer">Web Designer</option>
+            <option value="Finance Officer">Finance Officer</option>
+            <option value="Social Media Manager">Social Media Manager</option>
+            <option value="Marketing Staff">Marketing Staff</option>
+            <option value="Marketing Manager">Marketing Manager</option>
+            <option value="Sales Representative">Sales Representative</option>
+            <option value="Trainer">Trainer</option>
+            <option value="Online Tutor (K-12 Series)">Online Tutor (K-12 Series)</option>
+          </select>
+        </div>
+
+        <!-- Full Legal Name -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name (Legal) <span class="req">*</span></label>
+            <input type="text" id="firstName" name="firstName" placeholder="e.g. Maria" required>
+          </div>
+          <div class="form-group">
+            <label for="middleName">Middle Name</label>
+            <input type="text" id="middleName" name="middleName" placeholder="e.g. Santos">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="lastName">Last Name (Legal) <span class="req">*</span></label>
+            <input type="text" id="lastName" name="lastName" placeholder="e.g. Reyes" required>
+          </div>
+          <div class="form-group">
+            <label for="suffix">Suffix (if any)</label>
+            <select id="suffix" name="suffix">
+              <option value="">— None —</option>
+              <option value="Jr.">Jr.</option>
+              <option value="Sr.">Sr.</option>
+              <option value="II">II</option>
+              <option value="III">III</option>
+              <option value="IV">IV</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email Address <span class="req">*</span></label>
+          <input type="email" id="email" name="email" placeholder="you@email.com" required>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <label>Phone Number <span class="req">*</span></label>
+          <div class="phone-row">
+            <select id="areaCode" name="areaCode" required>
+              <option value="+63" selected>🇵🇭 +63</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+61">🇦🇺 +61</option>
+              <option value="+64">🇳🇿 +64</option>
+              <option value="+65">🇸🇬 +65</option>
+              <option value="+60">🇲🇾 +60</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+966">🇸🇦 +966</option>
+              <option value="+81">🇯🇵 +81</option>
+              <option value="+82">🇰🇷 +82</option>
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+86">🇨🇳 +86</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+33">🇫🇷 +33</option>
+              <option value="+39">🇮🇹 +39</option>
+              <option value="+34">🇪🇸 +34</option>
+              <option value="+55">🇧🇷 +55</option>
+              <option value="+52">🇲🇽 +52</option>
+              <option value="+27">🇿🇦 +27</option>
+              <option value="+234">🇳🇬 +234</option>
+            </select>
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="9XX XXX XXXX" required>
+          </div>
+        </div>
+
+        <!-- Mailing Address -->
+        <div class="form-group">
+          <label for="streetAddress">Street / Barangay Address <span class="req">*</span></label>
+          <input type="text" id="streetAddress" name="streetAddress" placeholder="House No., Street, Barangay" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cityMunicipality">City / Municipality <span class="req">*</span></label>
+            <input type="text" id="cityMunicipality" name="cityMunicipality" placeholder="e.g. Zamboanga City" required>
+          </div>
+          <div class="form-group">
+            <label for="province">Province / State <span class="req">*</span></label>
+            <input type="text" id="province" name="province" placeholder="e.g. Zamboanga del Sur" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="zipCode">ZIP / Postal Code <span class="req">*</span></label>
+            <input type="text" id="zipCode" name="zipCode" placeholder="e.g. 7000" required>
+          </div>
+          <div class="form-group">
+            <label for="country">Country <span class="req">*</span></label>
+            <select id="country" name="country" required>
+              <option value="Philippines" selected>Philippines</option>
+              <option value="United States">United States</option>
+              <option value="Australia">Australia</option>
+              <option value="Canada">Canada</option>
+              <option value="United Kingdom">United Kingdom</option>
+              <option value="Singapore">Singapore</option>
+              <option value="Malaysia">Malaysia</option>
+              <option value="UAE">UAE</option>
+              <option value="Saudi Arabia">Saudi Arabia</option>
+              <option value="Japan">Japan</option>
+              <option value="South Korea">South Korea</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Cover Note -->
+        <div class="form-group">
+          <label for="coverNote">Brief Cover Note <span class="req">*</span></label>
+          <textarea id="coverNote" name="coverNote" placeholder="Tell us why you're a great fit for this role and what you bring to the team..." required></textarea>
+        </div>
+
+        <!-- CV Upload -->
+        <div class="form-group">
+          <label>Upload CV / Resume <span class="req">*</span></label>
+          <div class="file-upload-area" id="fileDropArea">
+            <input type="file" id="cvFile" name="cvFile" accept=".pdf,.doc,.docx" required>
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Drag & drop your CV here, or <strong style="color:var(--neon)">browse</strong><br>
+            <small>Accepted formats: PDF, DOC, DOCX &nbsp;·&nbsp; Max 5MB</small></p>
+            <div class="file-name" id="fileNameDisplay"></div>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-paper-plane"></i>&nbsp; Submit Application
+        </button>
+        <p class="form-note">
+          Your application will be sent to <a href="mailto:nexgenixcreativesolutions@gmail.com">nexgenixcreativesolutions@gmail.com</a>.<br>
+          We handle all personal data in accordance with our Privacy Policy.
+        </p>
+
+      </form>
+    </div>
+  </section>
+
+</div><!-- end .page-content -->
+
+<!-- Toast Notification -->
+<div id="toast"></div>
+
+<!-- Footer -->
+<footer>&copy; 2026 <span>Nex Genix Creative Solutions</span>. All rights reserved.</footer>
+
+<!-- External JS -->
 <script src="script.js"></script>
 
-<!-- Toggle Menu Script -->
 <script>
-    function toggleMenu() {
-        document.querySelector('.nav-list').classList.toggle('active');
-        document.querySelector('.hamburger-menu').classList.toggle('open');
-    }
-</script>
+  /* ─── Toggle Menu ─── */
+  function toggleMenu() {
+    document.querySelector('.nav-list').classList.toggle('active');
+    document.querySelector('.hamburger-menu').classList.toggle('open');
+  }
 
-<!-- Floating Code Background Script -->
-<script>
-  // Floating Code Background
+  /* ─── Floating Code Background ─── */
   const codeSnippets = [
     'const nexgenix = () => {',
     'function createSolution() {',
@@ -263,41 +1105,158 @@
     'class Digital extends Tech {',
     'interface Vision { }',
     'type Success = Promise<Growth>;',
+    'JOIN careers SET future = true;',
+    'applyNow(candidate, position);',
   ];
-  
-  function createFloatingCodeBackground() {
-    const container = document.createElement('div');
-    container.className = 'floating-code-container';
 
-    // Create 15 floating code lines
-    for (let i = 0; i < 15; i++) {
-      const codeLine = document.createElement('div');
-      codeLine.className = 'code-line';
+  (function createFloatingCode() {
+    const container = document.getElementById('floatingCodeBg');
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement('div');
+      el.className = 'code-line';
+      el.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+      el.style.top = `${3 + i * 5.3}%`;
+      el.style.animationDuration = `${16 + Math.random() * 12}s`;
+      el.style.animationDelay = `${Math.random() * 22}s`;
+      container.appendChild(el);
+    }
+  })();
 
-      const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-      codeLine.textContent = randomSnippet;
+  /* ─── Qualification Toggle ─── */
+  function toggleQual(id, btn) {
+    const qual = document.getElementById('qual-' + id);
+    const isOpen = qual.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.innerHTML = isOpen
+      ? '<i class="fas fa-chevron-up"></i> Hide Qualifications'
+      : '<i class="fas fa-chevron-down"></i> View Qualifications';
+  }
 
-      const yPosition = 5 + (i * 6);
-      const duration = 15 + Math.random() * 10;
-      const delay = Math.random() * 20;
+  /* ─── Select Job & scroll to form ─── */
+  function selectJob(jobTitle, cardId) {
+    // Update position dropdown
+    const select = document.getElementById('position');
+    for (let opt of select.options) {
+      if (opt.value === jobTitle) { opt.selected = true; break; }
+    }
+    // Show banner
+    const banner = document.getElementById('selected-position-banner');
+    document.getElementById('banner-text').textContent = 'Applying for: ' + jobTitle;
+    banner.classList.add('visible');
+    // Scroll to form
+    document.getElementById('applySection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
-      codeLine.style.top = `${yPosition}%`;
-      codeLine.style.animationDuration = `${duration}s`;
-      codeLine.style.animationDelay = `${delay}s`;
+  /* ─── Sync position dropdown → banner ─── */
+  document.getElementById('position').addEventListener('change', function() {
+    if (this.value) {
+      document.getElementById('banner-text').textContent = 'Applying for: ' + this.value;
+      document.getElementById('selected-position-banner').classList.add('visible');
+    }
+  });
 
-      container.appendChild(codeLine);
+  /* ─── File Upload Display ─── */
+  const cvFile = document.getElementById('cvFile');
+  const fileNameDisplay = document.getElementById('fileNameDisplay');
+  const dropArea = document.getElementById('fileDropArea');
+
+  cvFile.addEventListener('change', function() {
+    if (this.files.length) {
+      fileNameDisplay.textContent = '📎 ' + this.files[0].name;
+    }
+  });
+  dropArea.addEventListener('dragover', e => { e.preventDefault(); dropArea.classList.add('dragover'); });
+  dropArea.addEventListener('dragleave', () => dropArea.classList.remove('dragover'));
+  dropArea.addEventListener('drop', e => {
+    e.preventDefault();
+    dropArea.classList.remove('dragover');
+    if (e.dataTransfer.files.length) {
+      cvFile.files = e.dataTransfer.files;
+      fileNameDisplay.textContent = '📎 ' + e.dataTransfer.files[0].name;
+    }
+  });
+
+  /* ─── Toast ─── */
+  function showToast(msg, isError = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = isError ? 'error' : '';
+    t.style.display = 'block';
+    setTimeout(() => { t.style.display = 'none'; }, 5000);
+  }
+
+  /* ─── Form Submission via mailto fallback ─── */
+  document.getElementById('applicationForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Basic validation
+    const required = this.querySelectorAll('[required]');
+    let valid = true;
+    required.forEach(field => {
+      if (!field.value.trim()) {
+        field.style.borderColor = 'var(--danger)';
+        valid = false;
+      } else {
+        field.style.borderColor = '';
+      }
+    });
+    if (!valid) {
+      showToast('⚠️ Please fill in all required fields.', true);
+      return;
     }
 
-    // Insert at the beginning of body so it's behind everything
-    document.body.insertBefore(container, document.body.firstChild);
-  }
-  
-  // Initialize when DOM is loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', createFloatingCodeBackground);
-  } else {
-    createFloatingCodeBackground();
-  }
+    // Build email body
+    const fn = document.getElementById('firstName').value.trim();
+    const mn = document.getElementById('middleName').value.trim();
+    const ln = document.getElementById('lastName').value.trim();
+    const sfx = document.getElementById('suffix').value;
+    const fullName = [fn, mn, ln, sfx].filter(Boolean).join(' ');
+
+    const position  = document.getElementById('position').value;
+    const email     = document.getElementById('email').value.trim();
+    const areaCode  = document.getElementById('areaCode').value;
+    const phone     = document.getElementById('phoneNumber').value.trim();
+    const street    = document.getElementById('streetAddress').value.trim();
+    const city      = document.getElementById('cityMunicipality').value.trim();
+    const province  = document.getElementById('province').value.trim();
+    const zip       = document.getElementById('zipCode').value.trim();
+    const country   = document.getElementById('country').value;
+    const cover     = document.getElementById('coverNote').value.trim();
+    const fileName  = cvFile.files.length ? cvFile.files[0].name : 'No file selected';
+
+    const body = `JOB APPLICATION — NexGenix Creative Solutions
+========================================
+Position Applied: ${position}
+
+PERSONAL INFORMATION
+Full Legal Name : ${fullName}
+Email Address  : ${email}
+Phone Number   : ${areaCode} ${phone}
+
+MAILING ADDRESS
+Street / Brgy  : ${street}
+City / Mun.    : ${city}
+Province/State : ${province}
+ZIP / Postal   : ${zip}
+Country        : ${country}
+
+COVER NOTE
+${cover}
+
+CV / RESUME
+Attached file  : ${fileName}
+(Please attach your CV file manually if sending via email)
+========================================
+Sent from NGCS Careers Page`;
+
+    const mailtoLink = `mailto:nexgenixcreativesolutions@gmail.com`
+      + `?subject=${encodeURIComponent('Job Application – ' + position + ' – ' + fullName)}`
+      + `&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailtoLink;
+
+    showToast('✅ Opening your email client to send the application. Please attach your CV file before sending!');
+  });
 </script>
 
 </body>
