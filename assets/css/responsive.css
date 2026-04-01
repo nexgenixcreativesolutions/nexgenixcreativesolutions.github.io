@@ -21,29 +21,47 @@
     }
 
     .hamburger-menu .bar {
-        background-color: white;
+        background-color: #39FF14;
+        box-shadow: 0 0 4px #39FF14;
         height: 2px;
         width: 20px;
         margin: 3px 0;
         transition: 0.3s;
+        border-radius: 1px;
     }
 
     /* HIDE NAVIGATION LINKS BY DEFAULT */
     .nav-list {
-        display: flex; /* Keep structure */
+        display: flex;
         flex-direction: column;
-        background: #333;
+        /* Techy glassmorphism panel */
+        background: rgba(10, 10, 10, 0.96);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-top: 2px solid #39FF14;
+        border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8),
+                    0 0 20px rgba(57, 255, 20, 0.08),
+                    inset 0 1px 0 rgba(57, 255, 20, 0.1);
         width: 100%;
         position: absolute;
         top: 50px;
         left: 0;
         text-align: center;
-        padding: 10px 0;
-        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        padding: 6px 0 10px;
+        transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
         z-index: 999;
         opacity: 0;
-        transform: translateY(-10px);
-        visibility: hidden; 
+        transform: translateY(-8px);
+        visibility: hidden;
+        /* Subtle scanline overlay */
+        background-image: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 3px,
+            rgba(57, 255, 20, 0.015) 3px,
+            rgba(57, 255, 20, 0.015) 4px
+        );
     }
 
     /* SHOW MENU WHEN ACTIVE */
@@ -54,7 +72,50 @@
     }
 
     .nav-list li {
-        margin: 10px 0;
+        margin: 0;
+        border-bottom: 1px solid rgba(57, 255, 20, 0.08);
+        position: relative;
+    }
+
+    .nav-list li:last-child {
+        border-bottom: none;
+    }
+
+    /* Techy left-accent line on hover */
+    .nav-list li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 3px;
+        background: #39FF14;
+        box-shadow: 0 0 8px #39FF14;
+        transform: scaleY(0);
+        transition: transform 0.2s ease;
+        transform-origin: bottom;
+    }
+
+    .nav-list li:hover::before {
+        transform: scaleY(1);
+    }
+
+    .nav-list a {
+        display: block;
+        padding: 12px 20px;
+        font-family: 'Courier New', monospace !important;
+        font-size: 12px !important;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.75) !important;
+        text-decoration: none;
+        transition: color 0.2s ease, background 0.2s ease, text-shadow 0.2s ease;
+    }
+
+    .nav-list a:hover {
+        color: #39FF14 !important;
+        text-shadow: 0 0 8px #39FF14, 0 0 16px rgba(57, 255, 20, 0.4);
+        background: rgba(57, 255, 20, 0.05);
     }
 
     /* HAMBURGER ANIMATION */
@@ -520,11 +581,13 @@
     }
 
     .hamburger-menu .bar {
-        background-color: white;
+        background-color: #39FF14;
+        box-shadow: 0 0 4px #39FF14;
         height: 2px;
         width: 18px;
         margin: 3px 0;
         transition: 0.3s;
+        border-radius: 1px;
     }
 
     .auth-buttons {
