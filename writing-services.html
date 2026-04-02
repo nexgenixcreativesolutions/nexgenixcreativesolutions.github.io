@@ -284,7 +284,10 @@
       <li><a href="https://nexgenixcreativesolutions.github.io/contact">Contact</a></li>
     </ul>
 
-    <div class="auth-buttons" id="auth-buttons">      <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
+    <div class="auth-buttons" id="auth-buttons">
+        <a href="login-signup.html" class="dashboard-btn" id="nav-login-btn" style="display:none">Log In</a>
+        <a href="dashboard.html" class="dashboard-btn" id="nav-dashboard-btn" style="display:none">Dashboard</a>
+        <button class="logout-btn" id="nav-logout-btn" style="display:none" onclick="NGCS_Auth.logout()">Log Out</button>
     </div>
   </nav>
 
@@ -579,5 +582,8 @@ Looking forward to your response. Thank you!`
       initScrollAnimations();
     });
   </script>
+
+<!-- Auth Guard -->
+<script src="auth.js"></script>
 </body>
 </html>
