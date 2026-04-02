@@ -570,9 +570,10 @@
     <li><a href="https://nexgenixcreativesolutions.github.io/contact">Contact</a></li>
   </ul>
   <div class="auth-buttons" id="auth-buttons">
-    <button onclick="handleLogout()" class="logout-btn">Logout</button>
-    <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
-  </div>
+        <a href="login-signup.html" class="dashboard-btn" id="nav-login-btn" style="display:none">Log In</a>
+        <a href="dashboard.html" class="dashboard-btn" id="nav-dashboard-btn" style="display:none">Dashboard</a>
+        <button class="logout-btn" id="nav-logout-btn" style="display:none" onclick="NGCS_Auth.logout()">Log Out</button>
+    </div>
 </nav>
 
 <div class="page-content">
@@ -1057,7 +1058,7 @@
           <i class="fas fa-paper-plane"></i>&nbsp; Submit Application
         </button>
         <p class="form-note">
-          Your application will be sent to <a href="mailto:nexgenixcreativesolutions@gmail.com">nexgenixcreativesolutions@gmail.com</a>.<br>
+          Your application will be sent to <a href="/cdn-cgi/l/email-protection#731d160b14161d1a0b10011612071a0516001c1f06071a1c1d0033141e121a1f5d101c1e"><span class="__cf_email__" data-cfemail="99f7fce1fefcf7f0e1faebfcf8edf0effceaf6f5ecedf0f6f7ead9fef4f8f0f5b7faf6f4">[email&#160;protected]</span></a>.<br>
           We handle all personal data in accordance with our Privacy Policy.
         </p>
 
@@ -1074,7 +1075,7 @@
 <footer>&copy; 2026 <span>Nex Genix Creative Solutions</span>. All rights reserved.</footer>
 
 <!-- External JS -->
-<script src="script.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
 
 <script>
   /* ─── Toggle Menu ─── */
@@ -1250,14 +1251,14 @@ Attached file  : ${fileName}
 Sent from NGCS Careers Page`;
 
     const mailtoLink = `mailto:nexgenixcreativesolutions@gmail.com`
-      + `?subject=${encodeURIComponent('Job Application – ' + position + ' – ' + fullName)}`
+      + `?subject=${encodeURIComponent('Job Application - ' + position)}`
       + `&body=${encodeURIComponent(body)}`;
-
     window.location.href = mailtoLink;
-
-    showToast('✅ Opening your email client to send the application. Please attach your CV file before sending!');
   });
-</script>
+  </script>
+
+<!-- Auth Guard -->
+<script src="auth.js"></script>
 
 </body>
 </html>
