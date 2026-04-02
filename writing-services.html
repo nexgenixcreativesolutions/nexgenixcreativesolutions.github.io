@@ -503,19 +503,23 @@
       }
     }
 
-    // Toggle Description
+    // Toggle Description — safe version (never touches innerHTML)
     function toggleDescription(button) {
       const card = button.closest('.service-card');
       const fullDescription = card.querySelector('.description-full');
+
+      const isExpanding = !fullDescription.classList.contains('expanded');
+      fullDescription.classList.toggle('expanded', isExpanding);
+      button.classList.toggle('expanded', isExpanding);
+
+      // Update label text without touching the button's event binding
+      const textNode = button.childNodes[0];
       const icon = button.querySelector('i');
-
-      fullDescription.classList.toggle('expanded');
-      button.classList.toggle('expanded');
-
-      if (fullDescription.classList.contains('expanded')) {
-        button.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
-      } else {
-        button.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
+      if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+        textNode.textContent = isExpanding ? 'Read Less ' : 'Read More ';
+      }
+      if (icon) {
+        icon.className = isExpanding ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
       }
     }
 
