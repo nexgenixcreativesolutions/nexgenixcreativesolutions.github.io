@@ -6,15 +6,16 @@
     <title>Nex Genix Creative Solutions</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <link rel="stylesheet" href="assets/css/styles.css" />
-    <link rel="stylesheet" href="assets/css/responsive.css" />    
+    <link rel="stylesheet" href="assets/css/responsive.css" />
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
-<!-- Orbitron Font -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
+    <!-- Orbitron Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   </head>
+
 <style>
 /* Floating Code Background */
 .floating-code-container {
@@ -357,7 +358,7 @@
     text-align: justify;
     flex: 1;
 }
-/* Author - Perfect alignment */
+/* Author */
 .testimonial-author {
     display: flex;
     align-items: center;
@@ -489,7 +490,7 @@
         font-size: 1.5rem;
     }
 }
-/* Extra small screens - Mobile optimization */
+/* Extra small screens */
 @media (max-width: 480px) {
     .categories-section,
     .testimonials-section {
@@ -499,41 +500,18 @@
     .testimonials-title {
         font-size: 1.75rem;
     }
-    .section-subtitle,
-    .testimonials-subtitle {
-        font-size: 0.85rem;
-        padding: 0 0.5rem;
-    }
-    .categories-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
     .category-card {
         padding: 1.75rem 1.25rem;
         min-height: 320px;
     }
-    .category-icon {
-        width: 3.5rem;
-        height: 3.5rem;
-        margin-bottom: 1rem;
-    }
-    .category-icon i {
-        font-size: 1.75rem;
-    }
-    .category-title {
-        font-size: 1.15rem;
-        margin-bottom: 0.75rem;
-        line-height: 1.3;
-    }
     .category-description {
-        font-size: 0.875rem;
+        font-size: 0.85rem;
         line-height: 1.6;
         margin-bottom: 1rem;
     }
     .category-link {
         font-size: 0.875rem;
     }
-    
     .testimonial-card-inner {
         padding: 1.5rem;
     }
@@ -564,7 +542,6 @@
         width: 1rem;
         height: 1rem;
     }
-    
     .counter-section {
         padding: 2.5rem 0.75rem;
     }
@@ -590,34 +567,27 @@
 }
 
 @media (max-width: 768px) {
-    /* Mobile Products & Services adjustments */
     .categories-section {
         padding: 3rem 1rem;
     }
-    
     .section-title {
         font-size: 2rem;
     }
-    
     .section-subtitle {
         font-size: 0.95rem;
     }
-    
     .categories-grid {
         grid-template-columns: 1fr;
         gap: 1.75rem;
     }
-    
     .category-card {
         padding: 2rem 1.5rem;
         min-height: 350px;
     }
-    
     .category-title {
         font-size: 1.25rem;
         line-height: 1.35;
     }
-    
     .category-description {
         font-size: 0.9rem;
         line-height: 1.65;
@@ -636,7 +606,9 @@
     }
 }
 </style>
+
   <body>
+
 <!-- Navigation Bar -->
 <nav id="navbar">
     <div class="logo">
@@ -644,12 +616,12 @@
         <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
         <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
     </div>
-        <!-- Hamburger Menu Icon -->
-        <div class="hamburger-menu" onclick="toggleMenu()">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
+    <!-- Hamburger Menu Icon -->
+    <div class="hamburger-menu" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
     <ul class="nav-list">
         <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
         <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
@@ -658,30 +630,46 @@
         <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
         <li><a href="https://nexgenixcreativesolutions.github.io/contact">Contact</a></li>
     </ul>
-<div class="auth-buttons" id="auth-buttons">    <a href="https://nexgenixcreativesolutions.github.io/dashboard" class="dashboard-btn">Dashboard</a>
-</div>
+
+    <!--
+      AUTH BUTTONS — controlled by auth.js
+      • nav-login-btn    → shown when logged OUT  (hidden when logged in)
+      • nav-dashboard-btn → shown when logged IN  (hidden when logged out)
+      • nav-logout-btn   → shown when logged IN   (hidden when logged out)
+      auth.js toggles display automatically — do not remove any of these.
+    -->
+    <div class="auth-buttons" id="auth-buttons">
+        <!-- Logged OUT state -->
+        <a href="login-signup.html" class="dashboard-btn" id="nav-login-btn" style="display:none">
+            Log In
+        </a>
+        <!-- Logged IN state -->
+        <a href="dashboard.html" class="dashboard-btn" id="nav-dashboard-btn" style="display:none">
+            Dashboard
+        </a>
+        <button class="logout-btn" id="nav-logout-btn" style="display:none" onclick="NGCS_Auth.logout()">
+            Log Out
+        </button>
+    </div>
 </nav>
 
 <!-- Welcome Section (Desktop) -->
 <section id="welcome-section">
     <main id="main-doc">
     <img src="assets/images/banner.png" alt="banner" class="banner">
-    
-<h1 class="slogan">Your Vision, Beautifully Engineered.</h1>
-
-        <p class="services-description">App Design | Web Design | Web Development | UI/UX Design</p>
-        <!-- ONLY Get Started button for DESKTOP view -->
-        <div class="hero-buttons">
-            <a href="contact.html" class="btn-get-started">Get Started</a>
-        </div>
+    <h1 class="slogan">Your Vision, Beautifully Engineered.</h1>
+    <p class="services-description">App Design | Web Design | Web Development | UI/UX Design</p>
+    <!-- ONLY Get Started button for DESKTOP view -->
+    <div class="hero-buttons">
+        <a href="contact.html" class="btn-get-started">Get Started</a>
+    </div>
     </main>
 </section>
 
 <!-- Welcome Section (Mobile) -->
 <section id="welcome-section-mobile">
-    
     <img src="assets/images/banner-mobile.png" alt="banner" class="responsive-banner">
-<h2 class="responsive-slogan">Your Vision, Beautifully Engineered.</h2>
+    <h2 class="responsive-slogan">Your Vision, Beautifully Engineered.</h2>
     <h5 class="responsive-description">App Design | Web Design | Web Development | UI/UX Design</h5>
     <!-- ONLY Get Started button for MOBILE view -->
     <div class="hero-buttons-mobile">
@@ -717,7 +705,7 @@
                     Learn More <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
-            
+
             <!-- Writing Services Card -->
             <div class="category-card">
                 <div class="category-icon">
@@ -731,7 +719,7 @@
                     Learn More <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
-            
+
             <!-- Education and Training Card -->
             <div class="category-card">
                 <div class="category-icon">
@@ -761,15 +749,12 @@
                 Hear what our valued clients have to say about their experience
             </p>
         </div>
-
-        <!-- Testimonials grid -->
-        <div class="testimonials-grid" id="testimonials-grid">
-            <!-- Cards will be inserted here by JavaScript -->
-        </div>
+        <!-- Testimonials grid — cards injected by JS -->
+        <div class="testimonials-grid" id="testimonials-grid"></div>
     </div>
 </section>
 
-<!-- Counter / Stats Section (NGBS Style) -->
+<!-- Counter / Stats Section -->
 <section class="counter-section">
     <h2 class="counter-section-title">Our Impact <span>in Numbers</span></h2>
     <div class="counter-container">
@@ -792,29 +777,34 @@
     </div>
 </section>
 
-    <div class="contact-buttons">
-              <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
-                  <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
-              </a>
-              <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
-                  <button class="contact-btn"><i class="fab fa-instagram"></i></button>
-              </a>
-              <a href="https://www.reddit.com/user/nexgenix" target="_blank">
-                  <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
-              </a>
-              <a href="/cdn-cgi/l/email-protection#4628233e2123282f3e25342327322f302335292a33322f29283506212b272f2a6825292b">
-                  <button class="contact-btn"><i class="fas fa-envelope"></i></button>
-              </a>
-              <a href="https://wa.me/+639171063504" target="_blank">
-                  <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
-              </a>
-    </div>
+<!-- Social / Contact Buttons -->
+<div class="contact-buttons">
+    <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
+        <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
+    </a>
+    <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
+        <button class="contact-btn"><i class="fab fa-instagram"></i></button>
+    </a>
+    <a href="https://www.reddit.com/user/nexgenix" target="_blank">
+        <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
+    </a>
+    <a href="/cdn-cgi/l/email-protection#4628233e2123282f3e25342327322f302335292a33322f29283506212b272f2a6825292b">
+        <button class="contact-btn"><i class="fas fa-envelope"></i></button>
+    </a>
+    <a href="https://wa.me/+639171063504" target="_blank">
+        <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
+    </a>
+</div>
 
 <!-- Footer Section -->
 <footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
 
 <!-- External JavaScript -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="script.js"></script>
+
+<!-- Auth Guard — must load before any auth-dependent logic -->
+<script src="auth.js"></script>
 
 <!-- Counter Animation Script -->
 <script>
@@ -886,7 +876,7 @@
     'interface Vision { }',
     'type Success = Promise<Growth>;',
   ];
-  
+
   function createFloatingCodeBackground() {
     const container = document.createElement('div');
     container.className = 'floating-code-container';
@@ -911,7 +901,7 @@
 
     document.body.insertBefore(container, document.body.firstChild);
   }
-  
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', createFloatingCodeBackground);
   } else {
@@ -934,7 +924,7 @@
       observer.observe(card);
     });
   }
-  
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initCategories);
   } else {
@@ -964,7 +954,7 @@
       rating: 5
     }
   ];
-  
+
   function createStarIcon() {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('class', 'star');
@@ -975,7 +965,7 @@
     svg.appendChild(path);
     return svg;
   }
-  
+
   function createQuoteIcon() {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('class', 'quote-icon');
@@ -991,7 +981,7 @@
     svg.appendChild(path2);
     return svg;
   }
-  
+
   function createTestimonialCard(testimonial, index) {
     const card = document.createElement('div');
     card.className = 'testimonial-card';
@@ -1033,7 +1023,7 @@
     card.appendChild(cardInner);
     return card;
   }
-  
+
   function initTestimonials() {
     const grid = document.getElementById('testimonials-grid');
     if (!grid) return;
@@ -1052,7 +1042,7 @@
       observer.observe(card);
     });
   }
-  
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initTestimonials);
   } else {
