@@ -540,32 +540,136 @@
 
     /* ─── RESPONSIVE — Mobile First ─── */
 
-    /* Navbar mobile */
+    /* ── Desktop navbar baseline (mirrors styles.css for careers) ── */
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      padding: 5px 20px;
+      background-color: #121212;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+    #navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #navbar .logo img {
+      height: 30px;
+      width: 30px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    #navbar .logo a,
+    #navbar .logo-title a,
+    #navbar .short-title a {
+      color: #39FF14;
+      text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      font-family: 'Courier New', monospace;
+    }
+    .short-title { display: none; }
+    .hamburger-menu {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .hamburger-menu .bar {
+      width: 25px;
+      height: 3px;
+      background: #39FF14;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    #navbar .nav-list {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    #navbar .nav-list li { display: inline-block; }
+    #navbar .nav-list a {
+      text-decoration: none;
+      color: white;
+      font-size: 12px;
+      padding: 8px 10px;
+      transition: color 0.3s ease;
+    }
+    #navbar .nav-list a:hover,
+    #navbar .nav-list a.active { color: #39FF14; }
+    .auth-buttons {
+      display: flex;
+      gap: 8px;
+      position: absolute;
+      right: 60px;
+      align-items: center;
+    }
+    .dashboard-btn {
+      background-color: green;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .dashboard-btn:hover { background-color: #00ff00; color: black; transform: scale(1.05); }
+    .logout-btn {
+      background-color: #D5D537;
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .logout-btn:hover { background: #E74C3C; color: white; transform: scale(1.05); }
+
+    /* ── Mobile navbar ── */
     @media (max-width: 768px) {
       #navbar {
-        flex-wrap: wrap;
         height: auto;
+        flex-wrap: wrap;
         padding: 8px 16px;
-        gap: 0;
+        position: fixed;
       }
-      #navbar .logo {
-        flex: 1;
-      }
-      .logo-title { display: none; }
+      .logo-title { display: none !important; }
       .short-title { display: block !important; }
-
       .hamburger-menu { display: flex !important; }
-
       #navbar .nav-list {
         position: static;
         transform: none;
         flex-direction: column;
         width: 100%;
         display: none;
-        background: #111;
+        background: #121212;
         border-top: 1px solid rgba(57,255,20,0.15);
         padding: 0.5rem 0;
         gap: 0;
+        order: 3;
       }
       #navbar .nav-list.active { display: flex; }
       #navbar .nav-list li { width: 100%; }
@@ -575,18 +679,16 @@
         font-size: 13px;
         border-bottom: 1px solid rgba(57,255,20,0.07);
       }
-
       .auth-buttons {
         position: static;
-        width: 100%;
-        justify-content: center;
-        padding: 8px 0 4px;
-        border-top: 1px solid rgba(57,255,20,0.1);
-        gap: 8px;
+        order: 2;
+        width: auto;
+        gap: 6px;
+        padding: 0;
       }
       .dashboard-btn, .logout-btn {
+        padding: 6px 12px;
         font-size: 12px;
-        padding: 7px 14px;
       }
     }
 
@@ -651,7 +753,7 @@
 <!-- Navigation Bar -->
 <nav id="navbar">
   <div class="logo">
-    <img src="assets/images/logo.png" alt="logo" class="logo">
+    <img src="assets/images/logo.png" alt="logo">
     <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
     <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
   </div>
