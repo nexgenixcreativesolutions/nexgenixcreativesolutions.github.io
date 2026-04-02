@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Access Denied — NGCS</title>
+
+  <!-- auth.js must be included but access-denied.html is whitelisted — no redirect loop -->
+  <script src="auth.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Montserrat+Alternates:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:      #080808;
+      --dark:       #0e0e0e;
+      --card:       #131313;
+      --border:     #1f1f1f;
+      --green:      #00ff88;
+      --green-dim:  #00cc6a;
+      --green-glow: rgba(0, 255, 136, 0.18);
+      --red:        #ff3c5a;
+      --red-glow:   rgba(255, 60, 90, 0.15);
+      --text:       #e8e8e8;
+      --muted:      #666;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Montserrat Alternates', sans-serif;
+      overflow: hidden;
+    }
+
+    /* ── Animated grid background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      animation: gridShift 20s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes gridShift {
+      0%   { background-position: 0 0; }
+      100% { background-position: 48px 48px; }
+    }
+
+    /* ── Center wrapper ── */
+    .scene {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      gap: 0;
+    }
+
+    /* ── Glow orb behind card ── */
+    .orb {
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+      filter: blur(40px);
+      pointer-events: none;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1);   opacity: 1; }
+      50%       { transform: scale(1.1); opacity: 0.7; }
+    }
+
+    /* ── Card ── */
+    .card {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 56px 48px 48px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.03),
+        0 24px 80px rgba(0,0,0,0.6);
+      animation: cardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)    scale(1); }
+    }
+
+    /* ── Error code badge ── */
+    .badge {
+      display: inline-block;
+      font-family: 'Orbitron', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      background: rgba(255, 60, 90, 0.08);
+      border: 1px solid rgba(255, 60, 90, 0.25);
+      border-radius: 4px;
+      padding: 4px 12px;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    /* ── Lock icon ── */
+    .lock-wrap {
+      margin-bottom: 24px;
+    }
+
+    .lock-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .lock-icon svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 12px rgba(255,60,90,0.4));
+    }
+
+    /* ── Heading ── */
+    h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(22px, 5vw, 28px);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #fff 40%, var(--muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Body text ── */
+    p {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    p strong {
+      color: #999;
+      font-weight: 600;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--red), transparent);
+      margin: 0 auto 32px;
+      border-radius: 2px;
+    }
+
+    /* ── Buttons ── */
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 12px 28px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+      background: var(--green);
+      color: #000;
+      box-shadow: 0 0 24px var(--green-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--green-dim);
+      box-shadow: 0 0 36px rgba(0,255,136,0.3);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: #333;
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    /* ── Wordmark ── */
+    .wordmark {
+      margin-top: 40px;
+      font-family: 'Orbitron', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      color: #2a2a2a;
+      text-transform: uppercase;
+      animation: cardIn 0.5s 0.2s both;
+    }
+
+    .wordmark span { color: var(--green); }
+
+    /* ── Scanline overlay ── */
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.04) 2px,
+        rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="orb"></div>
+
+  <div class="card">
+    <div class="badge">Error 401 — Unauthorized</div>
+
+    <div class="lock-wrap">
+      <div class="lock-icon">
+        <!-- Lock SVG -->
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="28" width="40" height="28" rx="5" fill="#1a1a1a" stroke="#ff3c5a" stroke-width="2"/>
+          <path d="M20 28V20C20 13.373 25.373 8 32 8C38.627 8 44 13.373 44 20V28" stroke="#ff3c5a" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="32" cy="42" r="4" fill="#ff3c5a" opacity="0.9"/>
+          <line x1="32" y1="46" x2="32" y2="52" stroke="#ff3c5a" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <h1>Access Restricted</h1>
+    <div class="divider"></div>
+
+    <p>
+      This page requires you to be <strong>logged in</strong>.<br />
+      Please sign in to your NGCS account to continue,<br />or return to the homepage.
+    </p>
+
+    <div class="actions">
+      <a href="#" class="btn btn-primary" id="loginBtn">
+        <!-- Key icon -->
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6M15.5 7.5l2 2"/>
+        </svg>
+        Log In
+      </a>
+      <a href="index.html" class="btn btn-ghost">
+        <!-- Home icon -->
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/>
+        </svg>
+        Go Home
+      </a>
+    </div>
+  </div>
+
+  <div class="wordmark">NEX<span>GENIX</span> CREATIVE SOLUTIONS</div>
+</div>
+
+<script>
+  // Point "Log In" to the login page, preserving the intended destination
+  // (auth.js already saved it in sessionStorage when it redirected here)
+  document.getElementById("loginBtn").href = "login-signup.html";
+</script>
+
+</body>
+</html>
