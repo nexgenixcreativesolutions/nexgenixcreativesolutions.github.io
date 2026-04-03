@@ -1017,7 +1017,9 @@
         <span id="banner-text">No position selected</span>
       </div>
 
-      <form id="applicationForm" novalidate>
+      <form id="applicationForm" action="https://formspree.io/f/maqdqdqw" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="Job Application — NexGenix Careers">
+        <input type="hidden" name="_source" value="Careers Page">
 
         <!-- Position Select -->
         <div class="form-group">
@@ -1293,8 +1295,8 @@
     setTimeout(() => { t.style.display = 'none'; }, 5000);
   }
 
-  /* ─── Form Submission via mailto fallback ─── */
-  document.getElementById('applicationForm').addEventListener('submit', function(e) {
+  /* ─── Form Submission via Formspree ─── */
+  document.getElementById('applicationForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     // Basic validation
@@ -1313,54 +1315,52 @@
       return;
     }
 
-    // Build email body
-    const fn = document.getElementById('firstName').value.trim();
-    const mn = document.getElementById('middleName').value.trim();
-    const ln = document.getElementById('lastName').value.trim();
-    const sfx = document.getElementById('suffix').value;
+    // Build full name for Formspree submission
+    const fn       = document.getElementById('firstName').value.trim();
+    const mn       = document.getElementById('middleName').value.trim();
+    const ln       = document.getElementById('lastName').value.trim();
+    const sfx      = document.getElementById('suffix').value;
     const fullName = [fn, mn, ln, sfx].filter(Boolean).join(' ');
 
-    const position  = document.getElementById('position').value;
-    const email     = document.getElementById('email').value.trim();
-    const areaCode  = document.getElementById('areaCode').value;
-    const phone     = document.getElementById('phoneNumber').value.trim();
-    const street    = document.getElementById('streetAddress').value.trim();
-    const city      = document.getElementById('cityMunicipality').value.trim();
-    const province  = document.getElementById('province').value.trim();
-    const zip       = document.getElementById('zipCode').value.trim();
-    const country   = document.getElementById('country').value;
-    const cover     = document.getElementById('coverNote').value.trim();
-    const fileName  = cvFile.files.length ? cvFile.files[0].name : 'No file selected';
+    const cvFile   = document.getElementById('cvFile');
+    const fileName = cvFile.files.length ? cvFile.files[0].name : 'No file attached';
 
-    const body = `JOB APPLICATION — NexGenix Creative Solutions
-========================================
-Position Applied: ${position}
+    // Build FormData — Formspree reads all name="" attributes automatically
+    const formData = new FormData(this);
+    // Add computed fields not in individual inputs
+    formData.set('full_name',  fullName);
+    formData.set('cv_filename', fileName);
 
-PERSONAL INFORMATION
-Full Legal Name : ${fullName}
-Email Address  : ${email}
-Phone Number   : ${areaCode} ${phone}
+    // Disable submit button while sending
+    const submitBtn = this.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
 
-MAILING ADDRESS
-Street / Brgy  : ${street}
-City / Mun.    : ${city}
-Province/State : ${province}
-ZIP / Postal   : ${zip}
-Country        : ${country}
+    try {
+      const response = await fetch('https://formspree.io/f/maqdqdqw', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
 
-COVER NOTE
-${cover}
-
-CV / RESUME
-Attached file  : ${fileName}
-(Please attach your CV file manually if sending via email)
-========================================
-Sent from NGCS Careers Page`;
-
-    const mailtoLink = `mailto:nexgenixcreativesolutions@gmail.com`
-      + `?subject=${encodeURIComponent('Job Application - ' + position)}`
-      + `&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoLink;
+      if (response.ok) {
+        showToast('✅ Application submitted! We will reach out to you soon.');
+        this.reset();
+        // Clear banner
+        document.getElementById('selected-position-banner').classList.remove('visible');
+        document.getElementById('fileNameDisplay').textContent = '';
+      } else {
+        const data = await response.json();
+        const msg = data.errors ? data.errors.map(e => e.message).join(', ') : 'Submission failed.';
+        showToast('❌ ' + msg, true);
+      }
+    } catch (err) {
+      showToast('❌ Network error. Please check your connection and try again.', true);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
   });
   </script>
 
