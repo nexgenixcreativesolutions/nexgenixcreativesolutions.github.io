@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Careers | Nex Genix Creative Solutions</title>
   <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-  <link rel="stylesheet" href="assets/css/styles.css" />
-  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <!-- NO external styles.css / responsive.css links — all styles are inlined below -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,16 +28,313 @@
       --font-mono: 'JetBrains Mono', monospace;
     }
 
+    /* ─── Reset & Base (self-contained; does NOT load styles.css) ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-head);
+    html, body {
+      max-width: 100%;
       overflow-x: hidden;
     }
 
-    /* ─── Floating Code Background ─── */
+    body {
+      /* Override the width/padding/text-align from styles.css entirely */
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-head);
+      font-size: 15px;
+      text-align: left;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       UNIVERSAL NAVBAR — copied from styles.css + responsive.css
+    ═══════════════════════════════════════════════════════ */
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      padding: 5px 20px;
+      background-color: #121212;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+
+    /* Logo */
+    #navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #navbar .logo img {
+      height: 30px;
+      width: 30px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    #navbar .logo a {
+      color: #39FF14;
+      text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      font-family: 'Courier New', monospace;
+    }
+    .short-title { display: none; }
+
+    /* Nav list — desktop centered */
+    #navbar .nav-list {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    #navbar .nav-list li { display: inline-block; }
+    #navbar .nav-list a {
+      text-decoration: none;
+      color: white;
+      font-size: 12px;
+      padding: 8px 10px;
+      transition: color 0.3s ease;
+    }
+    #navbar .nav-list a:hover,
+    #navbar .nav-list a.active { color: #39FF14; }
+
+    /* Auth buttons — desktop */
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+      position: absolute;
+      right: 60px;
+    }
+    .dashboard-btn {
+      background-color: green;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-align: center;
+    }
+    .dashboard-btn:hover {
+      background-color: #00ff00;
+      color: black;
+      transform: scale(1.05);
+    }
+    .dashboard-btn:active { transform: scale(0.95); }
+    .logout-btn {
+      background-color: #D5D537;
+      color: black;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-align: center;
+    }
+    .logout-btn:hover {
+      background: #E74C3C;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    /* Hamburger — hidden on desktop */
+    .hamburger-menu { display: none; }
+    .hamburger-menu .bar {
+      background-color: #39FF14;
+      box-shadow: 0 0 4px #39FF14;
+      height: 2px;
+      width: 20px;
+      margin: 3px 0;
+      transition: 0.3s;
+      border-radius: 1px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       UNIVERSAL FOOTER — copied from styles.css
+    ═══════════════════════════════════════════════════════ */
+    footer {
+      /* styles.css sets footer as position:fixed — we override to relative */
+      position: relative;
+      bottom: auto;
+      right: auto;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      width: 100%;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      z-index: 1;
+    }
+    footer span {
+      color: #39FF14;
+      text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE NAV — from responsive.css
+    ═══════════════════════════════════════════════════════ */
+    @media (max-width: 1030px) {
+      #navbar {
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%) scale(0.7);
+        z-index: 1000;
+      }
+      .nav-list {
+        display: flex;
+        flex-direction: column;
+        background: rgba(10,10,10,0.96);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-top: 2px solid #39FF14;
+        border-bottom: 1px solid rgba(57,255,20,0.2);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.8),
+                    0 0 20px rgba(57,255,20,0.08),
+                    inset 0 1px 0 rgba(57,255,20,0.1);
+        width: 100%;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        text-align: center;
+        padding: 6px 0 10px;
+        transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-8px);
+        visibility: hidden;
+        background-image: repeating-linear-gradient(
+          0deg, transparent, transparent 3px,
+          rgba(57,255,20,0.015) 3px, rgba(57,255,20,0.015) 4px
+        );
+        /* reset desktop centering */
+        gap: 0;
+      }
+      .nav-list.active {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+      }
+      .nav-list li {
+        margin: 0;
+        border-bottom: 1px solid rgba(57,255,20,0.08);
+        position: relative;
+        display: block;
+      }
+      .nav-list li:last-child { border-bottom: none; }
+      .nav-list li::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0;
+        height: 100%; width: 3px;
+        background: #39FF14;
+        box-shadow: 0 0 8px #39FF14;
+        transform: scaleY(0);
+        transition: transform 0.2s ease;
+        transform-origin: bottom;
+      }
+      .nav-list li:hover::before { transform: scaleY(1); }
+      .nav-list a {
+        display: block;
+        padding: 12px 20px;
+        font-family: 'Courier New', monospace !important;
+        font-size: 12px !important;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.75) !important;
+        text-decoration: none;
+        transition: color 0.2s ease, background 0.2s ease, text-shadow 0.2s ease;
+      }
+      .nav-list a:hover {
+        color: #39FF14 !important;
+        text-shadow: 0 0 8px #39FF14, 0 0 16px rgba(57,255,20,0.4);
+        background: rgba(57,255,20,0.05);
+      }
+      .hamburger-menu.open .bar:nth-child(1) { transform: rotate(-45deg) translate(-4px,5px); }
+      .hamburger-menu.open .bar:nth-child(2) { opacity: 0; }
+      .hamburger-menu.open .bar:nth-child(3) { transform: rotate(45deg) translate(-4px,-5px); }
+      .auth-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        position: absolute;
+        top: 50%;
+        right: 60px;
+        transform: translateY(-50%);
+      }
+      .auth-buttons button, .auth-buttons .dashboard-btn {
+        padding: 3px 7px;
+        font-size: 9px;
+        border-radius: 2.5px;
+        min-width: 65px;
+        height: 20px;
+        line-height: 1;
+      }
+      footer { font-size: 8px; }
+    }
+
+    @media (max-width: 500px) {
+      .logo-title { display: none; }
+      .short-title {
+        display: block;
+        color: #39FF14;
+        text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        font-family: 'Courier New', monospace;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #navbar { padding: 8px 13px; }
+      .hamburger-menu {
+        right: 10px;
+        transform: translateY(-50%) scale(0.7);
+      }
+      .hamburger-menu .bar { width: 18px; }
+      .auth-buttons { right: 30px; }
+      footer { padding: 1rem; font-size: 0.75rem; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       FLOATING CODE BACKGROUND
+    ═══════════════════════════════════════════════════════ */
     .floating-code-container {
       position: fixed;
       inset: 0;
@@ -66,7 +362,9 @@
     /* ─── Page Wrapper ─── */
     .page-content { position: relative; z-index: 1; }
 
-    /* ─── Hero ─── */
+    /* ═══════════════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════════════ */
     .careers-hero {
       padding: 8rem 2rem 4rem;
       text-align: center;
@@ -78,6 +376,7 @@
       color: var(--neon);
       text-transform: uppercase;
       margin-bottom: 1rem;
+      text-align: center;
     }
     .careers-hero h1 {
       font-size: clamp(2.4rem, 6vw, 4.5rem);
@@ -97,6 +396,7 @@
       font-size: 1.05rem;
       color: var(--muted);
       line-height: 1.8;
+      text-align: center;
     }
 
     /* ─── Section Titles ─── */
@@ -122,19 +422,21 @@
       margin: 0;
     }
 
-    /* ─── Job Listings ─── */
+    /* ═══════════════════════════════════════════════════════
+       JOB LISTINGS
+    ═══════════════════════════════════════════════════════ */
     .jobs-section {
       padding: 4rem 2rem;
       max-width: 1100px;
       margin: 0 auto;
+      text-align: left;
     }
-
     .jobs-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.5rem;
+      text-align: left;
     }
-
     .job-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -144,6 +446,7 @@
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      text-align: left;
     }
     .job-card::before {
       content: '';
@@ -160,11 +463,7 @@
       transform: translateY(-4px);
     }
     .job-card:hover::before { opacity: 1; }
-
-    .job-card.active {
-      border-color: var(--neon);
-      box-shadow: var(--neon-glow);
-    }
+    .job-card.active { border-color: var(--neon); box-shadow: var(--neon-glow); }
     .job-card.active::before { opacity: 1; }
 
     .job-header {
@@ -190,6 +489,7 @@
       font-weight: 700;
       color: #fff;
       margin-bottom: 0.25rem;
+      text-align: left;
     }
     .job-department {
       font-size: 0.75rem;
@@ -197,6 +497,7 @@
       font-family: var(--font-mono);
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      text-align: left;
     }
     .job-type-badge {
       display: inline-block;
@@ -217,6 +518,7 @@
       padding-top: 0.8rem;
       border-top: 1px solid var(--border);
       animation: fadeSlide 0.25s ease;
+      text-align: left;
     }
     .qualifications.open { display: block; }
     @keyframes fadeSlide {
@@ -230,12 +532,14 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       margin-bottom: 0.6rem;
+      text-align: left;
     }
     .qualifications ul {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
+      text-align: left;
     }
     .qualifications ul li {
       font-size: 0.83rem;
@@ -243,6 +547,7 @@
       line-height: 1.5;
       padding-left: 1rem;
       position: relative;
+      text-align: left;
     }
     .qualifications ul li::before {
       content: '▸';
@@ -264,6 +569,7 @@
       cursor: pointer;
       padding: 0;
       letter-spacing: 0.05em;
+      text-align: left;
     }
     .job-toggle-btn i { font-size: 0.75rem; transition: transform 0.2s; }
     .job-toggle-btn.open i { transform: rotate(180deg); }
@@ -289,25 +595,28 @@
       box-shadow: var(--neon-glow);
     }
 
-    /* ─── Application Form ─── */
+    /* ═══════════════════════════════════════════════════════
+       APPLICATION FORM
+    ═══════════════════════════════════════════════════════ */
     .apply-section {
       padding: 4rem 2rem 6rem;
       max-width: 820px;
       margin: 0 auto;
+      text-align: left;
     }
-
     .form-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 2.5rem;
       box-shadow: 0 0 60px rgba(57,255,20,0.05);
+      text-align: left;
     }
-
     .form-header {
       margin-bottom: 2rem;
       padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
+      text-align: left;
     }
     .form-header .label {
       font-family: var(--font-mono);
@@ -316,17 +625,20 @@
       letter-spacing: 0.25em;
       text-transform: uppercase;
       margin-bottom: 0.5rem;
+      text-align: left;
     }
     .form-header h2 {
       font-size: 1.7rem;
       font-weight: 700;
       color: #fff;
+      text-align: left;
     }
     .form-header p {
       font-size: 0.88rem;
       color: var(--muted);
       margin-top: 0.4rem;
       line-height: 1.6;
+      text-align: left;
     }
 
     /* Selected Position Banner */
@@ -340,6 +652,7 @@
       font-size: 0.88rem;
       color: var(--neon);
       font-family: var(--font-mono);
+      text-align: left;
     }
     #selected-position-banner.visible { display: flex; align-items: center; gap: 0.6rem; }
 
@@ -347,16 +660,14 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.2rem;
+      text-align: left;
     }
-    @media (max-width: 600px) {
-      .form-row { grid-template-columns: 1fr; }
-    }
-
     .form-group {
       display: flex;
       flex-direction: column;
       gap: 0.45rem;
       margin-bottom: 1.3rem;
+      text-align: left;
     }
     .form-group.full { grid-column: 1 / -1; }
 
@@ -366,6 +677,7 @@
       color: var(--neon);
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      text-align: left;
     }
     label span.req { color: var(--danger); margin-left: 2px; }
 
@@ -384,14 +696,13 @@
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
       width: 100%;
+      text-align: left;
     }
     input:focus, select:focus, textarea:focus {
       border-color: var(--neon);
       box-shadow: 0 0 0 3px rgba(57,255,20,0.12);
     }
-    input::placeholder, textarea::placeholder {
-      color: rgba(255,255,255,0.25);
-    }
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.25); }
     select {
       appearance: none;
       -webkit-appearance: none;
@@ -402,28 +713,13 @@
       padding-right: 2.5rem;
       cursor: pointer;
     }
-    select option {
-      background: var(--surface2);
-      color: #fff;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 110px;
-      line-height: 1.6;
-    }
+    select option { background: var(--surface2); color: #fff; }
+    textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
 
     /* Phone with area code */
-    .phone-row {
-      display: flex;
-      gap: 0.6rem;
-    }
-    .phone-row select {
-      flex: 0 0 145px;
-    }
-    .phone-row input {
-      flex: 1;
-    }
+    .phone-row { display: flex; gap: 0.6rem; text-align: left; }
+    .phone-row select { flex: 0 0 145px; }
+    .phone-row input { flex: 1; }
 
     /* File Upload */
     .file-upload-area {
@@ -450,17 +746,8 @@
       padding: 0;
       background: none;
     }
-    .file-upload-area i {
-      font-size: 2rem;
-      color: var(--neon);
-      margin-bottom: 0.6rem;
-      display: block;
-    }
-    .file-upload-area p {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .file-upload-area i { font-size: 2rem; color: var(--neon); margin-bottom: 0.6rem; display: block; }
+    .file-upload-area p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; text-align: center; }
     .file-upload-area .file-name {
       margin-top: 0.5rem;
       font-family: var(--font-mono);
@@ -502,7 +789,7 @@
     }
     .form-note a { color: var(--neon); text-decoration: none; }
 
-    /* Success / Error toast */
+    /* ─── Toast ─── */
     #toast {
       display: none;
       position: fixed;
@@ -525,124 +812,38 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ─── Footer ─── */
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.82rem;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      position: relative;
-      z-index: 1;
-    }
-    footer span { color: var(--neon); }
-
-
-    /* Hero */
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE — CAREERS PAGE
+    ═══════════════════════════════════════════════════════ */
     @media (max-width: 768px) {
-      .careers-hero {
-        padding: 6rem 1.25rem 2.5rem;
-      }
+      .careers-hero { padding: 6rem 1.25rem 2.5rem; }
       .careers-hero h1 { font-size: clamp(1.8rem, 7vw, 2.8rem); }
       .careers-hero p  { font-size: 0.95rem; }
-    }
-    @media (max-width: 480px) {
-      .careers-hero { padding: 5rem 1rem 2rem; }
-      .careers-hero h1 { font-size: 1.7rem; }
-    }
-
-    /* Jobs grid */
-    @media (max-width: 768px) {
       .jobs-section { padding: 2.5rem 1.25rem; }
       .jobs-grid { grid-template-columns: 1fr; gap: 1rem; }
-    }
-    @media (max-width: 480px) {
-      .jobs-section { padding: 2rem 1rem; }
-      .job-card { padding: 1.25rem; }
-      .job-title { font-size: 0.95rem; }
-    }
-
-    /* Apply form */
-    @media (max-width: 768px) {
       .apply-section { padding: 2.5rem 1.25rem 4rem; }
       .form-card { padding: 1.5rem; border-radius: 12px; }
       .form-header h2 { font-size: 1.35rem; }
       .form-row { grid-template-columns: 1fr; }
     }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
     @media (max-width: 480px) {
+      .careers-hero { padding: 5rem 1rem 2rem; }
+      .careers-hero h1 { font-size: 1.7rem; }
+      .jobs-section { padding: 2rem 1rem; }
+      .job-card { padding: 1.25rem; }
+      .job-title { font-size: 0.95rem; }
       .apply-section { padding: 2rem 1rem 3rem; }
       .form-card { padding: 1.25rem; border-radius: 10px; }
       .phone-row { flex-direction: column; }
       .phone-row select { flex: none; width: 100%; }
       .file-upload-area { padding: 1.25rem; }
       .submit-btn { font-size: 0.88rem; padding: 0.875rem 1.5rem; }
-    }
-
-    /* Section title */
-    @media (max-width: 480px) {
       .section-title { font-size: 1.35rem; }
       .section-subtitle { font-size: 0.78rem; }
     }
-
-    /* Footer */
-    @media (max-width: 480px) {
-      footer { padding: 1rem; font-size: 0.75rem; }
-    }
-
-
-    /* ─────────────────────────────────────────────────────
-       ALIGNMENT FIX
-       styles.css sets body { text-align: center } globally.
-       Using !important + high-specificity selectors to win
-       the cascade on all careers-specific content.
-    ───────────────────────────────────────────────────── */
-
-    /* Job listing cards — scoped to jobs-section for specificity */
-    .jobs-section                       { text-align: left !important; }
-    .jobs-section .jobs-grid            { text-align: left !important; }
-    .jobs-section .job-card             { text-align: left !important; }
-    .jobs-section .job-header           { text-align: left !important; }
-    .jobs-section .job-title            { text-align: left !important; }
-    .jobs-section .job-department       { text-align: left !important; }
-    .jobs-section .job-type-badge       { text-align: left !important; }
-    .jobs-section .job-toggle-btn       { text-align: left !important; }
-    .jobs-section .qualifications       { text-align: left !important; }
-    .jobs-section .qualifications ul    { text-align: left !important; }
-    .jobs-section .qualifications ul li { text-align: left !important; }
-    .jobs-section .section-title        { text-align: left !important; }
-    .jobs-section .section-subtitle     { text-align: left !important; }
-
-    /* Application form — scoped to form-card for specificity */
-    .apply-section                      { text-align: left !important; }
-    .apply-section .form-card           { text-align: left !important; }
-    .apply-section .form-header         { text-align: left !important; }
-    .apply-section .form-header h2      { text-align: left !important; }
-    .apply-section .form-header p       { text-align: left !important; }
-    .apply-section .form-group          { text-align: left !important; }
-    .apply-section .form-row            { text-align: left !important; }
-    .apply-section label                { text-align: left !important; }
-    .apply-section input                { text-align: left !important; }
-    .apply-section select               { text-align: left !important; }
-    .apply-section textarea             { text-align: left !important; }
-    .apply-section .phone-row           { text-align: left !important; }
-    .apply-section .phone-row select    { text-align: left !important; }
-    .apply-section .phone-row input     { text-align: left !important; }
-    .apply-section .file-upload-area p  { text-align: left !important; }
-    .apply-section .file-name           { text-align: left !important; }
-    .apply-section #selected-position-banner { text-align: left !important; }
-
-    /* Hero — stays centered */
-    .careers-hero { text-align: center !important; }
-
-    /* Footer — stays centered */
-    footer { text-align: center !important; }
-
-    /* File upload drop zone icon/main text — stays centered */
-    .apply-section .file-upload-area    { text-align: center !important; }
-
-    /* Form note below submit — stays centered */
-    .form-note { text-align: center !important; }
-
   </style>
 </head>
 <body>
@@ -671,10 +872,10 @@
     <li><a href="https://nexgenixcreativesolutions.github.io/contact">Contact</a></li>
   </ul>
   <div class="auth-buttons" id="auth-buttons">
-        <a href="login-signup.html" class="dashboard-btn" id="nav-login-btn" style="display:none">Log In</a>
-        <a href="dashboard.html" class="dashboard-btn" id="nav-dashboard-btn" style="display:none">Dashboard</a>
-        <button class="logout-btn" id="nav-logout-btn" style="display:none" onclick="NGCS_Auth.logout()">Log Out</button>
-    </div>
+    <a href="login-signup.html" class="dashboard-btn" id="nav-login-btn" style="display:none">Log In</a>
+    <a href="dashboard.html" class="dashboard-btn" id="nav-dashboard-btn" style="display:none">Dashboard</a>
+    <button class="logout-btn" id="nav-logout-btn" style="display:none" onclick="NGCS_Auth.logout()">Log Out</button>
+  </div>
 </nav>
 
 <div class="page-content">
@@ -701,7 +902,7 @@
           <div class="job-icon"><i class="fas fa-users-cog"></i></div>
           <div>
             <div class="job-title">Human Resource Manager</div>
-            <div class="job-department">People & Culture</div>
+            <div class="job-department">People &amp; Culture</div>
           </div>
         </div>
         <span class="job-type-badge">Full-Time</span>
@@ -728,7 +929,7 @@
           <div class="job-icon"><i class="fas fa-search"></i></div>
           <div>
             <div class="job-title">Recruiter</div>
-            <div class="job-department">People & Culture</div>
+            <div class="job-department">People &amp; Culture</div>
           </div>
         </div>
         <span class="job-type-badge">Full-Time</span>
@@ -809,7 +1010,7 @@
           <div class="job-icon"><i class="fas fa-chart-line"></i></div>
           <div>
             <div class="job-title">Finance Officer</div>
-            <div class="job-department">Finance & Admin</div>
+            <div class="job-department">Finance &amp; Admin</div>
           </div>
         </div>
         <span class="job-type-badge">Full-Time</span>
@@ -836,7 +1037,7 @@
           <div class="job-icon"><i class="fas fa-share-alt"></i></div>
           <div>
             <div class="job-title">Social Media Manager</div>
-            <div class="job-department">Marketing & Growth</div>
+            <div class="job-department">Marketing &amp; Growth</div>
           </div>
         </div>
         <span class="job-type-badge">Full-Time</span>
@@ -863,7 +1064,7 @@
           <div class="job-icon"><i class="fas fa-bullhorn"></i></div>
           <div>
             <div class="job-title">Marketing Staff</div>
-            <div class="job-department">Marketing & Growth</div>
+            <div class="job-department">Marketing &amp; Growth</div>
           </div>
         </div>
         <span class="job-type-badge">Full-Time</span>
@@ -890,7 +1091,7 @@
           <div class="job-icon"><i class="fas fa-funnel-dollar"></i></div>
           <div>
             <div class="job-title">Marketing Manager</div>
-            <div class="job-department">Marketing & Growth</div>
+            <div class="job-department">Marketing &amp; Growth</div>
           </div>
         </div>
         <span class="job-type-badge">Full-Time</span>
@@ -944,7 +1145,7 @@
           <div class="job-icon"><i class="fas fa-chalkboard-teacher"></i></div>
           <div>
             <div class="job-title">Trainer</div>
-            <div class="job-department">Learning & Development</div>
+            <div class="job-department">Learning &amp; Development</div>
           </div>
         </div>
         <span class="job-type-badge">Full-Time / Part-Time</span>
@@ -1151,7 +1352,7 @@
           <div class="file-upload-area" id="fileDropArea">
             <input type="file" id="cvFile" name="cvFile" accept=".pdf,.doc,.docx" required>
             <i class="fas fa-cloud-upload-alt"></i>
-            <p>Drag & drop your CV here, or <strong style="color:var(--neon)">browse</strong><br>
+            <p>Drag &amp; drop your CV here, or <strong style="color:var(--neon)">browse</strong><br>
             <small>Accepted formats: PDF, DOC, DOCX &nbsp;·&nbsp; Max 5MB</small></p>
             <div class="file-name" id="fileNameDisplay"></div>
           </div>
@@ -1161,7 +1362,7 @@
           <i class="fas fa-paper-plane"></i>&nbsp; Submit Application
         </button>
         <p class="form-note">
-          Your application will be sent to <a href="/cdn-cgi/l/email-protection#731d160b14161d1a0b10011612071a0516001c1f06071a1c1d0033141e121a1f5d101c1e"><span class="__cf_email__" data-cfemail="99f7fce1fefcf7f0e1faebfcf8edf0effceaf6f5ecedf0f6f7ead9fef4f8f0f5b7faf6f4">[email&#160;protected]</span></a>.<br>
+          Your application will be sent to <a href="mailto:nexgenixcreativesolutions@gmail.com">nexgenixcreativesolutions@gmail.com</a>.<br>
           We handle all personal data in accordance with our Privacy Policy.
         </p>
 
@@ -1178,7 +1379,7 @@
 <footer>&copy; 2026 <span>Nex Genix Creative Solutions</span>. All rights reserved.</footer>
 
 <!-- External JS -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
+<script src="script.js"></script>
 
 <script>
   /* ─── Toggle Menu ─── */
@@ -1238,16 +1439,13 @@
 
   /* ─── Select Job & scroll to form ─── */
   function selectJob(jobTitle, cardId) {
-    // Update position dropdown
     const select = document.getElementById('position');
     for (let opt of select.options) {
       if (opt.value === jobTitle) { opt.selected = true; break; }
     }
-    // Show banner
     const banner = document.getElementById('selected-position-banner');
     document.getElementById('banner-text').textContent = 'Applying for: ' + jobTitle;
     banner.classList.add('visible');
-    // Scroll to form
     document.getElementById('applySection').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -1293,7 +1491,6 @@
   document.getElementById('applicationForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    // Basic validation
     const required = this.querySelectorAll('[required]');
     let valid = true;
     required.forEach(field => {
@@ -1309,23 +1506,19 @@
       return;
     }
 
-    // Build full name for Formspree submission
     const fn       = document.getElementById('firstName').value.trim();
     const mn       = document.getElementById('middleName').value.trim();
     const ln       = document.getElementById('lastName').value.trim();
     const sfx      = document.getElementById('suffix').value;
     const fullName = [fn, mn, ln, sfx].filter(Boolean).join(' ');
 
-    const cvFile   = document.getElementById('cvFile');
-    const fileName = cvFile.files.length ? cvFile.files[0].name : 'No file attached';
+    const cvFileEl  = document.getElementById('cvFile');
+    const fileName  = cvFileEl.files.length ? cvFileEl.files[0].name : 'No file attached';
 
-    // Build FormData — Formspree reads all name="" attributes automatically
     const formData = new FormData(this);
-    // Add computed fields not in individual inputs
     formData.set('full_name',  fullName);
     formData.set('cv_filename', fileName);
 
-    // Disable submit button while sending
     const submitBtn = this.querySelector('.submit-btn');
     const originalText = submitBtn.textContent;
     submitBtn.disabled = true;
@@ -1341,7 +1534,6 @@
       if (response.ok) {
         showToast('✅ Application submitted! We will reach out to you soon.');
         this.reset();
-        // Clear banner
         document.getElementById('selected-position-banner').classList.remove('visible');
         document.getElementById('fileNameDisplay').textContent = '';
       } else {
@@ -1356,7 +1548,7 @@
       submitBtn.textContent = originalText;
     }
   });
-  </script>
+</script>
 
 <!-- Auth Guard -->
 <script src="auth.js"></script>
