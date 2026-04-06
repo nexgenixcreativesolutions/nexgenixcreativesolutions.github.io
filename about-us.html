@@ -253,7 +253,7 @@
 
     .team-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
       gap: 28px;
       max-width: 1200px;
       margin: 30px auto;
@@ -378,6 +378,59 @@
         font-size: 1.5rem;
       }
     }
+
+    /* =================== SMALL SCREEN FIXES =================== */
+    @media (max-width: 480px) {
+      .content-section,
+      .difference-section,
+      .typeform-section {
+        padding: 2.5rem 1rem;
+      }
+
+      .team-section {
+        padding: 36px 12px;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .team-card {
+        padding: 20px 16px;
+      }
+
+      .team-expertise {
+        gap: 6px;
+      }
+
+      .expertise-tag {
+        font-size: 10px;
+        padding: 4px 9px;
+      }
+
+      .point-item {
+        padding: 1.2rem 1rem;
+      }
+
+      .content-text {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .team-name {
+        font-size: 15px;
+      }
+
+      .hero-title {
+        font-size: 1.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -439,7 +492,7 @@
       </p>
 
       <p class="content-text">
-        Beyond our creative and writing services, Nex Genix is proud to be the home of <strong>Nex Genix Business School</strong>, our educational division focused on fostering business knowledge and skills. We offer a variety of <strong>self-paced</strong> courses designed for business enthusiasts, entrepreneurs, and professionals who wish to build a solid foundation in business fundamentals. Our programs are structured to be flexible, practical, and accessible—empowering learners to achieve their personal and professional goals.
+        Beyond our creative and writing services, Nex Genix is proud to be the home of <strong><a href="https://nexgenixbusinessschool.github.io" target="_blank" rel="noopener noreferrer" style="color:#39FF14;text-decoration:none;font-weight:700;">Nex Genix Business School</a></strong>, our educational division focused on fostering business knowledge and skills. We offer a variety of <strong>self-paced</strong> courses designed for business enthusiasts, entrepreneurs, and professionals who wish to build a solid foundation in business fundamentals. Our programs are structured to be flexible, practical, and accessible—empowering learners to achieve their personal and professional goals.
       </p>
     </div>
   </section>
@@ -467,9 +520,9 @@
       </div>
 
       <div class="point-item">
-        <strong>2. Education-Driven Approach</strong>
+        <strong>2. Insight-Driven Design Process</strong>
         <p class="content-text">
-          We believe in empowering not just businesses, but individuals. Through our dedicated Nex Genix Business School, we offer self-paced courses designed to equip learners with essential business skills and knowledge. Our commitment to education reflects in everything we do—whether it's guiding clients through design strategies or helping individuals lay a strong business foundation.
+          We don't just execute briefs—we collaborate. Before a single pixel is placed, we invest time in understanding your business, your audience, and your goals. Our process is rooted in research, user empathy, and strategic thinking, ensuring every design decision is purposeful and every deliverable drives real, measurable impact for your brand.
         </p>
       </div>
 
@@ -490,7 +543,7 @@
       <div class="point-item">
         <strong>5. Quality Without Compromise</strong>
         <p class="content-text">
-          Whether it's a complex web development project, an academic paper, or an online business course, quality is at the core of everything we do. Our team is committed to maintaining high standards, delivering polished, professional, and result-oriented outcomes every time.
+          Whether it's a complex web development project, a high-stakes brand identity, or a full suite of written content, quality is at the core of everything we do. Our team is committed to maintaining high standards, delivering polished, professional, and result-oriented outcomes every time.
         </p>
       </div>
     </div>
@@ -507,7 +560,7 @@
         <div class="team-image-placeholder" style="background-image: url('assets/images/cs-person1.png'); background-size: cover; background-position: center top;"></div>
         <h3 class="team-name">Arriane Doris Nuevo</h3>
         <p class="team-role">Founder & Chief Executive Officer</p>
-        <p class="team-description">Visionary founder who established Nex Genix Business School to democratize business education globally. Drives strategic direction, institutional growth, and overall organizational excellence.</p>
+        <p class="team-description">Visionary founder who built Nex Genix Creative Solutions from the ground up. Leads the agency's strategic direction, steers high-impact client projects, and sets the creative standard that defines Nex Genix Creative Solutions as a premier digital solutions partner.</p>
         <div class="team-expertise">
           <span class="expertise-tag"><i class="fas fa-check"></i> Executive Leadership</span>
           <span class="expertise-tag"><i class="fas fa-check"></i> Strategy</span>
@@ -520,7 +573,7 @@
         <div class="team-image-placeholder" style="background-image: url('assets/images/cs-person2.png'); background-size: cover; background-position: center top;"></div>
         <h3 class="team-name">Irene Clemenz</h3>
         <p class="team-role">Chief Operating Officer</p>
-        <p class="team-description">Oversees all operational functions and ensures seamless, high-quality delivery of educational programs. Leads cross-functional teams and drives process excellence across the institution.</p>
+        <p class="team-description">Oversees all agency operations and ensures seamless, on-time delivery of client projects. Leads cross-functional creative teams and drives process excellence that keeps Nex Genix Creative Solutions running at its highest standard.</p>
         <div class="team-expertise">
           <span class="expertise-tag"><i class="fas fa-check"></i> Operations</span>
           <span class="expertise-tag"><i class="fas fa-check"></i> Leadership</span>
@@ -533,7 +586,7 @@
         <div class="team-image-placeholder" style="background-image: url('assets/images/cs-person3.png'); background-size: cover; background-position: center top;"></div>
         <h3 class="team-name">Gioia Pavan</h3>
         <p class="team-role">Chief Marketing Officer</p>
-        <p class="team-description">Leads brand strategy, digital marketing initiatives, and global outreach campaigns. Drives awareness and engagement that connects learners worldwide with Nex Genix's transformative programs.</p>
+        <p class="team-description">Leads brand strategy, digital marketing campaigns, and client outreach initiatives. Drives awareness and engagement that connects businesses worldwide with Nex Genix Creative Solutions' design and development solutions.</p>
         <div class="team-expertise">
           <span class="expertise-tag"><i class="fas fa-check"></i> Brand Strategy</span>
           <span class="expertise-tag"><i class="fas fa-check"></i> Digital Marketing</span>
@@ -546,7 +599,7 @@
         <div class="team-image-placeholder" style="background-image: url('assets/images/cs-person4.png'); background-size: cover; background-position: center top;"></div>
         <h3 class="team-name">Monica Ann Lao</h3>
         <p class="team-role">Chief Sales Officer</p>
-        <p class="team-description">Directs all sales strategy, revenue generation, and enrollment growth initiatives. Builds lasting partnerships and ensures every prospective student finds the right program to achieve their goals.</p>
+        <p class="team-description">Directs all sales strategy, revenue generation, and new client acquisition. Builds lasting partnerships and ensures every prospective client finds the right Nex Genix Creative Solutions service package to achieve their business goals.</p>
         <div class="team-expertise">
           <span class="expertise-tag"><i class="fas fa-check"></i> Sales Strategy</span>
           <span class="expertise-tag"><i class="fas fa-check"></i> Revenue Growth</span>
@@ -558,11 +611,11 @@
       <div class="team-card">
         <div class="team-image-placeholder" style="background-image: url('assets/images/cs-person5.png'); background-size: cover; background-position: center top;"></div>
         <h3 class="team-name">Carissa Jade Mariano-Mondia</h3>
-        <p class="team-role">VP of Student Success</p>
-        <p class="team-description">Champions the complete student journey from enrollment to career placement. Develops and oversees support frameworks that ensure every learner achieves their academic and professional objectives.</p>
+        <p class="team-role">VP of Client Success</p>
+        <p class="team-description">Champions the complete client journey from onboarding to project delivery and beyond. Develops support frameworks and feedback systems that ensure every client achieves the results they envisioned with Nex Genix Creative Solutions.</p>
         <div class="team-expertise">
-          <span class="expertise-tag"><i class="fas fa-check"></i> Student Experience</span>
-          <span class="expertise-tag"><i class="fas fa-check"></i> Career Development</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Client Experience</span>
+          <span class="expertise-tag"><i class="fas fa-check"></i> Project Management</span>
           <span class="expertise-tag"><i class="fas fa-check"></i> Retention</span>
         </div>
       </div>
@@ -572,7 +625,7 @@
         <div class="team-image-placeholder" style="background-image: url('assets/images/cs-person6.png'); background-size: cover; background-position: center top;"></div>
         <h3 class="team-name">Kathrine Mendez</h3>
         <p class="team-role">Chief Financial Officer</p>
-        <p class="team-description">Leads all financial planning, budgeting, and fiscal governance for the institution. Ensures the school's financial health and sustainability to support its mission of accessible, high-quality education.</p>
+        <p class="team-description">Leads all financial planning, budgeting, and fiscal governance for the agency. Ensures Nex Genix Creative Solutions' financial health and sustainability so the team can continue delivering world-class creative solutions without compromise.</p>
         <div class="team-expertise">
           <span class="expertise-tag"><i class="fas fa-check"></i> Financial Strategy</span>
           <span class="expertise-tag"><i class="fas fa-check"></i> Budgeting</span>
