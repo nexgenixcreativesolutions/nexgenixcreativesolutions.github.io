@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Special Promo — NexGenix Creative Solutions</title>
+<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700;800&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -32,8 +33,6 @@
     justify-content: center;
     padding: 2rem 1rem;
   }
-
-  /* scanline */
   body::before {
     content:'';
     position:fixed; inset:0; pointer-events:none; z-index:0;
@@ -44,10 +43,8 @@
   }
 
   .wrap {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 600px;
+    position: relative; z-index: 1;
+    width: 100%; max-width: 600px;
     animation: fadeUp 0.6s ease both;
   }
 
@@ -61,292 +58,293 @@
     overflow: hidden;
     box-shadow: 0 0 60px rgba(57,255,20,0.07), 0 24px 64px rgba(0,0,0,0.6);
   }
-
-  /* top neon line */
   .promo-card::before {
-    content:'';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
     background: linear-gradient(90deg, transparent, var(--neon), transparent);
     box-shadow: 0 0 14px var(--neon-glow);
   }
-
-  /* corner accent */
   .promo-card::after {
-    content:'';
-    position: absolute;
-    bottom: -40px; right: -40px;
-    width: 160px; height: 160px;
-    border-radius: 50%;
+    content:''; position:absolute; bottom:-40px; right:-40px;
+    width:160px; height:160px; border-radius:50%;
     background: radial-gradient(circle, rgba(57,255,20,0.06) 0%, transparent 70%);
-    pointer-events: none;
+    pointer-events:none;
   }
 
-  /* ── BADGES ROW ── */
-  .badges {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-  }
+  .badges { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.5rem; }
   .badge {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.5rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 0.3rem 0.7rem;
-    border-radius: 2px;
+    font-family:'Orbitron',sans-serif; font-size:0.5rem; font-weight:700;
+    letter-spacing:0.15em; text-transform:uppercase;
+    padding:0.3rem 0.7rem; border-radius:2px;
   }
-  .badge-neon {
-    background: var(--neon);
-    color: #000;
-  }
-  .badge-outline {
-    border: 1px solid var(--border);
-    color: var(--neon);
-    background: var(--neon-dim);
-  }
+  .badge-neon { background:var(--neon); color:#000; }
+  .badge-outline { border:1px solid var(--border); color:var(--neon); background:var(--neon-dim); }
 
-  /* ── EYEBROW ── */
   .eyebrow {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.58rem;
-    letter-spacing: 0.3em;
-    color: var(--neon);
-    text-transform: uppercase;
-    opacity: 0.75;
-    margin-bottom: 0.5rem;
+    font-family:'Orbitron',sans-serif; font-size:0.58rem; letter-spacing:0.3em;
+    color:var(--neon); text-transform:uppercase; opacity:0.75; margin-bottom:0.5rem;
   }
-
-  /* ── HEADLINE ── */
   .headline {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(1.3rem, 5vw, 1.9rem);
-    font-weight: 900;
-    color: #fff;
-    line-height: 1.2;
-    margin-bottom: 0.4rem;
-    text-shadow: 0 0 24px rgba(57,255,20,0.15);
+    font-family:'Orbitron',sans-serif; font-size:clamp(1.3rem,5vw,1.9rem);
+    font-weight:900; color:#fff; line-height:1.2; margin-bottom:0.4rem;
+    text-shadow:0 0 24px rgba(57,255,20,0.15);
   }
-  .headline span { color: var(--neon); text-shadow: 0 0 16px var(--neon-glow); }
+  .headline span { color:var(--neon); text-shadow:0 0 16px var(--neon-glow); }
+  .subheadline { font-size:0.78rem; color:var(--text-muted); margin-bottom:1.75rem; line-height:1.6; }
+  .subheadline strong { color:var(--text); font-weight:600; }
 
-  .subheadline {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    margin-bottom: 1.75rem;
-    line-height: 1.6;
-  }
-  .subheadline strong { color: var(--text); font-weight: 600; }
+  .divider { height:1px; background:var(--border-dim); margin-bottom:1.5rem; }
 
-  /* ── DIVIDER ── */
-  .divider {
-    height: 1px;
-    background: var(--border-dim);
-    margin-bottom: 1.5rem;
-  }
-
-  /* ── PRICING ROW ── */
-  .pricing-row {
-    display: flex;
-    align-items: flex-end;
-    gap: 1rem;
-    margin-bottom: 1.75rem;
-    flex-wrap: wrap;
-  }
+  .pricing-row { display:flex; align-items:flex-end; gap:1rem; margin-bottom:1.75rem; flex-wrap:wrap; }
   .price-main {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 900;
-    font-size: clamp(2.5rem, 10vw, 3.5rem);
-    color: var(--neon);
-    text-shadow: 0 0 28px rgba(57,255,20,0.5);
-    line-height: 1;
+    font-family:'Orbitron',sans-serif; font-weight:900;
+    font-size:clamp(2.5rem,10vw,3.5rem);
+    color:var(--neon); text-shadow:0 0 28px rgba(57,255,20,0.5); line-height:1;
   }
-  .price-main sup {
-    font-size: 1.2rem;
-    vertical-align: super;
-  }
-  .price-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding-bottom: 0.3rem;
-  }
+  .price-main sup { font-size:1.2rem; vertical-align:super; }
+  .price-meta { display:flex; flex-direction:column; gap:0.25rem; padding-bottom:0.3rem; }
   .price-original {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    text-decoration: line-through;
+    font-family:'Orbitron',sans-serif; font-size:0.7rem;
+    color:var(--text-muted); text-decoration:line-through;
   }
   .price-save {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    color: var(--neon);
-    text-transform: uppercase;
-    opacity: 0.9;
+    font-family:'Orbitron',sans-serif; font-size:0.6rem;
+    letter-spacing:0.1em; color:var(--neon); text-transform:uppercase; opacity:0.9;
   }
 
-  /* ── FEATURES ── */
-  .features-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem 1rem;
-    margin-bottom: 1.75rem;
-  }
-  .feature-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.45rem;
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    line-height: 1.4;
-  }
-  .feature-item .chk {
-    color: var(--neon);
-    font-size: 0.6rem;
-    margin-top: 0.1rem;
-    flex-shrink: 0;
-  }
+  .features-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem 1rem; margin-bottom:1.75rem; }
+  .feature-item { display:flex; align-items:flex-start; gap:0.45rem; font-size:0.72rem; color:var(--text-muted); line-height:1.4; }
+  .feature-item .chk { color:var(--neon); font-size:0.6rem; margin-top:0.1rem; flex-shrink:0; }
 
-  /* ── WHO IT'S FOR ── */
   .for-label {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    color: var(--neon);
-    text-transform: uppercase;
-    opacity: 0.7;
-    margin-bottom: 0.5rem;
+    font-family:'Orbitron',sans-serif; font-size:0.55rem; letter-spacing:0.2em;
+    color:var(--neon); text-transform:uppercase; opacity:0.7; margin-bottom:0.5rem;
   }
-  .for-tags {
-    display: flex;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.75rem;
-  }
+  .for-tags { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1.75rem; }
   .for-tag {
-    font-size: 0.68rem;
-    color: var(--text);
-    border: 1px solid var(--border-dim);
-    background: var(--surface-2);
-    border-radius: 3px;
-    padding: 0.3rem 0.7rem;
+    font-size:0.68rem; color:var(--text);
+    border:1px solid var(--border-dim); background:var(--surface-2);
+    border-radius:3px; padding:0.3rem 0.7rem;
   }
 
-  /* ── SLOTS WARNING ── */
   .slots-bar {
-    background: rgba(57,255,20,0.05);
-    border: 1px solid var(--border-dim);
-    border-left: 3px solid var(--neon);
-    border-radius: 4px;
-    padding: 0.65rem 0.9rem;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+    background:rgba(57,255,20,0.05); border:1px solid var(--border-dim);
+    border-left:3px solid var(--neon); border-radius:4px;
+    padding:0.65rem 0.9rem; margin-bottom:1.5rem;
+    display:flex; align-items:center; gap:0.6rem;
   }
-  .slots-icon {
-    font-size: 0.9rem;
-    flex-shrink: 0;
-  }
+  .slots-icon { font-size:0.9rem; flex-shrink:0; }
   .slots-text {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.58rem;
-    letter-spacing: 0.08em;
-    color: var(--text);
-    line-height: 1.5;
+    font-family:'Orbitron',sans-serif; font-size:0.58rem;
+    letter-spacing:0.08em; color:var(--text); line-height:1.5;
   }
-  .slots-text span { color: var(--neon); }
+  .slots-text span { color:var(--neon); }
 
-  /* ── CTA ── */
-  .cta-row {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
+  .cta-row { display:flex; gap:0.75rem; flex-wrap:wrap; }
   .cta-primary {
-    flex: 1;
-    min-width: 160px;
-    text-align: center;
-    padding: 0.8rem 1rem;
-    background: var(--neon);
-    color: #000;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow: 0 0 24px rgba(57,255,20,0.4);
-    transition: all 0.2s;
+    flex:1; min-width:160px; text-align:center;
+    padding:0.8rem 1rem; background:var(--neon); color:#000;
+    font-family:'Orbitron',sans-serif; font-size:0.62rem; font-weight:700;
+    letter-spacing:0.14em; text-transform:uppercase;
+    border:none; border-radius:4px; cursor:pointer;
+    box-shadow:0 0 24px rgba(57,255,20,0.4); transition:all 0.2s;
   }
-  .cta-primary:hover {
-    box-shadow: 0 0 36px rgba(57,255,20,0.65);
-    transform: translateY(-2px);
-  }
+  .cta-primary:hover { box-shadow:0 0 36px rgba(57,255,20,0.65); transform:translateY(-2px); }
   .cta-secondary {
-    flex: 1;
-    min-width: 140px;
-    text-align: center;
-    padding: 0.8rem 1rem;
-    background: transparent;
-    color: var(--neon);
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.2s;
+    flex:1; min-width:140px; text-align:center;
+    padding:0.8rem 1rem; background:transparent; color:var(--neon);
+    font-family:'Orbitron',sans-serif; font-size:0.62rem; font-weight:700;
+    letter-spacing:0.14em; text-transform:uppercase;
+    border:1px solid var(--border); border-radius:4px; cursor:pointer;
+    text-decoration:none; transition:all 0.2s;
   }
-  .cta-secondary:hover {
-    background: var(--neon-dim);
-    border-color: var(--neon);
+  .cta-secondary:hover { background:var(--neon-dim); border-color:var(--neon); }
+
+  .card-footer {
+    margin-top:1.5rem; text-align:center;
+    font-family:'Orbitron',sans-serif; font-size:0.5rem;
+    letter-spacing:0.18em; color:var(--text-muted); text-transform:uppercase;
+  }
+  .card-footer span { color:var(--neon); }
+
+  /* ══════════════════════════════════════════
+     INVOICE MODAL
+  ══════════════════════════════════════════ */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+  }
+  .modal-overlay.open { display: flex; animation: fadeIn 0.25s ease; }
+
+  .invoice-modal {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 100%; max-width: 520px;
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 0 80px rgba(57,255,20,0.12), 0 32px 80px rgba(0,0,0,0.8);
+    animation: slideUp 0.3s ease both;
+  }
+  .invoice-modal::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, transparent, var(--neon), transparent);
+    box-shadow:0 0 14px var(--neon-glow);
   }
 
-  /* ── FOOTER ── */
-  .card-footer {
-    margin-top: 1.5rem;
-    text-align: center;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.5rem;
-    letter-spacing: 0.18em;
-    color: var(--text-muted);
-    text-transform: uppercase;
+  .invoice-header {
+    padding: 1.75rem 1.75rem 1.25rem;
+    border-bottom: 1px solid var(--border-dim);
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 1rem;
   }
-  .card-footer span { color: var(--neon); }
+  .invoice-brand {
+    font-family:'Orbitron',sans-serif; font-size:0.65rem; font-weight:700;
+    letter-spacing:0.15em; color:var(--neon); text-transform:uppercase; margin-bottom:0.2rem;
+  }
+  .invoice-title-row { display:flex; align-items:center; gap:0.6rem; margin-top:0.4rem; }
+  .invoice-title { font-family:'Orbitron',sans-serif; font-size:1rem; font-weight:900; color:#fff; }
+  .invoice-tag {
+    font-family:'Orbitron',sans-serif; font-size:0.45rem; font-weight:700;
+    letter-spacing:0.12em; text-transform:uppercase;
+    background:var(--neon); color:#000; padding:0.2rem 0.5rem; border-radius:2px;
+  }
+  .invoice-close {
+    background:transparent; border:1px solid var(--border-dim); color:var(--text-muted);
+    width:32px; height:32px; border-radius:4px; cursor:pointer; font-size:1rem;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s;
+  }
+  .invoice-close:hover { border-color:var(--border); color:var(--text); }
+
+  .invoice-body { padding:1.5rem 1.75rem; }
+
+  .invoice-meta {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:0.75rem 1rem; margin-bottom:1.5rem;
+  }
+  .invoice-meta-label {
+    font-family:'Orbitron',sans-serif; font-size:0.48rem; letter-spacing:0.18em;
+    color:var(--neon); text-transform:uppercase; opacity:0.7; margin-bottom:0.2rem;
+  }
+  .invoice-meta-value { font-size:0.72rem; color:var(--text); }
+
+  .invoice-table { width:100%; border-collapse:collapse; margin-bottom:1.25rem; }
+  .invoice-table thead tr { border-bottom:1px solid var(--border-dim); }
+  .invoice-table thead th {
+    font-family:'Orbitron',sans-serif; font-size:0.48rem; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--neon); opacity:0.7;
+    padding:0 0 0.6rem; text-align:left; font-weight:600;
+  }
+  .invoice-table thead th:last-child { text-align:right; }
+  .invoice-table tbody tr { border-bottom:1px solid var(--border-dim); }
+  .invoice-table tbody tr:last-child { border-bottom:none; }
+  .invoice-table tbody td {
+    padding:0.7rem 0; font-size:0.72rem; color:var(--text-muted); vertical-align:top;
+  }
+  .invoice-table tbody td:last-child { text-align:right; color:var(--text); font-weight:600; white-space:nowrap; }
+  .item-name { color:var(--text); font-weight:600; margin-bottom:0.15rem; }
+  .item-desc { font-size:0.64rem; color:var(--text-muted); line-height:1.4; }
+
+  .invoice-totals { border-top:1px solid var(--border-dim); padding-top:1rem; margin-bottom:1.5rem; }
+  .totals-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.45rem; }
+  .totals-label {
+    font-family:'Orbitron',sans-serif; font-size:0.55rem;
+    letter-spacing:0.1em; color:var(--text-muted); text-transform:uppercase;
+  }
+  .totals-value { font-size:0.75rem; color:var(--text); }
+  .totals-row.strikethrough .totals-value { text-decoration:line-through; color:var(--text-muted); }
+  .totals-row.discount .totals-label,
+  .totals-row.discount .totals-value { color:var(--neon); }
+  .totals-row.grand { border-top:1px solid var(--border); margin-top:0.6rem; padding-top:0.6rem; }
+  .totals-row.grand .totals-label {
+    font-family:'Orbitron',sans-serif; font-size:0.6rem; font-weight:700;
+    color:var(--text); letter-spacing:0.12em;
+  }
+  .totals-row.grand .totals-value {
+    font-family:'Orbitron',sans-serif; font-size:1.1rem; font-weight:900;
+    color:var(--neon); text-shadow:0 0 14px var(--neon-glow);
+  }
+
+  .invoice-promo-note {
+    background:rgba(57,255,20,0.05); border:1px solid var(--border-dim);
+    border-left:3px solid var(--neon); border-radius:4px;
+    padding:0.6rem 0.9rem; margin-bottom:1.5rem;
+    font-family:'Orbitron',sans-serif; font-size:0.52rem;
+    letter-spacing:0.07em; color:var(--text-muted); line-height:1.6;
+  }
+  .invoice-promo-note span { color:var(--neon); }
+
+  .invoice-form-title {
+    font-family:'Orbitron',sans-serif; font-size:0.55rem; letter-spacing:0.2em;
+    color:var(--neon); text-transform:uppercase; opacity:0.75; margin-bottom:0.75rem;
+  }
+  .invoice-form { display:flex; flex-direction:column; gap:0.6rem; margin-bottom:1.25rem; }
+  .invoice-input {
+    background:rgba(0,0,0,0.4); border:1px solid var(--border-dim);
+    border-radius:4px; color:var(--text);
+    font-family:'Montserrat Alternates',sans-serif; font-size:0.75rem;
+    padding:0.55rem 0.8rem; width:100%; transition:border-color 0.2s; outline:none;
+  }
+  .invoice-input:focus { border-color:var(--neon); }
+  .invoice-input::placeholder { color:var(--text-muted); }
+
+  .invoice-submit {
+    width:100%; padding:0.8rem;
+    background:var(--neon); color:#000;
+    font-family:'Orbitron',sans-serif; font-size:0.62rem; font-weight:700;
+    letter-spacing:0.14em; text-transform:uppercase;
+    border:none; border-radius:4px; cursor:pointer;
+    box-shadow:0 0 20px rgba(57,255,20,0.35); transition:all 0.2s;
+  }
+  .invoice-submit:hover { box-shadow:0 0 32px rgba(57,255,20,0.6); transform:translateY(-1px); }
+
+  .invoice-success {
+    display:none; text-align:center; padding:2rem 1rem;
+  }
+  .invoice-success.show { display:block; }
+  .success-icon { font-size:2.5rem; margin-bottom:0.75rem; }
+  .success-title {
+    font-family:'Orbitron',sans-serif; font-size:0.9rem; font-weight:900;
+    color:var(--neon); text-shadow:0 0 16px var(--neon-glow); margin-bottom:0.5rem;
+  }
+  .success-sub { font-size:0.75rem; color:var(--text-muted); line-height:1.6; }
 
   @keyframes fadeUp {
-    from { opacity:0; transform: translateY(20px); }
-    to   { opacity:1; transform: translateY(0); }
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity:0; } to { opacity:1; }
+  }
+  @keyframes slideUp {
+    from { opacity:0; transform:translateY(28px); }
+    to   { opacity:1; transform:translateY(0); }
   }
 
-  @media (max-width: 480px) {
-    .promo-card { padding: 1.75rem 1.25rem 1.5rem; }
-    .features-grid { grid-template-columns: 1fr; }
+  @media (max-width:480px) {
+    .promo-card { padding:1.75rem 1.25rem 1.5rem; }
+    .features-grid { grid-template-columns:1fr; }
+    .invoice-header { padding:1.25rem 1.25rem 1rem; }
+    .invoice-body { padding:1.25rem; }
+    .invoice-meta { grid-template-columns:1fr; }
   }
 </style>
 </head>
 <body>
 
+<!-- ══ PROMO CARD ══ -->
 <div class="wrap">
   <div class="promo-card">
 
-    <!-- BADGES -->
     <div class="badges">
       <span class="badge badge-neon">First-Time Clients Only</span>
       <span class="badge badge-outline">Limited Slots Available</span>
     </div>
 
-    <!-- EYEBROW + HEADLINE -->
     <div class="eyebrow">Special Promo Offer</div>
     <div class="headline">Multi-Page Website.<br><span>Startup Price.</span></div>
     <div class="subheadline">
@@ -356,7 +354,6 @@
 
     <div class="divider"></div>
 
-    <!-- PRICING -->
     <div class="pricing-row">
       <div class="price-main"><sup>$</sup>115</div>
       <div class="price-meta">
@@ -365,7 +362,6 @@
       </div>
     </div>
 
-    <!-- FEATURES -->
     <div class="features-grid">
       <div class="feature-item"><span class="chk">▸</span> Up to 5 Custom Pages</div>
       <div class="feature-item"><span class="chk">▸</span> Mobile Responsive</div>
@@ -377,7 +373,6 @@
       <div class="feature-item"><span class="chk">▸</span> Fast Delivery</div>
     </div>
 
-    <!-- WHO IT'S FOR -->
     <div class="for-label">Who This Is For</div>
     <div class="for-tags">
       <span class="for-tag">Freelancers</span>
@@ -386,7 +381,6 @@
       <span class="for-tag">Startups</span>
     </div>
 
-    <!-- SLOTS WARNING -->
     <div class="slots-bar">
       <div class="slots-icon">⚡</div>
       <div class="slots-text">
@@ -395,19 +389,187 @@
       </div>
     </div>
 
-    <!-- CTA -->
     <div class="cta-row">
-      <a class="cta-primary" href="mailto:info@nexgenixcreativesolutions.com">Claim This Offer</a>
+      <button class="cta-primary" onclick="openInvoice()">Claim This Offer</button>
       <a class="cta-secondary" href="https://nexgenixcreativesolutions.github.io">See Our Work</a>
     </div>
 
-    <!-- FOOTER -->
     <div class="card-footer">
       <span>NexGenix Creative Solutions</span> &nbsp;·&nbsp; nexgenixcreativesolutions.github.io
     </div>
 
   </div>
 </div>
+
+
+<!-- ══ INVOICE MODAL ══ -->
+<div class="modal-overlay" id="invoiceModal" onclick="handleOverlayClick(event)">
+  <div class="invoice-modal" id="invoiceBox">
+
+    <div class="invoice-header">
+      <div>
+        <div class="invoice-brand">NexGenix Creative Solutions</div>
+        <div class="invoice-title-row">
+          <div class="invoice-title">Promo Invoice</div>
+          <span class="invoice-tag">Special Offer</span>
+        </div>
+      </div>
+      <button class="invoice-close" onclick="closeInvoice()">✕</button>
+    </div>
+
+    <div class="invoice-body">
+
+      <!-- Success screen (shown after submit) -->
+      <div class="invoice-success" id="invoiceSuccess">
+        <div class="success-icon">✅</div>
+        <div class="success-title">Request Received!</div>
+        <div class="success-sub">
+          We'll reach out to you shortly to confirm your slot and get things moving.<br><br>
+          <span style="color:var(--neon);">Welcome to NexGenix.</span>
+        </div>
+      </div>
+
+      <!-- Invoice content (hidden after submit) -->
+      <div id="invoiceContent">
+
+        <div class="invoice-meta">
+          <div>
+            <div class="invoice-meta-label">Invoice No.</div>
+            <div class="invoice-meta-value" id="invoiceNumber">NGCS-PROMO-001</div>
+          </div>
+          <div>
+            <div class="invoice-meta-label">Date</div>
+            <div class="invoice-meta-value" id="invoiceDate">—</div>
+          </div>
+          <div>
+            <div class="invoice-meta-label">Package</div>
+            <div class="invoice-meta-value">Multi-Page Website</div>
+          </div>
+          <div>
+            <div class="invoice-meta-label">Eligibility</div>
+            <div class="invoice-meta-value">First-Time Clients Only</div>
+          </div>
+        </div>
+
+        <table class="invoice-table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="item-name">Multi-Page Website Build</div>
+                <div class="item-desc">Up to 5 pages · Mobile Responsive · CMS Integration<br>Contact Form + CTA · Basic SEO · Google Analytics · Social Links · Fast Delivery</div>
+              </td>
+              <td>$499.00</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="invoice-totals">
+          <div class="totals-row strikethrough">
+            <span class="totals-label">Standard Rate</span>
+            <span class="totals-value">$499.00</span>
+          </div>
+          <div class="totals-row discount">
+            <span class="totals-label">⚡ First-Time Client Promo</span>
+            <span class="totals-value">− $384.00</span>
+          </div>
+          <div class="totals-row grand">
+            <span class="totals-label">Total Due</span>
+            <span class="totals-value">$115.00</span>
+          </div>
+        </div>
+
+        <div class="invoice-promo-note">
+          This rate is exclusively for <span>first-time clients</span> with <span>limited slots</span>.
+          Submitting this form reserves your intent — our team will follow up to confirm availability and next steps.
+        </div>
+
+        <div class="invoice-form-title">Your Details</div>
+        <div class="invoice-form">
+          <input class="invoice-input" type="text"  id="clientName"  placeholder="Full Name" />
+          <input class="invoice-input" type="email" id="clientEmail" placeholder="Email Address" />
+          <input class="invoice-input" type="text"  id="clientBiz"   placeholder="Business / Brand Name (optional)" />
+          <button class="invoice-submit" onclick="submitInvoice()">Submit &amp; Claim Slot</button>
+        </div>
+
+      </div><!-- /invoiceContent -->
+    </div><!-- /invoice-body -->
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const d = new Date();
+    document.getElementById('invoiceDate').textContent =
+      d.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+    document.getElementById('invoiceNumber').textContent =
+      'NGCS-' + d.getFullYear() + '-' + String(Math.floor(Math.random() * 9000) + 1000);
+  });
+
+  function openInvoice() {
+    document.getElementById('invoiceModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeInvoice() {
+    document.getElementById('invoiceModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('invoiceModal')) closeInvoice();
+  }
+
+  async function submitInvoice() {
+    const name  = document.getElementById('clientName').value.trim();
+    const email = document.getElementById('clientEmail').value.trim();
+    const biz   = document.getElementById('clientBiz').value.trim();
+    const btn   = document.querySelector('.invoice-submit');
+
+    if (!name)  { document.getElementById('clientName').focus(); return; }
+    if (!email || !email.includes('@')) { document.getElementById('clientEmail').focus(); return; }
+
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('https://formspree.io/f/maqdqdqw', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          business: biz || 'N/A',
+          package: 'Multi-Page Website — Special Promo ($115)',
+          message: 'First-time client promo slot request.'
+        })
+      });
+
+      if (res.ok) {
+        document.getElementById('invoiceContent').style.display = 'none';
+        document.getElementById('invoiceSuccess').classList.add('show');
+      } else {
+        btn.textContent = 'Submit & Claim Slot';
+        btn.disabled = false;
+        alert('Something went wrong. Please try again or contact us directly.');
+      }
+    } catch (err) {
+      btn.textContent = 'Submit & Claim Slot';
+      btn.disabled = false;
+      alert('Network error. Please check your connection and try again.');
+    }
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeInvoice();
+  });
+</script>
 
 </body>
 </html>
