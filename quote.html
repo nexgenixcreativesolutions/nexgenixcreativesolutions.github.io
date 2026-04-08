@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NGCS — Website Packages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700;800&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --neon: #39ff14;
+    --neon-dim: rgba(57,255,20,0.10);
+    --neon-glow: rgba(57,255,20,0.35);
+    --bg: #080808;
+    --surface: #0e0e0e;
+    --surface-2: #141414;
+    --border: rgba(57,255,20,0.28);
+    --border-dim: rgba(57,255,20,0.12);
+    --text: #e8e8e8;
+    --text-muted: #888;
+    --gold: #ffd700;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat Alternates', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  /* ── SCANLINE TEXTURE ── */
+  body::before {
+    content:'';
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
+  }
+
+  .ad-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  /* ── HEADER ── */
+  .ad-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    animation: fadeDown 0.6s ease both;
+  }
+  .ad-eyebrow {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    color: var(--neon);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    opacity: 0.85;
+  }
+  .ad-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.15;
+    text-shadow: 0 0 30px rgba(57,255,20,0.2);
+  }
+  .ad-title span {
+    color: var(--neon);
+    text-shadow: 0 0 20px var(--neon-glow);
+  }
+  .ad-sub {
+    margin-top: 0.6rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── CATEGORY BLOCK ── */
+  .category-block {
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .category-block:nth-child(2) { animation-delay: 0.1s; }
+  .category-block:nth-child(3) { animation-delay: 0.2s; }
+  .category-block:nth-child(4) { animation-delay: 0.3s; }
+
+  .category-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--neon);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .category-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  /* ── CARDS ROW ── */
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .pkg-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border-dim);
+    border-radius: 6px;
+    padding: 1.4rem 1.1rem 1.2rem;
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    overflow: hidden;
+  }
+  .pkg-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-dim), transparent);
+    transition: background 0.22s;
+  }
+  .pkg-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border);
+    box-shadow: 0 0 24px rgba(57,255,20,0.12), 0 8px 32px rgba(0,0,0,0.5);
+  }
+  .pkg-card:hover::before {
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  }
+
+  /* PRO CARD HIGHLIGHT */
+  .pkg-card.featured {
+    border-color: var(--border);
+    background: #111;
+    box-shadow: 0 0 28px rgba(57,255,20,0.14);
+  }
+  .pkg-card.featured::before {
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: 0.7rem; right: 0.7rem;
+    background: var(--neon);
+    color: #000;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+  }
+
+  .pkg-tier {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--neon);
+    margin-bottom: 0.3rem;
+    opacity: 0.8;
+  }
+  .pkg-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+  }
+  .pkg-price {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--neon);
+    text-shadow: 0 0 14px rgba(57,255,20,0.4);
+    margin: 0.6rem 0 0.8rem;
+    line-height: 1;
+  }
+  .pkg-price sup {
+    font-size: 0.7rem;
+    vertical-align: super;
+  }
+
+  .pkg-divider {
+    height: 1px;
+    background: var(--border-dim);
+    margin-bottom: 0.8rem;
+  }
+
+  .pkg-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .pkg-features li {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    line-height: 1.4;
+  }
+  .pkg-features li .chk {
+    color: var(--neon);
+    font-size: 0.65rem;
+    margin-top: 0.05rem;
+    flex-shrink: 0;
+  }
+  .pkg-features li.muted .chk { color: #444; }
+  .pkg-features li.muted { opacity: 0.45; }
+
+  .pkg-cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.55rem 0;
+    border-radius: 4px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--neon-dim);
+    color: var(--neon);
+    transition: all 0.2s;
+  }
+  .pkg-cta:hover, .pkg-card.featured .pkg-cta {
+    background: var(--neon);
+    color: #000;
+    box-shadow: 0 0 18px rgba(57,255,20,0.4);
+    border-color: var(--neon);
+  }
+  .pkg-card.featured .pkg-cta:hover {
+    box-shadow: 0 0 28px rgba(57,255,20,0.6);
+  }
+
+  /* ── FOOTER LINE ── */
+  .ad-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .ad-footer p {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .ad-footer span { color: var(--neon); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity:0; transform: translateY(-16px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(16px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .cards-row { grid-template-columns: 1fr; }
+    .pkg-card.featured { order: -1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ad-wrap">
+
+  <!-- HEADER -->
+  <div class="ad-header">
+    <div class="ad-eyebrow">Special Packages</div>
+    <div class="ad-title">Custom <span>Website</span> Services</div>
+    <div class="ad-sub">Professional builds. Clean code. Real results.</div>
+  </div>
+
+  <!-- ══ CATEGORY 1: 2-PAGE WEBSITE (FAST LAUNCH) ══ -->
+  <div class="category-block">
+    <div class="category-label">2-Page Website — Fast Launch</div>
+    <div class="cards-row">
+
+      <!-- Basic -->
+      <div class="pkg-card">
+        <div class="pkg-tier">Basic</div>
+        <div class="pkg-name">Starter Site</div>
+        <div class="pkg-price"><sup>$</sup>199</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-features">
+          <li><span class="chk">▸</span> 2-Page Custom Design</li>
+          <li><span class="chk">▸</span> Mobile Responsive</li>
+          <li><span class="chk">▸</span> Contact Form</li>
+          <li><span class="chk">▸</span> 3-Day Delivery</li>
+          <li class="muted"><span class="chk">▸</span> SEO Setup</li>
+          <li class="muted"><span class="chk">▸</span> Analytics Integration</li>
+        </ul>
+        <a class="pkg-cta" href="#">Get Started</a>
+      </div>
+
+      <!-- Pro -->
+      <div class="pkg-card featured">
+        <div class="featured-badge">Best Value</div>
+        <div class="pkg-tier">Pro</div>
+        <div class="pkg-name">Launch Ready</div>
+        <div class="pkg-price"><sup>$</sup>349</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-features">
+          <li><span class="chk">▸</span> 2-Page Premium Design</li>
+          <li><span class="chk">▸</span> Mobile Responsive</li>
+          <li><span class="chk">▸</span> Contact Form + CTA</li>
+          <li><span class="chk">▸</span> 2-Day Delivery</li>
+          <li><span class="chk">▸</span> Basic SEO Setup</li>
+          <li><span class="chk">▸</span> Google Analytics</li>
+        </ul>
+        <a class="pkg-cta" href="#">Get Started</a>
+      </div>
+
+      <!-- Premium -->
+      <div class="pkg-card">
+        <div class="pkg-tier">Premium</div>
+        <div class="pkg-name">Elite Launch</div>
+        <div class="pkg-price"><sup>$</sup>549</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-features">
+          <li><span class="chk">▸</span> 2-Page Elite Design</li>
+          <li><span class="chk">▸</span> Mobile + Tablet Optimized</li>
+          <li><span class="chk">▸</span> Advanced Forms + Logic</li>
+          <li><span class="chk">▸</span> Same-Day / 24hr Delivery</li>
+          <li><span class="chk">▸</span> Full SEO Setup</li>
+          <li><span class="chk">▸</span> Analytics + Pixel Setup</li>
+        </ul>
+        <a class="pkg-cta" href="#">Get Started</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ CATEGORY 2: MULTI-PAGE WEBSITE (WITH MAINTENANCE) ══ -->
+  <div class="category-block">
+    <div class="category-label">Multi-Page Website — With Maintenance</div>
+    <div class="cards-row">
+
+      <!-- Basic -->
+      <div class="pkg-card">
+        <div class="pkg-tier">Basic</div>
+        <div class="pkg-name">Core + Care</div>
+        <div class="pkg-price"><sup>$</sup>699</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-features">
+          <li><span class="chk">▸</span> Up to 5 Pages</li>
+          <li><span class="chk">▸</span> Mobile Responsive</li>
+          <li><span class="chk">▸</span> CMS Integration</li>
+          <li><span class="chk">▸</span> 1 Month Maintenance</li>
+          <li><span class="chk">▸</span> Basic SEO</li>
+          <li class="muted"><span class="chk">▸</span> Social Integration</li>
+        </ul>
+        <a class="pkg-cta" href="#">Get Started</a>
+      </div>
+
+      <!-- Pro -->
+      <div class="pkg-card featured">
+        <div class="featured-badge">Best Value</div>
+        <div class="pkg-tier">Pro</div>
+        <div class="pkg-name">Growth + Care</div>
+        <div class="pkg-price"><sup>$</sup>1,199</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-features">
+          <li><span class="chk">▸</span> Up to 8 Pages</li>
+          <li><span class="chk">▸</span> Mobile + Tablet Optimized</li>
+          <li><span class="chk">▸</span> CMS + Blog Setup</li>
+          <li><span class="chk">▸</span> 3 Months Maintenance</li>
+          <li><span class="chk">▸</span> Full SEO + Analytics</li>
+          <li><span class="chk">▸</span> Social Media Integration</li>
+        </ul>
+        <a class="pkg-cta" href="#">Get Started</a>
+      </div>
+
+      <!-- Premium -->
+      <div class="pkg-card">
+        <div class="pkg-tier">Premium</div>
+        <div class="pkg-name">Authority + Care</div>
+        <div class="pkg-price"><sup>$</sup>1,999</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-features">
+          <li><span class="chk">▸</span> Unlimited Pages</li>
+          <li><span class="chk">▸</span> Full Responsive + Animation</li>
+          <li><span class="chk">▸</span> CMS + E-Commerce Ready</li>
+          <li><span class="chk">▸</span> 6 Months Maintenance</li>
+          <li><span class="chk">▸</span> Advanced SEO + GA4</li>
+          <li><span class="chk">▸</span> Full Social + Pixel Setup</li>
+        </ul>
+        <a class="pkg-cta" href="#">Get Started</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ CATEGORY 3: MULTI-PAGE WEBSITE (NO MAINTENANCE) ══ -->
+  <div class="category-block">
+    <div class="category-label">Multi-Page Website — No Maintenance</div>
+    <div class="cards-row">
+
+      <!-- Basic -->
+      <div class="pkg-card">
+        <div class="pkg-tier">Basic</div>
+        <div class="pkg-name">Core Build</div>
+        <div class="pkg-price"><sup>$</sup>499</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-features">
+          <li><span class="chk">▸</span> Up to 5 Pages</li>
+          <li><span class="chk">▸</span> Mobile Responsive</li>
+          <li><span class="chk">▸</span> CMS Integration</li>
+          <li><span class="chk">▸</span> Basic SEO</li>
+          <li class="muted"><span class="chk">▸</span> Social Integration</li>
+          <li class="muted"><span class="chk">▸</span> Analytics Setup</li>
+        </ul>
+        <a class="pkg-cta" href="#">Get Started</a>
+      </div>
+
+      <!-- Pro -->
+      <div class="pkg-card featured">
+        <div class="featured-badge">Best Value</div>
+        <div class="pkg-tier">Pro</div>
+        <div class="pkg-name">Growth Build</div>
+        <div class="pkg-price"><sup>$</sup>899</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-features">
+          <li><span class="chk">▸</span> Up to 8 Pages</li>
+          <li><span class="chk">▸</span> Mobile + Tablet Optimized</li>
+          <li><span class="chk">▸</span> CMS + Blog Setup</li>
+          <li><span class="chk">▸</span> Full SEO + Analytics</li>
+          <li><span class="chk">▸</span> Social Media Integration</li>
+          <li class="muted"><span class="chk">▸</span> E-Commerce Module</li>
+        </ul>
+        <a class="pkg-cta" href="#">Get Started</a>
+      </div>
+
+      <!-- Premium -->
+      <div class="pkg-card">
+        <div class="pkg-tier">Premium</div>
+        <div class="pkg-name">Authority Build</div>
+        <div class="pkg-price"><sup>$</sup>1,499</div>
+        <div class="pkg-divider"></div>
+        <ul class="pkg-features">
+          <li><span class="chk">▸</span> Unlimited Pages</li>
+          <li><span class="chk">▸</span> Full Responsive + Animation</li>
+          <li><span class="chk">▸</span> CMS + E-Commerce Ready</li>
+          <li><span class="chk">▸</span> Advanced SEO + GA4</li>
+          <li><span class="chk">▸</span> Full Social + Pixel Setup</li>
+          <li><span class="chk">▸</span> Logo & Branding Included</li>
+        </ul>
+        <a class="pkg-cta" href="#">Get Started</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="ad-footer">
+    <p><span>NexGenix Creative Solutions</span> &nbsp;·&nbsp; nexgenixcreativesolutions.github.io</p>
+  </div>
+
+</div>
+</body>
+</html>
