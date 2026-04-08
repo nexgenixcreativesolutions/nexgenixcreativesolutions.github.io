@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Special Promo — NexGenix Creative Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700;800&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --neon: #39ff14;
+    --neon-dim: rgba(57,255,20,0.10);
+    --neon-glow: rgba(57,255,20,0.35);
+    --bg: #080808;
+    --surface: #0e0e0e;
+    --surface-2: #141414;
+    --border: rgba(57,255,20,0.28);
+    --border-dim: rgba(57,255,20,0.12);
+    --text: #e8e8e8;
+    --text-muted: #888;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat Alternates', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  /* scanline */
+  body::before {
+    content:'';
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px
+    );
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 600px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  /* ── PROMO CARD ── */
+  .promo-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2.5rem 2rem 2rem;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(57,255,20,0.07), 0 24px 64px rgba(0,0,0,0.6);
+  }
+
+  /* top neon line */
+  .promo-card::before {
+    content:'';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+    box-shadow: 0 0 14px var(--neon-glow);
+  }
+
+  /* corner accent */
+  .promo-card::after {
+    content:'';
+    position: absolute;
+    bottom: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(57,255,20,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── BADGES ROW ── */
+  .badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .badge {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+  }
+  .badge-neon {
+    background: var(--neon);
+    color: #000;
+  }
+  .badge-outline {
+    border: 1px solid var(--border);
+    color: var(--neon);
+    background: var(--neon-dim);
+  }
+
+  /* ── EYEBROW ── */
+  .eyebrow {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    color: var(--neon);
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── HEADLINE ── */
+  .headline {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.3rem, 5vw, 1.9rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+    text-shadow: 0 0 24px rgba(57,255,20,0.15);
+  }
+  .headline span { color: var(--neon); text-shadow: 0 0 16px var(--neon-glow); }
+
+  .subheadline {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+  }
+  .subheadline strong { color: var(--text); font-weight: 600; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── PRICING ROW ── */
+  .pricing-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+  }
+  .price-main {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+    color: var(--neon);
+    text-shadow: 0 0 28px rgba(57,255,20,0.5);
+    line-height: 1;
+  }
+  .price-main sup {
+    font-size: 1.2rem;
+    vertical-align: super;
+  }
+  .price-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-bottom: 0.3rem;
+  }
+  .price-original {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-decoration: line-through;
+  }
+  .price-save {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--neon);
+    text-transform: uppercase;
+    opacity: 0.9;
+  }
+
+  /* ── FEATURES ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1.75rem;
+  }
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .feature-item .chk {
+    color: var(--neon);
+    font-size: 0.6rem;
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+  }
+
+  /* ── WHO IT'S FOR ── */
+  .for-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--neon);
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+  .for-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.75rem;
+  }
+  .for-tag {
+    font-size: 0.68rem;
+    color: var(--text);
+    border: 1px solid var(--border-dim);
+    background: var(--surface-2);
+    border-radius: 3px;
+    padding: 0.3rem 0.7rem;
+  }
+
+  /* ── SLOTS WARNING ── */
+  .slots-bar {
+    background: rgba(57,255,20,0.05);
+    border: 1px solid var(--border-dim);
+    border-left: 3px solid var(--neon);
+    border-radius: 4px;
+    padding: 0.65rem 0.9rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .slots-icon {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  .slots-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .slots-text span { color: var(--neon); }
+
+  /* ── CTA ── */
+  .cta-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .cta-primary {
+    flex: 1;
+    min-width: 160px;
+    text-align: center;
+    padding: 0.8rem 1rem;
+    background: var(--neon);
+    color: #000;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 0 24px rgba(57,255,20,0.4);
+    transition: all 0.2s;
+  }
+  .cta-primary:hover {
+    box-shadow: 0 0 36px rgba(57,255,20,0.65);
+    transform: translateY(-2px);
+  }
+  .cta-secondary {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    padding: 0.8rem 1rem;
+    background: transparent;
+    color: var(--neon);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .cta-secondary:hover {
+    background: var(--neon-dim);
+    border-color: var(--neon);
+  }
+
+  /* ── FOOTER ── */
+  .card-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .card-footer span { color: var(--neon); }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(20px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    .promo-card { padding: 1.75rem 1.25rem 1.5rem; }
+    .features-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="promo-card">
+
+    <!-- BADGES -->
+    <div class="badges">
+      <span class="badge badge-neon">First-Time Clients Only</span>
+      <span class="badge badge-outline">Limited Slots Available</span>
+    </div>
+
+    <!-- EYEBROW + HEADLINE -->
+    <div class="eyebrow">Special Promo Offer</div>
+    <div class="headline">Multi-Page Website.<br><span>Startup Price.</span></div>
+    <div class="subheadline">
+      Get a <strong>full multi-page website</strong> built for your business —
+      at the price of a basic 2-page package. Built for people who are serious about growing online.
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- PRICING -->
+    <div class="pricing-row">
+      <div class="price-main"><sup>$</sup>115</div>
+      <div class="price-meta">
+        <div class="price-original">Multi-Page starting at $499</div>
+        <div class="price-save">↓ You save $384+</div>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="features-grid">
+      <div class="feature-item"><span class="chk">▸</span> Up to 5 Custom Pages</div>
+      <div class="feature-item"><span class="chk">▸</span> Mobile Responsive</div>
+      <div class="feature-item"><span class="chk">▸</span> CMS Integration</div>
+      <div class="feature-item"><span class="chk">▸</span> Contact Form + CTA</div>
+      <div class="feature-item"><span class="chk">▸</span> Basic SEO Setup</div>
+      <div class="feature-item"><span class="chk">▸</span> Google Analytics</div>
+      <div class="feature-item"><span class="chk">▸</span> Social Media Links</div>
+      <div class="feature-item"><span class="chk">▸</span> Fast Delivery</div>
+    </div>
+
+    <!-- WHO IT'S FOR -->
+    <div class="for-label">Who This Is For</div>
+    <div class="for-tags">
+      <span class="for-tag">Freelancers</span>
+      <span class="for-tag">Small Business Owners</span>
+      <span class="for-tag">Solo Entrepreneurs</span>
+      <span class="for-tag">Startups</span>
+    </div>
+
+    <!-- SLOTS WARNING -->
+    <div class="slots-bar">
+      <div class="slots-icon">⚡</div>
+      <div class="slots-text">
+        This promo is available to <span>first-time clients only</span> and
+        slots are <span>strictly limited</span>. Once filled, the offer closes — no exceptions.
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-row">
+      <a class="cta-primary" href="mailto:info@nexgenixcreativesolutions.com">Claim This Offer</a>
+      <a class="cta-secondary" href="https://nexgenixcreativesolutions.github.io">See Our Work</a>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="card-footer">
+      <span>NexGenix Creative Solutions</span> &nbsp;·&nbsp; nexgenixcreativesolutions.github.io
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
