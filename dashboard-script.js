@@ -5,21 +5,27 @@ const SUPABASE_URL  = 'https://rranivozhrsldhapzwqc.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyYW5pdm96aHJzbGRoYXB6d3FjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAxNzIxMzcsImV4cCI6MjA4NTc0ODEzN30.0wOlQErCvNbf9LhhWzecDINB6523BHqgc2G2v0wURGQ';
 const _sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-// Session guard — uses onAuthStateChange to avoid redirect loop
+// ── GUEST-FRIENDLY AUTH — no forced redirect ──────────────────────────────
+// Guests can browse and place orders; only Profile/Settings/Orders need login.
 let _sessionResolved = false;
+let _currentSession = null;
+
 _sb.auth.onAuthStateChange(async (event, session) => {
   if (_sessionResolved) return;
   _sessionResolved = true;
+  _currentSession = session;
 
-  if (!session) {
-    window.location.href =
-      'https://nexgenixcreativesolutions.github.io/login-signup' +
-      '?redirect=' + encodeURIComponent(window.location.href);
-    return;
+  if (session) {
+    // Logged in: load profile data and update UI to auth state
+    const { data: profile } = await _sb
+      .from('profiles').select('*').eq('id', session.user.id).single();
+    if (profile) loadProfileIntoUI(profile);
   }
-  const { data: profile } = await _sb
-    .from('profiles').select('*').eq('id', session.user.id).single();
-  if (profile) loadProfileIntoUI(profile);
+
+  // Apply auth state to UI (works for both guests and logged-in users)
+  if (typeof window.applyAuthState === 'function') {
+    window.applyAuthState(!!session);
+  }
 });
 
 function loadProfileIntoUI(profile) {
@@ -46,12 +52,18 @@ function loadProfileIntoUI(profile) {
       else { numEl.value = phone; }
     }
   }
+
+  // Update initials in avatar
+  const initialsEl = document.getElementById('avatarInitials');
+  if (initialsEl && displayName) {
+    const parts = displayName.trim().split(/\s+/);
+    initialsEl.textContent = parts.length >= 2
+      ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+      : displayName.slice(0, 2).toUpperCase();
+  }
 }
 
     // =================== EMAILJS CONFIGURATION ===================
-    // Initialize EmailJS with your Public Key
-    // IMPORTANT: Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS Public Key
-    // Get it from: https://dashboard.emailjs.com/admin/account
     (function() {
       emailjs.init({
         publicKey: 'coUeJ01I7BiMQ-ABN',
@@ -59,56 +71,27 @@ function loadProfileIntoUI(profile) {
       });
     })();
 
-    // EmailJS Service Configuration
     const EMAILJS_CONFIG = {
-      serviceID: 'service_ju84tjo',           // Gmail service ID
-      adminTemplateID: 'template_7z9si7j',    // Admin template → notifies NexGenix (auto-reply linked to client template_s8jsvcf)
-      clientTemplateID: 'template_s8jsvcf',   // Client template → confirmation email to client
-      publicKey: 'coUeJ01I7BiMQ-ABN'          // Public key
+      serviceID: 'service_ju84tjo',
+      adminTemplateID: 'template_7z9si7j',
+      clientTemplateID: 'template_s8jsvcf',
+      publicKey: 'coUeJ01I7BiMQ-ABN'
     };
 
     // =================== CURRENCY CONVERSION ===================
     let currentCurrency = 'USD';
     const conversionRates = {
-      'USD': 1,           // US Dollar
-      'PHP': 56.50,       // Philippine Peso
-      'EUR': 0.92,        // Euro (EU incl. Italy)
-      'GBP': 0.79,        // British Pound
-      'JPY': 149.50,      // Japanese Yen
-      'AUD': 1.52,        // Australian Dollar
-      'CAD': 1.39,        // Canadian Dollar
-      'SGD': 1.34,        // Singapore Dollar
-      'INR': 83.20,       // Indian Rupee
-      'CNY': 7.24,        // Chinese Yuan
-      'PLN': 3.98,        // Polish Złoty
-      'MXN': 17.15,       // Mexican Peso
-      'BRL': 4.97,        // Brazilian Real
-      'KRW': 1325.00,     // South Korean Won
-      'CHF': 0.89,        // Swiss Franc
-      'AED': 3.67,        // UAE Dirham
-      'SAR': 3.75         // Saudi Riyal
+      'USD': 1, 'PHP': 56.50, 'EUR': 0.92, 'GBP': 0.79,
+      'JPY': 149.50, 'AUD': 1.52, 'CAD': 1.39, 'SGD': 1.34,
+      'INR': 83.20, 'CNY': 7.24, 'PLN': 3.98, 'MXN': 17.15,
+      'BRL': 4.97, 'KRW': 1325.00, 'CHF': 0.89, 'AED': 3.67, 'SAR': 3.75
     };
-
     const currencySymbols = {
-      'USD': '$',
-      'PHP': '₱',
-      'EUR': '€',
-      'GBP': '£',
-      'JPY': '¥',
-      'AUD': 'A$',
-      'CAD': 'C$',
-      'SGD': 'S$',
-      'INR': '₹',
-      'CNY': '¥',
-      'PLN': 'zł',
-      'MXN': 'MX$',
-      'BRL': 'R$',
-      'KRW': '₩',
-      'CHF': 'Fr',
-      'AED': 'د.إ',
-      'SAR': '﷼'
+      'USD': '$', 'PHP': '₱', 'EUR': '€', 'GBP': '£', 'JPY': '¥',
+      'AUD': 'A$', 'CAD': 'C$', 'SGD': 'S$', 'INR': '₹', 'CNY': '¥',
+      'PLN': 'zł', 'MXN': 'MX$', 'BRL': 'R$', 'KRW': '₩', 'CHF': 'Fr',
+      'AED': 'د.إ', 'SAR': '﷼'
     };
-
     const currencyNames = {
       'USD': 'US Dollar', 'PHP': 'Philippine Peso', 'EUR': 'Euro (Italy/EU)',
       'GBP': 'British Pound', 'JPY': 'Japanese Yen', 'AUD': 'Australian Dollar',
@@ -117,7 +100,6 @@ function loadProfileIntoUI(profile) {
       'BRL': 'Brazilian Real', 'KRW': 'South Korean Won', 'CHF': 'Swiss Franc',
       'AED': 'UAE Dirham', 'SAR': 'Saudi Riyal'
     };
-
     const currencyFlags = {
       'USD': '💵', 'PHP': '🇵🇭', 'EUR': '🇪🇺', 'GBP': '🇬🇧', 'JPY': '🇯🇵',
       'AUD': '🇦🇺', 'CAD': '🇨🇦', 'SGD': '🇸🇬', 'INR': '🇮🇳', 'CNY': '🇨🇳',
@@ -128,8 +110,6 @@ function loadProfileIntoUI(profile) {
     function formatPrice(usdAmount) {
       const converted = usdAmount * conversionRates[currentCurrency];
       const symbol = currencySymbols[currentCurrency];
-
-      // Format with proper decimal places
       if (['JPY', 'KRW', 'INR'].includes(currentCurrency)) {
         return symbol + Math.round(converted).toLocaleString();
       }
@@ -137,28 +117,17 @@ function loadProfileIntoUI(profile) {
     }
 
     function convertPHPToUSD(phpAmount) {
-      // All prices in servicePackages are in PHP, convert to USD as base
       return phpAmount / 56.50;
     }
 
     function changeCurrency(currency) {
       currentCurrency = currency;
-
-      // Sync currency meta in invoice
       const metaEl = document.getElementById('invoiceCurrencyMeta');
       if (metaEl) metaEl.textContent = currency;
-
-      // Sync dropdown
       const dropdown = document.getElementById('currencyDropdown');
       if (dropdown) dropdown.value = currency;
-
-      // Reload services to update all prices
       loadServices();
-
-      // Update invoice if visible
-      if (selectedPackage) {
-        updateInvoice();
-      }
+      if (selectedPackage) updateInvoice();
     }
 
     function changeCurrencyFromDropdown(select) {
@@ -169,1841 +138,608 @@ function loadProfileIntoUI(profile) {
       changeCurrency(currency);
     }
 
-    // =================== SERVICE PACKAGES DATA (CATEGORIZED) ===================
+    // =================== SERVICE PACKAGES DATA ===================
     const servicePackages = {
-      // CATEGORY 1: MULTI-PAGE WITH MAINTENANCE
       maintenance: {
         basic: {
-          name: 'BASIC - Starter Business',
-          price: 18000,
-          basePages: 5,
-          minPages: 3,
-          maxPages: 5,
-          pricePerPage: 1500,
-          features: [
-            '3-5 page website',
-            'Mobile responsive',
-            'Free domain (1 year)',
-            'Hosting (1 year)',
-            '1 professional email'
-          ],
-          excluded: [],
-          bestFor: 'sari-sari, cafés, freelancers, startups'
+          name: 'BASIC - Starter Business', price: 18000,
+          basePages: 5, minPages: 3, maxPages: 5, pricePerPage: 1500,
+          features: ['3-5 page website','Mobile responsive','Free domain (1 year)','Hosting (1 year)','1 professional email'],
+          excluded: [], bestFor: 'sari-sari, cafés, freelancers, startups'
         },
         pro: {
-          name: 'PRO - Growing Business',
-          price: 26000,
-          basePages: 8,
-          minPages: 5,
-          maxPages: 8,
-          pricePerPage: 2000,
-          features: [
-            '5-8 pages',
-            'SQL database',
-            'Contact forms',
-            'Speed optimization',
-            'Website Manager (1 month FREE)'
-          ],
-          excluded: [],
-          bestFor: 'clinics, restaurants, agencies'
+          name: 'PRO - Growing Business', price: 26000,
+          basePages: 8, minPages: 5, maxPages: 8, pricePerPage: 2000,
+          features: ['5-8 pages','SQL database','2 professional emails','SEO optimization','Monthly maintenance'],
+          excluded: [], bestFor: 'clinics, restaurants, agencies'
         },
         premium: {
-          name: 'PREMIUM - Established/Corporate',
-          price: 52500,
-          basePages: 12,
-          minPages: 8,
-          maxPages: 12,
-          pricePerPage: 3500,
-          features: [
-            'Custom UI/UX',
-            'Advanced SQL & admin panel',
-            'Multiple emails',
-            'Priority support',
-            'Dedicated Website Manager'
-          ],
-          excluded: [],
-          bestFor: 'corporations, franchises, e-commerce'
+          name: 'PREMIUM - Established/Corporate', price: 52500,
+          basePages: 12, minPages: 8, maxPages: 12, pricePerPage: 3500,
+          features: ['Custom UI/UX','Advanced SQL & admin panel','Multiple emails','Priority support','Dedicated Website Manager'],
+          excluded: [], bestFor: 'corporations, franchises, e-commerce'
         }
       },
-
-      // CATEGORY 2: TWO-PAGE WEBSITES
       onePage: {
         starter: {
-          name: 'TWO-PAGE Starter',
-          price: 6500,
-          basePages: 2,
-          minPages: 2,
-          maxPages: 2,
-          pricePerPage: 1000,
-          features: [
-            '2 pages',
-            'Mobile responsive',
-            'Basic UI design',
-            'Contact form (email notification)',
-            'Hosted online',
-            'FREE domain (1 year)',
-            'Hosting (1 year)'
-          ],
-          excluded: ['No maintenance', 'No business email'],
+          name: 'TWO-PAGE Starter', price: 6500,
+          basePages: 2, minPages: 2, maxPages: 2, pricePerPage: 1000,
+          features: ['2 pages','Mobile responsive','Basic UI design','Contact form','FREE domain (1 year)','Hosting (1 year)'],
+          excluded: ['No maintenance','No business email'],
           bestFor: 'freelancers, home-based sellers, promos'
         },
         pro: {
-          name: 'TWO-PAGE Pro',
-          price: 9500,
-          basePages: 2,
-          minPages: 2,
-          maxPages: 2,
-          pricePerPage: 1500,
-          features: [
-            'Everything in Starter',
-            'Custom layout & branding',
-            'SEO-ready structure',
-            'Faster loading optimization',
-            'Priority setup'
-          ],
-          excluded: ['No maintenance', 'No business email'],
+          name: 'TWO-PAGE Pro', price: 9500,
+          basePages: 2, minPages: 2, maxPages: 2, pricePerPage: 1500,
+          features: ['Everything in Starter','Custom layout & branding','SEO-ready structure','Faster loading optimization','Priority setup'],
+          excluded: ['No maintenance','No business email'],
           bestFor: 'cafés, startups, marketing campaigns'
         },
         premium: {
-          name: 'TWO-PAGE Premium',
-          price: 14000,
-          basePages: 2,
-          minPages: 2,
-          maxPages: 2,
-          pricePerPage: 2000,
-          features: [
-            'Custom-designed landing page',
-            'Conversion-focused layout',
-            'Call-to-action sections',
-            'Google Map integration',
-            'Analytics setup'
-          ],
-          excluded: ['No maintenance', 'No business email'],
+          name: 'TWO-PAGE Premium', price: 14000,
+          basePages: 2, minPages: 2, maxPages: 2, pricePerPage: 2000,
+          features: ['Custom-designed landing page','Conversion-focused layout','Call-to-action sections','Google Map integration','Analytics setup'],
+          excluded: ['No maintenance','No business email'],
           bestFor: 'product launches, agencies, corporate promos'
         }
       },
-
-      // CATEGORY 3: MULTI-PAGE WITHOUT MAINTENANCE
       noMaintenance: {
         basic: {
-          name: 'MULTI-PAGE Basic',
-          price: 12000,
-          basePages: 4,
-          minPages: 3,
-          maxPages: 4,
-          pricePerPage: 1200,
-          features: [
-            '3-4 pages',
-            'Mobile responsive',
-            'FREE domain (1 year)',
-            'Hosting (1 year)',
-            'Contact form'
-          ],
-          excluded: ['No maintenance', 'No business email', 'No updates after turnover'],
+          name: 'MULTI-PAGE Basic', price: 12000,
+          basePages: 4, minPages: 3, maxPages: 4, pricePerPage: 1200,
+          features: ['3-4 pages','Mobile responsive','FREE domain (1 year)','Hosting (1 year)','Contact form'],
+          excluded: ['No maintenance','No business email','No updates after turnover'],
           bestFor: 'small shops, sari-sari, service providers'
         },
         standard: {
-          name: 'MULTI-PAGE Standard',
-          price: 17000,
-          basePages: 7,
-          minPages: 5,
-          maxPages: 7,
-          pricePerPage: 1700,
-          features: [
-            '5-7 pages',
-            'Improved UI design',
-            'Speed optimization',
-            'FREE domain (1 year)',
-            'Hosting (1 year)'
-          ],
-          excluded: ['No maintenance', 'No business email'],
+          name: 'MULTI-PAGE Standard', price: 17000,
+          basePages: 7, minPages: 5, maxPages: 7, pricePerPage: 1700,
+          features: ['5-7 pages','Improved UI design','Speed optimization','FREE domain (1 year)','Hosting (1 year)'],
+          excluded: ['No maintenance','No business email'],
           bestFor: 'restaurants, clinics, schools'
         },
         advanced: {
-          name: 'MULTI-PAGE Advanced',
-          price: 25000,
-          basePages: 12,
-          minPages: 8,
-          maxPages: 12,
-          pricePerPage: 2500,
-          features: [
-            '8-12 pages',
-            'Custom layout',
-            'SQL database (if needed)',
-            'FREE domain (1 year)',
-            'Hosting (1 year)'
-          ],
-          excluded: ['No maintenance', 'No business email'],
+          name: 'MULTI-PAGE Advanced', price: 25000,
+          basePages: 12, minPages: 8, maxPages: 12, pricePerPage: 2500,
+          features: ['8-12 pages','Custom layout','SQL database (if needed)','FREE domain (1 year)','Hosting (1 year)'],
+          excluded: ['No maintenance','No business email'],
           bestFor: 'large local businesses, organizations'
         }
       },
-
-      // CATEGORY 4: WEBSITE MANAGER SERVICES
       manager: {
         monthly: {
-          name: 'Website Manager (Monthly)',
-          price: 800,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Content updates (text/images)',
-            'Minor design changes',
-            'Plugin & security checks',
-            'Backup monitoring',
-            'Basic performance checks',
-            'Startup-friendly pricing'
-          ],
-          excluded: [],
-          bestFor: 'businesses wanting flexible monthly support'
+          name: 'Website Manager (Monthly)', price: 800,
+          basePages: 0, pricePerPage: 0,
+          features: ['Content updates','Minor design changes','Plugin & security checks','Backup monitoring','Basic performance checks','Startup-friendly pricing'],
+          excluded: [], bestFor: 'businesses wanting flexible monthly support'
         },
         annual: {
-          name: 'Website Manager (Annual)',
-          price: 8000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'All monthly features',
-            '2 months FREE',
-            'Priority support',
-            'Discounted rate',
-            'Better value for long-term'
-          ],
-          excluded: [],
-          bestFor: 'businesses committed to ongoing maintenance'
+          name: 'Website Manager (Annual)', price: 8000,
+          basePages: 0, pricePerPage: 0,
+          features: ['All monthly features','2 months FREE','Priority support','Discounted rate','Better value for long-term'],
+          excluded: [], bestFor: 'businesses committed to ongoing maintenance'
         }
       },
-
-      // CATEGORY 5: ANNUAL RENEWAL
       renewal: {
         standard: {
-          name: 'Annual Website Renewal',
-          price: 20000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Hosting Renewal: ₱1,800',
-            'Domain Renewal: ₱900',
-            'Google Workspace Email Renewal (1 user): ₱6,800',
-            'Website Manager Service (Annual): ₱8,000',
-            'Technical Support & Vendor Handling Fee: ₱2,500'
-          ],
-          excluded: [],
-          bestFor: 'existing clients renewing annual services'
+          name: 'Annual Website Renewal', price: 20000,
+          basePages: 0, pricePerPage: 0,
+          features: ['Hosting Renewal: ₱1,800','Domain Renewal: ₱900','Google Workspace Email Renewal (1 user): ₱6,800','Website Manager Service (Annual): ₱8,000','Technical Support & Vendor Handling Fee: ₱2,500'],
+          excluded: [], bestFor: 'existing clients renewing annual services'
         }
       },
-
-      // CATEGORY 6: APP DESIGN
       appDesign: {
         starter: {
-          name: 'APP DESIGN - Starter',
-          price: 8000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Up to 8 screens',
-            'iOS or Android',
-            'Static Figma mockups',
-            'Basic UI design',
-            'Mobile-first layout'
-          ],
-          excluded: ['No prototype', 'No branding'],
-          bestFor: 'small apps, MVPs, simple utilities'
+          name: 'APP DESIGN - Starter', price: 8000,
+          basePages: 0, pricePerPage: 0,
+          features: ['Up to 8 screens','iOS or Android','Static Figma mockups','Basic UI design','Mobile-first layout'],
+          excluded: ['No prototype','No branding'], bestFor: 'small apps, MVPs, simple utilities'
         },
         pro: {
-          name: 'APP DESIGN - Pro',
-          price: 18000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Up to 20 screens',
-            'iOS & Android',
-            'Clickable prototype',
-            'Custom branding & icon',
-            'Onboarding screens'
-          ],
-          excluded: [],
-          bestFor: 'startups, e-commerce apps, service apps'
+          name: 'APP DESIGN - Pro', price: 18000,
+          basePages: 0, pricePerPage: 0,
+          features: ['Up to 20 screens','iOS & Android','Clickable prototype','Custom branding & icon','Onboarding screens'],
+          excluded: [], bestFor: 'startups, e-commerce apps, service apps'
         },
         premium: {
-          name: 'APP DESIGN - Premium',
-          price: 35000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Unlimited screens',
-            'Cross-platform design',
-            'Animated prototype',
-            'Full design system',
-            'Dark & light mode',
-            'Developer handoff'
-          ],
-          excluded: [],
-          bestFor: 'funded startups, enterprise apps, SaaS'
+          name: 'APP DESIGN - Premium', price: 35000,
+          basePages: 0, pricePerPage: 0,
+          features: ['Unlimited screens','Cross-platform design','Animated prototype','Full design system','Dark & light mode','Developer handoff'],
+          excluded: [], bestFor: 'funded startups, enterprise apps, SaaS'
         }
       },
-
-
-      // CATEGORY 8: LOGO DESIGN
+      uiux: {
+        starter: {
+          name: 'UI/UX - Starter', price: 5000,
+          basePages: 0, pricePerPage: 0,
+          features: ['Up to 5 screens','Wireframes only','Figma delivery','1 revision round'],
+          excluded: ['No prototype'], bestFor: 'simple projects, landing pages'
+        },
+        pro: {
+          name: 'UI/UX - Pro', price: 12000,
+          basePages: 0, pricePerPage: 0,
+          features: ['Up to 15 screens','Hi-fi mockups','Clickable prototype','3 revision rounds','Design tokens'],
+          excluded: [], bestFor: 'apps, dashboards, SaaS products'
+        },
+        premium: {
+          name: 'UI/UX - Premium', price: 28000,
+          basePages: 0, pricePerPage: 0,
+          features: ['Unlimited screens','Full design system','User research & testing','Unlimited revisions','Developer specs'],
+          excluded: [], bestFor: 'enterprise products, full redesigns'
+        }
+      },
       logoDesign: {
         basic: {
-          name: 'LOGO - Basic',
-          price: 2500,
-          basePages: 0, pricePerPage: 0,
-          tier: 'basic',
+          name: 'LOGO - Basic', price: 2500,
+          basePages: 0, pricePerPage: 0, tier: 'basic',
           tagline: 'Simple & clean logo to get started',
-          features: [
-            '2 logo concepts to choose from',
-            'PNG & JPG formats only',
-            '2 revision rounds',
-            'Color & black-and-white versions',
-            '5–7 business day delivery'
-          ],
-          excluded: [
-            'No vector file (AI / EPS / SVG)',
-            'No brand guide or style sheet',
-            'No business card mockup',
-            'No social media kit',
-            'No reversed / transparent versions'
-          ],
+          features: ['2 logo concepts','PNG & JPG formats only','2 revision rounds','Color & black-and-white versions','5–7 business day delivery'],
+          excluded: ['No vector file (AI / EPS / SVG)','No brand guide','No business card mockup'],
           bestFor: 'startups, solo entrepreneurs, sari-sari stores'
         },
         pro: {
-          name: 'LOGO - Pro',
-          price: 5500,
-          basePages: 0, pricePerPage: 0,
-          tier: 'pro',
+          name: 'LOGO - Pro', price: 5500,
+          basePages: 0, pricePerPage: 0, tier: 'pro',
           tagline: 'Professional quality with vector files',
-          features: [
-            '4 logo concepts to choose from',
-            'PNG, JPG & SVG (vector) formats',
-            '4 revision rounds',
-            'Color, B&W & reversed versions',
-            'Business card mockup preview',
-            '3–5 business day delivery'
-          ],
-          excluded: [
-            'No full brand guide',
-            'No social media kit',
-            'No AI / EPS source files'
-          ],
+          features: ['4 logo concepts','PNG, JPG & SVG (vector) formats','4 revision rounds','Color, B&W & reversed versions','Business card mockup preview','3–5 business day delivery'],
+          excluded: ['No full brand guide','No social media kit'],
           bestFor: 'growing businesses, clinics, restaurants'
         },
         premium: {
-          name: 'LOGO - Premium Brand Identity',
-          price: 12000,
-          basePages: 0, pricePerPage: 0,
-          tier: 'premium',
+          name: 'LOGO - Premium Brand Identity', price: 12000,
+          basePages: 0, pricePerPage: 0, tier: 'premium',
           tagline: 'Complete brand identity — everything included',
-          features: [
-            'Unlimited logo concepts',
-            'Full vector package: AI, EPS, SVG, PNG, JPG',
-            'Unlimited revision rounds',
-            'Complete mini brand guide (colors, fonts, usage rules)',
-            'Social media profile kit (FB, IG, LinkedIn covers)',
-            'Business card mockup',
-            'Transparent / reversed versions for all backgrounds',
-            'Priority 2–3 business day delivery'
-          ],
-          excluded: [],
-          bestFor: 'corporations, franchises, rebrands, serious businesses'
+          features: ['Unlimited logo concepts','Full vector package: AI, EPS, SVG, PNG, JPG','Unlimited revisions','Brand style guide','Social media kit','Business card + letterhead mockup'],
+          excluded: [], bestFor: 'established brands, agencies, funded startups'
         }
       },
-
-      // CATEGORY 9: VIDEO ADS
       videoAds: {
         short: {
-          name: 'VIDEO AD - Short (up to 30s)',
-          price: 4500,
+          name: 'VIDEO ADS - Short', price: 4500,
           basePages: 0, pricePerPage: 0,
-          features: [
-            'Up to 30 seconds',
-            'Script consultation',
-            'Motion graphics & text overlays',
-            'Background music (licensed)',
-            '2 revision rounds',
-            'HD 1080p export'
-          ],
-          excluded: [],
-          bestFor: 'social media stories, reels, quick promos'
+          features: ['Up to 30 seconds','1080p Full HD','1 revision round','Background music included','Fast 3–5 day delivery'],
+          excluded: ['No custom voiceover'], bestFor: 'social media stories, reels, quick promos'
         },
         standard: {
-          name: 'VIDEO AD - Standard (up to 60s)',
-          price: 8000,
+          name: 'VIDEO ADS - Standard', price: 9500,
           basePages: 0, pricePerPage: 0,
-          features: [
-            'Up to 60 seconds',
-            'Script & storyboard',
-            'Custom motion graphics',
-            'Voiceover ready (client provides)',
-            '3 revision rounds',
-            'HD 1080p / 4K export'
-          ],
-          excluded: [],
-          bestFor: 'YouTube ads, Facebook campaigns, product launches'
+          features: ['Up to 60 seconds','1080p or 4K','2 revision rounds','Custom graphics & animations','Voiceover option'],
+          excluded: [], bestFor: 'Facebook/Instagram ads, YouTube pre-rolls'
         },
         premium: {
-          name: 'VIDEO AD - Premium (up to 120s)',
-          price: 15000,
+          name: 'VIDEO ADS - Premium', price: 22000,
           basePages: 0, pricePerPage: 0,
-          features: [
-            'Up to 120 seconds',
-            'Full script & storyboard',
-            'Advanced animation & effects',
-            'Custom music / SFX',
-            'Multiple format exports',
-            'Unlimited revisions',
-            'Priority 3-day turnaround'
-          ],
-          excluded: [],
-          bestFor: 'brand films, company profiles, major campaigns'
-        }
-      },
-      // CATEGORY 7: UI/UX DESIGN
-      uiuxDesign: {
-        wireframe: {
-          name: 'UI/UX - Wireframes',
-          price: 5000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Up to 10 screens',
-            'Low to mid-fidelity',
-            'User flow diagrams',
-            'Figma deliverables',
-            'Revision rounds included'
-          ],
-          excluded: ['No visual design', 'No prototype'],
-          bestFor: 'early-stage planning, concept validation'
-        },
-        prototype: {
-          name: 'UI/UX - Full Prototype',
-          price: 14000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Up to 25 screens',
-            'High-fidelity design',
-            'Clickable prototype',
-            'User journey mapping',
-            'Information architecture'
-          ],
-          excluded: [],
-          bestFor: 'investor demos, usability testing, pitches'
-        },
-        system: {
-          name: 'UI/UX - Design System',
-          price: 28000,
-          basePages: 0,
-          pricePerPage: 0,
-          features: [
-            'Complete component library',
-            'Design tokens & variables',
-            'Accessibility audit (WCAG)',
-            'Developer handoff specs',
-            'Documentation included'
-          ],
-          excluded: [],
-          bestFor: 'product teams, SaaS platforms, enterprises'
+          features: ['Up to 120 seconds','4K resolution','Unlimited revisions','Custom voiceover included','Multiple format delivery','Full post-production'],
+          excluded: [], bestFor: 'brand campaigns, TV-quality ads, product launches'
         }
       }
     };
 
-    // =================== FLOATING CODE BACKGROUND ===================
-    const codeSnippets = [
-      'const nexgenix = () => {',
-      'function createSolution() {',
-      'import { Innovation } from "future"',
-      '<div className="digital">',
-      'async function buildDreams() {',
-      'export default Excellence;',
-      'return <Success />;',
-      'const vision = await design();',
-      'npm install creativity',
-      'git commit -m "launch"',
-      'SELECT * FROM solutions;',
-      'CREATE TABLE success;',
-      '{ transform: "ideas" }',
-      '.future { display: flex; }',
-      'onClick={() => innovate()}',
-      'useState(creativity);',
-      'useEffect(() => grow());',
-      'class Digital extends Tech {',
-      'interface Vision { }',
-      'type Success = Promise<Growth>;'
-    ];
+    // =================== STATE ===================
+    let selectedCategory = null;
+    let selectedPackage  = null;
+    let currentPageCount = 1;
+    let bizSelections    = { type: [], goal: [], stage: [] };
+    let webDesignSelections = [];
+    let webDevSelections    = [];
 
-    function createFloatingCodeBackground() {
-      const container = document.getElementById('floatingCodeContainer');
-      for (let i = 0; i < 15; i++) {
-        const codeLine = document.createElement('div');
-        codeLine.className = 'code-line';
-        const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-        codeLine.textContent = randomSnippet;
-        const yPosition = 5 + (i * 6);
-        const duration = 15 + Math.random() * 10;
-        const delay = Math.random() * 20;
-        codeLine.style.top = `${yPosition}%`;
-        codeLine.style.animationDuration = `${duration}s`;
-        codeLine.style.animationDelay = `${delay}s`;
-        container.appendChild(codeLine);
+    // =================== SHOW SECTION ===================
+    function showSection(id) {
+      document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(id);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
 
-    // =================== DATE TIME UPDATE ===================
-    function updateDateTime() {
-      const now = new Date();
-      const options = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      };
-      document.getElementById('datetime').textContent = now.toLocaleDateString('en-US', options);
-    }
-
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
-
-    // =================== SERVICE TYPE FILTER ===================
-    let activeServiceFilter = 'all';
-
-    function filterByServiceType(type, btn) {
-      activeServiceFilter = type;
-
-      // Update tab active states
-      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-
-      // Show/hide package categories based on data-service-types attribute
-      document.querySelectorAll('#newWebsitePackages .package-category').forEach(cat => {
-        const types = (cat.dataset.serviceTypes || '').split(' ');
-        if (type === 'all' || types.includes(type)) {
-          cat.classList.remove('hidden');
-        } else {
-          cat.classList.add('hidden');
-        }
-      });
-
-      // Reset any selected package when filter changes
-      if (selectedPackage) {
-        selectedPackage = null;
-        selectedCategory = null;
-        document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
-        document.getElementById('customizationPanel').style.display = 'none';
-        document.getElementById('invoiceSection').style.display = 'none';
-      }
-
-      // Pre-set activeServiceType to match the filter tab so when a card is clicked it's consistent
-      const serviceTypeMap = {
-        'app-design':     'app-design',
-        'web-design':     'web-design',
-        'web-development':'web-development',
-        'ui-ux-design':   'ui-ux-design',
-        'logo-design':    'logo-design',
-        'video-ads':      'video-ads'
-      };
-      if (type !== 'all' && serviceTypeMap[type]) {
-        activeServiceType = serviceTypeMap[type];
+    // =================== TOGGLE SIDEBAR (MOBILE) ===================
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      if (!sidebar) return;
+      const isOpen = sidebar.style.transform === 'translateX(0px)' || sidebar.classList.contains('open');
+      if (isOpen) {
+        sidebar.style.transform = 'translateX(-100%)';
+        sidebar.style.display = 'none';
+        if (overlay) overlay.style.display = 'none';
+        sidebar.classList.remove('open');
       } else {
-        activeServiceType = '';
+        sidebar.style.display = 'flex';
+        sidebar.style.transform = 'translateX(0px)';
+        if (overlay) overlay.style.display = 'block';
+        sidebar.classList.add('open');
       }
     }
 
-    // =================== ORDER TYPE SELECTION ===================
-    let currentOrderType = 'new';
-
+    // =================== ORDER TYPE ===================
     function selectOrderType(type) {
-      currentOrderType = type;
-
-      // Update button states
+      document.getElementById('newWebsitePackages').style.display = type === 'new' ? 'block' : 'none';
+      document.getElementById('renewalPackages').style.display    = type === 'renewal' ? 'block' : 'none';
       document.getElementById('newWebsiteBtn').classList.toggle('active', type === 'new');
       document.getElementById('renewalBtn').classList.toggle('active', type === 'renewal');
-
-      // Show/hide package sections
-      document.getElementById('newWebsitePackages').style.display = type === 'new' ? 'block' : 'none';
-      document.getElementById('renewalPackages').style.display = type === 'renewal' ? 'block' : 'none';
-      document.getElementById('serviceFilterBar').style.display = type === 'new' ? 'flex' : 'none';
-
-      // Hide customization and invoice
       document.getElementById('customizationPanel').style.display = 'none';
-      document.getElementById('invoiceSection').style.display = 'none';
-
-      // Clear selection
-      selectedPackage = null;
+      document.getElementById('invoiceSection').style.display     = 'none';
       selectedCategory = null;
-      document.querySelectorAll('.service-card').forEach(card => {
-        card.classList.remove('selected');
+      selectedPackage  = null;
+    }
+
+    // =================== FILTER BY SERVICE TYPE ===================
+    function filterByServiceType(type, btn) {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      document.querySelectorAll('.package-category').forEach(cat => {
+        if (type === 'all') {
+          cat.classList.remove('hidden');
+        } else {
+          const types = (cat.dataset.serviceTypes || '').split(' ');
+          cat.classList.toggle('hidden', !types.includes(type));
+        }
       });
     }
 
-    // =================== NAVIGATION ===================
-    function showSection(sectionId) {
-      document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-      const section = document.getElementById(sectionId);
-      if (section) section.classList.add('active');
-      // Close sidebar on mobile
-      if (window.innerWidth <= 768) {
-        const sb = document.getElementById('sidebar');
-        if (sb) sb.classList.remove('active');
-        const ov = document.getElementById('sidebarOverlay');
-        if (ov) ov.classList.remove('active');
-      }
-    }
-
-    function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('active');
-      document.getElementById('sidebarOverlay').classList.toggle('active');
-    }
-
-    // =================== LOAD SERVICES BY CATEGORY ===================
+    // =================== LOAD SERVICES ===================
     function loadServices() {
-      // Load maintenance packages
-      loadServiceCategory('serviceGridMaintenance', servicePackages.maintenance, 'maintenance');
+      const grids = {
+        serviceGridMaintenance:  { cat: 'maintenance',  keys: ['basic','pro','premium'] },
+        serviceGridOnePage:      { cat: 'onePage',      keys: ['starter','pro','premium'] },
+        serviceGridNoMaintenance:{ cat: 'noMaintenance',keys: ['basic','standard','advanced'] },
+        serviceGridManager:      { cat: 'manager',      keys: ['monthly','annual'] },
+        serviceGridRenewal:      { cat: 'renewal',      keys: ['standard'] },
+        serviceGridAppDesign:    { cat: 'appDesign',    keys: ['starter','pro','premium'] },
+        serviceGridUiux:         { cat: 'uiux',         keys: ['starter','pro','premium'] },
+        serviceGridLogoDesign:   { cat: 'logoDesign',   keys: ['basic','pro','premium'] },
+        serviceGridVideoAds:     { cat: 'videoAds',     keys: ['short','standard','premium'] }
+      };
 
-      // Load one-page packages
-      loadServiceCategory('serviceGridOnePage', servicePackages.onePage, 'onePage');
+      Object.entries(grids).forEach(([gridId, { cat, keys }]) => {
+        const grid = document.getElementById(gridId);
+        if (!grid) return;
+        grid.innerHTML = keys.map(key => {
+          const pkg = servicePackages[cat]?.[key];
+          if (!pkg) return '';
+          const usdPrice = convertPHPToUSD(pkg.price);
+          const displayPrice = formatPrice(usdPrice);
+          const isSelected = selectedCategory === cat && selectedPackage === key;
 
-      // Load no maintenance packages
-      loadServiceCategory('serviceGridNoMaintenance', servicePackages.noMaintenance, 'noMaintenance');
-
-      // Load website manager packages
-      loadServiceCategory('serviceGridManager', servicePackages.manager, 'manager');
-
-      // Load renewal packages
-      loadServiceCategory('serviceGridRenewal', servicePackages.renewal, 'renewal');
-
-      // Load app design packages
-      loadServiceCategory('serviceGridAppDesign', servicePackages.appDesign, 'appDesign');
-
-      // Load UI/UX packages
-      loadServiceCategory('serviceGridUiux', servicePackages.uiuxDesign, 'uiuxDesign');
-      loadServiceCategory('serviceGridLogoDesign', servicePackages.logoDesign, 'logoDesign');
-      loadServiceCategory('serviceGridVideoAds', servicePackages.videoAds, 'videoAds');
+          return `
+            <div class="service-card ${isSelected ? 'selected' : ''}" id="card-${cat}-${key}">
+              <h3>${pkg.name}</h3>
+              <div class="price">${displayPrice}</div>
+              ${pkg.tagline ? `<div class="card-tagline">${pkg.tagline}</div>` : ''}
+              <div class="price-info">Base price • Add-ons available</div>
+              <ul>
+                ${pkg.features.map(f => `<li>${f}</li>`).join('')}
+              </ul>
+              ${pkg.excluded?.length ? `
+                <div class="card-not-included-label">Not Included</div>
+                <ul class="excluded-list">
+                  ${pkg.excluded.map(e => `<li class="excluded">${e}</li>`).join('')}
+                </ul>
+              ` : ''}
+              <div class="best-for">🎯 Best for: ${pkg.bestFor}</div>
+              <button class="select-btn" onclick="selectService('${cat}', '${key}')">
+                ${isSelected ? '✓ Selected' : 'Select Package'}
+              </button>
+            </div>
+          `;
+        }).join('');
+      });
     }
 
-    function loadServiceCategory(gridId, packages, category) {
-      const grid = document.getElementById(gridId);
-      if (!grid) return;
-
-      grid.innerHTML = '';
-
-      for (const [key, pkg] of Object.entries(packages)) {
-        const card = document.createElement('div');
-        card.className = 'service-card';
-        card.setAttribute('data-category', category);
-        card.setAttribute('data-key', key);
-
-        const featuresHTML = pkg.features.map(f => `<li>${f}</li>`).join('');
-        const excludedHTML = pkg.excluded.map(f => `<li class="excluded">${f}</li>`).join('');
-
-        // Convert prices from PHP (stored) to current currency
-        const priceUSD = convertPHPToUSD(pkg.price);
-        const pricePerPageUSD = convertPHPToUSD(pkg.pricePerPage);
-
-        const isLogoOrVideo = category === 'logoDesign' || category === 'videoAds';
-        const tierColors = { basic: 'var(--text-muted)', pro: 'var(--neon)', premium: 'var(--yellow)' };
-        const tierIcons  = { basic: '🥉', pro: '🥈', premium: '🏆' };
-        const tierColor  = (pkg.tier && tierColors[pkg.tier]) || 'var(--text-muted)';
-        const tierIcon   = (pkg.tier && tierIcons[pkg.tier]) || '';
-
-        card.innerHTML = `
-          ${pkg.tier ? `<div class="card-tier-badge" style="color:${tierColor};border-color:${tierColor};">${tierIcon} ${pkg.tier.toUpperCase()}</div>` : ''}
-          <h3>${pkg.name}</h3>
-          ${pkg.tagline ? `<p class="card-tagline">${pkg.tagline}</p>` : ''}
-          <div class="price">${formatPrice(priceUSD)}</div>
-          ${pkg.basePages > 0 ? `
-            <p class="price-info">
-              ${pkg.basePages} pages included<br>
-              ${formatPrice(pricePerPageUSD)} per additional page
-            </p>
-          ` : ''}
-          <ul>
-            ${featuresHTML}
-          </ul>
-          ${pkg.excluded && pkg.excluded.length ? `
-            ${isLogoOrVideo ? '<div class="card-not-included-label">Not included:</div>' : ''}
-            <ul class="excluded-list">
-              ${excludedHTML}
-            </ul>
-          ` : ''}
-          <p class="best-for">
-            💡 Best for: ${pkg.bestFor}
-          </p>
-          <button class="select-btn" onclick="selectService('${category}', '${key}')">Select Package</button>
-        `;
-
-        grid.appendChild(card);
-      }
-    }
-
-    let selectedPackage = null;
-    let selectedCategory = null;
-    let prevInvoiceKeys = new Set();
-    let activeServiceType = '';
-
-    // Business questionnaire tag state
-    const bizSelections = { type: [], goal: [], stage: [] };
-
-    function toggleBizTag(el, group, value) {
-      const container = el.closest('.biz-tags');
-      const isSingle = container.dataset.single === 'true';
-
-      if (isSingle) {
-        // Deselect all siblings first
-        container.querySelectorAll('.biz-tag').forEach(t => t.classList.remove('selected'));
-        bizSelections[group] = [value];
-        el.classList.add('selected');
-      } else {
-        if (el.classList.contains('selected')) {
-          el.classList.remove('selected');
-          bizSelections[group] = bizSelections[group].filter(v => v !== value);
-        } else {
-          el.classList.add('selected');
-          bizSelections[group].push(value);
-        }
-      }
-      updateInvoice();
-    }
-
-    // Toggle feature checkboxes (multi-select card toggles)
-    function toggleFeature(toggleEl, checkboxId) {
-      const cb = document.getElementById(checkboxId);
-      if (!cb) return;
-      cb.checked = !cb.checked;
-      toggleEl.classList.toggle('selected', cb.checked);
-      updateInvoice();
-    }
-
-    // =================== SMART PAGE COUNTER ===================
-    function initPageCounter(inputId) {
-      if (!selectedPackage || !selectedCategory) return;
-      const pkg = servicePackages[selectedCategory][selectedPackage];
-
-      const min = pkg.minPages || 1;
-      const max = pkg.maxPages || 999;
-      const fixed = (min === max);
-      const input = document.getElementById(inputId);
-      const hint  = document.getElementById(inputId + 'Hint');
-      const wrap  = document.getElementById(inputId + 'Counter');
-      const btnMinus = document.getElementById(inputId + 'Minus');
-      const btnPlus  = document.getElementById(inputId + 'Plus');
-
-      if (!input) return;
-
-      // Set value to minimum (or fixed value)
-      input.value = min;
-      input.min = min;
-
-      if (fixed) {
-        // Locked — two-page packages
-        if (btnMinus) btnMinus.disabled = true;
-        if (btnPlus)  btnPlus.disabled  = true;
-        if (hint) {
-          hint.textContent = `Fixed at ${min} page${min > 1 ? 's' : ''} — included in package`;
-          hint.className = 'page-counter-hint hint-fixed';
-        }
-        if (wrap) wrap.className = 'page-counter';
-      } else {
-        if (btnMinus) btnMinus.disabled = (min <= min); // starts at min so minus is disabled
-        if (btnPlus)  btnPlus.disabled  = false;
-        if (hint) {
-          hint.textContent = `${min}–${max} pages included • beyond ${max}: +₱${pkg.pricePerPage.toLocaleString()}/page`;
-          hint.className = 'page-counter-hint hint-included';
-        }
-        if (wrap) wrap.className = 'page-counter';
-      }
-
-      updateInvoice();
-    }
-
-    function adjustPages(inputId, delta) {
-      if (!selectedPackage || !selectedCategory) return;
-      const pkg = servicePackages[selectedCategory][selectedPackage];
-
-      const min = pkg.minPages || 1;
-      const max = pkg.maxPages || 999;
-      const input = document.getElementById(inputId);
-
-      // Hint element IDs: numPages → pageCounterHint, numPagesdev → pageCounterHint2
-      const hintIdMap = { 'numPages': 'pageCounterHint', 'numPagesdev': 'pageCounterHint2' };
-      const hintId = hintIdMap[inputId] || (inputId + 'Hint');
-      const hint  = document.getElementById(hintId);
-      const wrap  = document.getElementById(inputId + 'Counter');
-      const btnMinus = document.getElementById(inputId + 'Minus');
-      const btnPlus  = document.getElementById(inputId + 'Plus');
-
-      if (!input) return;
-
-      let current = parseInt(input.value) || min;
-      if (delta !== 0) current = current + delta;  // 0 = manual input, just validate
-      current = Math.max(min, current);  // never go below min
-
-      input.value = current;
-
-      // Update minus button state
-      if (btnMinus) btnMinus.disabled = (current <= min);
-
-      // Update hint and border colour
-      if (current < min) {
-        // shouldn't happen but safety
-        if (hint) { hint.textContent = `Minimum is ${min} pages`; hint.className = 'page-counter-hint hint-extra'; }
-        if (wrap) wrap.className = 'page-counter';
-      } else if (current <= max) {
-        const remaining = max - current;
-        if (remaining === 0) {
-          if (hint) { hint.textContent = `At package maximum (${max} pages) — extra pages cost ₱${pkg.pricePerPage.toLocaleString()}/page`; hint.className = 'page-counter-hint hint-extra'; }
-          if (wrap) wrap.className = 'page-counter at-max';
-        } else {
-          if (hint) { hint.textContent = `${current} page${current>1?'s':''} • ${remaining} more included free`; hint.className = 'page-counter-hint hint-included'; }
-          if (wrap) wrap.className = 'page-counter';
-        }
-      } else {
-        const over = current - max;
-        const overCost = over * pkg.pricePerPage;
-        if (hint) { hint.textContent = `${over} extra page${over>1?'s':''} beyond package → +₱${overCost.toLocaleString()} added to invoice`; hint.className = 'page-counter-hint hint-overage'; }
-        if (wrap) wrap.className = 'page-counter over-max';
-      }
-
-      updateInvoice();
-    }
-
-    // Map category → service type label and icon
-    const categoryServiceMap = {
-      maintenance:    { type: 'web-development', label: '🌐 Web Development', badgeText: '🌐 WEB DEVELOPMENT' },
-      onePage:        { type: 'web-development', label: '🌐 Web Development', badgeText: '🌐 WEB DEVELOPMENT' },
-      noMaintenance:  { type: 'web-development', label: '🌐 Web Development', badgeText: '🌐 WEB DEVELOPMENT' },
-      appDesign:      { type: 'app-design',       label: '📱 App Design',      badgeText: '📱 APP DESIGN' },
-      uiuxDesign:     { type: 'ui-ux-design',     label: '🧩 UI/UX Design',    badgeText: '🧩 UI/UX DESIGN' },
-      manager:        { type: '',                 label: '🔧 Maintenance',     badgeText: '🔧 WEBSITE MANAGER' },
-      renewal:        { type: '',                 label: '📅 Renewal',         badgeText: '📅 ANNUAL RENEWAL' },
-      logoDesign:     { type: 'logo-design',    label: '🎨 Logo Design',    badgeText: '🎨 LOGO DESIGN' },
-      videoAds:       { type: 'video-ads',      label: '🎬 Video Ads',      badgeText: '🎬 VIDEO ADS' }
-    };
-
-    function selectService(category, packageKey) {
-      selectedCategory = category;
-      selectedPackage = packageKey;
-
-      // Update visual selection on cards
-      document.querySelectorAll('.service-card').forEach(card => card.classList.remove('selected'));
-      const selectedCard = document.querySelector(`[data-category="${category}"][data-key="${packageKey}"]`);
-      if (selectedCard) selectedCard.classList.add('selected');
-
-      // Determine and set the service type from the category
-      const mapping = categoryServiceMap[category] || { type: '', badgeText: '⚙️ Service Selected' };
-      activeServiceType = mapping.type;
-
-      // Update the badge
-      document.getElementById('serviceTypeBadge').textContent = mapping.badgeText;
+    // =================== SELECT SERVICE ===================
+    function selectService(cat, pkg) {
+      selectedCategory = cat;
+      selectedPackage  = pkg;
+      loadServices();
 
       // Show customization panel
-      document.getElementById('customizationPanel').style.display = 'block';
-      document.getElementById('invoiceSection').style.display = 'block';
+      const panel = document.getElementById('customizationPanel');
+      panel.style.display = 'block';
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-      // ── Hide ALL panels first ──────────────────────────────────────────
-      const allPanels = [
-        'appDesignOptions','webDesignOptions','webDevOptions','uiuxOptions',
-        'logoDesignOptions','videoAdsOptions','bizQuestionnaire','projectDetailsSection'
-      ];
-      allPanels.forEach(id => {
+      // Determine service type
+      const webCats     = ['maintenance','onePage','noMaintenance'];
+      const serviceType = webCats.includes(cat) ? 'web' :
+                          cat === 'appDesign'   ? 'app-design' :
+                          cat === 'uiux'        ? 'ui-ux' :
+                          cat === 'logoDesign'  ? 'logo' :
+                          cat === 'videoAds'    ? 'video' :
+                          cat === 'manager'     ? 'manager' :
+                          cat === 'renewal'     ? 'renewal' : 'web';
+
+      // Badge
+      const badgeMap = {
+        'web':'🌐 WEB DESIGN / DEVELOPMENT','app-design':'📱 APP DESIGN',
+        'ui-ux':'🧩 UI/UX DESIGN','logo':'🎨 LOGO DESIGN',
+        'video':'🎬 VIDEO ADS','manager':'🔧 WEBSITE MANAGER','renewal':'🔄 RENEWAL'
+      };
+      const badge = document.getElementById('serviceTypeBadge');
+      if (badge) badge.textContent = badgeMap[serviceType] || serviceType.toUpperCase();
+
+      // Show/hide option panels
+      const panels = {
+        'appDesignOptions':   serviceType === 'app-design',
+        'webDesignOptions':   serviceType === 'web' && cat !== 'noMaintenance',
+        'webDevOptions':      serviceType === 'web',
+        'uiuxOptions':        serviceType === 'ui-ux',
+        'logoOptions':        serviceType === 'logo',
+        'videoAdsOptions':    serviceType === 'video',
+        'bizQuestionnaire':   !['manager','renewal'].includes(serviceType),
+        'projectDetailsSection': !['manager','renewal','video'].includes(serviceType),
+      };
+      Object.entries(panels).forEach(([id, show]) => {
         const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
+        if (el) el.style.display = show ? 'block' : 'none';
       });
 
-      // ── Show only what's needed for this service type ──────────────────
-      if (activeServiceType === 'logo-design') {
-        document.getElementById('logoDesignOptions').style.display = 'block';
-        // projectDetailsSection and videoAdsOptions stay hidden
-
-      } else if (activeServiceType === 'video-ads') {
-        document.getElementById('videoAdsOptions').style.display = 'block';
-        // projectDetailsSection and logoDesignOptions stay hidden
-
-      } else if (activeServiceType === 'app-design') {
-        document.getElementById('appDesignOptions').style.display = 'block';
-        document.getElementById('bizQuestionnaire').style.display = 'block';
-        document.getElementById('projectDetailsSection').style.display = 'block';
-
-      } else if (activeServiceType === 'web-design') {
-        document.getElementById('webDesignOptions').style.display = 'block';
-        document.getElementById('bizQuestionnaire').style.display = 'block';
-        document.getElementById('projectDetailsSection').style.display = 'block';
-        initPageCounter('numPages');
-
-      } else if (activeServiceType === 'web-development') {
-        document.getElementById('webDevOptions').style.display = 'block';
-        document.getElementById('bizQuestionnaire').style.display = 'block';
-        document.getElementById('projectDetailsSection').style.display = 'block';
-        initPageCounter('numPagesdev');
-
-      } else if (activeServiceType === 'ui-ux-design') {
-        document.getElementById('uiuxOptions').style.display = 'block';
-        document.getElementById('bizQuestionnaire').style.display = 'block';
-        document.getElementById('projectDetailsSection').style.display = 'block';
-
-      } else {
-        // manager / renewal — just show project details (notes/deadline)
-        document.getElementById('projectDetailsSection').style.display = 'block';
-      }
-
-      // Reset invoice flash tracking
-      prevInvoiceKeys = new Set();
+      // Load toggles for web design
+      if (serviceType === 'web') loadWebDesignFeatures(cat);
 
       updateInvoice();
-      document.getElementById('customizationPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Show invoice section
+      document.getElementById('invoiceSection').style.display = 'block';
     }
 
-    // =================== EDITABLE CLIENT NAME ===================
-    function syncClientName() { /* input is the direct source of truth */ }
-
-    function syncInvoiceEmail() {
-      const val = document.getElementById('invoiceEmailInput').value;
-      const settingsEmail = document.getElementById('profileEmail');
-      if (settingsEmail && !settingsEmail.dataset.userEdited) {
-        settingsEmail.value = val;
-      }
-    }
-
-    function syncInvoiceEmailFromSettings() {
-    const profileEmail = document.getElementById('profileEmail');
-    if (profileEmail) { const inv = document.getElementById('invoiceEmailInput'); if (inv) inv.value = profileEmail.value; return; }
-      const val = document.getElementById('profileEmail').value;
-      const invoiceEmail = document.getElementById('invoiceEmailInput');
-      if (invoiceEmail) invoiceEmail.value = val;
-      document.getElementById('profileEmail').dataset.userEdited = 'true';
-    }
-
-    function syncInvoicePhone() {
-      const code = document.getElementById('invoicePhoneCode').value;
-      const num = document.getElementById('invoicePhoneNumber').value;
-      const settingsCode = document.getElementById('phoneCode');
-      const settingsNum = document.getElementById('phoneNumber');
-      if (settingsCode) settingsCode.value = code;
-      if (settingsNum) settingsNum.value = num;
-    }
-
-    function syncSettingsPhoneToInvoice() {
-      const code = document.getElementById('phoneCode').value;
-      const num = document.getElementById('phoneNumber').value;
-      const invCode = document.getElementById('invoicePhoneCode');
-      const invNum = document.getElementById('invoicePhoneNumber');
-      if (invCode) invCode.value = code;
-      if (invNum) invNum.value = num;
-    }
-
-    function getFullWhatsApp() {
-      const code = document.getElementById('invoicePhoneCode')?.value || '';
-      const num = document.getElementById('invoicePhoneNumber')?.value || '';
-      return num ? `${code}${num.replace(/\s/g, '')}` : '';
-    }
-
-    // =================== COUNTRY PHONE CODES ===================
-    const PHONE_COUNTRIES = [
-      { code: '+1',    flag: '🇺🇸', name: 'US/Canada',       abbr: 'US' },
-      { code: '+44',   flag: '🇬🇧', name: 'United Kingdom',   abbr: 'GB' },
-      { code: '+63',   flag: '🇵🇭', name: 'Philippines',      abbr: 'PH' },
-      { code: '+39',   flag: '🇮🇹', name: 'Italy',            abbr: 'IT' },
-      { code: '+48',   flag: '🇵🇱', name: 'Poland',           abbr: 'PL' },
-      { code: '+61',   flag: '🇦🇺', name: 'Australia',        abbr: 'AU' },
-      { code: '+1',    flag: '🇨🇦', name: 'Canada',           abbr: 'CA' },
-      { code: '+65',   flag: '🇸🇬', name: 'Singapore',        abbr: 'SG' },
-      { code: '+91',   flag: '🇮🇳', name: 'India',            abbr: 'IN' },
-      { code: '+86',   flag: '🇨🇳', name: 'China',            abbr: 'CN' },
-      { code: '+81',   flag: '🇯🇵', name: 'Japan',            abbr: 'JP' },
-      { code: '+82',   flag: '🇰🇷', name: 'South Korea',      abbr: 'KR' },
-      { code: '+49',   flag: '🇩🇪', name: 'Germany',          abbr: 'DE' },
-      { code: '+33',   flag: '🇫🇷', name: 'France',           abbr: 'FR' },
-      { code: '+34',   flag: '🇪🇸', name: 'Spain',            abbr: 'ES' },
-      { code: '+31',   flag: '🇳🇱', name: 'Netherlands',      abbr: 'NL' },
-      { code: '+46',   flag: '🇸🇪', name: 'Sweden',           abbr: 'SE' },
-      { code: '+47',   flag: '🇳🇴', name: 'Norway',           abbr: 'NO' },
-      { code: '+45',   flag: '🇩🇰', name: 'Denmark',          abbr: 'DK' },
-      { code: '+358',  flag: '🇫🇮', name: 'Finland',          abbr: 'FI' },
-      { code: '+7',    flag: '🇷🇺', name: 'Russia',           abbr: 'RU' },
-      { code: '+55',   flag: '🇧🇷', name: 'Brazil',           abbr: 'BR' },
-      { code: '+52',   flag: '🇲🇽', name: 'Mexico',           abbr: 'MX' },
-      { code: '+54',   flag: '🇦🇷', name: 'Argentina',        abbr: 'AR' },
-      { code: '+56',   flag: '🇨🇱', name: 'Chile',            abbr: 'CL' },
-      { code: '+57',   flag: '🇨🇴', name: 'Colombia',         abbr: 'CO' },
-      { code: '+971',  flag: '🇦🇪', name: 'UAE',              abbr: 'AE' },
-      { code: '+966',  flag: '🇸🇦', name: 'Saudi Arabia',     abbr: 'SA' },
-      { code: '+20',   flag: '🇪🇬', name: 'Egypt',            abbr: 'EG' },
-      { code: '+27',   flag: '🇿🇦', name: 'South Africa',     abbr: 'ZA' },
-      { code: '+234',  flag: '🇳🇬', name: 'Nigeria',          abbr: 'NG' },
-      { code: '+254',  flag: '🇰🇪', name: 'Kenya',            abbr: 'KE' },
-      { code: '+62',   flag: '🇮🇩', name: 'Indonesia',        abbr: 'ID' },
-      { code: '+60',   flag: '🇲🇾', name: 'Malaysia',         abbr: 'MY' },
-      { code: '+66',   flag: '🇹🇭', name: 'Thailand',         abbr: 'TH' },
-      { code: '+84',   flag: '🇻🇳', name: 'Vietnam',          abbr: 'VN' },
-      { code: '+880',  flag: '🇧🇩', name: 'Bangladesh',       abbr: 'BD' },
-      { code: '+92',   flag: '🇵🇰', name: 'Pakistan',         abbr: 'PK' },
-      { code: '+94',   flag: '🇱🇰', name: 'Sri Lanka',        abbr: 'LK' },
-      { code: '+64',   flag: '🇳🇿', name: 'New Zealand',      abbr: 'NZ' },
-      { code: '+41',   flag: '🇨🇭', name: 'Switzerland',      abbr: 'CH' },
-      { code: '+43',   flag: '🇦🇹', name: 'Austria',          abbr: 'AT' },
-      { code: '+32',   flag: '🇧🇪', name: 'Belgium',          abbr: 'BE' },
-      { code: '+351',  flag: '🇵🇹', name: 'Portugal',         abbr: 'PT' },
-      { code: '+30',   flag: '🇬🇷', name: 'Greece',           abbr: 'GR' },
-      { code: '+380',  flag: '🇺🇦', name: 'Ukraine',          abbr: 'UA' },
-      { code: '+90',   flag: '🇹🇷', name: 'Turkey',           abbr: 'TR' },
-      { code: '+98',   flag: '🇮🇷', name: 'Iran',             abbr: 'IR' },
-      { code: '+972',  flag: '🇮🇱', name: 'Israel',           abbr: 'IL' },
-      { code: '+852',  flag: '🇭🇰', name: 'Hong Kong',        abbr: 'HK' },
-      { code: '+886',  flag: '🇹🇼', name: 'Taiwan',           abbr: 'TW' },
+    // =================== WEB DESIGN FEATURES ===================
+    const webDesignFeatureOptions = [
+      { name: 'Custom Animations',   price: 2000 },
+      { name: 'Live Chat Widget',    price: 1500 },
+      { name: 'Booking System',      price: 3000 },
+      { name: 'E-Commerce Store',    price: 5000 },
+      { name: 'Admin Dashboard',     price: 4000 },
+      { name: 'Blog / News Section', price: 2000 },
+      { name: 'Gallery / Portfolio', price: 1500 },
+      { name: 'Social Media Feed',   price: 1000 },
     ];
 
-    function populatePhoneDropdowns() {
-      const selects = ['invoicePhoneCode', 'phoneCode'];
-      selects.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.innerHTML = PHONE_COUNTRIES.map(c =>
-          `<option value="${c.code}" data-abbr="${c.abbr}">${c.flag} ${c.abbr} ${c.code}</option>`
-        ).join('');
-        // default to PH
-        el.value = '+63';
-      });
+    function loadWebDesignFeatures(cat) {
+      const container = document.getElementById('webDesignFeatures');
+      if (!container) return;
+      container.innerHTML = webDesignFeatureOptions.map((f, i) => `
+        <label class="toggle-item" onclick="this.classList.toggle('selected'); updateInvoice()">
+          <input type="checkbox" value="${f.name}" data-price="${f.price}">
+          <span class="toggle-check"></span>
+          <span class="toggle-text">
+            <span class="toggle-name">${f.name}</span>
+            <span class="toggle-price">+${formatPrice(convertPHPToUSD(f.price))}</span>
+          </span>
+        </label>
+      `).join('');
+
+      // Same for dev features
+      const devContainer = document.getElementById('webDevFeatures');
+      if (devContainer) devContainer.innerHTML = container.innerHTML;
     }
 
-    // =================== SERVICE TYPE CHANGE (kept for filter-tab pre-setting) ===================
-    function onServiceTypeChange() {
+    // =================== PAGE ADJUSTMENT ===================
+    function adjustPages(inputId, delta) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      let val = parseInt(input.value) || 1;
+      val = Math.max(1, val + delta);
+      input.value = val;
+      updatePageCount(inputId);
       updateInvoice();
     }
 
-    // =================== INVOICE GENERATION ===================
+    function updatePageCount(inputId) {
+      if (!selectedCategory || !selectedPackage) return;
+      const pkg = servicePackages[selectedCategory]?.[selectedPackage];
+      if (!pkg || !pkg.basePages) return;
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const pages = parseInt(input.value) || 1;
+      const hint = document.getElementById(
+        inputId === 'numPages' ? 'pageCounterHint' : 'pageCounterHintDev'
+      );
+      const counter = input.closest('.page-counter');
+
+      if (pages <= pkg.maxPages) {
+        if (hint) { hint.textContent = `✓ Included in package (up to ${pkg.maxPages} pages)`; hint.className = 'page-counter-hint hint-included'; }
+        if (counter) counter.className = 'page-counter';
+      } else {
+        const extra = pages - pkg.maxPages;
+        const extraCost = extra * pkg.pricePerPage;
+        if (hint) { hint.textContent = `+${extra} extra page(s) at ${formatPrice(convertPHPToUSD(pkg.pricePerPage))}/page = +${formatPrice(convertPHPToUSD(extraCost))}`; hint.className = 'page-counter-hint hint-extra'; }
+        if (counter) counter.className = 'page-counter over-max';
+      }
+    }
+
+    // =================== UPDATE INVOICE ===================
     function updateInvoice() {
-      if (!selectedPackage || !selectedCategory) return;
+      if (!selectedCategory || !selectedPackage) return;
+      const pkg = servicePackages[selectedCategory]?.[selectedPackage];
+      if (!pkg) return;
 
-      const pkg = servicePackages[selectedCategory][selectedPackage];
-      const serviceType = activeServiceType;
+      let baseUSD = convertPHPToUSD(pkg.price);
+      let rows = [];
+      let totalUSD = baseUSD;
 
-      let total = pkg.price;
-      const items = [];
+      rows.push({ desc: pkg.name, detail: 'Base package', amount: baseUSD });
 
-      // Base package
-      items.push({
-        description: `${pkg.name}${pkg.basePages > 0 ? ` (${pkg.basePages} pages)` : ''}`,
-        amount: pkg.price
+      // Extra pages
+      const pageInputId = selectedCategory === 'noMaintenance' ? 'numPagesdev' : 'numPages';
+      const pageInput = document.getElementById(pageInputId) || document.getElementById('numPages');
+      if (pageInput && pkg.pricePerPage) {
+        const pages = parseInt(pageInput.value) || pkg.basePages;
+        if (pages > pkg.maxPages) {
+          const extra = pages - pkg.maxPages;
+          const extraUSD = extra * convertPHPToUSD(pkg.pricePerPage);
+          rows.push({ desc: `Extra Pages (${extra})`, detail: `+${extra} × ${formatPrice(convertPHPToUSD(pkg.pricePerPage))}`, amount: extraUSD });
+          totalUSD += extraUSD;
+        }
+      }
+
+      // Web design add-ons
+      document.querySelectorAll('#webDesignFeatures .toggle-item.selected input, #webDevFeatures .toggle-item.selected input').forEach(input => {
+        const price = convertPHPToUSD(parseInt(input.dataset.price) || 0);
+        rows.push({ desc: input.value, detail: 'Add-on', amount: price });
+        totalUSD += price;
       });
 
-      // Manager/Renewal: no further customization
-      if (selectedCategory === 'manager' || selectedCategory === 'renewal') {
-        renderInvoice(items, total);
-        return;
-      }
-
-      // Business profile notes (informational, ₱0)
-      if (bizSelections.type.length > 0) {
-        items.push({ description: `Business Type: ${bizSelections.type.join(', ')}`, amount: 0 });
-      }
-      if (bizSelections.goal.length > 0) {
-        items.push({ description: `Goals: ${bizSelections.goal.join(', ')}`, amount: 0 });
-      }
-      if (bizSelections.stage.length > 0) {
-        items.push({ description: `Stage: ${bizSelections.stage[0]}`, amount: 0 });
-      }
-
-      // ── APP DESIGN ──
-      if (serviceType === 'app-design') {
-        const platform = document.getElementById('appPlatform');
-        if (platform && platform.value) {
-          const extra = parseInt(platform.options[platform.selectedIndex].dataset.extra || 0);
-          items.push({ description: `Platform: ${platform.value}`, amount: extra });
-          total += extra;
-        }
-        const category = document.getElementById('appCategory');
-        if (category && category.value) items.push({ description: `App Category: ${category.value}`, amount: 0 });
-        const screens = document.getElementById('appScreens');
-        if (screens && screens.value) items.push({ description: `Screens: ${screens.value}`, amount: 0 });
-        const proto = document.getElementById('appPrototype');
-        if (proto && proto.value && proto.value !== 'none') {
-          const extra = parseInt(proto.options[proto.selectedIndex].dataset.extra || 0);
-          if (extra > 0) { items.push({ description: `Prototype: ${proto.value}`, amount: extra }); total += extra; }
-          else if (proto.value) { items.push({ description: `Prototype: ${proto.value}`, amount: 0 }); }
-        }
-        [['app-branding','Branding / Logo Integration'],['app-darkmode','Dark Mode Version'],['app-icon','App Icon Design'],['app-onboarding','Onboarding Screens'],['app-designsystem','Design System / Style Guide'],['app-splash','Splash Screen Design']].forEach(([id, label]) => {
-          const cb = document.getElementById(id);
-          if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
-        });
-
-      // ── WEB DESIGN ──
-      } else if (serviceType === 'web-design') {
-        const wdType = document.getElementById('wdType');
-        if (wdType && wdType.value) items.push({ description: `Website Type: ${wdType.value}`, amount: 0 });
-
-        const numPages = parseInt(document.getElementById('numPages').value) || pkg.minPages || pkg.basePages;
-        const maxPg = pkg.maxPages || pkg.basePages;
-        const minPg = pkg.minPages || 1;
-
-        if (numPages <= maxPg) {
-          items.push({ description: `Pages: ${numPages} of ${maxPg} included`, amount: 0 });
-        } else {
-          const extra = numPages - maxPg;
-          const extraCost = extra * pkg.pricePerPage;
-          items.push({ description: `Pages: ${maxPg} included in package`, amount: 0 });
-          items.push({ description: `Extra Pages: ${extra} × ₱${pkg.pricePerPage.toLocaleString()} (beyond package max)`, amount: extraCost });
-          total += extraCost;
-        }
-        [['wd-responsive','Mobile Responsive Design'],['wd-illustrations','Custom Illustrations'],['wd-logo','Logo Design'],['wd-motion','Animated / Motion Elements'],['wd-brandguide','Brand Style Guide'],['wd-darkmode','Dark Mode Design'],['wd-prototype','Clickable Prototype'],['wd-socialmedia','Social Media Kit']].forEach(([id, label]) => {
-          const cb = document.getElementById(id);
-          if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
-        });
-
-      // ── WEB DEVELOPMENT ──
-      } else if (serviceType === 'web-development') {
-        const stack = document.getElementById('devStack');
-        if (stack && stack.value) {
-          const extra = parseInt(stack.options[stack.selectedIndex].dataset.extra || 0);
-          items.push({ description: `Tech Stack: ${stack.value}`, amount: extra });
-          total += extra;
-        }
-        const numPagesdev = parseInt(document.getElementById('numPagesdev').value) || pkg.minPages || pkg.basePages;
-        const maxPgDev = pkg.maxPages || pkg.basePages;
-
-        if (numPagesdev <= maxPgDev) {
-          items.push({ description: `Pages: ${numPagesdev} of ${maxPgDev} included`, amount: 0 });
-        } else {
-          const extra = numPagesdev - maxPgDev;
-          const extraCost = extra * pkg.pricePerPage;
-          items.push({ description: `Pages: ${maxPgDev} included in package`, amount: 0 });
-          items.push({ description: `Extra Pages: ${extra} × ₱${pkg.pricePerPage.toLocaleString()} (beyond package max)`, amount: extraCost });
-          total += extraCost;
-        }
-        const maint = document.getElementById('devMaintenance');
-        if (maint && maint.value && maint.value !== 'none') {
-          const extra = parseInt(maint.options[maint.selectedIndex].dataset.extra || 0);
-          items.push({ description: `Maintenance Plan: ${maint.value}`, amount: extra });
-          total += extra;
-        }
-        [['dev-ecommerce','E-Commerce / Online Store'],['dev-cms','CMS Integration'],['dev-forms','Contact Form / Email Setup'],['dev-seo','SEO Optimization'],['dev-analytics','Analytics Integration'],['dev-ssl','SSL Certificate'],['dev-backup','Automated Backups'],['dev-hosting','Hosting & Domain Setup'],['dev-livechat','Live Chat Integration'],['dev-social','Social Media Integration'],['dev-speed','Speed Optimization']].forEach(([id, label]) => {
-          const cb = document.getElementById(id);
-          if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
-        });
-
-      // ── UI/UX DESIGN ──
-      } else if (serviceType === 'ui-ux-design') {
-        const projectType = document.getElementById('uxProjectType');
-        if (projectType && projectType.value) items.push({ description: `Project Type: ${projectType.value}`, amount: 0 });
-        const deliverable = document.getElementById('uxDeliverable');
-        if (deliverable && deliverable.value) {
-          const extra = parseInt(deliverable.options[deliverable.selectedIndex].dataset.extra || 0);
-          items.push({ description: `Deliverable: ${deliverable.value}`, amount: extra });
-          total += extra;
-        }
-        const fidelity = document.getElementById('uxFidelity');
-        if (fidelity && fidelity.value) items.push({ description: `Fidelity: ${fidelity.value}`, amount: 0 });
-        const screens = document.getElementById('uxScreens');
-        if (screens && screens.value) items.push({ description: `Screens: ${screens.value}`, amount: 0 });
-        [['ux-research','User Research & Personas'],['ux-journey','User Journey Mapping'],['ux-ia','Information Architecture'],['ux-usability','Usability Testing Plan'],['ux-accessibility','Accessibility Audit (WCAG)'],['ux-microinteraction','Micro-Interaction Design'],['ux-handoff','Developer Handoff / Specs'],['ux-brand','Brand Integration']].forEach(([id, label]) => {
-          const cb = document.getElementById(id);
-          if (cb && cb.checked) { const p = parseInt(cb.dataset.price||0); items.push({description:label,amount:p}); total+=p; }
-        });
-
-      // ── LOGO DESIGN ──
-      if (activeServiceType === 'logo-design') {
-        const bizName   = (document.getElementById('logoBizName')?.value || '').trim();
-        const industry  = (document.getElementById('logoBizIndustry')?.value || '').trim();
-        const colors    = (document.getElementById('logoColorScheme')?.value || '').trim();
-        const deadline  = (document.getElementById('logoDeadline')?.value || '');
-        if (bizName)   items.push({ description: `Business Name: ${bizName}`, amount: 0 });
-        if (industry)  items.push({ description: `Industry: ${industry}`, amount: 0 });
-        if (colors)    items.push({ description: `Color Scheme: ${colors}`, amount: 0 });
-        if (deadline)  items.push({ description: `Deadline: ${deadline}`, amount: 0 });
-      }
-
-      // ── VIDEO ADS ──
-      if (activeServiceType === 'video-ads') {
-        const bizName   = (document.getElementById('videoBizName')?.value || '').trim();
-        const industry  = (document.getElementById('videoBizIndustry')?.value || '').trim();
-        const colors    = (document.getElementById('videoColorScheme')?.value || '').trim();
-        const formats   = Array.from(document.querySelectorAll('#videoFormats input:checked')).map(i=>i.value);
-        const res       = (document.getElementById('videoResolution')?.value || '');
-        const duration  = (document.getElementById('videoDuration')?.value || '');
-        const deadline  = (document.getElementById('videoDeadline')?.value || '');
-        if (bizName)          items.push({ description: `Business Name: ${bizName}`, amount: 0 });
-        if (industry)         items.push({ description: `Industry: ${industry}`, amount: 0 });
-        if (colors)           items.push({ description: `Color Scheme: ${colors}`, amount: 0 });
-        if (formats.length)   items.push({ description: `File Format: ${formats.join(', ')}`, amount: 0 });
-        if (res)              items.push({ description: `Resolution: ${res}`, amount: 0 });
-        if (duration)         items.push({ description: `Duration: ${duration}`, amount: 0 });
-        if (deadline)         items.push({ description: `Deadline: ${deadline}`, amount: 0 });
-      }
-
-      // ── GENERIC fallback ──
-      } else {
-        const numPages = parseInt((document.getElementById('numPages') || {}).value || 0) || pkg.basePages;
-        if (numPages > pkg.basePages) {
-          const extra = (numPages - pkg.basePages) * pkg.pricePerPage;
-          items.push({ description: `Additional Pages (${numPages - pkg.basePages} × ₱${pkg.pricePerPage.toLocaleString()})`, amount: extra });
-          total += extra;
-        }
-      }
-
-      renderInvoice(items, total);
-    }
-
-    function renderInvoice(items, total) {
-      const invoiceItemsEl = document.getElementById('invoiceItems');
-      const currentKeys = new Set(items.map(i => i.description));
-
-      // Convert total from PHP to current currency
-      const totalUSD = convertPHPToUSD(total);
-
-      invoiceItemsEl.innerHTML = items.map(item => {
-        const isNew = !prevInvoiceKeys.has(item.description);
-        const rowClass = isNew ? 'invoice-row-new' : '';
-
-        // Convert item amounts from PHP to current currency
-        const itemAmountUSD = convertPHPToUSD(item.amount);
-
-        return `
-          <tr class="${rowClass}">
-            <td>${item.description}</td>
-            <td style="text-align: right; font-weight: 600; color: ${item.amount === 0 ? '#9ca3af' : '#fff'};">
-              ${item.amount === 0 ? 'Included' : formatPrice(itemAmountUSD)}
-            </td>
+      // Build table
+      const tbody = document.getElementById('invoiceTableBody');
+      if (tbody) {
+        tbody.innerHTML = rows.map(r => `
+          <tr>
+            <td>${r.desc}</td>
+            <td style="color:var(--text-muted);font-size:0.8rem;">${r.detail}</td>
+            <td style="text-align:right;font-weight:700;color:var(--yellow);">${formatPrice(r.amount)}</td>
           </tr>
-        `;
-      }).join('');
+        `).join('');
+      }
 
-      prevInvoiceKeys = currentKeys;
+      // Total
+      const totalEl = document.getElementById('invoiceTotalAmount');
+      if (totalEl) {
+        totalEl.textContent = formatPrice(totalUSD);
+        totalEl.classList.add('total-updating');
+        setTimeout(() => totalEl.classList.remove('total-updating'), 500);
+      }
 
-      // Pulse the total
-      const totalEl = document.getElementById('totalAmount');
-      totalEl.textContent = formatPrice(totalUSD);
-      totalEl.classList.remove('total-updating');
-      void totalEl.offsetWidth; // reflow to restart animation
-      totalEl.classList.add('total-updating');
-
-      document.getElementById('invoiceDate').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-      document.getElementById('invoiceNumber').textContent = 'NGCS-2026-' + String(Math.floor(Math.random() * 9000) + 1000);
+      // Invoice date
+      const dateEl = document.getElementById('invoiceDate');
+      if (dateEl && !dateEl.textContent) {
+        dateEl.textContent = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+      }
     }
 
-    // =================== ORDER SUBMISSION ===================
-    async function submitOrder(event) {
-      if (!selectedPackage || !selectedCategory) {
-        alert('Please select a service package first.');
+    // =================== SYNC CLIENT INFO ===================
+    function syncClientName(input) {
+      input.dataset.userEdited = '1';
+    }
+    function syncInvoiceEmail(input) {
+      input.dataset.userEdited = '1';
+    }
+    function syncInvoicePhone() {}
+    function syncInvoiceEmailFromSettings() {
+      const settings = document.getElementById('profileEmail');
+      const inv = document.getElementById('invoiceEmailInput');
+      if (settings && inv && !inv.dataset.userEdited) inv.value = settings.value;
+    }
+    function syncSettingsPhoneToInvoice() {}
+
+    // =================== SUBMIT ORDER ===================
+    async function submitOrder(e) {
+      if (e) e.preventDefault();
+      if (!selectedPackage) { alert('Please select a service package first.'); return; }
+
+      const clientName  = document.getElementById('clientNameInput')?.value?.trim() || 'Guest';
+      const clientEmail = document.getElementById('invoiceEmailInput')?.value?.trim() || '';
+
+      if (!clientEmail) {
+        alert('Please enter your email address to receive order confirmation.');
         return;
       }
 
-      const isManagerOrRenewal = selectedCategory === 'manager' || selectedCategory === 'renewal';
-
-      if (!isManagerOrRenewal && !activeServiceType) {
-        alert('Please select a service package first.');
-        return;
-      }
-
-      if (activeServiceType === 'web-design' && !document.getElementById('numPages').value) {
-        alert('Please enter the Number of Pages for Web Design.');
-        return;
-      }
-
-      if (activeServiceType === 'web-development' && !document.getElementById('numPagesdev').value) {
-        alert('Please enter the Number of Pages for Web Development.');
-        return;
-      }
-
-      // Collect order data
-      const orderData = collectOrderData();
-
-      // Show loading state
       const btn = document.getElementById('placeOrderBtn');
-      btn.textContent = '⏳ Sending Order...';
-      btn.disabled = true;
+      if (btn) { btn.disabled = true; btn.textContent = '⏳ Sending...'; }
 
-      const orderDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const pkg = servicePackages[selectedCategory]?.[selectedPackage];
+      const totalEl = document.getElementById('invoiceTotalAmount');
+      const totalText = totalEl?.textContent || '—';
 
-      // Build a clean readable order summary for the message body
-      const itemsList = (() => {
-        const rows = document.querySelectorAll('#invoiceItems tr');
-        let lines = '';
-        rows.forEach(row => {
-          const cols = row.querySelectorAll('td');
-          if (cols.length === 2) lines += `  • ${cols[0].textContent.trim()} — ${cols[1].textContent.trim()}\n`;
-        });
-        return lines;
-      })();
-
-      // ── Single email to NexGenix (free plan only allows sending to verified address)
-      // Variable names MUST match the EmailJS template exactly: {{email}}, {{from_name}}, {{subject}}, {{message}}
-      const emailParams = {
-        // ── To NexGenix (matches {{email}} in template To Email field) ──
-        email:      'nexgenixcreativesolutions@gmail.com',
-        from_name:  orderData.clientName,
-        reply_to:   orderData.clientEmail || 'nexgenixcreativesolutions@gmail.com',
-        subject:    `New Order — ${orderData.invoiceNumber} | ${orderData.clientName}`,
-
-        // ── Client fields used by EmailJS Auto-Reply tab ──
-        client_name:  orderData.clientName,
-        client_email: orderData.clientEmail || '',   // Auto-Reply sends to this address
-
-        // ── Admin notification message body ──
-        message:
-`📦 NEW ORDER RECEIVED
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Invoice #:    ${orderData.invoiceNumber}
-Date:         ${orderDate}
-
-CLIENT DETAILS
-Name:         ${orderData.clientName}
-Email:        ${orderData.clientEmail || 'N/A'}
-WhatsApp:     ${orderData.clientPhone || 'N/A'}
-
-ORDER DETAILS
-Package:      ${orderData.packageName}
-Service Type: ${activeServiceType || 'N/A'}
-Currency:     ${currentCurrency}
-
-Items:
-${itemsList}
-TOTAL:        ${orderData.totalAmount}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-ACTION REQUIRED: Follow up with client to confirm and process payment.
-Reply-to client at: ${orderData.clientEmail || 'N/A'}`,
-
-        // ── Auto-Reply message body (sent to client) ──
-        auto_reply_message:
-`Dear ${orderData.clientName},
-
-Thank you for placing your order with Nex Genix Creative Solutions! 🎉
-We have received your request and will be in touch shortly to confirm details and arrange payment.
-
-ORDER SUMMARY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Invoice #:    ${orderData.invoiceNumber}
-Package:      ${orderData.packageName}
-Service Type: ${activeServiceType || 'N/A'}
-Total Amount: ${orderData.totalAmount} (${currentCurrency})
-Date:         ${orderDate}
-
-Items Ordered:
-${itemsList}
-Payment Terms: 50% downpayment to start · 50% upon completion
-Payment Methods: GCash · Bank Transfer · PayMaya · PayPal · Stripe
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-If you have any questions, feel free to reply to this email.
-
-Best regards,
-Nex Genix Creative Solutions
-nexgenixcreativesolutions@gmail.com`
+      const templateParams = {
+        client_name:    clientName,
+        client_email:   clientEmail,
+        service_name:   pkg?.name || selectedPackage,
+        total_amount:   totalText,
+        currency:       currentCurrency,
+        invoice_number: document.getElementById('invoiceNumber')?.textContent || '',
+        invoice_date:   document.getElementById('invoiceDate')?.textContent   || '',
+        payment_method: document.getElementById('invPaymentMethod')?.value    || '',
+        business_name:  document.getElementById('businessName')?.value        || '',
+        special_notes:  document.getElementById('specialRequests')?.value     || '',
+        deadline:       document.getElementById('projectDeadline')?.value     || '',
       };
 
       try {
-        // Send order notification to NexGenix
-        const response = await emailjs.send(
-          EMAILJS_CONFIG.serviceID,
-          EMAILJS_CONFIG.adminTemplateID,
-          emailParams,
-          EMAILJS_CONFIG.publicKey
-        );
-        console.log('Order notification sent:', response);
+        await emailjs.send(EMAILJS_CONFIG.serviceID, EMAILJS_CONFIG.adminTemplateID, templateParams);
+        try {
+          await emailjs.send(EMAILJS_CONFIG.serviceID, EMAILJS_CONFIG.clientTemplateID, templateParams);
+        } catch(e2) { /* client email optional */ }
 
-        // Show success state
-        btn.textContent = '✅ Order Placed!';
-        btn.style.background = 'linear-gradient(135deg, rgba(57,255,20,0.3), rgba(57,255,20,0.15))';
-        btn.style.borderColor = 'var(--neon)';
-        btn.style.color = 'var(--neon)';
-        btn.disabled = true;
-        document.getElementById('orderSuccessBanner').style.display = 'block';
-        document.getElementById('newPurchaseBtn').style.display = 'block';
-        document.getElementById('orderSuccessBanner').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const banner = document.getElementById('orderSuccessBanner');
+        if (banner) banner.style.display = 'block';
+        if (btn) { btn.style.display = 'none'; }
+        const newPurchaseBtn = document.getElementById('newPurchaseBtn');
+        if (newPurchaseBtn) newPurchaseBtn.style.display = 'block';
 
-      } catch (error) {
-        console.error('EmailJS Error:', error);
-
-        // Fallback to mailto if EmailJS fails
-        const subject = encodeURIComponent(`New Order - ${orderData.invoiceNumber}`);
-        const body = encodeURIComponent(`
-Order Details:
-━━━━━━━━━━━━━━━━━━
-Client: ${orderData.clientName}
-Package: ${orderData.packageName}
-Total Amount: ${orderData.totalAmount}
-Currency: ${currentCurrency}
-Invoice #: ${orderData.invoiceNumber}
-Date: ${new Date().toLocaleDateString()}
-
-Please contact this client to process their order.
-
-Full order details:
-${JSON.stringify(orderData, null, 2)}
-        `);
-
-        const mailto = `mailto:nexgenixcreativesolutions@gmail.com?subject=${subject}&body=${body}`;
-        window.open(mailto, '_blank');
-
-        btn.textContent = '⚠️ Retry — Send via Email';
-        btn.disabled = false;
-        btn.style.background = 'rgba(255,64,64,0.15)';
-        btn.style.borderColor = 'var(--red)';
-        btn.style.color = 'var(--red)';
+      } catch(err) {
+        alert('Order submission failed. Please try again or contact us directly.');
+        if (btn) { btn.disabled = false; btn.textContent = '🛒 Place Order'; }
       }
     }
 
+    // =================== DOWNLOAD INVOICE ===================
+    function downloadInvoice() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const pkg = servicePackages[selectedCategory]?.[selectedPackage];
+      if (!pkg) { alert('Select a package first.'); return; }
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(18);
+      doc.text('NEX GENIX CREATIVE SOLUTIONS', 14, 20);
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'normal');
+      doc.text('nexgenixcreativesolutions.github.io', 14, 28);
+      doc.text('info@nexgenixcreativesolutions.com', 14, 34);
+
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('INVOICE', 160, 20);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text(document.getElementById('invoiceNumber')?.textContent || '', 160, 28);
+      doc.text(document.getElementById('invoiceDate')?.textContent   || '', 160, 34);
+
+      doc.line(14, 40, 196, 40);
+
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text('BILL TO:', 14, 50);
+      doc.setFont('helvetica', 'normal');
+      doc.text(document.getElementById('clientNameInput')?.value  || 'Client', 14, 57);
+      doc.text(document.getElementById('invoiceEmailInput')?.value || '', 14, 63);
+
+      doc.setFont('helvetica', 'bold');
+      doc.text('Package:', 14, 78);
+      doc.setFont('helvetica', 'normal');
+      doc.text(pkg.name, 50, 78);
+
+      doc.setFont('helvetica', 'bold');
+      doc.text('Total Amount:', 14, 90);
+      doc.setFont('helvetica', 'normal');
+      doc.text(document.getElementById('invoiceTotalAmount')?.textContent || '', 60, 90);
+
+      doc.setFontSize(9);
+      doc.setTextColor(100);
+      doc.text('50% downpayment required to start • 50% upon project completion', 14, 105);
+      doc.text('Thank you for choosing Nex Genix Creative Solutions!', 14, 112);
+
+      doc.save(`NGCS-Invoice-${Date.now()}.pdf`);
+    }
+
+    // =================== START NEW PURCHASE ===================
     function startNewPurchase() {
-      // Reset invoice section
-      selectedPackage = null;
       selectedCategory = null;
+      selectedPackage  = null;
+      document.getElementById('customizationPanel').style.display = 'none';
       document.getElementById('invoiceSection').style.display = 'none';
       document.getElementById('orderSuccessBanner').style.display = 'none';
+      document.getElementById('placeOrderBtn').style.display = 'block';
+      document.getElementById('placeOrderBtn').disabled = false;
+      document.getElementById('placeOrderBtn').textContent = '🛒 Place Order';
       document.getElementById('newPurchaseBtn').style.display = 'none';
-      const btn = document.getElementById('placeOrderBtn');
-      btn.textContent = '🛒 Place Order';
-      btn.disabled = false;
-      btn.style.background = '';
-      btn.style.borderColor = '';
-      btn.style.color = '';
-      // Scroll to top of services
-      document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
+      loadServices();
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      // Re-highlight no package selected
-      document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
     }
 
-    function collectOrderData() {
-      const pkg = servicePackages[selectedCategory][selectedPackage];
-
-      // Collect all invoice items
-      const invoiceItems = [];
-      const itemRows = document.querySelectorAll('#invoiceItems tr');
-      itemRows.forEach(row => {
-        const cols = row.querySelectorAll('td');
-        if (cols.length === 2) {
-          invoiceItems.push({
-            description: cols[0].textContent.trim(),
-            amount: cols[1].textContent.trim()
-          });
-        }
-      });
-
-      return {
-        invoiceNumber: document.getElementById('invoiceNumber').textContent,
-        clientName: document.getElementById('clientNameInput').value,
-        clientEmail: document.getElementById('invoiceEmailInput').value || document.getElementById('profileEmail').value,
-        clientPhone: getFullWhatsApp(),
-        packageName: pkg.name,
-        packagePrice: formatPrice(convertPHPToUSD(pkg.price)),
-        category: selectedCategory,
-        serviceType: activeServiceType,
-        totalAmount: document.getElementById('totalAmount').textContent,
-        currency: currentCurrency,
-        invoiceItems: invoiceItems,
-        timestamp: new Date().toISOString()
-      };
-    }
-
-    async function downloadInvoice() {
-      if (!selectedPackage || !selectedCategory) {
-        alert('Please select a service package first.');
-        return;
-      }
-
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-      const W = 210, H = 297;
-      const mg = 12;          // left/right margin
-      const cW = W - mg * 2;  // content width = 186
-
-      // ── Palette ──────────────────────────────────────────────────
-      const C = {
-        bg:       [6,   8,  14],
-        surface:  [13,  18,  28],
-        surface2: [20,  28,  42],
-        neon:     [57, 255,  20],
-        neonMid:  [22, 163,  74],
-        yellow:   [232,212,  77],
-        white:    [255,255, 255],
-        light:    [190,205, 220],
-        muted:    [110,125, 145],
-        border:   [35,  50,  70],
-        rowEven:  [16,  22,  34],
-        rowOdd:   [11,  16,  26],
-      };
-
-      // ── Helpers ────────────────────────────────────────────────────
-      const fr = (x,y,w,h,col)  => { doc.setFillColor(...col); doc.rect(x,y,w,h,'F'); };
-      const rr = (x,y,w,h,r,col,stroke) => {
-        if (col)    { doc.setFillColor(...col);   doc.roundedRect(x,y,w,h,r,r,'F'); }
-        if (stroke) { doc.setDrawColor(...stroke); doc.setLineWidth(0.7); doc.roundedRect(x,y,w,h,r,r,'D'); }
-      };
-      const t = (s,x,y,opts) => doc.text(String(s),x,y,opts||{});
-
-      // ── Read invoice data ──────────────────────────────────────────
-      const invNum     = (document.getElementById('invoiceNumber')?.textContent || 'NGCS-'+Date.now()).trim();
-      const invDate    = (document.getElementById('invoiceDate')?.textContent   || new Date().toLocaleDateString()).trim();
-      const clientName = (document.getElementById('clientNameInput')?.value     || 'Valued Client').trim();
-      const clientEmail= (document.getElementById('invoiceEmailInput')?.value   || '').trim();
-      const pkg        = servicePackages[selectedCategory][selectedPackage];
-      const totalText  = (document.getElementById('totalAmount')?.textContent   || '').trim();
-      const currSym    = currencySymbols[currentCurrency] || '$';
-      const currLabel  = currentCurrency;
-
-      const rows = [];
-      document.querySelectorAll('#invoiceItems tr').forEach(tr => {
-        const cols = tr.querySelectorAll('td');
-        if (cols.length === 2) rows.push({
-          desc:   cols[0].textContent.trim(),
-          amount: cols[1].textContent.trim()
-        });
-      });
-
-      let y = 0;
-
-      // ══════════════════════════════════════════════════════════════
-      // 1. FULL-PAGE BACKGROUND
-      // ══════════════════════════════════════════════════════════════
-      fr(0, 0, W, H, C.bg);
-
-      // ══════════════════════════════════════════════════════════════
-      // 2. HEADER — dark background, small centered banner, INVOICE badge
-      // ══════════════════════════════════════════════════════════════
-      const hH = 52;  // header height
-
-      const loadImg = (url) => new Promise(res => {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.onload = () => {
-          const c = document.createElement('canvas');
-          c.width = img.width; c.height = img.height;
-          c.getContext('2d').drawImage(img, 0, 0);
-          res(c.toDataURL('image/png'));
-        };
-        img.onerror = () => res(null);
-        img.src = url;
-        setTimeout(() => res(null), 3500);
-      });
-
-      // Dark header background (full width)
-      fr(0, 0, W, hH, C.surface);
-
-      // ── Small banner image — centred, does NOT fill the header ───
-      const bannerData = await loadImg(
-        'https://nexgenixcreativesolutions.github.io/assets/images/banner.png'
-      );
-      // Banner rendered small and centered: 90mm wide, 28mm tall, vertically centered
-      const bnW = 90, bnH = 28;
-      const bnX = (W - bnW) / 2;          // horizontally centered
-      const bnY = (hH - bnH) / 2;         // vertically centered in header
-      if (bannerData) {
-        doc.addImage(bannerData, 'PNG', bnX, bnY, bnW, bnH, '', 'FAST');
-      } else {
-        // Fallback text if image fails
-        doc.setTextColor(...C.neon);
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(13);
-        t('NEX GENIX', W/2, hH/2 - 2, { align:'center' });
-        doc.setFontSize(7);
-        doc.setCharSpace(3);
-        t('CREATIVE SOLUTIONS', W/2, hH/2 + 5, { align:'center' });
-        doc.setCharSpace(0);
-      }
-
-      // Neon bottom strip
-      fr(0, hH - 1.5, W, 1.5, C.neon);
-
-      // ── INVOICE badge — top-right, hardcoded safe dimensions ─────
-      const badgeW = 38, badgeH = 10;
-      const badgeX = W - mg - badgeW;   // = 210 - 12 - 38 = 160mm
-      const badgeY = 9;
-      doc.setFillColor(...C.surface2);
-      doc.roundedRect(badgeX, badgeY, badgeW, badgeH, 2, 2, 'F');
-      doc.setDrawColor(...C.neon);
-      doc.setLineWidth(0.7);
-      doc.roundedRect(badgeX, badgeY, badgeW, badgeH, 2, 2, 'D');
-      doc.setTextColor(...C.neon);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(7.5);
-      doc.setCharSpace(0);   // NO charSpace — prevents overflow
-      t('INVOICE', badgeX + badgeW / 2, badgeY + 7, { align: 'center' });
-      // invoice number below badge
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(6);
-      doc.setTextColor(...C.muted);
-      t('# ' + invNum, badgeX + badgeW / 2, badgeY + badgeH + 4.5, { align: 'center' });
-
-      y = hH + 1;
-
-      // ══════════════════════════════════════════════════════════════
-      // 3. META BAR — 4 cells
-      // ══════════════════════════════════════════════════════════════
-      const mH = 22;
-      fr(0, y, W, mH, C.surface2);
-      fr(0, y + mH - 0.5, W, 0.5, C.border);
-
-      const cells = [
-        { label:'INVOICE NO', value: invNum,              valCol: C.neon   },
-        { label:'DATE',       value: invDate,             valCol: C.yellow },
-        { label:'STATUS',     value:'⏳  PENDING',        valCol: C.yellow },
-        { label:'CURRENCY',   value: currSym+' '+currLabel, valCol: C.light },
-      ];
-      const cw4 = cW / 4;
-      cells.forEach((cell, i) => {
-        const cx = mg + i * cw4;
-        doc.setTextColor(...C.muted);
-        doc.setFont('helvetica','normal');
-        doc.setFontSize(6);
-        doc.setCharSpace(1);
-        t(cell.label, cx + cw4/2, y + 7, { align:'center' });
-        doc.setCharSpace(0);
-        doc.setTextColor(...cell.valCol);
-        doc.setFont('helvetica','bold');
-        doc.setFontSize(8.5);
-        t(cell.value, cx + cw4/2, y + 16, { align:'center' });
-        if (i < 3) {
-          doc.setDrawColor(...C.border);
-          doc.setLineWidth(0.3);
-          doc.line(mg+(i+1)*cw4, y+4, mg+(i+1)*cw4, y+mH-4);
-        }
-      });
-
-      y += mH + 5;
-
-      // ══════════════════════════════════════════════════════════════
-      // 4. BILL TO / ISSUED BY
-      // ══════════════════════════════════════════════════════════════
-      const cardH = 34, cardW = (cW - 5) / 2;
-
-      // ── Bill To ───────────────────────────────────────────────────
-      rr(mg, y, cardW, cardH, 3, C.surface);
-      rr(mg, y, cardW, cardH, 3, null, C.neonMid);
-      // header band
-      rr(mg, y, cardW, 9, 3, C.neonMid);
-      fr(mg, y+5, cardW, 4, C.neonMid);
-      doc.setTextColor(...C.white); doc.setFont('helvetica','bold'); doc.setFontSize(7);
-      doc.setCharSpace(1.2); t('BILL TO', mg+6, y+6.5); doc.setCharSpace(0);
-      doc.setTextColor(...C.white); doc.setFont('helvetica','bold'); doc.setFontSize(10);
-      t(clientName, mg+6, y+18);
-      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(...C.light);
-      if (clientEmail) t(clientEmail, mg+6, y+25);
-
-      // ── Issued By ─────────────────────────────────────────────────
-      const ibX = mg + cardW + 5;
-      rr(ibX, y, cardW, cardH, 3, C.surface);
-      rr(ibX, y, cardW, cardH, 3, null, C.border);
-      rr(ibX, y, cardW, 9, 3, C.surface2);
-      fr(ibX, y+5, cardW, 4, C.surface2);
-      doc.setTextColor(...C.muted); doc.setFont('helvetica','bold'); doc.setFontSize(7);
-      doc.setCharSpace(1.2); t('ISSUED BY', ibX+6, y+6.5); doc.setCharSpace(0);
-      doc.setTextColor(...C.white); doc.setFont('helvetica','bold'); doc.setFontSize(9.5);
-      t('Nex Genix Creative Solutions', ibX+6, y+17);
-      doc.setFont('helvetica','normal'); doc.setFontSize(7.8);
-      doc.setTextColor(...C.neon); t('nexgenixcreativesolutions@gmail.com', ibX+6, y+24);
-      doc.setTextColor(...C.muted); t('Philippines', ibX+6, y+30);
-
-      y += cardH + 6;
-
-      // ══════════════════════════════════════════════════════════════
-      // 5. ITEMS TABLE
-      // ══════════════════════════════════════════════════════════════
-      // Table header row
-      rr(mg, y, cW, 9, 2, C.surface2);
-      fr(mg, y+5, cW, 4, C.surface2);
-      doc.setDrawColor(...C.neon); doc.setLineWidth(0.5);
-      doc.line(mg, y+9, mg+cW, y+9);
-      doc.setTextColor(...C.neon); doc.setFont('helvetica','bold'); doc.setFontSize(7.5);
-      doc.setCharSpace(0.8); t('DESCRIPTION', mg+6, y+6.5); doc.setCharSpace(0);
-      t('AMOUNT', mg+cW-5, y+6.5, { align:'right' });
-      y += 9;
-
-      rows.forEach((row, i) => {
-        const isZero = row.amount==='Included'||row.amount===''||row.amount==='—'||row.amount==='$0.00'||row.amount==='₱0.00'||row.amount==='€0.00';
-        const split  = doc.splitTextToSize(row.desc, cW - 50);
-        const rH     = Math.max(9, split.length * 5 + 4);
-        fr(mg, y, cW, rH, i%2===0 ? C.rowEven : C.rowOdd);
-        fr(mg, y, 2.5, rH, C.neon); // accent
-        doc.setTextColor(...C.light); doc.setFont('helvetica','normal'); doc.setFontSize(8);
-        t(split, mg+7, y+6);
-        doc.setFont('helvetica','bold'); doc.setFontSize(8.5);
-        if (isZero) {
-          doc.setTextColor(...C.muted); t('Included', mg+cW-5, y+6, { align:'right' });
-        } else {
-          doc.setTextColor(...C.neon); t(row.amount, mg+cW-5, y+6, { align:'right' });
-        }
-        doc.setDrawColor(...C.border); doc.setLineWidth(0.2);
-        doc.line(mg, y+rH, mg+cW, y+rH);
-        y += rH;
-      });
-
-      y += 6;
-
-      // ══════════════════════════════════════════════════════════════
-      // 6. TOTAL BOX — right-aligned, hardcoded safe width
-      // ══════════════════════════════════════════════════════════════
-      // Box: 80mm wide, right edge flush with content (W - mg = 198)
-      const tbW  = 80;
-      const tbH  = 28;
-      const tbX  = W - mg - tbW;   // 210 - 12 - 80 = 118mm left edge
-      const tbRightEdge = tbX + tbW;  // = 198mm = W - mg
-
-      // Package info to the LEFT (capped so it never overlaps the box)
-      const infoMaxW = tbX - mg - 4;  // available space left of box
-      if (infoMaxW > 20) {
-        doc.setTextColor(...C.muted);
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(7.5);
-        const pkgLine = doc.splitTextToSize(pkg.name, infoMaxW)[0];
-        t(pkgLine, mg, y + 10);
-        doc.setTextColor(...C.light);
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(8.5);
-        const cliLine = doc.splitTextToSize(clientName, infoMaxW)[0];
-        t(cliLine, mg, y + 20);
-      }
-
-      // Draw box fill + border
-      doc.setFillColor(...C.surface2);
-      doc.roundedRect(tbX, y, tbW, tbH, 3, 3, 'F');
-      doc.setDrawColor(...C.neon);
-      doc.setLineWidth(0.8);
-      doc.roundedRect(tbX, y, tbW, tbH, 3, 3, 'D');
-
-      // "TOTAL AMOUNT DUE" — right-aligned, 5mm inside right edge
-      doc.setTextColor(...C.muted);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(6.5);
-      doc.setCharSpace(0);
-      t('TOTAL AMOUNT DUE', tbRightEdge - 5, y + 9, { align: 'right' });
-
-      // Total amount value — right-aligned, 5mm inside right edge
-      doc.setTextColor(...C.neon);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(17);
-      t(totalText, tbRightEdge - 5, y + 23, { align: 'right' });
-
-      y = y + tbH + 6;
-
-      // ══════════════════════════════════════════════════════════════
-      // 7. PAYMENT INFO
-      // ══════════════════════════════════════════════════════════════
-      const pyH = 28;
-      rr(mg, y, cW, pyH, 3, C.surface);
-      doc.setDrawColor(...C.neonMid); doc.setLineWidth(0.5);
-      doc.roundedRect(mg, y, cW, pyH, 3, 3, 'D');
-      fr(mg, y, 3, pyH, C.neonMid);
-      doc.setTextColor(...C.neon); doc.setFont('helvetica','bold'); doc.setFontSize(8);
-      doc.setCharSpace(0.8); t('PAYMENT INFORMATION', mg+8, y+7); doc.setCharSpace(0);
-      doc.setFont('helvetica','normal'); doc.setFontSize(7.8);
-      doc.setTextColor(...C.light);
-      t('Terms: 50% downpayment to start  ·  50% upon project completion', mg+8, y+14);
-      doc.setTextColor(...C.muted);
-      t('Local: GCash  ·  Bank Transfer  ·  PayMaya', mg+8, y+20);
-      t('International: PayPal  ·  Stripe', mg+8, y+26);
-
-      // ══════════════════════════════════════════════════════════════
-      // 8. FOOTER
-      // ══════════════════════════════════════════════════════════════
-      const fy = H - 16;
-      fr(0, fy-3, W, 1, C.neon);
-      doc.setTextColor(...C.muted); doc.setFont('helvetica','normal'); doc.setFontSize(7.5);
-      t('Thank you for choosing Nex Genix Creative Solutions!', W/2, fy+3, { align:'center' });
-      t('nexgenixcreativesolutions@gmail.com  ·  Philippines', W/2, fy+8.5, { align:'center' });
-      doc.setFontSize(6.5); doc.setTextColor(...C.border);
-      t('© '+new Date().getFullYear()+' Nex Genix Creative Solutions. All Rights Reserved.', W/2, fy+14, { align:'center' });
-
-      // ── Save ──────────────────────────────────────────────────────
-      doc.save('NexGenix_Invoice_'+invNum.replace(/[^a-zA-Z0-9]/g,'_')+'.pdf');
-    }
-
-    // =================== USER PROFILE ===================
-    async function saveProfile() {
-      const displayName = document.getElementById('displayNameInput').value.trim();
-      const phoneCode   = document.getElementById('phoneCode').value;
-      const phoneNum    = document.getElementById('phoneNumber').value.trim();
-      const fullPhone   = phoneNum ? `${phoneCode}${phoneNum.replace(/\s/g,'')}` : '';
-
-      syncSettingsPhoneToInvoice();
-
-      try {
-        const { data: { session } } = await _sb.auth.getSession();
-        if (!session) throw new Error('Not logged in');
-        const { error } = await _sb.from('profiles').update({
-          display_name: displayName,
-          phone:        fullPhone || null,
-          updated_at:   new Date().toISOString()
-        }).eq('id', session.user.id);
-        if (error) throw error;
-        alert('Profile updated successfully!' + (fullPhone ? `\nWhatsApp: ${fullPhone}` : ''));
-      } catch(err) {
-        alert('Could not save profile: ' + err.message);
-      }
-    }
-
-    async function updatePassword() {
-      const newPassword = document.getElementById('passwordInput').value;
-      if (!newPassword || newPassword.length < 6) {
-        alert('Password must be at least 6 characters.');
-        return;
-      }
-      try {
-        const { error } = await _sb.auth.updateUser({ password: newPassword });
-        if (error) throw error;
-        alert('Password updated successfully!');
-        document.getElementById('passwordInput').value = '';
-      } catch(err) {
-        alert('Could not update password: ' + err.message);
-      }
-    }
-
-    async function logout() {
-      await _sb.auth.signOut();
-      window.location.href = 'https://nexgenixcreativesolutions.github.io/login-signup';
-    }
-
-    // =================== BOTTOM NAV ACTIVE STATE ===================
-    function setBottomActive(el) {
-      document.querySelectorAll('.bottom-nav-item').forEach(btn => btn.classList.remove('active'));
-      el.classList.add('active');
-    }
-
-
-
-    // =================== INITIALIZE ===================
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      document.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-
-    // =================== PAYMENT METHOD ICON ========================
-    function updateDurationLimit() {
-      updateInvoice();
-      if (!selectedCategory || !selectedPackage) return;
-      const sel     = document.getElementById('videoDuration');
-      const warning = document.getElementById('durationWarning');
-      const maxLabel = document.getElementById('durationMaxLabel');
-      if (!sel || !warning) return;
-      const secMap = {
-        '15 seconds': 15,
-        '30 seconds': 30,
-        '60 seconds (1 min)': 60,
-        '90 seconds': 90,
-        '120 seconds (2 min)': 120
-      };
-      const chosen = secMap[sel.value] || 0;
-      const limits = { short: 30, standard: 60, premium: 120 };
-      const limitLabels = { short: '30 seconds', standard: '60 seconds', premium: '120 seconds' };
-      const limit = limits[selectedPackage] || 120;
-      if (chosen > limit) {
-        warning.style.display = 'block';
-        if (maxLabel) maxLabel.textContent = limitLabels[selectedPackage] || '120 seconds';
-      } else {
-        warning.style.display = 'none';
-      }
-    }
-
-    function updatePaymentIcon() {
-      const sel = document.getElementById('invPaymentMethod');
-      if (!sel) return;
-      const icons = { gcash: '🟢', bank: '🏦', maya: '🟣', paypal: '🔵', stripe: '⬛' };
-      const icon = document.getElementById('invPayIcon');
-      if (icon) icon.textContent = icons[sel.value] || '💳';
-    }
-
-    // =================== LOCALSTORAGE CLIENT INFO ===================
+    // =================== SAVE / LOAD CLIENT INFO ===================
     const LS_KEY = 'ngcs_client_v1';
 
     function saveClientInfo() {
@@ -2037,11 +773,185 @@ ${JSON.stringify(orderData, null, 2)}
       } catch(e) { /* ignore */ }
     }
 
+    // =================== POPULATE PHONE DROPDOWNS ===================
+    const phoneCountries = [
+      { code: '+63', flag: '🇵🇭', name: 'Philippines (+63)' },
+      { code: '+1',  flag: '🇺🇸', name: 'US/Canada (+1)' },
+      { code: '+44', flag: '🇬🇧', name: 'UK (+44)' },
+      { code: '+61', flag: '🇦🇺', name: 'Australia (+61)' },
+      { code: '+65', flag: '🇸🇬', name: 'Singapore (+65)' },
+      { code: '+60', flag: '🇲🇾', name: 'Malaysia (+60)' },
+      { code: '+81', flag: '🇯🇵', name: 'Japan (+81)' },
+      { code: '+82', flag: '🇰🇷', name: 'South Korea (+82)' },
+      { code: '+86', flag: '🇨🇳', name: 'China (+86)' },
+      { code: '+91', flag: '🇮🇳', name: 'India (+91)' },
+      { code: '+49', flag: '🇩🇪', name: 'Germany (+49)' },
+      { code: '+33', flag: '🇫🇷', name: 'France (+33)' },
+      { code: '+39', flag: '🇮🇹', name: 'Italy (+39)' },
+      { code: '+48', flag: '🇵🇱', name: 'Poland (+48)' },
+      { code: '+971',flag: '🇦🇪', name: 'UAE (+971)' },
+      { code: '+966',flag: '🇸🇦', name: 'Saudi Arabia (+966)' },
+      { code: '+55', flag: '🇧🇷', name: 'Brazil (+55)' },
+      { code: '+52', flag: '🇲🇽', name: 'Mexico (+52)' },
+    ];
+
+    function populatePhoneDropdowns() {
+      const options = phoneCountries.map(c =>
+        `<option value="${c.code}">${c.flag} ${c.name}</option>`
+      ).join('');
+
+      ['phoneCode', 'invoicePhoneCode'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = options;
+      });
+    }
+
+    // =================== FLOATING CODE BACKGROUND ===================
+    function createFloatingCodeBackground() {
+      const container = document.getElementById('floatingCodeContainer');
+      if (!container) return;
+      const snippets = [
+        'const solution = ngcs.build()',
+        'function createWebsite() {}',
+        '<div class="hero-section">',
+        'display: flex; gap: 1rem;',
+        'git commit -m "launch v1"',
+        'SELECT * FROM clients;',
+        'border-radius: 0.875rem;',
+        '@media (max-width: 768px)',
+        'async function fetchData()',
+        'import { useState } from react',
+        'transform: translateY(-4px);',
+        'box-shadow: 0 0 20px #39FF14;',
+      ];
+      for (let i = 0; i < 12; i++) {
+        const el = document.createElement('div');
+        el.className = 'code-line';
+        el.textContent = snippets[i % snippets.length];
+        el.style.top    = Math.random() * 100 + '%';
+        el.style.animationDuration = (20 + Math.random() * 30) + 's';
+        el.style.animationDelay   = (Math.random() * 20) + 's';
+        container.appendChild(el);
+      }
+    }
+
+    // =================== DATETIME CLOCK ===================
+    function updateClock() {
+      const el = document.getElementById('datetime');
+      if (!el) return;
+      const now = new Date();
+      el.textContent = now.toLocaleString('en-US', {
+        weekday:'short', year:'numeric', month:'short',
+        day:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit'
+      });
+    }
+
+    // =================== SAVE PROFILE ===================
+    async function saveProfile() {
+      const displayName = document.getElementById('displayNameInput')?.value?.trim() || '';
+      const phoneCode   = document.getElementById('phoneCode')?.value || '';
+      const phoneNum    = document.getElementById('phoneNumber')?.value?.trim() || '';
+      const fullPhone   = phoneNum ? `${phoneCode}${phoneNum.replace(/\s/g,'')}` : '';
+
+      try {
+        const { data: { session } } = await _sb.auth.getSession();
+        if (!session) throw new Error('Not logged in');
+        const { error } = await _sb.from('profiles').update({
+          display_name: displayName,
+          phone:        fullPhone || null,
+          updated_at:   new Date().toISOString()
+        }).eq('id', session.user.id);
+        if (error) throw error;
+        alert('Profile updated successfully!');
+      } catch(err) {
+        alert('Could not save profile: ' + err.message);
+      }
+    }
+
+    async function updatePassword() {
+      const newPassword = document.getElementById('passwordInput')?.value ||
+                          document.getElementById('newPasswordInput')?.value;
+      if (!newPassword || newPassword.length < 6) {
+        alert('Password must be at least 6 characters.');
+        return;
+      }
+      try {
+        const { error } = await _sb.auth.updateUser({ password: newPassword });
+        if (error) throw error;
+        alert('Password updated successfully!');
+        const pwEl = document.getElementById('passwordInput') || document.getElementById('newPasswordInput');
+        if (pwEl) pwEl.value = '';
+      } catch(err) {
+        alert('Could not update password: ' + err.message);
+      }
+    }
+
+    async function logout() {
+      await _sb.auth.signOut();
+      // Instead of redirect, just update UI to guest state
+      _currentSession = null;
+      if (typeof window.applyAuthState === 'function') window.applyAuthState(false);
+      showSection('order');
+    }
+
+    // =================== BOTTOM NAV ACTIVE STATE ===================
+    function setBottomActive(el) {
+      document.querySelectorAll('.bottom-nav-item').forEach(btn => btn.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // =================== SCROLL TO TOP ===================
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =================== VIDEO DURATION LIMIT ===================
+    function updateDurationLimit() {
+      updateInvoice();
+      if (!selectedCategory || !selectedPackage) return;
+      const sel     = document.getElementById('videoDuration');
+      const warning = document.getElementById('durationWarning');
+      const maxLabel = document.getElementById('durationMaxLabel');
+      if (!sel || !warning) return;
+      const secMap = { '15 seconds':15,'30 seconds':30,'60 seconds (1 min)':60,'90 seconds':90,'120 seconds (2 min)':120 };
+      const chosen = secMap[sel.value] || 0;
+      const limits = { short: 30, standard: 60, premium: 120 };
+      const limitLabels = { short: '30 seconds', standard: '60 seconds', premium: '120 seconds' };
+      const limit = limits[selectedPackage] || 120;
+      if (chosen > limit) {
+        warning.style.display = 'block';
+        if (maxLabel) maxLabel.textContent = limitLabels[selectedPackage] || '120 seconds';
+      } else {
+        warning.style.display = 'none';
+      }
+    }
+
+    // =================== PAYMENT ICON ===================
+    function updatePaymentIcon() {
+      const sel = document.getElementById('invPaymentMethod');
+      if (!sel) return;
+      const icons = { gcash: '🟢', bank: '🏦', maya: '🟣', paypal: '🔵', stripe: '⬛' };
+      const icon = document.getElementById('invPayIcon');
+      if (icon) icon.textContent = icons[sel.value] || '💳';
+    }
+
+    // =================== INITIALIZE ===================
     document.addEventListener('DOMContentLoaded', function() {
       createFloatingCodeBackground();
       loadServices();
       populatePhoneDropdowns();
       loadClientInfo();
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      // Hamburger show on mobile
+      const toggle = document.getElementById('sidebarToggleBtn');
+      if (toggle) {
+        if (window.innerWidth <= 768) toggle.style.display = 'flex';
+        window.addEventListener('resize', () => {
+          toggle.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+        });
+      }
 
       // Auto-select service tab from URL ?service= param
       (function autoSelectServiceFromURL() {
@@ -2066,49 +976,45 @@ ${JSON.stringify(orderData, null, 2)}
         }
       })();
 
-      // Go to top button visibility
+      // Go to top button
       window.addEventListener('scroll', () => {
-        document.getElementById('goTopBtn').style.display = window.scrollY > 300 ? 'block' : 'none';
+        const goTopBtn = document.getElementById('goTopBtn');
+        if (goTopBtn) goTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
       });
-      const mainContent = document.querySelector('.main-content');
-      if (mainContent) {
-        mainContent.addEventListener('scroll', () => {
-          document.getElementById('goTopBtn').style.display = mainContent.scrollTop > 300 ? 'block' : 'none';
-        });
-      }
 
-      // User info loaded by loadProfileIntoUI() via onAuthStateChange above
-
-      // Sync settings phone to invoice whenever settings phone changes
-      document.getElementById('phoneCode').addEventListener('change', syncSettingsPhoneToInvoice);
-      document.getElementById('phoneNumber').addEventListener('input', syncSettingsPhoneToInvoice);
+      // Phone sync
+      const codeEl = document.getElementById('phoneCode');
+      const numEl  = document.getElementById('phoneNumber');
+      if (codeEl) codeEl.addEventListener('change', syncSettingsPhoneToInvoice);
+      if (numEl)  numEl.addEventListener('input',  syncSettingsPhoneToInvoice);
     });
-    // ── GLOBAL EXPORTS — ensure onclick= attributes can always reach these ──
-    window.filterByServiceType   = filterByServiceType;
-    window.selectOrderType       = selectOrderType;
-    window.selectService         = selectService;
-    window.showSection           = showSection;
-    window.toggleSidebar         = toggleSidebar;
-    window.updateInvoice         = updateInvoice;
-    window.adjustPages           = adjustPages;
-    window.updatePageCount       = updatePageCount;
+
+    // ── GLOBAL EXPORTS ──
+    window.filterByServiceType        = filterByServiceType;
+    window.selectOrderType            = selectOrderType;
+    window.selectService              = selectService;
+    window.showSection                = showSection;
+    window.toggleSidebar              = toggleSidebar;
+    window.updateInvoice              = updateInvoice;
+    window.adjustPages                = adjustPages;
+    window.updatePageCount            = updatePageCount;
     window.changeCurrencyFromDropdown = changeCurrencyFromDropdown;
-    window.submitOrder           = submitOrder;
-    window.downloadInvoice       = downloadInvoice;
-    window.startNewPurchase      = startNewPurchase;
-    window.saveClientInfo        = saveClientInfo;
-    window.syncClientName        = syncClientName;
-    window.syncInvoiceEmail      = syncInvoiceEmail;
-    window.syncInvoicePhone      = syncInvoicePhone;
+    window.submitOrder                = submitOrder;
+    window.downloadInvoice            = downloadInvoice;
+    window.startNewPurchase           = startNewPurchase;
+    window.saveClientInfo             = saveClientInfo;
+    window.syncClientName             = syncClientName;
+    window.syncInvoiceEmail           = syncInvoiceEmail;
+    window.syncInvoicePhone           = syncInvoicePhone;
     window.syncInvoiceEmailFromSettings = syncInvoiceEmailFromSettings;
-    window.updatePaymentIcon     = updatePaymentIcon;
-    window.logout                = logout;
-    window.setBottomActive       = setBottomActive;
-    window.scrollToTop           = scrollToTop;
-    window.updateDurationLimit   = updateDurationLimit;
-    window.filterOrders          = typeof filterOrders === 'function' ? filterOrders : function(){};
-    window.saveProfile           = saveProfile;
-    window.updatePassword        = updatePassword;
-    window.toggleMultiDrop       = toggleMultiDrop;
-    window.updateMultiSelect     = updateMultiSelect;
-    window.togglePw              = togglePw;
+    window.updatePaymentIcon          = updatePaymentIcon;
+    window.logout                     = logout;
+    window.setBottomActive            = setBottomActive;
+    window.scrollToTop                = scrollToTop;
+    window.updateDurationLimit        = updateDurationLimit;
+    window.saveProfile                = saveProfile;
+    window.updatePassword             = updatePassword;
+    window.toggleMultiDrop            = typeof toggleMultiDrop === 'function' ? toggleMultiDrop : function(){};
+    window.updateMultiSelect          = typeof updateMultiSelect === 'function' ? updateMultiSelect : function(){};
+    window.togglePw                   = typeof togglePw === 'function' ? togglePw : function(){};
+    window.filterOrders               = typeof filterOrders === 'function' ? filterOrders : function(){};
