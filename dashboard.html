@@ -236,6 +236,11 @@
     .bottom-nav-item.logout-item:hover,
     .bottom-nav-item.logout-item.active { background: rgba(255,64,64,0.1) !important; }
 
+    /* ── BOTTOM NAV LOGIN ── */
+    .bottom-nav-item.login-item { color: var(--neon) !important; }
+    .bottom-nav-item.login-item svg { stroke: var(--neon) !important; }
+    .bottom-nav-item.login-item:hover { background: var(--neon-dim) !important; }
+
     /* ── HIDE + BUTTON STYLE ── */
     .bottom-nav-plus { display: none !important; }
 
@@ -244,6 +249,82 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+    }
+
+    /* ── GUEST BADGE in top nav ── */
+    .guest-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      background: rgba(232,212,77,0.08);
+      border: 1px solid rgba(232,212,77,0.25);
+      border-radius: var(--radius-sm);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.62rem;
+      color: var(--yellow);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    /* ── LOGIN NAV BUTTON ── */
+    .login-nav-btn {
+      border-color: rgba(57,255,20,0.5);
+      color: var(--neon);
+      background: var(--neon-dim);
+    }
+    .login-nav-btn:hover {
+      background: var(--neon);
+      color: #000;
+      border-color: var(--neon);
+      box-shadow: 0 4px 16px rgba(57,255,20,0.25);
+    }
+
+    /* ── GUEST WALL — locked sections ── */
+    .guest-wall {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+    .guest-wall-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .guest-wall h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      color: var(--neon);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+    }
+    .guest-wall p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.6;
+    }
+    .guest-wall-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.5rem;
+      background: var(--neon);
+      color: #000;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      text-transform: uppercase;
+    }
+    .guest-wall-btn:hover {
+      background: #5aff3a;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--neon-glow);
     }
 
     /* ── PASSWORD TOGGLE ── */
@@ -299,6 +380,17 @@
       color: var(--neon);
       box-shadow: inset 3px 0 0 var(--neon);
     }
+    /* Guest-locked sidebar items */
+    .sidebar-top-item.auth-only {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .sidebar-top-item.auth-only::after {
+      content: ' 🔒';
+      font-size: 0.65rem;
+      opacity: 0.7;
+    }
 
     /* ── SIDEBAR BOTTOM ACTIONS (Home + Logout) ── */
     .sidebar-bottom-actions {
@@ -349,6 +441,17 @@
       border-color: var(--red);
     }
     .sidebar-logout-btn svg { stroke: currentColor; }
+    .sidebar-login-btn {
+      color: var(--neon);
+      border-color: rgba(57,255,20,0.3);
+      background: rgba(57,255,20,0.06);
+    }
+    .sidebar-login-btn:hover {
+      background: var(--neon);
+      color: #000;
+      border-color: var(--neon);
+    }
+    .sidebar-login-btn svg { stroke: currentColor; }
 
     /* ── NO UNDERLINE ON BOTTOM NAV LINKS ── */
     .bottom-nav a, .bottom-nav a:visited, .bottom-nav a:hover {
@@ -398,121 +501,30 @@
       border: 1.5px solid var(--neon);
       color: var(--neon);
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      padding: 0.25rem 0.6rem;
-      border-radius: 3px;
-    }
-
-    /* ── MULTI-SELECT DROPDOWN ── */
-    .multi-select-wrap {
-      position: relative;
-      width: 100%;
-    }
-    .multi-select-display {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.6rem 0.875rem;
-      background: rgba(0,0,0,0.4);
-      border: 1px solid var(--border-dim);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: border-color 0.2s;
-      user-select: none;
-    }
-    .multi-select-display:hover,
-    .multi-select-display.open { border-color: var(--neon); }
-    .multi-select-text {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .multi-select-text.has-value { color: var(--text); }
-    .multi-arrow {
       font-size: 0.65rem;
-      color: var(--neon);
-      transition: transform 0.2s;
-      margin-left: 0.5rem;
+      letter-spacing: 0.2em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 0.35rem;
     }
-    .multi-select-display.open .multi-arrow { transform: rotate(180deg); }
-    .multi-select-dropdown {
-      display: none;
+
+    /* ── SERVICE CARD BADGE OVERLAY (for popular/recommended) ── */
+    .card-badge-overlay {
       position: absolute;
-      top: calc(100% + 4px);
-      left: 0;
-      right: 0;
-      background: #0c1018;
-      border: 1px solid var(--neon);
-      border-radius: var(--radius-sm);
-      z-index: 500;
-      max-height: 220px;
-      overflow-y: auto;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    }
-    .multi-select-dropdown.open { display: block; }
-    .multi-opt {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 0.875rem;
-      cursor: pointer;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      transition: background 0.15s, color 0.15s;
-    }
-    .multi-opt:hover { background: var(--neon-dim); color: var(--text); }
-    .multi-opt input[type="checkbox"] {
-      accent-color: var(--neon);
-      width: 14px;
-      height: 14px;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-    .multi-opt:has(input:checked) { color: var(--neon); background: rgba(57,255,20,0.05); }
-
-    /* ── VIDEO FORMAT CHECKBOXES ── */
-    .fmt-opt {
-      padding: 0.45rem 0.75rem;
-      background: var(--surface-2);
-      border: 1px solid var(--border-dim);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.18s;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-    .fmt-opt:has(input:checked) {
-      border-color: var(--neon);
-      background: var(--neon-dim);
-      color: var(--neon);
-    }
-    /* ── DEADLINE DATE INPUT ── */
-    input[type="date"].input {
-      cursor: pointer;
-    }
-    input[type="date"].input::-webkit-calendar-picker-indicator {
-      filter: invert(1) sepia(1) saturate(5) hue-rotate(70deg);
-      cursor: pointer;
-    }
-
-    /* ── SERVICE CARD TIER BADGES ── */
-    .card-tier-badge {
-      display: inline-block;
+      top: 10px;
+      right: 10px;
+      background: var(--neon);
+      color: #000;
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      border: 1px solid;
-      border-radius: 3px;
-      padding: 0.2rem 0.55rem;
-      margin-bottom: 0.5rem;
+      font-size: 0.5rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
       text-transform: uppercase;
     }
+    .card-badge-overlay.yellow { background: var(--yellow); }
+
+    /* ── CARD TAGLINE ── */
     .card-tagline {
       font-size: 0.72rem;
       color: var(--text-muted);
@@ -549,6 +561,16 @@
       flex-shrink: 0;
       margin-top: 0.1rem;
     }
+
+    /* ── AUTH STATE VISIBILITY ── */
+    .auth-only-el { display: none; }
+    .guest-only-el { display: inline-flex; }
+    body.is-logged-in .auth-only-el { display: inline-flex; }
+    body.is-logged-in .guest-only-el { display: none; }
+    body.is-logged-in .auth-only-block { display: block; }
+    body.is-logged-in .guest-only-block { display: none; }
+    .auth-only-block { display: none; }
+    .guest-only-block { display: block; }
   </style>
 </head>
 
@@ -566,8 +588,12 @@
       <div>
         <img src="assets/images/dashboard-logo-no-bg.png" class="sidebar-logo" alt="Nex Genix">
         <ul class="sidebar-menu">
-          <li onclick="showSection('profile')" class="sidebar-top-item">👤 View Profile</li>
-          <li onclick="showSection('my-orders')" class="sidebar-top-item">🛍️ Services Purchased</li>
+          <!-- Order (accessible to all) -->
+          <li onclick="showSection('order')" class="sidebar-top-item active">🛒 Order Service</li>
+          <!-- Auth-gated items -->
+          <li onclick="handleAuthSection('profile')" class="sidebar-top-item auth-nav-item" id="sidebar-profile-item">👤 View Profile</li>
+          <li onclick="handleAuthSection('my-orders')" class="sidebar-top-item auth-nav-item" id="sidebar-orders-item">🛍️ Services Purchased</li>
+          <!-- Support (accessible to all) -->
           <li onclick="showSection('support')" class="sidebar-top-item">💬 Contact Support</li>
         </ul>
         <div class="sidebar-bottom-actions">
@@ -575,10 +601,16 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             Home
           </a>
-          <button onclick="logout()" class="sidebar-action-btn sidebar-logout-btn">
+          <!-- Logout — shown only to logged-in users -->
+          <button onclick="logout()" class="sidebar-action-btn sidebar-logout-btn auth-only-block" id="sidebar-logout-btn" style="display:none;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
             Logout
           </button>
+          <!-- Login — shown only to guests -->
+          <a href="https://nexgenixcreativesolutions.github.io/login-signup" class="sidebar-action-btn sidebar-login-btn guest-only-block" id="sidebar-login-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            Log In
+          </a>
         </div>
       </div>
       <p class="sidebar-footer">&copy; 2023–2026 Nex Genix Creative Solutions<br>All rights reserved.</p>
@@ -587,11 +619,21 @@
     <!-- =================== MAIN CONTENT =================== -->
     <main class="main-content">
 
-      <!-- Top Navigation — clock only -->
+      <!-- Top Navigation -->
       <nav class="top-nav">
         <div id="datetime" class="datetime"></div>
         <div class="top-nav-buttons-right">
-          <!-- hamburger on mobile -->
+          <!-- Guest badge — visible when not logged in -->
+          <span class="guest-badge guest-only-el" id="guestBadge">👋 Browsing as Guest</span>
+          <!-- Login button for guests -->
+          <a href="https://nexgenixcreativesolutions.github.io/login-signup" class="nav-btn login-nav-btn guest-only-el" id="topLoginBtn" style="display:inline-flex;">
+            🔐 Log In
+          </a>
+          <!-- Logout button for logged-in users -->
+          <button onclick="logout()" class="nav-btn logout-btn auth-only-el" id="topLogoutBtn" style="display:none;">
+            ⏏ Logout
+          </button>
+          <!-- Hamburger on mobile -->
           <button class="nav-btn" id="sidebarToggleBtn" onclick="toggleSidebar()" style="display:none;">☰</button>
         </div>
       </nav>
@@ -815,80 +857,64 @@
                   <button class="page-counter-btn" id="numPagesdevPlus" onclick="adjustPages('numPagesdev', 1)">+</button>
                 </div>
               </div>
-              <div class="page-counter-hint" id="pageCounterHint2"></div>
+              <div class="page-counter-hint" id="pageCounterHintDev"></div>
             </div>
             <div class="form-group">
-              <label>Maintenance Plan</label>
-              <select id="maintenancePlan" class="select"><option value="none">No maintenance needed</option><option value="monthly">Monthly (₱800/mo)</option><option value="annual">Annual (₱8,000/yr)</option></select>
-            </div>
-            <div class="form-group">
-              <label>Additional Development Features (Select Multiple)</label>
+              <label>Development Features (Select Multiple)</label>
               <div class="toggle-group" id="webDevFeatures"></div>
             </div>
           </div>
 
           <!-- UI/UX Options -->
           <div id="uiuxOptions" style="display:none;">
-            <div class="panel-section-title">🧩 UI/UX DESIGN CONFIGURATION</div>
+            <div class="panel-section-title">🧩 UI/UX CONFIGURATION</div>
             <div class="form-group">
-              <label>Deliverables</label>
-              <div class="toggle-group" id="uiuxDeliverables"></div>
+              <label>Deliverable Type *</label>
+              <select id="uiuxDeliverable" class="select" onchange="updateInvoice()"><option value="">Select type</option><option>Wireframes only</option><option>Hi-fi mockups</option><option>Clickable prototype</option><option>Full design system</option></select>
             </div>
             <div class="form-group">
-              <label>Fidelity Level</label>
-              <select id="uiuxFidelity" class="select"><option value="low">Low-fidelity (Wireframes)</option><option value="mid">Mid-fidelity (Detailed Wireframes)</option><option value="high">High-fidelity (Pixel-perfect)</option></select>
+              <label>Number of Screens *</label>
+              <div class="page-counter-wrap">
+                <div class="page-counter">
+                  <button class="page-counter-btn" onclick="adjustPages('uiuxScreens', -1)">−</button>
+                  <input type="number" id="uiuxScreens" class="page-counter-input" value="1" min="1" max="100" oninput="adjustPages('uiuxScreens', 0)">
+                  <button class="page-counter-btn" onclick="adjustPages('uiuxScreens', 1)">+</button>
+                </div>
+              </div>
             </div>
           </div>
 
-
           <!-- Logo Design Options -->
-          <div id="logoDesignOptions" style="display:none;">
-            <div class="panel-section-title">🎨 LOGO DESIGN DETAILS</div>
+          <div id="logoOptions" style="display:none;">
+            <div class="panel-section-title">🎨 LOGO DESIGN CONFIGURATION</div>
             <div class="form-group">
-              <label>Name of Business *</label>
-              <input type="text" id="logoBizName" class="input" placeholder="e.g. Nex Genix Creative Solutions" oninput="updateInvoice()">
-            </div>
-            <div class="form-group">
-              <label>Business Type / Industry *</label>
-              <input type="text" id="logoBizIndustry" class="input" placeholder="e.g. Technology, Restaurant, Retail..." oninput="updateInvoice()">
-            </div>
-            <div class="form-group">
-              <label>Color Scheme / Preference</label>
-              <input type="text" id="logoColorScheme" class="input" placeholder="e.g. Dark green & gold, Minimalist black & white..." oninput="updateInvoice()">
-            </div>
-            <div class="form-group">
-              <label>📅 Preferred Deadline</label>
-              <input type="date" id="logoDeadline" class="input" oninput="updateInvoice()" style="color-scheme:dark;">
+              <label>Brand Style Preference</label>
+              <select id="logoStyle" class="select" onchange="updateInvoice()"><option value="">Select style</option><option>Minimalist / Clean</option><option>Bold / Modern</option><option>Vintage / Classic</option><option>Playful / Fun</option><option>Luxury / Premium</option><option>Tech / Futuristic</option></select>
             </div>
             <div class="form-group">
               <label>Additional Notes</label>
-              <textarea id="logoNotes" class="input" rows="3" placeholder="Style references, symbols, words to include or avoid..."></textarea>
+              <textarea id="logoNotes" class="input" rows="3" placeholder="Colors, symbols, tagline, references..."></textarea>
             </div>
           </div>
+
           <!-- Video Ads Options -->
           <div id="videoAdsOptions" style="display:none;">
-            <div class="panel-section-title">🎬 VIDEO ADS DETAILS</div>
+            <div class="panel-section-title">🎬 VIDEO ADS CONFIGURATION</div>
             <div class="form-group">
-              <label>Name of Business *</label>
-              <input type="text" id="videoBizName" class="input" placeholder="e.g. Nex Genix Creative Solutions" oninput="updateInvoice()">
-            </div>
-            <div class="form-group">
-              <label>Business Type / Industry *</label>
-              <input type="text" id="videoBizIndustry" class="input" placeholder="e.g. Food & Beverage, Tech, Fashion..." oninput="updateInvoice()">
-            </div>
-            <div class="form-group">
-              <label>Color Scheme / Brand Colors</label>
-              <input type="text" id="videoColorScheme" class="input" placeholder="e.g. Red & white, Corporate blue..." oninput="updateInvoice()">
-            </div>
-            <div class="form-group">
-              <label>File Format <span style="font-size:0.65rem;color:var(--text-muted);">(select all needed)</span></label>
-              <div class="toggle-group" id="videoFormats" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr));">
-                <label class="multi-opt fmt-opt"><input type="checkbox" value=".mp4" onchange="updateInvoice()"> .mp4</label>
-                <label class="multi-opt fmt-opt"><input type="checkbox" value=".mov" onchange="updateInvoice()"> .mov</label>
-                <label class="multi-opt fmt-opt"><input type="checkbox" value=".avi" onchange="updateInvoice()"> .avi</label>
-                <label class="multi-opt fmt-opt"><input type="checkbox" value=".mkv" onchange="updateInvoice()"> .mkv</label>
-                <label class="multi-opt fmt-opt"><input type="checkbox" value=".webm" onchange="updateInvoice()"> .webm</label>
-                <label class="multi-opt fmt-opt"><input type="checkbox" value=".gif" onchange="updateInvoice()"> .gif (animated)</label>
+              <label>Video Format(s) *</label>
+              <div class="multi-select-wrap">
+                <div class="multi-select-display" onclick="toggleMultiDrop('videoFmtDropdown', this)">
+                  <span class="multi-select-text" id="videoFmtText">Select format(s)…</span>
+                  <span class="multi-arrow">▾</span>
+                </div>
+                <div class="multi-select-dropdown" id="videoFmtDropdown">
+                  <label class="multi-opt fmt-opt"><input type="checkbox" value=".mp4" onchange="updateInvoice()"> .mp4</label>
+                  <label class="multi-opt fmt-opt"><input type="checkbox" value=".mov" onchange="updateInvoice()"> .mov</label>
+                  <label class="multi-opt fmt-opt"><input type="checkbox" value=".avi" onchange="updateInvoice()"> .avi</label>
+                  <label class="multi-opt fmt-opt"><input type="checkbox" value=".mkv" onchange="updateInvoice()"> .mkv</label>
+                  <label class="multi-opt fmt-opt"><input type="checkbox" value=".webm" onchange="updateInvoice()"> .webm</label>
+                  <label class="multi-opt fmt-opt"><input type="checkbox" value=".gif" onchange="updateInvoice()"> .gif (animated)</label>
+                </div>
               </div>
             </div>
             <div class="form-group">
@@ -924,36 +950,37 @@
               <textarea id="videoNotes" class="input" rows="3" placeholder="Target audience, tone (fun/formal/emotional), reference videos..."></textarea>
             </div>
           </div>
+
           <!-- Project Details -->
           <div id="projectDetailsSection">
-          <div class="panel-section-title">📝 PROJECT DETAILS</div>
-          <div class="form-group">
-            <label>📅 Preferred Deadline</label>
-            <input type="date" id="projectDeadline" class="input" oninput="updateInvoice()" style="color-scheme:dark;">
-          </div>
-          <div class="form-row">
+            <div class="panel-section-title">📝 PROJECT DETAILS</div>
             <div class="form-group">
-              <label>Business Name *</label>
-              <input type="text" id="businessName" class="input" placeholder="Your business name">
+              <label>📅 Preferred Deadline</label>
+              <input type="date" id="projectDeadline" class="input" oninput="updateInvoice()" style="color-scheme:dark;">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Business Name *</label>
+                <input type="text" id="businessName" class="input" placeholder="Your business name">
+              </div>
+              <div class="form-group">
+                <label>Website/App Purpose *</label>
+                <input type="text" id="websitePurpose" class="input" placeholder="e.g. Online store, portfolio...">
+              </div>
             </div>
             <div class="form-group">
-              <label>Website/App Purpose *</label>
-              <input type="text" id="websitePurpose" class="input" placeholder="e.g. Online store, portfolio...">
+              <label>Color Preference</label>
+              <input type="text" id="colorPreference" class="input" placeholder="e.g. Blue & white, dark theme...">
+            </div>
+            <div class="form-group">
+              <label>Reference Websites (optional)</label>
+              <input type="text" id="referenceWebsites" class="input" placeholder="Links to sites you like...">
+            </div>
+            <div class="form-group">
+              <label>Special Requests / Notes</label>
+              <textarea id="specialRequests" class="input" placeholder="Any special requirements or notes..."></textarea>
             </div>
           </div>
-          <div class="form-group">
-            <label>Color Preference</label>
-            <input type="text" id="colorPreference" class="input" placeholder="e.g. Blue & white, dark theme...">
-          </div>
-          <div class="form-group">
-            <label>Reference Websites (optional)</label>
-            <input type="text" id="referenceWebsites" class="input" placeholder="Links to sites you like...">
-          </div>
-          <div class="form-group">
-            <label>Special Requests / Notes</label>
-            <textarea id="specialRequests" class="input" placeholder="Any special requirements or notes..."></textarea>
-          </div>
-          </div><!-- /projectDetailsSection -->
         </div>
 
         <!-- Invoice Preview -->
@@ -998,66 +1025,112 @@
                     <div class="inv-saved-banner" id="invSavedBanner">✅ Auto-filled from saved profile</div>
                     <div class="p-name">
                       <span class="invoice-client-edit">
-                        <input type="text" id="clientNameInput" value="Valued Client" placeholder="Client name" oninput="syncClientName()" />
+                        <input type="text" id="clientNameInput" placeholder="Your Name"
+                               oninput="syncClientName(this)" />
                         <span class="edit-icon">✏️</span>
                       </span>
                     </div>
-                    <div class="p-detail neon">
+                    <div class="p-detail">
                       <span class="invoice-client-edit">
-                        <input type="email" id="invoiceEmailInput" placeholder="email@example.com" oninput="syncInvoiceEmail()" />
+                        <input type="email" id="invoiceEmailInput" placeholder="your@email.com"
+                               oninput="syncInvoiceEmail(this)" />
                         <span class="edit-icon">✏️</span>
                       </span>
                     </div>
-                    <div class="p-detail" style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
-                      <span class="phone-input-group">
-                        <select id="invoicePhoneCode" class="phone-country-select" oninput="syncInvoicePhone()"></select>
-                        <input type="tel" id="invoicePhoneNumber" class="phone-number-input" placeholder="9XX XXX XXXX" oninput="syncInvoicePhone()" maxlength="15" />
+                    <div class="p-detail green">
+                      <span class="invoice-client-edit">
+                        <span class="phone-input-group">
+                          <select id="invoicePhoneCode" class="phone-country-select" onchange="syncInvoicePhone()"></select>
+                          <input type="tel" id="invoicePhoneNumber" class="phone-number-input" placeholder="Phone / WhatsApp"
+                                 oninput="syncInvoicePhone()" maxlength="15"/>
+                        </span>
                       </span>
                     </div>
-                    <button class="inv-save-btn" onclick="saveClientInfo()">💾 SAVE INFO TO DEVICE</button>
                   </div>
                 </div>
                 <div class="invoice-party-card">
                   <div class="invoice-party-head issuer">🏢 Issued By</div>
                   <div class="invoice-party-body">
                     <div class="p-name">Nex Genix Creative Solutions</div>
-                    <div class="p-detail neon"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="38565d405f5d5651405b4a5d594c514e5d4b57544d4c5157564b785f55595154165b5755">[email&#160;protected]</a></div>
-                    <div class="p-detail">Philippines</div>
-                    <div class="p-detail" style="color:var(--text-muted);font-size:0.75rem;">nexgenixcreativesolutions.github.io</div>
+                    <div class="p-detail neon">info@nexgenixcreativesolutions.com</div>
+                    <div class="p-detail">Zamboanga City, Philippines</div>
+                    <div class="p-detail">nexgenixcreativesolutions.github.io</div>
                   </div>
                 </div>
               </div>
 
               <div class="invoice-table">
                 <table>
-                  <thead><tr><th>Description</th><th style="text-align:right;">Amount</th></tr></thead>
-                  <tbody id="invoiceItems"></tbody>
+                  <thead>
+                    <tr>
+                      <th>Description</th>
+                      <th>Details</th>
+                      <th style="text-align:right;">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody id="invoiceTableBody">
+                    <tr>
+                      <td colspan="3" style="text-align:center;color:var(--text-muted);padding:1.5rem;">Select a package above to generate invoice</td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
 
               <div class="invoice-total">
-                <div class="total-label">💰 Total Amount Due</div>
-                <div class="total-amount" id="totalAmount">₱0.00</div>
+                <div>
+                  <div class="total-label">Total Amount Due</div>
+                  <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.2rem;">50% downpayment to start</div>
+                </div>
+                <div class="total-amount" id="invoiceTotalAmount">—</div>
               </div>
 
+              <!-- Payment methods -->
               <div class="inv-pay-section">
-                <div class="inv-pay-label">Payment Method</div>
+                <div class="inv-pay-label">Payment Options</div>
+                <div class="inv-pay-sub">Preferred</div>
+                <div class="inv-pay-grid">
+                  <div class="inv-pay-chip chip-gcash">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#60a5fa"><circle cx="12" cy="12" r="10"/></svg>GCash
+                  </div>
+                  <div class="inv-pay-chip chip-maya">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#34d399"><circle cx="12" cy="12" r="10"/></svg>Maya
+                  </div>
+                  <div class="inv-pay-chip chip-bank">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="10" width="18" height="11"/><path d="M7 10V7a5 5 0 0 1 10 0v3"/></svg>Bank Transfer
+                  </div>
+                </div>
+                <div class="inv-pay-sub">International</div>
+                <div class="inv-pay-grid">
+                  <div class="inv-pay-chip chip-paypal">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#60a5fa"><circle cx="12" cy="12" r="10"/></svg>PayPal
+                  </div>
+                  <div class="inv-pay-chip chip-stripe">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#a78bfa"><circle cx="12" cy="12" r="10"/></svg>Stripe
+                  </div>
+                </div>
+
+                <div class="inv-pay-sub" style="margin-top:0.875rem;">Select Preferred Payment</div>
                 <div class="inv-pay-dropdown-wrap">
-                  <span class="inv-pay-icon" id="invPayIcon">🟢</span>
+                  <span class="inv-pay-icon" id="invPayIcon">💳</span>
                   <select id="invPaymentMethod" class="inv-pay-select" onchange="updatePaymentIcon()">
-                    <optgroup label="🇵🇭 Local — Philippines">
-                      <option value="gcash" data-icon="🟢">GCash</option>
-                      <option value="bank" data-icon="🏦">Bank Transfer</option>
-                      <option value="maya" data-icon="🟣">Maya</option>
+                    <optgroup label="🇵🇭 Local (Philippines)">
+                      <option value="gcash">GCash</option>
+                      <option value="maya">Maya</option>
+                      <option value="bank">Bank Transfer</option>
                     </optgroup>
                     <optgroup label="🌐 International">
-                      <option value="paypal" data-icon="🔵">PayPal</option>
-                      <option value="stripe" data-icon="⬛">Stripe</option>
+                      <option value="paypal">PayPal</option>
+                      <option value="stripe">Stripe</option>
                     </optgroup>
                   </select>
                   <span class="inv-pay-dropdown-arrow">▼</span>
                 </div>
                 <div class="inv-pay-terms">50% downpayment required to start · 50% upon project completion</div>
+              </div>
+
+              <!-- Save client info (localStorage) -->
+              <div class="inv-save-btn" onclick="saveClientInfo()">
+                💾 Save my info for next time (device only)
               </div>
 
               <div id="orderSuccessBanner" style="display:none;margin-bottom:1rem;padding:1.1rem 1.25rem;background:rgba(57,255,20,0.10);border:1.5px solid var(--neon);border-radius:var(--radius);text-align:center;">
@@ -1077,10 +1150,20 @@
         </div>
       </div>
 
-      <!-- ── MY ORDERS SECTION ── -->
+      <!-- ── MY ORDERS SECTION (auth-gated) ── -->
       <div id="my-orders" class="content-section">
         <h1 class="welcome-title">Services Purchased</h1>
-        <div class="content-box">
+
+        <!-- Guest wall -->
+        <div class="guest-wall guest-only-block" id="myOrdersGuestWall">
+          <div class="guest-wall-icon">🔒</div>
+          <h3>Sign In to View Orders</h3>
+          <p>Your order history is linked to your account. Log in or create a free account to track your services and purchase history.</p>
+          <a href="https://nexgenixcreativesolutions.github.io/login-signup" class="guest-wall-btn">🔐 Log In / Sign Up</a>
+        </div>
+
+        <!-- Actual orders content (logged-in only) -->
+        <div class="content-box auth-only-block" id="myOrdersContent" style="display:none;">
           <div class="orders-filter-tabs">
             <button class="orders-tab active" id="otab-all"         onclick="setOrdersFilter('all')">📦 All</button>
             <button class="orders-tab"        id="otab-in-progress" onclick="setOrdersFilter('in-progress')">⚙️ In Progress</button>
@@ -1093,12 +1176,20 @@
         </div>
       </div>
 
-      <!-- ── PROFILE SECTION ── -->
+      <!-- ── PROFILE SECTION (auth-gated) ── -->
       <div id="profile" class="content-section">
         <h1 class="welcome-title">View Profile</h1>
 
-        <!-- Account Settings -->
-        <div class="content-box" id="avatarSection">
+        <!-- Guest wall -->
+        <div class="guest-wall guest-only-block" id="profileGuestWall">
+          <div class="guest-wall-icon">👤</div>
+          <h3>Account Required</h3>
+          <p>Create a free account to save your profile, sync your preferences, and get faster checkout next time.</p>
+          <a href="https://nexgenixcreativesolutions.github.io/login-signup" class="guest-wall-btn">🔐 Log In / Sign Up</a>
+        </div>
+
+        <!-- Account Settings (logged-in only) -->
+        <div class="content-box auth-only-block" id="avatarSection" style="display:none;">
           <div class="profile-section-title">👤 Account Settings</div>
 
           <!-- Avatar -->
@@ -1134,8 +1225,8 @@
           <button class="button" onclick="saveProfile()" style="width:100%;">💾 Save Changes</button>
         </div>
 
-        <!-- Change Password -->
-        <div class="content-box" id="passwordSection">
+        <!-- Change Password (logged-in only) -->
+        <div class="content-box auth-only-block" id="passwordSection" style="display:none;">
           <div class="profile-section-title">🔒 Change Password</div>
 
           <div class="form-group">
@@ -1182,11 +1273,11 @@
                 <div class="support-sub">Chat with us directly — fastest response</div>
               </div>
             </a>
-            <a class="support-card" href="/cdn-cgi/l/email-protection#2749425f4042494e5f44554246534e514254484b52534e48495467404a464e4b0944484a">
+            <a class="support-card" href="mailto:info@nexgenixcreativesolutions.com">
               <span class="support-icon">✉️</span>
               <div>
                 <div class="support-label">Email Support</div>
-                <div class="support-sub"><span class="__cf_email__" data-cfemail="8be5eef3eceee5e2f3e8f9eeeaffe2fdeef8e4e7feffe2e4e5f8cbece6eae2e7a5e8e4e6">[email&#160;protected]</span></div>
+                <div class="support-sub">info@nexgenixcreativesolutions.com</div>
               </div>
             </a>
             <a class="support-card" href="https://nexgenixcreativesolutions.github.io" target="_blank">
@@ -1221,15 +1312,15 @@
     </a>
 
     <!-- Services → Order section -->
-    <button class="bottom-nav-item" onclick="showSection('order'); setBottomActive(this)" title="Services">
+    <button class="bottom-nav-item active" onclick="showSection('order'); setBottomActive(this)" title="Services">
       <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
       </svg>
       <span>Services</span>
     </button>
 
-    <!-- Orders → My Orders -->
-    <button class="bottom-nav-item" onclick="showSection('my-orders'); setBottomActive(this)" title="My Orders">
+    <!-- Orders → My Orders (auth-gated) -->
+    <button class="bottom-nav-item" onclick="handleAuthSection('my-orders'); setBottomActive(this)" title="My Orders">
       <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
         <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
@@ -1237,29 +1328,33 @@
       <span>Orders</span>
     </button>
 
-    <!-- Profile → View Profile -->
-    <button class="bottom-nav-item" onclick="showSection('profile'); setBottomActive(this)" title="Profile">
+    <!-- Profile → auth-gated -->
+    <button class="bottom-nav-item" onclick="handleAuthSection('profile'); setBottomActive(this)" title="Profile">
       <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
       </svg>
       <span>Profile</span>
     </button>
 
-    <!-- Logout -->
-    <button class="bottom-nav-item logout-item" onclick="logout()" title="Logout">
+    <!-- Logout (auth) / Login (guest) -->
+    <button class="bottom-nav-item logout-item auth-only-bottom" id="bottomLogoutBtn" onclick="logout()" title="Logout" style="display:none;">
       <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
       </svg>
       <span>Logout</span>
     </button>
+    <a class="bottom-nav-item login-item guest-only-bottom" id="bottomLoginBtn" href="https://nexgenixcreativesolutions.github.io/login-signup" title="Login" style="text-decoration:none;">
+      <svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+      </svg>
+      <span>Login</span>
+    </a>
   </nav>
 
   <script src="dashboard-script.js"></script>
   <script>
-
     // ── MULTI-SELECT DROPDOWN ──────────────────────────────────────────
     function toggleMultiDrop(dropdownId, displayEl) {
-      // Close all other open dropdowns first
       document.querySelectorAll('.multi-select-dropdown.open').forEach(d => {
         if (d.id !== dropdownId) {
           d.classList.remove('open');
@@ -1273,7 +1368,6 @@
     }
 
     function updateMultiSelect(textId, group, checkbox) {
-      // Collect all checked values in this dropdown
       const dropdown = checkbox.closest('.multi-select-dropdown');
       const checked  = Array.from(dropdown.querySelectorAll('input:checked')).map(i => i.value);
       bizSelections[group] = checked;
@@ -1285,7 +1379,6 @@
       updateInvoice();
     }
 
-    // Close multi-select dropdowns when clicking outside
     document.addEventListener('click', function(e) {
       if (!e.target.closest('.multi-select-wrap')) {
         document.querySelectorAll('.multi-select-dropdown.open').forEach(d => {
@@ -1298,7 +1391,12 @@
     // ── SIDEBAR ACTIVE STATE ──────────────────────────────────────────
     function setSidebarActive(sectionId) {
       document.querySelectorAll('.sidebar-top-item').forEach(li => li.classList.remove('active'));
-      const map = { 'profile': 0, 'my-orders': 1, 'support': 2 };
+      const map = {
+        'order': 0,
+        'profile': 1,
+        'my-orders': 2,
+        'support': 3
+      };
       const items = document.querySelectorAll('.sidebar-top-item');
       if (map[sectionId] !== undefined && items[map[sectionId]]) {
         items[map[sectionId]].classList.add('active');
@@ -1312,12 +1410,17 @@
       setSidebarActive(id);
     };
 
+    // ── AUTH SECTION GUARD ─────────────────────────────────────────────
+    // Navigate to auth-gated sections; shows guest wall if not logged in
+    function handleAuthSection(sectionId) {
+      showSection(sectionId);
+    }
+
     // ── ORDERS FILTER TABS ─────────────────────────────────────────────
     function setOrdersFilter(filter) {
       document.querySelectorAll('.orders-tab').forEach(t => t.classList.remove('active'));
       const tab = document.getElementById('otab-' + filter);
       if (tab) tab.classList.add('active');
-      // TODO: hook into actual orders list filtering when orders are added
     }
 
     // ── AVATAR UPLOAD ─────────────────────────────────────────────────
@@ -1336,7 +1439,6 @@
       reader.readAsDataURL(file);
     }
 
-    // Load saved avatar on start
     (function loadAvatar() {
       const saved = localStorage.getItem('ngcs_avatar');
       if (saved) {
@@ -1347,7 +1449,7 @@
       }
     })();
 
-    // ── STAR RATING (used in review cards) ────────────────────────────
+    // ── STAR RATING ────────────────────────────────────────────────────
     function setRating(stars, rating) {
       stars.forEach((s, i) => {
         s.classList.toggle('active', i < rating);
@@ -1362,20 +1464,18 @@
       const isHidden = input.type === 'password';
       input.type = isHidden ? 'text' : 'password';
       btn.classList.toggle('visible', isHidden);
-      // Swap eye icon: open eye when visible, slashed eye when hidden
       btn.querySelector('svg').innerHTML = isHidden
         ? '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
         : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
     }
 
-    // ── SYNC CURRENCY DROPDOWN → INVOICE META BAR ─────────────────────
-    // The main script's changeCurrency() already updates invoiceCurrencyMeta.
-    // This just ensures it's correct on initial load.
+    // ── SYNC CURRENCY DROPDOWN ────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', function() {
       const sel = document.getElementById('currencyDropdown');
       const meta = document.getElementById('invoiceCurrencyMeta');
       if (sel && meta) meta.textContent = sel.value;
     });
+
     // Sync profile email → invoice email
     (function() {
       const profileEmailEl = document.getElementById('profileEmail');
@@ -1387,16 +1487,63 @@
       }
     })();
 
-    // ── EXPOSE INLINE FUNCTIONS TO GLOBAL SCOPE ──────────────────────────
+    // ── AUTH UI STATE MANAGER ─────────────────────────────────────────
+    function applyAuthState(isLoggedIn) {
+      // Body class
+      document.body.classList.toggle('is-logged-in', isLoggedIn);
+
+      // Top nav elements
+      const guestBadge   = document.getElementById('guestBadge');
+      const topLoginBtn  = document.getElementById('topLoginBtn');
+      const topLogoutBtn = document.getElementById('topLogoutBtn');
+
+      if (guestBadge)   guestBadge.style.display   = isLoggedIn ? 'none' : 'inline-flex';
+      if (topLoginBtn)  topLoginBtn.style.display   = isLoggedIn ? 'none' : 'inline-flex';
+      if (topLogoutBtn) topLogoutBtn.style.display  = isLoggedIn ? 'inline-flex' : 'none';
+
+      // Sidebar
+      const sidebarLogout = document.getElementById('sidebar-logout-btn');
+      const sidebarLogin  = document.getElementById('sidebar-login-btn');
+      if (sidebarLogout) sidebarLogout.style.display = isLoggedIn ? 'flex' : 'none';
+      if (sidebarLogin)  sidebarLogin.style.display  = isLoggedIn ? 'none' : 'flex';
+
+      // Bottom nav
+      const bottomLogout = document.getElementById('bottomLogoutBtn');
+      const bottomLogin  = document.getElementById('bottomLoginBtn');
+      if (bottomLogout) bottomLogout.style.display = isLoggedIn ? 'flex' : 'none';
+      if (bottomLogin)  bottomLogin.style.display  = isLoggedIn ? 'none' : 'flex';
+
+      // Auth-gated sidebar items — show lock indicator when guest
+      document.querySelectorAll('.auth-nav-item').forEach(el => {
+        if (isLoggedIn) {
+          el.classList.remove('auth-only');
+          el.style.pointerEvents = '';
+          el.style.opacity = '';
+        } else {
+          el.classList.add('auth-only');
+        }
+      });
+
+      // Auth-gated content blocks
+      document.querySelectorAll('.auth-only-block').forEach(el => {
+        el.style.display = isLoggedIn ? 'block' : 'none';
+      });
+      document.querySelectorAll('.guest-only-block').forEach(el => {
+        el.style.display = isLoggedIn ? 'none' : 'block';
+      });
+    }
+
+    // ── EXPOSE INLINE FUNCTIONS ──────────────────────────────────────────
     window.togglePw           = togglePw;
     window.toggleMultiDrop    = toggleMultiDrop;
     window.updateMultiSelect  = updateMultiSelect;
     window.setOrdersFilter    = setOrdersFilter;
     window.handleAvatarUpload = handleAvatarUpload;
     window.setSidebarActive   = setSidebarActive;
+    window.handleAuthSection  = handleAuthSection;
+    window.applyAuthState     = applyAuthState;
 
-    // ── KEEP emailInput alias for old JS references ────────────────────
-    // The script.js may reference emailInput — mirror it
+    // ── KEEP emailInput alias ────────────────────────────────────────
     Object.defineProperty(window, 'emailInput', {
       get() { return document.getElementById('profileEmail'); }
     });
