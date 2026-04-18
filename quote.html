@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NGCS — Website Packages</title>
+<title>NGCS — Website Packages & Quote Calculator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700;800&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -19,466 +19,623 @@
     --border-dim: rgba(57,255,20,0.12);
     --text: #e8e8e8;
     --text-muted: #888;
-    --gold: #ffd700;
+    --gold: #e8d44d;
+    --red: #ff4040;
+    --PHP_RATE: 56.50; /* reference only */
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
+  *{margin:0;padding:0;box-sizing:border-box;}
 
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Montserrat Alternates', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1rem;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Montserrat Alternates',sans-serif;
+    min-height:100vh;
+    padding:2rem 1rem 4rem;
   }
-
-  /* ── SCANLINE TEXTURE ── */
   body::before {
     content:'';
-    position:fixed; inset:0; pointer-events:none; z-index:0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.15) 2px,
-      rgba(0,0,0,0.15) 4px
-    );
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.15) 2px,rgba(0,0,0,0.15) 4px);
   }
 
-  .ad-wrap {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 900px;
+  .wrap {
+    position:relative;z-index:1;
+    width:100%;max-width:960px;
+    margin:0 auto;
   }
 
   /* ── HEADER ── */
-  .ad-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-    animation: fadeDown 0.6s ease both;
+  .ad-header { text-align:center;margin-bottom:2.5rem;animation:fadeDown 0.6s ease both; }
+  .ad-eyebrow { font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:0.35em;color:var(--neon);text-transform:uppercase;margin-bottom:0.6rem;opacity:0.85; }
+  .ad-title { font-family:'Orbitron',sans-serif;font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;color:#fff;line-height:1.15;text-shadow:0 0 30px rgba(57,255,20,0.2); }
+  .ad-title span { color:var(--neon);text-shadow:0 0 20px var(--neon-glow); }
+  .ad-sub { margin-top:0.6rem;font-size:0.8rem;color:var(--text-muted);letter-spacing:0.04em; }
+
+  /* ── CURRENCY SWITCHER ── */
+  .currency-bar {
+    display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;justify-content:center;
+    margin-bottom:2rem;
+    padding:0.75rem 1.25rem;
+    background:rgba(232,212,77,0.07);
+    border:1px solid rgba(232,212,77,0.22);
+    border-radius:8px;
+    animation:fadeUp 0.5s ease both;
   }
-  .ad-eyebrow {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.35em;
-    color: var(--neon);
-    text-transform: uppercase;
-    margin-bottom: 0.6rem;
-    opacity: 0.85;
+  .currency-bar label { font-family:'Orbitron',sans-serif;font-size:0.62rem;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase; }
+  .currency-select {
+    background:#0c0c0c;border:1px solid rgba(232,212,77,0.35);border-radius:6px;
+    color:var(--gold);font-family:'Montserrat Alternates',sans-serif;font-size:0.82rem;
+    padding:0.4rem 2rem 0.4rem 0.75rem;
+    appearance:none;-webkit-appearance:none;cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23e8d44d'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 0.6rem center;
+    transition:border-color 0.2s;
   }
-  .ad-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(1.4rem, 4vw, 2.2rem);
-    font-weight: 900;
-    color: #fff;
-    line-height: 1.15;
-    text-shadow: 0 0 30px rgba(57,255,20,0.2);
+  .currency-select:focus { outline:none;border-color:var(--gold); }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    display:flex;align-items:center;gap:1rem;margin:2.5rem 0 1.75rem;
+    animation:fadeUp 0.5s ease both;
   }
-  .ad-title span {
-    color: var(--neon);
-    text-shadow: 0 0 20px var(--neon-glow);
+  .section-divider span {
+    font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:0.25em;
+    color:var(--neon);text-transform:uppercase;white-space:nowrap;
   }
-  .ad-sub {
-    margin-top: 0.6rem;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    letter-spacing: 0.04em;
+  .section-divider::before,.section-divider::after {
+    content:'';flex:1;height:1px;
+    background:linear-gradient(to right,transparent,var(--border-dim),transparent);
   }
 
-  /* ── CATEGORY BLOCK ── */
-  .category-block {
-    margin-bottom: 2.5rem;
-    animation: fadeUp 0.6s ease both;
-  }
-  .category-block:nth-child(2) { animation-delay: 0.1s; }
-  .category-block:nth-child(3) { animation-delay: 0.2s; }
-  .category-block:nth-child(4) { animation-delay: 0.3s; }
-
-  .category-label {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--neon);
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-  .category-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, var(--border), transparent);
-  }
-
-  /* ── CARDS ROW ── */
+  /* ── CARDS GRID ── */
   .cards-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1rem;
+    margin-bottom:0.5rem;
   }
-
   .pkg-card {
-    position: relative;
-    background: var(--surface);
-    border: 1px solid var(--border-dim);
-    border-radius: 6px;
-    padding: 1.4rem 1.1rem 1.2rem;
-    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
-    overflow: hidden;
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--border-dim);
+    border-radius:8px;
+    padding:1.4rem 1.1rem 1.2rem;
+    transition:transform 0.22s ease,border-color 0.22s ease,box-shadow 0.22s ease;
+    overflow:hidden;
   }
-  .pkg-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--neon-dim), transparent);
-    transition: background 0.22s;
-  }
-  .pkg-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--border);
-    box-shadow: 0 0 24px rgba(57,255,20,0.12), 0 8px 32px rgba(0,0,0,0.5);
-  }
-  .pkg-card:hover::before {
-    background: linear-gradient(90deg, transparent, var(--neon), transparent);
-  }
+  .pkg-card::before { content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--neon-dim),transparent);transition:background 0.22s; }
+  .pkg-card:hover { transform:translateY(-4px);border-color:var(--border);box-shadow:0 0 24px rgba(57,255,20,0.12),0 8px 32px rgba(0,0,0,0.5); }
+  .pkg-card:hover::before { background:linear-gradient(90deg,transparent,var(--neon),transparent); }
+  .pkg-card.featured { border-color:var(--border);background:#111;box-shadow:0 0 28px rgba(57,255,20,0.14); }
+  .pkg-card.featured::before { background:linear-gradient(90deg,transparent,var(--neon),transparent); }
 
-  /* PRO CARD HIGHLIGHT */
-  .pkg-card.featured {
-    border-color: var(--border);
-    background: #111;
-    box-shadow: 0 0 28px rgba(57,255,20,0.14);
-  }
-  .pkg-card.featured::before {
-    background: linear-gradient(90deg, transparent, var(--neon), transparent);
-  }
-
-  .featured-badge {
-    position: absolute;
-    top: 0.7rem; right: 0.7rem;
-    background: var(--neon);
-    color: #000;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.5rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.2rem 0.5rem;
-    border-radius: 2px;
-  }
-
-  .pkg-tier {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--neon);
-    margin-bottom: 0.3rem;
-    opacity: 0.8;
-  }
-  .pkg-name {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 0.25rem;
-    line-height: 1.3;
-  }
-  .pkg-price {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.35rem;
-    font-weight: 900;
-    color: var(--neon);
-    text-shadow: 0 0 14px rgba(57,255,20,0.4);
-    margin: 0.6rem 0 0.8rem;
-    line-height: 1;
-  }
-  .pkg-price sup {
-    font-size: 0.7rem;
-    vertical-align: super;
-  }
-
-  .pkg-divider {
-    height: 1px;
-    background: var(--border-dim);
-    margin-bottom: 0.8rem;
-  }
-
-  .pkg-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    margin-bottom: 1rem;
-  }
-  .pkg-features li {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    display: flex;
-    align-items: flex-start;
-    gap: 0.45rem;
-    line-height: 1.4;
-  }
-  .pkg-features li .chk {
-    color: var(--neon);
-    font-size: 0.65rem;
-    margin-top: 0.05rem;
-    flex-shrink: 0;
-  }
-  .pkg-features li.muted .chk { color: #444; }
-  .pkg-features li.muted { opacity: 0.45; }
-
+  .featured-badge { position:absolute;top:0.7rem;right:0.7rem;background:var(--neon);color:#000;font-family:'Orbitron',sans-serif;font-size:0.5rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.5rem;border-radius:2px; }
+  .pkg-tier { font-family:'Orbitron',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--neon);margin-bottom:0.3rem;opacity:0.8; }
+  .pkg-name { font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:0.25rem;line-height:1.3; }
+  .pkg-price { font-family:'Orbitron',sans-serif;font-size:1.35rem;font-weight:900;color:var(--neon);text-shadow:0 0 14px rgba(57,255,20,0.4);margin:0.6rem 0 0.8rem;line-height:1; }
+  .pkg-price sup { font-size:0.7rem;vertical-align:super; }
+  .pkg-price-php { font-size:0.72rem;color:var(--text-muted);margin-top:0.2rem;font-family:'Orbitron',sans-serif;letter-spacing:0.05em; }
+  .pkg-divider { height:1px;background:var(--border-dim);margin-bottom:0.8rem; }
+  .pkg-features { list-style:none;display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem; }
+  .pkg-features li { font-size:0.7rem;color:var(--text-muted);display:flex;align-items:flex-start;gap:0.45rem;line-height:1.4; }
+  .pkg-features li .chk { color:var(--neon);font-size:0.65rem;margin-top:0.05rem;flex-shrink:0; }
+  .pkg-features li.no .chk { color:#444; }
+  .pkg-features li.no { opacity:0.45; }
   .pkg-cta {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 0.55rem 0;
-    border-radius: 4px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    background: var(--neon-dim);
-    color: var(--neon);
-    transition: all 0.2s;
+    display:block;width:100%;text-align:center;padding:0.55rem 0;
+    border-radius:4px;font-family:'Orbitron',sans-serif;font-size:0.6rem;font-weight:700;
+    letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;
+    cursor:pointer;border:1px solid var(--border);background:var(--neon-dim);color:var(--neon);
+    transition:all 0.2s;
   }
-  .pkg-cta:hover, .pkg-card.featured .pkg-cta {
-    background: var(--neon);
-    color: #000;
-    box-shadow: 0 0 18px rgba(57,255,20,0.4);
-    border-color: var(--neon);
+  .pkg-cta:hover,.pkg-card.featured .pkg-cta { background:var(--neon);color:#000;box-shadow:0 0 18px rgba(57,255,20,0.4);border-color:var(--neon); }
+
+  /* ── QUOTATION CALCULATOR ── */
+  .calc-section {
+    margin-top:3rem;
+    animation:fadeUp 0.6s 0.3s ease both;
   }
-  .pkg-card.featured .pkg-cta:hover {
-    box-shadow: 0 0 28px rgba(57,255,20,0.6);
+  .calc-header {
+    text-align:center;margin-bottom:1.75rem;
+  }
+  .calc-title { font-family:'Orbitron',sans-serif;font-size:clamp(1.1rem,3vw,1.6rem);font-weight:900;color:#fff;margin-bottom:0.4rem; }
+  .calc-title span { color:var(--neon); }
+  .calc-sub { font-size:0.78rem;color:var(--text-muted);max-width:560px;margin:0 auto;line-height:1.6; }
+
+  .calc-body {
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:1.5rem;
+    align-items:start;
   }
 
-  /* ── FOOTER LINE ── */
-  .ad-footer {
-    text-align: center;
-    margin-top: 1.5rem;
-    animation: fadeUp 0.6s 0.4s ease both;
+  /* Services panel */
+  .calc-services {
+    background:var(--surface);
+    border:1px solid var(--border-dim);
+    border-radius:10px;
+    overflow:hidden;
   }
-  .ad-footer p {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    color: var(--text-muted);
-    text-transform: uppercase;
+  .calc-cat-header {
+    padding:0.75rem 1.1rem;
+    background:rgba(57,255,20,0.06);
+    border-bottom:1px solid var(--border-dim);
+    font-family:'Orbitron',sans-serif;
+    font-size:0.62rem;
+    letter-spacing:0.18em;
+    color:var(--neon);
+    text-transform:uppercase;
+    display:flex;align-items:center;gap:0.5rem;
   }
-  .ad-footer span { color: var(--neon); }
+  .calc-item {
+    display:flex;align-items:center;gap:0.75rem;
+    padding:0.7rem 1.1rem;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    cursor:pointer;
+    transition:background 0.15s;
+    user-select:none;
+  }
+  .calc-item:last-child { border-bottom:none; }
+  .calc-item:hover { background:rgba(57,255,20,0.05); }
+  .calc-item.selected { background:rgba(57,255,20,0.08);border-left:2.5px solid var(--neon); }
+  .calc-cb {
+    width:16px;height:16px;min-width:16px;
+    border:1.5px solid #444;border-radius:3px;
+    background:rgba(0,0,0,0.4);
+    display:flex;align-items:center;justify-content:center;
+    transition:all 0.15s;flex-shrink:0;
+  }
+  .calc-item.selected .calc-cb { background:var(--neon);border-color:var(--neon); }
+  .calc-cb::after { content:'';display:none; }
+  .calc-item.selected .calc-cb::after { content:'✓';display:block;color:#000;font-size:10px;font-weight:800;line-height:1; }
+  .calc-item-info { flex:1;min-width:0; }
+  .calc-item-name { font-size:0.78rem;color:var(--text);font-weight:600;line-height:1.3; }
+  .calc-item-desc { font-size:0.65rem;color:var(--text-muted);margin-top:0.15rem;line-height:1.4; }
+  .calc-item-price { font-family:'Orbitron',sans-serif;font-size:0.78rem;font-weight:700;color:var(--gold);white-space:nowrap; }
+
+  /* Qty selector for pages */
+  .calc-qty-wrap { display:flex;align-items:center;gap:0.35rem;margin-top:0.4rem; }
+  .calc-qty-btn { width:22px;height:22px;background:var(--neon-dim);border:1px solid var(--border-dim);border-radius:3px;color:var(--neon);font-size:0.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s;flex-shrink:0; }
+  .calc-qty-btn:hover { background:rgba(57,255,20,0.2); }
+  .calc-qty-input { width:40px;background:rgba(0,0,0,0.5);border:1px solid var(--border-dim);border-radius:3px;color:var(--text);font-family:'Orbitron',sans-serif;font-size:0.72rem;text-align:center;padding:0.2rem;outline:none; }
+  .calc-qty-label { font-size:0.62rem;color:var(--text-muted); }
+
+  /* Quote panel */
+  .calc-quote {
+    position:sticky;
+    top:1rem;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 0 40px rgba(57,255,20,0.06);
+  }
+  .calc-quote-header {
+    padding:0.875rem 1.25rem;
+    background:rgba(57,255,20,0.08);
+    border-bottom:1px solid var(--border);
+    font-family:'Orbitron',sans-serif;font-size:0.7rem;letter-spacing:0.12em;color:var(--neon);text-transform:uppercase;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .calc-quote-clear { font-size:0.55rem;color:var(--text-muted);cursor:pointer;padding:0.2rem 0.5rem;border:1px solid var(--border-dim);border-radius:3px;transition:all 0.15s;background:none; }
+  .calc-quote-clear:hover { border-color:var(--red);color:var(--red); }
+
+  .calc-line-items { padding:0.75rem 1.25rem;min-height:100px; }
+  .calc-empty { font-size:0.72rem;color:var(--text-muted);text-align:center;padding:1.5rem 0;font-style:italic; }
+  .calc-line { display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;padding:0.4rem 0;border-bottom:1px solid rgba(255,255,255,0.04); }
+  .calc-line:last-child { border-bottom:none; }
+  .calc-line-name { font-size:0.72rem;color:var(--text);flex:1;min-width:0;line-height:1.4; }
+  .calc-line-price { font-family:'Orbitron',sans-serif;font-size:0.72rem;font-weight:700;color:var(--gold);white-space:nowrap; }
+  .calc-line-remove { font-size:0.75rem;color:var(--text-muted);cursor:pointer;padding:0 0.25rem;transition:color 0.15s;flex-shrink:0; }
+  .calc-line-remove:hover { color:var(--red); }
+
+  .calc-total-bar {
+    padding:1rem 1.25rem;
+    background:rgba(6,6,9,0.9);
+    border-top:1.5px solid rgba(57,255,20,0.2);
+  }
+  .calc-total-row { display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem; }
+  .calc-total-label { font-family:'Orbitron',sans-serif;font-size:0.6rem;letter-spacing:0.12em;color:var(--text-muted);text-transform:uppercase; }
+  .calc-total-amount { font-family:'Orbitron',sans-serif;font-size:1.3rem;font-weight:900;color:var(--neon);text-shadow:0 0 16px rgba(57,255,20,0.4); }
+  .calc-downpay { font-size:0.62rem;color:var(--text-muted);margin-bottom:0.875rem; }
+  .calc-cta {
+    display:block;width:100%;text-align:center;padding:0.65rem;
+    background:var(--neon);color:#000;border:none;border-radius:5px;
+    font-family:'Orbitron',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+    cursor:pointer;text-decoration:none;
+    transition:all 0.2s;
+  }
+  .calc-cta:hover { background:#5aff3a;box-shadow:0 0 20px rgba(57,255,20,0.5);transform:translateY(-1px); }
+  .calc-cta:disabled { opacity:0.35;cursor:not-allowed;transform:none; }
+
+  /* ── FOOTER ── */
+  .ad-footer { text-align:center;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border-dim); }
+  .ad-footer p { font-family:'Orbitron',sans-serif;font-size:0.55rem;letter-spacing:0.2em;color:var(--text-muted);text-transform:uppercase; }
+  .ad-footer span { color:var(--neon); }
+  .footer-links { display:flex;justify-content:center;gap:1.5rem;margin-top:0.6rem;flex-wrap:wrap; }
+  .footer-links a { font-family:'Orbitron',sans-serif;font-size:0.55rem;letter-spacing:0.1em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;transition:color 0.2s; }
+  .footer-links a:hover { color:var(--neon); }
 
   /* ── ANIMATIONS ── */
-  @keyframes fadeDown {
-    from { opacity:0; transform: translateY(-16px); }
-    to   { opacity:1; transform: translateY(0); }
-  }
-  @keyframes fadeUp {
-    from { opacity:0; transform: translateY(16px); }
-    to   { opacity:1; transform: translateY(0); }
-  }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-16px);} to{opacity:1;transform:translateY(0);} }
+  @keyframes fadeUp   { from{opacity:0;transform:translateY(16px);}  to{opacity:1;transform:translateY(0);} }
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 600px) {
-    .cards-row { grid-template-columns: 1fr; }
-    .pkg-card.featured { order: -1; }
+  @media (max-width: 760px) {
+    .cards-row { grid-template-columns:1fr;gap:0.75rem; }
+    .pkg-card.featured { order:-1; }
+    .calc-body { grid-template-columns:1fr; }
+    .calc-quote { position:static;order:-1; }
+  }
+  @media (max-width: 500px) {
+    body { padding:1.25rem 0.75rem 3rem; }
+    .calc-item { padding:0.6rem 0.875rem; }
+    .calc-line-items { padding:0.65rem 0.875rem; }
+    .calc-total-bar { padding:0.875rem 0.875rem; }
+    .calc-quote-header { padding:0.75rem 0.875rem; }
+    .pkg-price { font-size:1.15rem; }
   }
 </style>
 </head>
 <body>
 
-<div class="ad-wrap">
+<div class="wrap">
 
   <!-- HEADER -->
   <div class="ad-header">
-    <div class="ad-eyebrow">Special Packages</div>
-    <div class="ad-title">Custom <span>Website</span> Services</div>
-    <div class="ad-sub">Professional builds. Clean code. Real results.</div>
+    <div class="ad-eyebrow">NexGenix Creative Solutions</div>
+    <div class="ad-title">Website <span>Packages</span> & Pricing</div>
+    <div class="ad-sub">Professional builds. Clean code. Real results. All prices in USD — converted from Philippine Peso.</div>
+  </div>
+
+  <!-- CURRENCY BAR -->
+  <div class="currency-bar">
+    <label for="quoteCurrency">💱 Display prices in:</label>
+    <select id="quoteCurrency" class="currency-select" onchange="setCurrency(this.value)">
+      <option value="USD">💵 USD — US Dollar</option>
+      <option value="PHP">🇵🇭 PHP — Philippine Peso</option>
+      <option value="EUR">🇪🇺 EUR — Euro</option>
+      <option value="GBP">🇬🇧 GBP — British Pound</option>
+      <option value="AUD">🇦🇺 AUD — Australian Dollar</option>
+      <option value="SGD">🇸🇬 SGD — Singapore Dollar</option>
+      <option value="JPY">🇯🇵 JPY — Japanese Yen</option>
+    </select>
   </div>
 
   <!-- ══ CATEGORY 1: 2-PAGE WEBSITE (FAST LAUNCH) ══ -->
-  <div class="category-block">
-    <div class="category-label">2-Page Website — Fast Launch</div>
-    <div class="cards-row">
+  <div class="section-divider"><span>⚡ 2-Page Website — Fast Launch</span></div>
+  <div class="cards-row" id="row-twopage">
 
-      <!-- Basic -->
-      <div class="pkg-card">
-        <div class="pkg-tier">Basic</div>
-        <div class="pkg-name">Starter Site</div>
-        <div class="pkg-price"><sup>$</sup>199</div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li><span class="chk">▸</span> 2-Page Custom Design</li>
-          <li><span class="chk">▸</span> Mobile Responsive</li>
-          <li><span class="chk">▸</span> Contact Form</li>
-          <li><span class="chk">▸</span> 3-Day Delivery</li>
-          <li class="muted"><span class="chk">▸</span> SEO Setup</li>
-          <li class="muted"><span class="chk">▸</span> Analytics Integration</li>
-        </ul>
-        <a class="pkg-cta" href="#">Get Started</a>
-      </div>
-
-      <!-- Pro -->
-      <div class="pkg-card featured">
-        <div class="featured-badge">Best Value</div>
-        <div class="pkg-tier">Pro</div>
-        <div class="pkg-name">Launch Ready</div>
-        <div class="pkg-price"><sup>$</sup>349</div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li><span class="chk">▸</span> 2-Page Premium Design</li>
-          <li><span class="chk">▸</span> Mobile Responsive</li>
-          <li><span class="chk">▸</span> Contact Form + CTA</li>
-          <li><span class="chk">▸</span> 2-Day Delivery</li>
-          <li><span class="chk">▸</span> Basic SEO Setup</li>
-          <li><span class="chk">▸</span> Google Analytics</li>
-        </ul>
-        <a class="pkg-cta" href="#">Get Started</a>
-      </div>
-
-      <!-- Premium -->
-      <div class="pkg-card">
-        <div class="pkg-tier">Premium</div>
-        <div class="pkg-name">Elite Launch</div>
-        <div class="pkg-price"><sup>$</sup>549</div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li><span class="chk">▸</span> 2-Page Elite Design</li>
-          <li><span class="chk">▸</span> Mobile + Tablet Optimized</li>
-          <li><span class="chk">▸</span> Advanced Forms + Logic</li>
-          <li><span class="chk">▸</span> Same-Day / 24hr Delivery</li>
-          <li><span class="chk">▸</span> Full SEO Setup</li>
-          <li><span class="chk">▸</span> Analytics + Pixel Setup</li>
-        </ul>
-        <a class="pkg-cta" href="#">Get Started</a>
-      </div>
-
+    <div class="pkg-card">
+      <div class="pkg-tier">Starter</div>
+      <div class="pkg-name">TWO-PAGE Starter</div>
+      <div class="pkg-price" data-php="6500"></div>
+      <div class="pkg-price-php">₱6,500</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li><span class="chk">▸</span> 2 pages, mobile responsive</li>
+        <li><span class="chk">▸</span> Basic UI design</li>
+        <li><span class="chk">▸</span> Contact form (email notification)</li>
+        <li><span class="chk">▸</span> FREE domain (1 year)</li>
+        <li><span class="chk">▸</span> Hosting (1 year)</li>
+        <li class="no"><span class="chk">▸</span> No maintenance</li>
+        <li class="no"><span class="chk">▸</span> No business email</li>
+      </ul>
+      <a class="pkg-cta" href="https://nexgenixcreativesolutions.github.io/dashboard">Get Started</a>
     </div>
+
+    <div class="pkg-card featured">
+      <div class="featured-badge">Best Value</div>
+      <div class="pkg-tier">Pro</div>
+      <div class="pkg-name">TWO-PAGE Pro</div>
+      <div class="pkg-price" data-php="9500"></div>
+      <div class="pkg-price-php">₱9,500</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li><span class="chk">▸</span> Everything in Starter</li>
+        <li><span class="chk">▸</span> Custom layout & branding</li>
+        <li><span class="chk">▸</span> SEO-ready structure</li>
+        <li><span class="chk">▸</span> Faster loading optimization</li>
+        <li><span class="chk">▸</span> Priority setup</li>
+        <li class="no"><span class="chk">▸</span> No maintenance</li>
+        <li class="no"><span class="chk">▸</span> No business email</li>
+      </ul>
+      <a class="pkg-cta" href="https://nexgenixcreativesolutions.github.io/dashboard">Get Started</a>
+    </div>
+
+    <div class="pkg-card">
+      <div class="pkg-tier">Premium</div>
+      <div class="pkg-name">TWO-PAGE Premium</div>
+      <div class="pkg-price" data-php="14000"></div>
+      <div class="pkg-price-php">₱14,000</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li><span class="chk">▸</span> Custom-designed landing page</li>
+        <li><span class="chk">▸</span> Conversion-focused layout</li>
+        <li><span class="chk">▸</span> Call-to-action sections</li>
+        <li><span class="chk">▸</span> Google Map integration</li>
+        <li><span class="chk">▸</span> Analytics setup</li>
+        <li class="no"><span class="chk">▸</span> No maintenance</li>
+        <li class="no"><span class="chk">▸</span> No business email</li>
+      </ul>
+      <a class="pkg-cta" href="https://nexgenixcreativesolutions.github.io/dashboard">Get Started</a>
+    </div>
+
   </div>
 
-  <!-- ══ CATEGORY 2: MULTI-PAGE WEBSITE (WITH MAINTENANCE) ══ -->
-  <div class="category-block">
-    <div class="category-label">Multi-Page Website — With Maintenance</div>
-    <div class="cards-row">
+  <!-- ══ CATEGORY 2: MULTI-PAGE WITH MAINTENANCE ══ -->
+  <div class="section-divider"><span>📱 Multi-Page Website — With Maintenance</span></div>
+  <div class="cards-row" id="row-maintenance">
 
-      <!-- Basic -->
-      <div class="pkg-card">
-        <div class="pkg-tier">Basic</div>
-        <div class="pkg-name">Core + Care</div>
-        <div class="pkg-price"><sup>$</sup>699</div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li><span class="chk">▸</span> Up to 5 Pages</li>
-          <li><span class="chk">▸</span> Mobile Responsive</li>
-          <li><span class="chk">▸</span> CMS Integration</li>
-          <li><span class="chk">▸</span> 1 Month Maintenance</li>
-          <li><span class="chk">▸</span> Basic SEO</li>
-          <li class="muted"><span class="chk">▸</span> Social Integration</li>
-        </ul>
-        <a class="pkg-cta" href="#">Get Started</a>
-      </div>
-
-      <!-- Pro -->
-      <div class="pkg-card featured">
-        <div class="featured-badge">Best Value</div>
-        <div class="pkg-tier">Pro</div>
-        <div class="pkg-name">Growth + Care</div>
-        <div class="pkg-price"><sup>$</sup>1,199</div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li><span class="chk">▸</span> Up to 8 Pages</li>
-          <li><span class="chk">▸</span> Mobile + Tablet Optimized</li>
-          <li><span class="chk">▸</span> CMS + Blog Setup</li>
-          <li><span class="chk">▸</span> 3 Months Maintenance</li>
-          <li><span class="chk">▸</span> Full SEO + Analytics</li>
-          <li><span class="chk">▸</span> Social Media Integration</li>
-        </ul>
-        <a class="pkg-cta" href="#">Get Started</a>
-      </div>
-
-      <!-- Premium -->
-      <div class="pkg-card">
-        <div class="pkg-tier">Premium</div>
-        <div class="pkg-name">Authority + Care</div>
-        <div class="pkg-price"><sup>$</sup>1,999</div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li><span class="chk">▸</span> Unlimited Pages</li>
-          <li><span class="chk">▸</span> Full Responsive + Animation</li>
-          <li><span class="chk">▸</span> CMS + E-Commerce Ready</li>
-          <li><span class="chk">▸</span> 6 Months Maintenance</li>
-          <li><span class="chk">▸</span> Advanced SEO + GA4</li>
-          <li><span class="chk">▸</span> Full Social + Pixel Setup</li>
-        </ul>
-        <a class="pkg-cta" href="#">Get Started</a>
-      </div>
-
+    <div class="pkg-card">
+      <div class="pkg-tier">Basic</div>
+      <div class="pkg-name">BASIC — Starter Business</div>
+      <div class="pkg-price" data-php="18000"></div>
+      <div class="pkg-price-php">₱18,000</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li><span class="chk">▸</span> 3–5 page website</li>
+        <li><span class="chk">▸</span> Mobile responsive</li>
+        <li><span class="chk">▸</span> Free domain (1 year)</li>
+        <li><span class="chk">▸</span> Hosting (1 year)</li>
+        <li><span class="chk">▸</span> 1 professional email</li>
+        <li><span class="chk">▸</span> Ongoing maintenance</li>
+      </ul>
+      <a class="pkg-cta" href="https://nexgenixcreativesolutions.github.io/dashboard">Get Started</a>
     </div>
+
+    <div class="pkg-card featured">
+      <div class="featured-badge">Most Popular</div>
+      <div class="pkg-tier">Pro</div>
+      <div class="pkg-name">PRO — Growing Business</div>
+      <div class="pkg-price" data-php="26000"></div>
+      <div class="pkg-price-php">₱26,000</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li><span class="chk">▸</span> 5–8 pages</li>
+        <li><span class="chk">▸</span> SQL database</li>
+        <li><span class="chk">▸</span> 2 professional emails</li>
+        <li><span class="chk">▸</span> SEO optimization</li>
+        <li><span class="chk">▸</span> Monthly maintenance</li>
+      </ul>
+      <a class="pkg-cta" href="https://nexgenixcreativesolutions.github.io/dashboard">Get Started</a>
+    </div>
+
+    <div class="pkg-card">
+      <div class="pkg-tier">Premium</div>
+      <div class="pkg-name">PREMIUM — Corporate</div>
+      <div class="pkg-price" data-php="52500"></div>
+      <div class="pkg-price-php">₱52,500</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li><span class="chk">▸</span> 8–12 pages custom UI/UX</li>
+        <li><span class="chk">▸</span> Advanced SQL & admin panel</li>
+        <li><span class="chk">▸</span> Multiple emails</li>
+        <li><span class="chk">▸</span> Priority support</li>
+        <li><span class="chk">▸</span> Dedicated Website Manager</li>
+      </ul>
+      <a class="pkg-cta" href="https://nexgenixcreativesolutions.github.io/dashboard">Get Started</a>
+    </div>
+
   </div>
 
-  <!-- ══ CATEGORY 3: MULTI-PAGE WEBSITE (NO MAINTENANCE) ══ -->
-  <div class="category-block">
-    <div class="category-label">Multi-Page Website — No Maintenance</div>
-    <div class="cards-row">
+  <!-- ══ CATEGORY 3: MULTI-PAGE NO MAINTENANCE ══ -->
+  <div class="section-divider"><span>🌐 Multi-Page Website — No Maintenance</span></div>
+  <div class="cards-row" id="row-nomaint">
 
-      <!-- Basic -->
-      <div class="pkg-card">
-        <div class="pkg-tier">Basic</div>
-        <div class="pkg-name">Core Build</div>
-        <div class="pkg-price"><sup>$</sup>499</div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li><span class="chk">▸</span> Up to 5 Pages</li>
-          <li><span class="chk">▸</span> Mobile Responsive</li>
-          <li><span class="chk">▸</span> CMS Integration</li>
-          <li><span class="chk">▸</span> Basic SEO</li>
-          <li class="muted"><span class="chk">▸</span> Social Integration</li>
-          <li class="muted"><span class="chk">▸</span> Analytics Setup</li>
-        </ul>
-        <a class="pkg-cta" href="#">Get Started</a>
+    <div class="pkg-card">
+      <div class="pkg-tier">Basic</div>
+      <div class="pkg-name">MULTI-PAGE Basic</div>
+      <div class="pkg-price" data-php="12000"></div>
+      <div class="pkg-price-php">₱12,000</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li><span class="chk">▸</span> 3–4 pages</li>
+        <li><span class="chk">▸</span> Mobile responsive</li>
+        <li><span class="chk">▸</span> FREE domain (1 year)</li>
+        <li><span class="chk">▸</span> Hosting (1 year)</li>
+        <li><span class="chk">▸</span> Contact form</li>
+        <li class="no"><span class="chk">▸</span> No maintenance</li>
+        <li class="no"><span class="chk">▸</span> No business email</li>
+      </ul>
+      <a class="pkg-cta" href="https://nexgenixcreativesolutions.github.io/dashboard">Get Started</a>
+    </div>
+
+    <div class="pkg-card featured">
+      <div class="featured-badge">Best Value</div>
+      <div class="pkg-tier">Standard</div>
+      <div class="pkg-name">MULTI-PAGE Standard</div>
+      <div class="pkg-price" data-php="17000"></div>
+      <div class="pkg-price-php">₱17,000</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li><span class="chk">▸</span> 5–7 pages</li>
+        <li><span class="chk">▸</span> Improved UI design</li>
+        <li><span class="chk">▸</span> Speed optimization</li>
+        <li><span class="chk">▸</span> FREE domain (1 year)</li>
+        <li><span class="chk">▸</span> Hosting (1 year)</li>
+        <li class="no"><span class="chk">▸</span> No maintenance</li>
+      </ul>
+      <a class="pkg-cta" href="https://nexgenixcreativesolutions.github.io/dashboard">Get Started</a>
+    </div>
+
+    <div class="pkg-card">
+      <div class="pkg-tier">Advanced</div>
+      <div class="pkg-name">MULTI-PAGE Advanced</div>
+      <div class="pkg-price" data-php="25000"></div>
+      <div class="pkg-price-php">₱25,000</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li><span class="chk">▸</span> 8–12 pages</li>
+        <li><span class="chk">▸</span> Custom layout</li>
+        <li><span class="chk">▸</span> SQL database (if needed)</li>
+        <li><span class="chk">▸</span> FREE domain (1 year)</li>
+        <li><span class="chk">▸</span> Hosting (1 year)</li>
+        <li class="no"><span class="chk">▸</span> No maintenance</li>
+      </ul>
+      <a class="pkg-cta" href="https://nexgenixcreativesolutions.github.io/dashboard">Get Started</a>
+    </div>
+
+  </div>
+
+  <!-- ══ QUOTATION CALCULATOR ══ -->
+  <div class="calc-section">
+    <div class="calc-header">
+      <div class="section-divider"><span>🧮 Custom Quotation Calculator</span></div>
+      <div class="calc-title">Build Your Own <span>Package</span></div>
+      <div class="calc-sub">Don't see a package that fits? Pick exactly what you need — mix and match services, add-ons, and features. Your quote updates in real time.</div>
+    </div>
+
+    <div class="calc-body">
+
+      <!-- Services checklist -->
+      <div class="calc-services" id="calcServices">
+
+        <!-- Web Design & Development -->
+        <div class="calc-cat-header">🌐 Web Design & Development</div>
+        <div class="calc-item" data-id="webbasic" data-php="12000" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Multi-Page Basic Website</div><div class="calc-item-desc">3–4 pages, mobile responsive, contact form, domain + hosting</div></div>
+          <div class="calc-item-price" data-php="12000"></div>
+        </div>
+        <div class="calc-item" data-id="webstandard" data-php="17000" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Multi-Page Standard Website</div><div class="calc-item-desc">5–7 pages, improved UI, speed optimized, domain + hosting</div></div>
+          <div class="calc-item-price" data-php="17000"></div>
+        </div>
+        <div class="calc-item" data-id="webadvanced" data-php="25000" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Multi-Page Advanced Website</div><div class="calc-item-desc">8–12 pages, custom layout, SQL database option</div></div>
+          <div class="calc-item-price" data-php="25000"></div>
+        </div>
+        <div class="calc-item" data-id="webmaint" data-php="18000" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Multi-Page + Maintenance (Basic)</div><div class="calc-item-desc">3–5 pages with ongoing monthly support, 1 email</div></div>
+          <div class="calc-item-price" data-php="18000"></div>
+        </div>
+
+        <!-- Add-ons -->
+        <div class="calc-cat-header">⚡ Add-Ons & Extras</div>
+        <div class="calc-item" data-id="extrapage" data-php="1500" data-qty="1" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info">
+            <div class="calc-item-name">Extra Page(s)</div>
+            <div class="calc-item-desc">Additional pages beyond base package</div>
+            <div class="calc-qty-wrap" onclick="event.stopPropagation()">
+              <button class="calc-qty-btn" onclick="changeQty('extrapage',-1)">−</button>
+              <input type="number" class="calc-qty-input" id="qty-extrapage" value="1" min="1" max="20" oninput="updateQty('extrapage',this.value)">
+              <span class="calc-qty-label">pages</span>
+              <button class="calc-qty-btn" onclick="changeQty('extrapage',1)">+</button>
+            </div>
+          </div>
+          <div class="calc-item-price" data-php="1500" data-base="1500">₱1,500/page</div>
+        </div>
+        <div class="calc-item" data-id="animations" data-php="2000" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Custom Animations</div><div class="calc-item-desc">Scroll-triggered, hover, and entrance animations</div></div>
+          <div class="calc-item-price" data-php="2000"></div>
+        </div>
+        <div class="calc-item" data-id="chat" data-php="1500" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Live Chat Widget</div><div class="calc-item-desc">WhatsApp / Messenger / Tawk.to integration</div></div>
+          <div class="calc-item-price" data-php="1500"></div>
+        </div>
+        <div class="calc-item" data-id="booking" data-php="3000" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Booking / Appointment System</div><div class="calc-item-desc">Online scheduling with calendar integration</div></div>
+          <div class="calc-item-price" data-php="3000"></div>
+        </div>
+        <div class="calc-item" data-id="ecomm" data-php="5000" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">E-Commerce Store Module</div><div class="calc-item-desc">Product listings, cart, and payment integration</div></div>
+          <div class="calc-item-price" data-php="5000"></div>
+        </div>
+        <div class="calc-item" data-id="admin" data-php="4000" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Admin Dashboard / CMS</div><div class="calc-item-desc">Custom backend panel to manage content</div></div>
+          <div class="calc-item-price" data-php="4000"></div>
+        </div>
+        <div class="calc-item" data-id="blog" data-php="2000" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Blog / News Section</div><div class="calc-item-desc">Fully managed blog with categories and search</div></div>
+          <div class="calc-item-price" data-php="2000"></div>
+        </div>
+        <div class="calc-item" data-id="gallery" data-php="1500" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Gallery / Portfolio Section</div><div class="calc-item-desc">Image/video grid with lightbox viewer</div></div>
+          <div class="calc-item-price" data-php="1500"></div>
+        </div>
+
+        <!-- Logo -->
+        <div class="calc-cat-header">🎨 Logo & Branding</div>
+        <div class="calc-item" data-id="logobasic" data-php="2500" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Logo Design — Basic</div><div class="calc-item-desc">2 concepts, PNG/JPG, 2 revision rounds, 5–7 day delivery</div></div>
+          <div class="calc-item-price" data-php="2500"></div>
+        </div>
+        <div class="calc-item" data-id="logopro" data-php="5500" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Logo Design — Pro</div><div class="calc-item-desc">4 concepts, PNG/JPG/SVG, 4 revisions, business card mockup</div></div>
+          <div class="calc-item-price" data-php="5500"></div>
+        </div>
+        <div class="calc-item" data-id="logopremium" data-php="12000" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Logo + Brand Identity — Premium</div><div class="calc-item-desc">Full vector package, brand guide, social media kit, letterhead</div></div>
+          <div class="calc-item-price" data-php="12000"></div>
+        </div>
+
+        <!-- Video -->
+        <div class="calc-cat-header">🎬 Video Ads</div>
+        <div class="calc-item" data-id="videoshort" data-php="4500" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Video Ad — Short (≤30s)</div><div class="calc-item-desc">1080p, background music, 1 revision, 3–5 day delivery</div></div>
+          <div class="calc-item-price" data-php="4500"></div>
+        </div>
+        <div class="calc-item" data-id="videostandard" data-php="9500" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Video Ad — Standard (≤60s)</div><div class="calc-item-desc">1080p/4K, custom graphics, voiceover option, 2 revisions</div></div>
+          <div class="calc-item-price" data-php="9500"></div>
+        </div>
+        <div class="calc-item" data-id="videopremium" data-php="22000" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Video Ad — Premium (≤2min)</div><div class="calc-item-desc">4K, custom voiceover, unlimited revisions, multi-format delivery</div></div>
+          <div class="calc-item-price" data-php="22000"></div>
+        </div>
+
+        <!-- Maintenance -->
+        <div class="calc-cat-header">🔧 Maintenance & Renewal</div>
+        <div class="calc-item" data-id="maintmonth" data-php="800" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Website Manager — Monthly</div><div class="calc-item-desc">Content updates, minor changes, security checks, backups</div></div>
+          <div class="calc-item-price" data-php="800"></div>
+        </div>
+        <div class="calc-item" data-id="maintannual" data-php="8000" onclick="toggleCalcItem(this)">
+          <div class="calc-cb"></div>
+          <div class="calc-item-info"><div class="calc-item-name">Website Manager — Annual</div><div class="calc-item-desc">All monthly features + 2 months free + priority support</div></div>
+          <div class="calc-item-price" data-php="8000"></div>
+        </div>
+
       </div>
 
-      <!-- Pro -->
-      <div class="pkg-card featured">
-        <div class="featured-badge">Best Value</div>
-        <div class="pkg-tier">Pro</div>
-        <div class="pkg-name">Growth Build</div>
-        <div class="pkg-price"><sup>$</sup>899</div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li><span class="chk">▸</span> Up to 8 Pages</li>
-          <li><span class="chk">▸</span> Mobile + Tablet Optimized</li>
-          <li><span class="chk">▸</span> CMS + Blog Setup</li>
-          <li><span class="chk">▸</span> Full SEO + Analytics</li>
-          <li><span class="chk">▸</span> Social Media Integration</li>
-          <li class="muted"><span class="chk">▸</span> E-Commerce Module</li>
-        </ul>
-        <a class="pkg-cta" href="#">Get Started</a>
-      </div>
-
-      <!-- Premium -->
-      <div class="pkg-card">
-        <div class="pkg-tier">Premium</div>
-        <div class="pkg-name">Authority Build</div>
-        <div class="pkg-price"><sup>$</sup>1,499</div>
-        <div class="pkg-divider"></div>
-        <ul class="pkg-features">
-          <li><span class="chk">▸</span> Unlimited Pages</li>
-          <li><span class="chk">▸</span> Full Responsive + Animation</li>
-          <li><span class="chk">▸</span> CMS + E-Commerce Ready</li>
-          <li><span class="chk">▸</span> Advanced SEO + GA4</li>
-          <li><span class="chk">▸</span> Full Social + Pixel Setup</li>
-          <li><span class="chk">▸</span> Logo & Branding Included</li>
-        </ul>
-        <a class="pkg-cta" href="#">Get Started</a>
+      <!-- Quote panel -->
+      <div class="calc-quote">
+        <div class="calc-quote-header">
+          <span>📋 Your Quote</span>
+          <button class="calc-quote-clear" onclick="clearCalc()">✕ Clear</button>
+        </div>
+        <div class="calc-line-items" id="calcLineItems">
+          <div class="calc-empty" id="calcEmpty">Select services on the left to build your quote.</div>
+        </div>
+        <div class="calc-total-bar">
+          <div class="calc-total-row">
+            <span class="calc-total-label">Estimated Total</span>
+            <span class="calc-total-amount" id="calcTotal">—</span>
+          </div>
+          <div class="calc-downpay" id="calcDownpay"></div>
+          <a class="calc-cta" id="calcCta" href="https://nexgenixcreativesolutions.github.io/dashboard" style="pointer-events:none;opacity:0.35;">
+            🛒 Proceed to Order
+          </a>
+        </div>
       </div>
 
     </div>
@@ -486,9 +643,160 @@
 
   <!-- FOOTER -->
   <div class="ad-footer">
-    <p><span>NexGenix Creative Solutions</span> &nbsp;·&nbsp; nexgenixcreativesolutions.github.io</p>
+    <p><span>NexGenix Creative Solutions</span> &nbsp;·&nbsp; Zamboanga City, Philippines</p>
+    <div class="footer-links">
+      <a href="https://nexgenixcreativesolutions.github.io">Home</a>
+      <a href="https://nexgenixcreativesolutions.github.io/dashboard">Dashboard</a>
+      <a href="mailto:info@nexgenixcreativesolutions.com">Contact</a>
+    </div>
   </div>
 
 </div>
+
+<script>
+// ── CURRENCY DATA ──────────────────────────────────────────────────────────
+const PHP_RATE = 56.50;
+const rates = { USD:1, PHP:56.50, EUR:0.92, GBP:0.79, AUD:1.52, SGD:1.34, JPY:149.50 };
+const symbols = { USD:'$', PHP:'₱', EUR:'€', GBP:'£', AUD:'A$', SGD:'S$', JPY:'¥' };
+let cur = 'USD';
+
+function phpToDisplay(php) {
+  const usd = php / PHP_RATE;
+  const val = usd * rates[cur];
+  const sym = symbols[cur];
+  if (cur === 'JPY') return sym + Math.round(val).toLocaleString();
+  return sym + val.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function setCurrency(c) {
+  cur = c;
+  renderPrices();
+  renderCalcPrices();
+  renderQuote();
+}
+
+function renderPrices() {
+  document.querySelectorAll('.pkg-price[data-php]').forEach(el => {
+    const php = parseInt(el.dataset.php);
+    el.innerHTML = phpToDisplay(php);
+  });
+}
+
+// ── CALCULATOR STATE ──────────────────────────────────────────────────────
+const calcItems = {}; // id → { php, qty, name, desc }
+
+function toggleCalcItem(el) {
+  const id = el.dataset.id;
+  if (calcItems[id]) {
+    delete calcItems[id];
+    el.classList.remove('selected');
+  } else {
+    const php = parseInt(el.dataset.php);
+    const qty = parseInt(el.dataset.qty||1);
+    const name = el.querySelector('.calc-item-name').textContent;
+    const desc = el.querySelector('.calc-item-desc').textContent;
+    calcItems[id] = { php, qty, name, desc };
+    el.classList.add('selected');
+  }
+  renderCalcPrices();
+  renderQuote();
+}
+
+function changeQty(id, delta) {
+  const input = document.getElementById('qty-'+id);
+  if (!input) return;
+  let v = parseInt(input.value)||1;
+  v = Math.max(1, v + delta);
+  input.value = v;
+  updateQty(id, v);
+}
+
+function updateQty(id, val) {
+  const v = Math.max(1, parseInt(val)||1);
+  if (calcItems[id]) { calcItems[id].qty = v; }
+  // Update display price for per-unit items
+  const el = document.querySelector(`[data-id="${id}"] .calc-item-price`);
+  if (el && el.dataset.base) {
+    calcItems[id] = calcItems[id] || { php: parseInt(el.dataset.base), qty: v, name: document.querySelector(`[data-id="${id}"] .calc-item-name`).textContent, desc: '' };
+    calcItems[id].qty = v;
+    calcItems[id].php = parseInt(el.dataset.base);
+  }
+  renderCalcPrices();
+  renderQuote();
+}
+
+function renderCalcPrices() {
+  document.querySelectorAll('.calc-item-price[data-php]').forEach(el => {
+    const php = parseInt(el.dataset.php);
+    if (el.dataset.base) {
+      // per-unit — show per-unit price label
+      el.textContent = phpToDisplay(php) + '/page';
+    } else {
+      el.textContent = phpToDisplay(php);
+    }
+  });
+}
+
+function renderQuote() {
+  const container = document.getElementById('calcLineItems');
+  const empty = document.getElementById('calcEmpty');
+  const totalEl = document.getElementById('calcTotal');
+  const downpayEl = document.getElementById('calcDownpay');
+  const cta = document.getElementById('calcCta');
+
+  const ids = Object.keys(calcItems);
+
+  if (ids.length === 0) {
+    container.innerHTML = '<div class="calc-empty" id="calcEmpty">Select services on the left to build your quote.</div>';
+    totalEl.textContent = '—';
+    downpayEl.textContent = '';
+    cta.style.pointerEvents = 'none';
+    cta.style.opacity = '0.35';
+    return;
+  }
+
+  let totalPHP = 0;
+  let html = '';
+
+  ids.forEach(id => {
+    const item = calcItems[id];
+    const linePHP = item.php * item.qty;
+    totalPHP += linePHP;
+    const label = item.qty > 1 ? `${item.name} ×${item.qty}` : item.name;
+    html += `<div class="calc-line">
+      <span class="calc-line-name">${label}</span>
+      <span class="calc-line-price">${phpToDisplay(linePHP)}</span>
+      <span class="calc-line-remove" onclick="removeCalcItem('${id}')">✕</span>
+    </div>`;
+  });
+
+  container.innerHTML = html;
+  totalEl.textContent = phpToDisplay(totalPHP);
+  const downpayPHP = totalPHP * 0.5;
+  downpayEl.textContent = `50% downpayment: ${phpToDisplay(downpayPHP)}`;
+  cta.style.pointerEvents = '';
+  cta.style.opacity = '1';
+}
+
+function removeCalcItem(id) {
+  const el = document.querySelector(`[data-id="${id}"]`);
+  if (el) el.classList.remove('selected');
+  delete calcItems[id];
+  renderQuote();
+}
+
+function clearCalc() {
+  Object.keys(calcItems).forEach(id => {
+    const el = document.querySelector(`[data-id="${id}"]`);
+    if (el) el.classList.remove('selected');
+  });
+  for (const k in calcItems) delete calcItems[k];
+  renderQuote();
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+renderPrices();
+renderCalcPrices();
+</script>
 </body>
 </html>
