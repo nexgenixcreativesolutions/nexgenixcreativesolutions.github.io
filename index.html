@@ -759,19 +759,19 @@
     <h2 class="counter-section-title">Our Impact <span>in Numbers</span></h2>
     <div class="counter-container">
         <div class="counter-item">
-            <div class="counter" data-target="48200">0</div>
+            <div class="counter" data-target="4800" data-suffix="K+">0</div>
             <div class="label">Projects Completed</div>
         </div>
         <div class="counter-item">
-            <div class="counter" data-target="13800">0</div>
+            <div class="counter" data-target="1300" data-suffix="K+">0</div>
             <div class="label">Clients Served</div>
         </div>
         <div class="counter-item">
-            <div class="counter" data-target="22500">0</div>
+            <div class="counter" data-target="2500" data-suffix="K+">0</div>
             <div class="label">Certificates Granted</div>
         </div>
         <div class="counter-item">
-            <div class="counter" data-target="9100">0</div>
+            <div class="counter" data-target="910" data-suffix="+">0</div>
             <div class="label">Books Sold</div>
         </div>
     </div>
@@ -811,18 +811,42 @@
     const counters = document.querySelectorAll('.counter');
     const speed = 200;
 
+    const formatCounter = (el, value) => {
+        const suffix = el.getAttribute('data-suffix') || '';
+        const target = +el.getAttribute('data-target');
+        // For K+ values, show decimal (e.g. 4.8K+)
+        if (suffix === 'K+') {
+            const kVal = (value / 1000).toFixed(1);
+            // Once at target, snap to clean display
+            if (value >= target) {
+                el.innerText = (target / 1000).toFixed(1) + 'K+';
+            } else {
+                el.innerText = kVal + 'K+';
+            }
+        } else {
+            el.innerText = value.toLocaleString() + suffix;
+        }
+    };
+
     const animateCounters = () => {
         counters.forEach(counter => {
             const updateCount = () => {
                 const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText.replace(/,/g, '');
+                const suffix = counter.getAttribute('data-suffix') || '';
+                // Parse current value (strip suffix and commas)
+                let rawText = counter.innerText.replace(/K\+|\+|,/g, '').trim();
+                let count = parseFloat(rawText) || 0;
+                // For K+ counters, the displayed value is in thousands
+                if (suffix === 'K+' && counter.innerText.includes('K')) {
+                    count = parseFloat(rawText) * 1000;
+                }
                 const increment = target / speed;
 
                 if (count < target) {
-                    counter.innerText = Math.ceil(count + increment).toLocaleString();
+                    formatCounter(counter, Math.ceil(count + increment));
                     setTimeout(updateCount, 30);
                 } else {
-                    counter.innerText = target.toLocaleString();
+                    formatCounter(counter, target);
                 }
             };
             updateCount();
