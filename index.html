@@ -809,47 +809,33 @@
 <!-- Counter Animation Script -->
 <script>
     const counters = document.querySelectorAll('.counter');
-    const speed = 200;
-
-    const formatCounter = (el, value) => {
-        const suffix = el.getAttribute('data-suffix') || '';
-        const target = +el.getAttribute('data-target');
-        // For K+ values, show decimal (e.g. 4.8K+)
-        if (suffix === 'K+') {
-            const kVal = (value / 1000).toFixed(1);
-            // Once at target, snap to clean display
-            if (value >= target) {
-                el.innerText = (target / 1000).toFixed(1) + 'K+';
-            } else {
-                el.innerText = kVal + 'K+';
-            }
-        } else {
-            el.innerText = value.toLocaleString() + suffix;
-        }
-    };
 
     const animateCounters = () => {
         counters.forEach(counter => {
-            const updateCount = () => {
-                const target = +counter.getAttribute('data-target');
-                const suffix = counter.getAttribute('data-suffix') || '';
-                // Parse current value (strip suffix and commas)
-                let rawText = counter.innerText.replace(/K\+|\+|,/g, '').trim();
-                let count = parseFloat(rawText) || 0;
-                // For K+ counters, the displayed value is in thousands
-                if (suffix === 'K+' && counter.innerText.includes('K')) {
-                    count = parseFloat(rawText) * 1000;
-                }
-                const increment = target / speed;
+            const target = +counter.getAttribute('data-target');
+            const suffix = counter.getAttribute('data-suffix') || '';
+            const isK = suffix === 'K+';
+            const steps = 200;
+            const interval = 1800 / steps; // ~1.8s total
+            let step = 0;
 
-                if (count < target) {
-                    formatCounter(counter, Math.ceil(count + increment));
-                    setTimeout(updateCount, 30);
+            const tick = () => {
+                step++;
+                const progress = step / steps;
+                const current = Math.round(target * progress);
+
+                if (step >= steps) {
+                    counter.innerText = isK
+                        ? (target / 1000).toFixed(1) + 'K+'
+                        : target.toLocaleString() + suffix;
                 } else {
-                    formatCounter(counter, target);
+                    counter.innerText = isK
+                        ? (current / 1000).toFixed(1) + 'K+'
+                        : current.toLocaleString() + suffix;
+                    setTimeout(tick, interval);
                 }
             };
-            updateCount();
+            tick();
         });
     };
 
