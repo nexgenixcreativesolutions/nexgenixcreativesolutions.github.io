@@ -1414,16 +1414,16 @@
       <p class="hero-sub">From handcrafted florals to fine-art photography and Filipino kitchens — we craft websites that tell each client's unique story with precision and style.</p>
       <div class="hero-stats">
         <div class="stat">
-          <span class="stat-num">3+</span>
+          <span class="stat-num" id="live-projects-counter">0</span>
           <span class="stat-label">Live Projects</span>
         </div>
         <div class="stat">
-          <span class="stat-num">100%</span>
-          <span class="stat-label">Custom Built</span>
+          <span class="stat-num" id="templates-counter">0</span>
+          <span class="stat-label">Templates in Stack</span>
         </div>
         <div class="stat">
-          <span class="stat-num">6+</span>
-          <span class="stat-label">Templates Ready</span>
+          <span class="stat-num" id="satisfaction-counter">0</span>
+          <span class="stat-label">Client Satisfaction</span>
         </div>
       </div>
     </div>
@@ -2012,6 +2012,79 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+  <!-- Live Projects Counter Animation -->
+  <script>
+    (function() {
+      // --- Live Projects: phases through 4 service categories → 4,822
+      const phases = [
+        { end: 1240 },
+        { end: 2480 },
+        { end: 3720 },
+        { end: 4822 },
+      ];
+
+      // Generic eased counter (number → target over duration ms)
+      function animateTo(el, from, to, duration, suffix, onDone) {
+        const steps = 50;
+        const interval = duration / steps;
+        const increment = (to - from) / steps;
+        let current = from;
+        let step = 0;
+        const tick = () => {
+          step++;
+          current += increment;
+          if (step >= steps) {
+            el.textContent = to.toLocaleString() + suffix;
+            if (onDone) onDone();
+          } else {
+            el.textContent = Math.round(current).toLocaleString() + suffix;
+            setTimeout(tick, interval);
+          }
+        };
+        tick();
+      }
+
+      function animatePhases(el, phaseIndex, from) {
+        if (phaseIndex >= phases.length) {
+          el.textContent = '4,822';
+          return;
+        }
+        const target = phases[phaseIndex].end;
+        const duration = phaseIndex === phases.length - 1 ? 900 : 480;
+        animateTo(el, from, target, duration, '', () => {
+          if (phaseIndex < phases.length - 1) {
+            setTimeout(() => animatePhases(el, phaseIndex + 1, target), 100);
+          }
+        });
+      }
+
+      let started = false;
+
+      const projectsEl    = document.getElementById('live-projects-counter');
+      const templatesEl   = document.getElementById('templates-counter');
+      const satisfactionEl = document.getElementById('satisfaction-counter');
+
+      function startAll() {
+        if (started) return;
+        started = true;
+        // 1. Live Projects — phased merge animation
+        if (projectsEl) animatePhases(projectsEl, 0, 0);
+        // 2. Templates — counts to 300, then appends +
+        if (templatesEl) animateTo(templatesEl, 0, 300, 1800, '+', null);
+        // 3. Client Satisfaction — counts to 100, then appends %
+        if (satisfactionEl) animateTo(satisfactionEl, 0, 100, 1400, '%', null);
+      }
+
+      const heroStats = projectsEl && projectsEl.closest('.hero-stats');
+      if (heroStats) {
+        const obs = new IntersectionObserver(entries => {
+          entries.forEach(e => { if (e.isIntersecting) { startAll(); obs.disconnect(); } });
+        }, { threshold: 0.5 });
+        obs.observe(heroStats);
+      }
+    })();
   </script>
 </body>
 </html>
