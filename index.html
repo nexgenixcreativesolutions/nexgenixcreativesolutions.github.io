@@ -17,6 +17,38 @@
   </head>
 
 <style>
+/* =================== HERO SECTION =================== */
+#hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 500px;
+  background-image: url('assets/images/banner-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 4rem;
+  margin-top: 0;
+}
+
+.hero-get-started-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Navbar transparent overlay when hero is in view */
+#navbar.nav-hero {
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+}
+
 /* Floating Code Background */
 .floating-code-container {
   position: fixed;
@@ -653,26 +685,9 @@
     </div>
 </nav>
 
-<!-- Welcome Section (Desktop) -->
-<section id="welcome-section">
-    <main id="main-doc">
-    <img src="assets/images/banner.png" alt="banner" class="banner">
-    <h1 class="slogan">Your Vision, Beautifully Engineered.</h1>
-    <p class="services-description">App Design | Web Design | Web Development | UI/UX Design</p>
-    <!-- ONLY Get Started button for DESKTOP view -->
-    <div class="hero-buttons">
-        <a href="contact.html" class="btn-get-started">Get Started</a>
-    </div>
-    </main>
-</section>
-
-<!-- Welcome Section (Mobile) -->
-<section id="welcome-section-mobile">
-    <img src="assets/images/banner-mobile.png" alt="banner" class="responsive-banner">
-    <h2 class="responsive-slogan">Your Vision, Beautifully Engineered.</h2>
-    <h5 class="responsive-description">App Design | Web Design | Web Development | UI/UX Design</h5>
-    <!-- ONLY Get Started button for MOBILE view -->
-    <div class="hero-buttons-mobile">
+<!-- Hero Section -->
+<section id="hero-section">
+    <div class="hero-get-started-wrap">
         <a href="contact.html" class="btn-get-started">Get Started</a>
     </div>
 </section>
@@ -805,6 +820,28 @@
 
 <!-- Auth Guard — must load before any auth-dependent logic -->
 <script src="auth.js"></script>
+
+<!-- Navbar Hero Transparency Script -->
+<script>
+  (function () {
+    const navbar = document.getElementById('navbar');
+    const hero   = document.getElementById('hero-section');
+    if (!navbar || !hero) return;
+
+    function updateNav() {
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      if (heroBottom > navbar.offsetHeight) {
+        navbar.classList.add('nav-hero');
+      } else {
+        navbar.classList.remove('nav-hero');
+      }
+    }
+
+    // Run on load and scroll
+    updateNav();
+    window.addEventListener('scroll', updateNav, { passive: true });
+  })();
+</script>
 
 <!-- Counter Animation Script -->
 <script>
