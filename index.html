@@ -18,15 +18,23 @@
 
 <style>
 /* =================== HERO SECTION =================== */
-#hero-section {
+
+/* Outer wrapper sits in normal document flow and reserves the full viewport height */
+#hero-section-outer {
   position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 500px;
+}
+
+/* Hero uses fixed positioning so it is never clipped by body width/padding/overflow-x */
+#hero-section {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   min-height: 500px;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
   background-image: url('assets/images/banner-bg.png');
   background-size: cover;
   background-position: center;
@@ -36,7 +44,17 @@
   justify-content: center;
   padding-bottom: 4rem;
   box-sizing: border-box;
-  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#hero-section * {
+  pointer-events: auto;
+}
+
+/* When hero scrolls out of view, collapse it behind other content */
+#hero-section.hero-behind {
+  z-index: -1;
 }
 
 .hero-get-started-wrap {
@@ -697,11 +715,15 @@
 </nav>
 
 <!-- Hero Section -->
-<section id="hero-section">
-    <div class="hero-get-started-wrap">
-        <a href="contact.html" class="btn-get-started">Get Started</a>
-    </div>
-</section>
+<!-- Hero outer wrapper — reserves space in document flow -->
+<div id="hero-section-outer">
+    <!-- Hero inner — fixed positioned to escape body width/padding constraints -->
+    <section id="hero-section">
+        <div class="hero-get-started-wrap">
+            <a href="contact.html" class="btn-get-started">Get Started</a>
+        </div>
+    </section>
+</div>
 
 <!-- Products and Services Section -->
 <section class="main-section categories-section" id="services">
@@ -837,18 +859,24 @@
   (function () {
     const navbar = document.getElementById('navbar');
     const hero   = document.getElementById('hero-section');
-    if (!navbar || !hero) return;
+    const outer  = document.getElementById('hero-section-outer');
+    if (!navbar || !hero || !outer) return;
 
     function updateNav() {
-      const heroBottom = hero.getBoundingClientRect().bottom;
-      if (heroBottom > navbar.offsetHeight) {
+      const outerBottom = outer.getBoundingClientRect().bottom;
+      const navH = navbar.offsetHeight;
+
+      if (outerBottom > navH) {
+        // Hero still in view — navbar transparent, hero visible above content
         navbar.classList.add('nav-hero');
+        hero.classList.remove('hero-behind');
       } else {
+        // Hero scrolled out — restore navbar, push hero behind content
         navbar.classList.remove('nav-hero');
+        hero.classList.add('hero-behind');
       }
     }
 
-    // Run on load and scroll
     updateNav();
     window.addEventListener('scroll', updateNav, { passive: true });
   })();
