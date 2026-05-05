@@ -53,7 +53,21 @@
 @media (max-width: 768px) {
   #hero-section {
     background-image: url('assets/images/banner-bg-mobile.png');
+    background-size: 90%;
+    background-position: center;
   }
+
+  /* Shrink Get Started on small screens */
+  #hero-section .btn-get-started {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Remove underline from logo name */
+#navbar .logo-title a,
+#navbar .short-title a {
+  text-decoration: none;
 }
 
 /* Navbar transparent overlay when hero is in view */
@@ -63,6 +77,35 @@
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   border-bottom: none !important;
+}
+
+/* Black outline on logo text + hamburger bars when navbar is over hero */
+#navbar.nav-hero .logo a {
+  -webkit-text-stroke: 0.5px black;
+  text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14,
+               -1px -1px 0 #000, 1px -1px 0 #000,
+               -1px  1px 0 #000, 1px  1px 0 #000;
+}
+
+#navbar.nav-hero .short-title a {
+  -webkit-text-stroke: 0.5px black;
+  text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14,
+               -1px -1px 0 #000, 1px -1px 0 #000,
+               -1px  1px 0 #000, 1px  1px 0 #000;
+}
+
+#navbar.nav-hero .hamburger-menu .bar {
+  box-shadow: 0 0 4px #39FF14,
+              0 1px 2px rgba(0,0,0,0.9),
+              0 -1px 2px rgba(0,0,0,0.9);
+  outline: 0.5px solid rgba(0,0,0,0.4);
+}
+
+/* Move Get Started up on desktop so it clears the image text */
+@media (min-width: 769px) {
+  #hero-section {
+    padding-bottom: 6rem;
+  }
 }
 
 /* Floating Code Background */
