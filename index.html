@@ -19,22 +19,20 @@
 <style>
 /* =================== HERO SECTION =================== */
 
-/* Outer wrapper sits in normal document flow and reserves the full viewport height */
 #hero-section-outer {
+  /* Break out of body's width:90% / max-width:1100px / padding:60px 20px */
   position: relative;
-  width: 100%;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
   height: 100vh;
   min-height: 500px;
+  /* Also cancel the body's top padding so hero starts at very top */
+  margin-top: -60px;
 }
 
-/* Hero uses fixed positioning so it is never clipped by body width/padding/overflow-x */
 #hero-section {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  min-height: 500px;
+  width: 100%;
+  height: 100%;
   background-image: url('assets/images/banner-bg.png');
   background-size: cover;
   background-position: center;
@@ -44,17 +42,6 @@
   justify-content: center;
   padding-bottom: 4rem;
   box-sizing: border-box;
-  z-index: 1;
-  pointer-events: none;
-}
-
-#hero-section * {
-  pointer-events: auto;
-}
-
-/* When hero scrolls out of view, collapse it behind other content */
-#hero-section.hero-behind {
-  z-index: -1;
 }
 
 .hero-get-started-wrap {
@@ -858,22 +845,21 @@
 <script>
   (function () {
     const navbar = document.getElementById('navbar');
-    const hero   = document.getElementById('hero-section');
     const outer  = document.getElementById('hero-section-outer');
-    if (!navbar || !hero || !outer) return;
+    if (!navbar || !outer) return;
+
+    // Allow the full-bleed breakout to work by lifting overflow-x restriction
+    document.documentElement.style.overflowX = 'visible';
+    document.body.style.overflowX = 'visible';
 
     function updateNav() {
       const outerBottom = outer.getBoundingClientRect().bottom;
       const navH = navbar.offsetHeight;
 
       if (outerBottom > navH) {
-        // Hero still in view — navbar transparent, hero visible above content
         navbar.classList.add('nav-hero');
-        hero.classList.remove('hero-behind');
       } else {
-        // Hero scrolled out — restore navbar, push hero behind content
         navbar.classList.remove('nav-hero');
-        hero.classList.add('hero-behind');
       }
     }
 
