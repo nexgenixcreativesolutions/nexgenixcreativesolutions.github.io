@@ -20,14 +20,13 @@
 /* =================== HERO SECTION =================== */
 
 #hero-section-outer {
-  /* Break out of body's width:90% / max-width:1100px / padding:60px 20px */
   position: relative;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  height: 100vh;
-  min-height: 500px;
-  /* Also cancel the body's top padding so hero starts at very top */
   margin-top: -60px;
+  /* Fill full viewport including cancelled body padding */
+  height: calc(100vh + 60px);
+  min-height: 100vh;
 }
 
 #hero-section {
@@ -40,7 +39,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 4rem;
+  padding-bottom: 2.5rem;
   box-sizing: border-box;
 }
 
@@ -50,18 +49,63 @@
   width: 100%;
 }
 
+/* Animated down-arrow CTA */
+.hero-arrow-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border: 2.5px solid rgba(255,255,255,0.85);
+  border-radius: 50%;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  transition: border-color 0.3s ease, background 0.3s ease;
+  animation: heroBounce 1.8s ease-in-out infinite;
+}
+
+.hero-arrow-btn:hover,
+.hero-arrow-btn:focus {
+  border-color: #39FF14;
+  background: rgba(57,255,20,0.15);
+  animation-play-state: paused;
+}
+
+.hero-arrow {
+  display: inline-block;
+  font-size: 2.4rem;
+  line-height: 1;
+  color: white;
+  transform: rotate(90deg);
+  margin-top: 3px;
+  transition: color 0.3s ease;
+  pointer-events: none;
+}
+
+.hero-arrow-btn:hover .hero-arrow,
+.hero-arrow-btn:focus .hero-arrow {
+  color: #39FF14;
+}
+
+@keyframes heroBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(10px); }
+}
+
 @media (max-width: 768px) {
-  #hero-section {
-    background-image: url('assets/images/banner-bg-mobile.png');
-    background-size: contain;
-    background-position: center center;
-    background-color: #060609;
+  #hero-section-outer {
+    height: calc(100svh + 60px);
+    min-height: 100svh;
   }
 
-  /* Shrink Get Started on small screens */
-  #hero-section .btn-get-started {
-    padding: 0.6rem 1.5rem;
-    font-size: 0.8rem;
+  #hero-section {
+    background-image: url('assets/images/banner-bg-mobile.png');
+    background-size: cover;
+    background-position: center center;
+    padding-bottom: 2.5rem;
   }
 }
 
@@ -88,12 +132,7 @@
               -1px 0 3px rgba(0,0,0,1);
 }
 
-/* Move Get Started up on desktop so it clears the image text */
-@media (min-width: 769px) {
-  #hero-section {
-    padding-bottom: 6rem;
-  }
-}
+
 
 /* Floating Code Background */
 .floating-code-container {
@@ -737,10 +776,15 @@
     <!-- Hero inner — fixed positioned to escape body width/padding constraints -->
     <section id="hero-section">
         <div class="hero-get-started-wrap">
-            <a href="contact.html" class="btn-get-started">Get Started</a>
+            <button class="hero-arrow-btn" aria-label="Scroll down to explore" onclick="revealContent()">
+                <span class="hero-arrow">&#8250;</span>
+            </button>
         </div>
     </section>
 </div>
+
+<!-- Page content revealed on arrow click -->
+<div id="page-content" style="display:none;">
 
 <!-- Products and Services Section -->
 <section class="main-section categories-section" id="services">
@@ -885,7 +929,6 @@
     function updateNav() {
       const outerBottom = outer.getBoundingClientRect().bottom;
       const navH = navbar.offsetHeight;
-
       if (outerBottom > navH) {
         navbar.classList.add('nav-hero');
       } else {
@@ -896,6 +939,18 @@
     updateNav();
     window.addEventListener('scroll', updateNav, { passive: true });
   })();
+
+  // Reveal page content when arrow is clicked
+  function revealContent() {
+    const pageContent = document.getElementById('page-content');
+    if (!pageContent) return;
+
+    // Show content
+    pageContent.style.display = 'block';
+
+    // Smoothly scroll to it
+    pageContent.scrollIntoView({ behavior: 'smooth' });
+  }
 </script>
 
 <!-- Counter Animation Script -->
@@ -1151,6 +1206,8 @@
     initTestimonials();
   }
 </script>
+
+</div><!-- /#page-content -->
 
 </body>
 </html>
