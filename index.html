@@ -75,14 +75,17 @@
 }
 
 .hero-arrow {
-  display: inline-block;
-  font-size: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
   line-height: 1;
   color: white;
-  transform: rotate(90deg);
-  margin-top: 3px;
+  /* Use a proper down chevron character instead of rotated › */
   transition: color 0.3s ease;
   pointer-events: none;
+  margin: 0;
+  padding: 0;
 }
 
 .hero-arrow-btn:hover .hero-arrow,
@@ -104,7 +107,7 @@
   #hero-section {
     background-image: url('assets/images/banner-bg-mobile.png');
     background-size: cover;
-    background-position: center center;
+    background-position: 60% center;
     padding-bottom: 2.5rem;
   }
 }
@@ -777,7 +780,7 @@
     <section id="hero-section">
         <div class="hero-get-started-wrap">
             <button class="hero-arrow-btn" aria-label="Scroll down to explore" onclick="revealContent()">
-                <span class="hero-arrow">&#8250;</span>
+                <span class="hero-arrow">&#8964;</span>
             </button>
         </div>
     </section>
@@ -940,15 +943,19 @@
     window.addEventListener('scroll', updateNav, { passive: true });
   })();
 
+  // Lock scroll while hero is showing
+  document.body.style.overflow = 'hidden';
+
   // Reveal page content when arrow is clicked
   function revealContent() {
     const pageContent = document.getElementById('page-content');
     if (!pageContent) return;
 
-    // Show content
+    // Show content and unlock scroll
     pageContent.style.display = 'block';
+    document.body.style.overflow = '';
 
-    // Smoothly scroll to it
+    // Smoothly scroll to content
     pageContent.scrollIntoView({ behavior: 'smooth' });
   }
 </script>
