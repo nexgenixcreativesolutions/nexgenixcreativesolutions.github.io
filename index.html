@@ -53,8 +53,9 @@
 @media (max-width: 768px) {
   #hero-section {
     background-image: url('assets/images/banner-bg-mobile.png');
-    background-size: cover;
-    background-position: center top;
+    background-size: contain;
+    background-position: center center;
+    background-color: #060609;
   }
 
   /* Shrink Get Started on small screens */
@@ -72,33 +73,19 @@
 
 /* Navbar transparent overlay when hero is in view */
 #navbar.nav-hero {
-  background: transparent !important;
+  background: rgba(0,0,0,0.45) !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   border-bottom: none !important;
 }
 
-/* Black outline on logo text + hamburger bars when navbar is over hero */
-#navbar.nav-hero .logo a {
-  -webkit-text-stroke: 0.5px black;
-  text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14,
-               -1px -1px 0 #000, 1px -1px 0 #000,
-               -1px  1px 0 #000, 1px  1px 0 #000;
-}
-
-#navbar.nav-hero .short-title a {
-  -webkit-text-stroke: 0.5px black;
-  text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14,
-               -1px -1px 0 #000, 1px -1px 0 #000,
-               -1px  1px 0 #000, 1px  1px 0 #000;
-}
-
 #navbar.nav-hero .hamburger-menu .bar {
   box-shadow: 0 0 4px #39FF14,
-              0 1px 2px rgba(0,0,0,0.9),
-              0 -1px 2px rgba(0,0,0,0.9);
-  outline: 0.5px solid rgba(0,0,0,0.4);
+              0 1px 3px rgba(0,0,0,1),
+              0 -1px 3px rgba(0,0,0,1),
+              1px 0 3px rgba(0,0,0,1),
+              -1px 0 3px rgba(0,0,0,1);
 }
 
 /* Move Get Started up on desktop so it clears the image text */
