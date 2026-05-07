@@ -40,7 +40,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  padding-bottom: 10vh;
+  padding-bottom: 15vh;
   box-sizing: border-box;
 }
 
@@ -63,55 +63,47 @@
   width: 100%;
 }
 
-/* Animated down-arrow CTA */
+/* Animated triple-chevron CTA */
 .hero-arrow-btn {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
-  border: 2px solid rgba(255,255,255,0.75);
-  border-radius: 50%;
-  background: rgba(0,0,0,0.3);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  gap: 0;
+  background: none;
+  border: none;
   cursor: pointer;
   outline: none;
   padding: 0;
-  transition: border-color 0.3s ease, background 0.3s ease;
-  animation: heroBounce 1.8s ease-in-out infinite;
-}
-
-.hero-arrow-btn:hover,
-.hero-arrow-btn:focus {
-  border-color: #39FF14;
-  background: rgba(57,255,20,0.15);
-  animation-play-state: paused;
-}
-
-.hero-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  font-size: 1.4rem;
   line-height: 1;
-  color: white;
-  transition: color 0.3s ease;
-  pointer-events: none;
-  margin: 0;
-  padding: 0;
 }
 
-.hero-arrow-btn:hover .hero-arrow,
-.hero-arrow-btn:focus .hero-arrow {
+.hero-chevron {
+  display: block;
+  font-size: 2.2rem;
+  line-height: 0.75;
   color: #39FF14;
+  /* rotate › to point downward */
+  transform: rotate(90deg);
+  opacity: 0.15;
+  text-shadow: 0 0 8px #39FF14, 0 0 18px #39FF14;
+  pointer-events: none;
 }
 
-@keyframes heroBounce {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(8px); }
+/* Cascade glow: each chevron lights up in sequence */
+.hero-chevron.c1 { animation: chevronGlow 1.4s ease-in-out infinite 0s; }
+.hero-chevron.c2 { animation: chevronGlow 1.4s ease-in-out infinite 0.22s; }
+.hero-chevron.c3 { animation: chevronGlow 1.4s ease-in-out infinite 0.44s; }
+
+@keyframes chevronGlow {
+  0%, 100% {
+    opacity: 0.15;
+    text-shadow: 0 0 4px #39FF14;
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 10px #39FF14, 0 0 24px #39FF14, 0 0 40px #39FF14;
+  }
 }
 
 @media (max-width: 768px) {
@@ -124,7 +116,7 @@
     background-image: url('assets/images/banner-bg-mobile.jpeg');
     background-size: cover;
     background-position: center center;
-    padding-bottom: 10vh;
+    padding-bottom: 15vh;
   }
 }
 
@@ -796,7 +788,9 @@
     <section id="hero-section">
         <div class="hero-get-started-wrap">
             <button class="hero-arrow-btn" aria-label="Scroll down to explore" onclick="revealContent()">
-                <span class="hero-arrow">&#8964;</span>
+                <span class="hero-chevron c1">&#8250;</span>
+                <span class="hero-chevron c2">&#8250;</span>
+                <span class="hero-chevron c3">&#8250;</span>
             </button>
         </div>
     </section>
