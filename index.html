@@ -24,27 +24,40 @@
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   margin-top: -60px;
-  /* Fill full viewport including cancelled body padding */
   height: calc(100vh + 60px);
   min-height: 100vh;
 }
 
 #hero-section {
+  position: relative;
   width: 100%;
   height: 100%;
   background-image: url('assets/images/banner-bg.png');
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  padding-bottom: 5vh;
+  padding-bottom: 10vh;
   box-sizing: border-box;
 }
 
+/* Semi-transparent dark overlay — lets code animation bleed through */
+#hero-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 6, 9, 0.35);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Arrow sits above the overlay */
 .hero-get-started-wrap {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -55,12 +68,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
-  border: 2.5px solid rgba(255,255,255,0.85);
+  width: 52px;
+  height: 52px;
+  border: 2px solid rgba(255,255,255,0.75);
   border-radius: 50%;
-  background: rgba(0,0,0,0.25);
-  backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   cursor: pointer;
   outline: none;
   padding: 0;
@@ -79,10 +93,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
+  width: 100%;
+  height: 100%;
+  font-size: 1.4rem;
   line-height: 1;
   color: white;
-  /* Use a proper down chevron character instead of rotated › */
   transition: color 0.3s ease;
   pointer-events: none;
   margin: 0;
@@ -96,7 +111,7 @@
 
 @keyframes heroBounce {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(10px); }
+  50%       { transform: translateY(8px); }
 }
 
 @media (max-width: 768px) {
@@ -108,8 +123,8 @@
   #hero-section {
     background-image: url('assets/images/banner-bg-mobile.jpeg');
     background-size: cover;
-    background-position: 60% center;
-    padding-bottom: 5vh;
+    background-position: center center;
+    padding-bottom: 10vh;
   }
 }
 
