@@ -806,6 +806,60 @@
         transform: translateY(0);
     }
 }
+
+/* =================== FEATURED PROJECTS SECTION =================== */
+.project-card {
+    padding-top: 0;
+    overflow: hidden;
+}
+.project-img-wrap {
+    position: relative;
+    width: calc(100% + 5rem);
+    margin-left: -2.5rem;
+    margin-top: 0;
+    overflow: hidden;
+    border-radius: 1rem 1rem 0 0;
+    flex-shrink: 0;
+}
+.project-thumb {
+    display: block;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    filter: brightness(0.85);
+}
+.project-card:hover .project-thumb {
+    transform: scale(1.04);
+    filter: brightness(1);
+}
+.project-tag {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 1rem;
+    background: rgba(57, 255, 20, 0.15);
+    border: 1px solid rgba(57, 255, 20, 0.4);
+    color: #39FF14;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+}
+@media (max-width: 768px) {
+    .project-img-wrap {
+        width: calc(100% + 3rem);
+        margin-left: -1.5rem;
+    }
+}
+@media (max-width: 480px) {
+    .project-img-wrap {
+        width: calc(100% + 2.5rem);
+        margin-left: -1.25rem;
+    }
+}
 </style>
 
   <body>
@@ -930,6 +984,92 @@
             </div>
         </div>
     </div>
+</section>
+
+<!-- Featured Projects Section -->
+<section class="main-section categories-section" id="projects">
+    <div class="categories-container">
+        <!-- Section header -->
+        <div class="section-header">
+            <h2 class="section-title">
+                Featured <span class="gradient-text">Projects</span>
+            </h2>
+            <p class="section-subtitle">
+                A showcase of our finest work — crafted with precision, creativity, and purpose
+            </p>
+        </div>
+
+        <!-- Projects grid -->
+        <div class="categories-grid">
+
+            <!-- Project Card 1: Marahuyo Designs -->
+            <div class="category-card project-card">
+                <div class="project-img-wrap">
+                    <img
+                        src="https://placehold.co/600x340/0a0a0a/39FF14?text=Marahuyo+Designs"
+                        alt="Marahuyo Designs project preview"
+                        class="project-thumb"
+                    />
+                    <span class="project-tag">Branding &amp; Web Design</span>
+                </div>
+                <div class="category-icon" style="margin-top:1.5rem;">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h3 class="category-title">Marahuyo Designs</h3>
+                <p class="category-description">
+                    Full brand identity and e-commerce web design for a Filipino artisan apparel label. Included logo system, color palette, and a scroll-animated product showcase.
+                </p>
+                <a href="#projects" class="category-link project-btn">
+                    View Details <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Project Card 2: Nostalgic Trails -->
+            <div class="category-card project-card">
+                <div class="project-img-wrap">
+                    <img
+                        src="https://placehold.co/600x340/0a0a0a/39FF14?text=Nostalgic+Trails"
+                        alt="Nostalgic Trails project preview"
+                        class="project-thumb"
+                    />
+                    <span class="project-tag">UI/UX &amp; Video Production</span>
+                </div>
+                <div class="category-icon" style="margin-top:1.5rem;">
+                    <i class="fas fa-film"></i>
+                </div>
+                <h3 class="category-title">Nostalgic Trails</h3>
+                <p class="category-description">
+                    Editorial-inspired travel platform with a vintage Fujifilm Instax aesthetic. Delivered a full UI/UX overhaul, promotional video ads, and responsive landing page.
+                </p>
+                <a href="#projects" class="category-link project-btn">
+                    View Details <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Project Card 3: Charito's Food & Beverage -->
+            <div class="category-card project-card">
+                <div class="project-img-wrap">
+                    <img
+                        src="https://placehold.co/600x340/0a0a0a/39FF14?text=Charito%27s+F%26B"
+                        alt="Charito's Food and Beverage project preview"
+                        class="project-thumb"
+                    />
+                    <span class="project-tag">Web Development &amp; Branding</span>
+                </div>
+                <div class="category-icon" style="margin-top:1.5rem;">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h3 class="category-title">Charito's Food &amp; Beverage</h3>
+                <p class="category-description">
+                    End-to-end digital presence for a local F&amp;B brand — logo design, menu layout, social media assets, and a fully responsive website with online ordering flow.
+                </p>
+                <a href="#projects" class="category-link project-btn">
+                    View Details <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+        </div><!-- /.categories-grid -->
+    </div><!-- /.categories-container -->
 </section>
 
 <!-- Reviews Section -->
