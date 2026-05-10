@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | NexGenix Creative Solutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── CSS VARIABLES ─────────────────────────────────────────── */
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #111111;
+      --glass:     rgba(255,255,255,0.04);
+      --border:    rgba(57,255,20,0.18);
+      --accent:    #39FF14;
+      --accent-dim:#1db30a;
+      --text:      #e8e8e8;
+      --muted:     #888;
+      --font-head: 'Montserrat Alternates', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    /* ─── RESET ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-head);
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* ─── ANIMATED CODE BACKGROUND ──────────────────────────────── */
+    #code-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    #code-bg canvas { width: 100%; height: 100%; opacity: 0.045; }
+
+    /* ─── HEADER ─────────────────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo span { color: var(--accent); }
+
+    nav { display: flex; align-items: center; gap: 2rem; }
+
+    nav a {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.25s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent) !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 3px;
+      transition: background 0.25s, color 0.25s !important;
+    }
+    .nav-cta:hover {
+      background: var(--accent) !important;
+      color: var(--bg) !important;
+    }
+
+    /* ─── MAIN CONTENT ───────────────────────────────────────────── */
+    main {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── PAGE HERO ──────────────────────────────────────────────── */
+    .page-hero {
+      padding: 5rem 2rem 3.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .page-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.9rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-hero h1 {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .page-hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .last-updated {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .divider {
+      width: 56px;
+      height: 2px;
+      background: var(--accent);
+      margin: 1.6rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* ─── POLICY CONTENT ─────────────────────────────────────────── */
+    .policy-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    /* Glass card for each section */
+    .policy-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.4rem 2.6rem;
+      margin-bottom: 1.6rem;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .policy-card:hover {
+      border-color: rgba(57,255,20,0.35);
+      box-shadow: 0 0 28px rgba(57,255,20,0.06);
+    }
+
+    .policy-card h2 {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-icon {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .policy-card p {
+      font-family: var(--font-head);
+      font-weight: 300;
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: #bbb;
+      margin-bottom: 0.8rem;
+    }
+    .policy-card p:last-child { margin-bottom: 0; }
+
+    .policy-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.6rem 0 0.8rem;
+    }
+    .policy-card ul li {
+      font-family: var(--font-head);
+      font-weight: 300;
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: #bbb;
+      padding-left: 1.4rem;
+      position: relative;
+      margin-bottom: 0.25rem;
+    }
+    .policy-card ul li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .highlight-inline {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent);
+      background: rgba(57,255,20,0.07);
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── INTRO NOTE ─────────────────────────────────────────────── */
+    .intro-note {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.7;
+      border-left: 2px solid var(--accent);
+      padding: 1rem 1.4rem;
+      background: rgba(57,255,20,0.03);
+      border-radius: 0 4px 4px 0;
+      margin-bottom: 2.4rem;
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── RETURN BUTTON ──────────────────────────────────────────── */
+    .return-wrap {
+      text-align: center;
+      padding-top: 1rem;
+    }
+
+    .btn-return {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      padding: 0.75rem 2rem;
+      border-radius: 3px;
+      transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+    }
+    .btn-return:hover {
+      background: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 22px rgba(57,255,20,0.3);
+    }
+    .btn-return svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s;
+    }
+    .btn-return:hover svg { transform: translateX(-3px); }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      background: rgba(10,10,10,0.9);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text);
+      letter-spacing: 0.04em;
+    }
+    .footer-logo span { color: var(--accent); }
+
+    .footer-links {
+      display: flex;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-links a.active { color: var(--accent); }
+
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: #555;
+      letter-spacing: 0.06em;
+      text-align: right;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .header-inner { padding: 0 1.2rem; }
+      nav { gap: 1rem; }
+      nav a:not(.nav-cta) { display: none; }
+      .page-hero { padding: 3.5rem 1.2rem 2.5rem; }
+      .policy-wrap { padding: 0 1.2rem 4rem; }
+      .policy-card { padding: 1.6rem 1.4rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .footer-copy { text-align: left; }
+    }
+
+    /* ─── FADE-IN ANIMATION ──────────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(22px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+    .fade-up:nth-child(1) { animation-delay: 0.05s; }
+    .fade-up:nth-child(2) { animation-delay: 0.15s; }
+    .fade-up:nth-child(3) { animation-delay: 0.25s; }
+    .fade-up:nth-child(4) { animation-delay: 0.35s; }
+    .fade-up:nth-child(5) { animation-delay: 0.45s; }
+    .fade-up:nth-child(6) { animation-delay: 0.55s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── ANIMATED CODE BACKGROUND ──────────────────────────── -->
+  <div id="code-bg"><canvas id="matrixCanvas"></canvas></div>
+
+  <!-- ── HEADER ─────────────────────────────────────────────── -->
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        Nex<span>Genix</span>&nbsp;Creative Solutions
+      </a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About</a>
+        <a href="our-work.html">Work</a>
+        <a href="contact.html" class="nav-cta">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── MAIN ───────────────────────────────────────────────── -->
+  <main>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="page-tag">Legal · Policy</div>
+      <h1>Privacy <em>Policy</em></h1>
+      <p class="last-updated">Last Updated: May 11, 2025</p>
+      <div class="divider"></div>
+    </section>
+
+    <!-- Policy Cards -->
+    <div class="policy-wrap">
+
+      <p class="intro-note">
+        This Privacy Policy describes how Nex Genix Creative Solutions ("NGCS", "we", "us", or "our")
+        collects, uses, and protects information submitted through our website. By using our services,
+        you agree to the practices outlined below.
+      </p>
+
+      <!-- 1. Data Collection -->
+      <div class="policy-card fade-up">
+        <h2>
+          <span class="section-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1" ry="1"/></svg>
+          </span>
+          01 — Data We Collect
+        </h2>
+        <p>We collect personal information only when you voluntarily provide it through the following channels on our website:</p>
+        <ul>
+          <li>
+            <span class="highlight-inline">Contact Form</span> — When you reach out to us, we collect your name, email address, and the details of your message or project inquiry.
+          </li>
+          <li>
+            <span class="highlight-inline">Client Login Portal</span> — Registered clients provide credentials (email and password) to access their dedicated dashboards. Depending on your project, this may also include business name, project notes, and communication history.
+          </li>
+        </ul>
+        <p>We do not collect any personal data passively through third-party advertising trackers or behavioral profiling tools.</p>
+      </div>
+
+      <!-- 2. How We Use Your Data -->
+      <div class="policy-card fade-up">
+        <h2>
+          <span class="section-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+          </span>
+          02 — How We Use Your Information
+        </h2>
+        <p>Your information is used solely for the following purposes:</p>
+        <ul>
+          <li>Responding to project inquiries and client communications submitted via the Contact Form.</li>
+          <li>Managing and tracking ongoing client projects through the Client Login Portal.</li>
+          <li>Providing project updates, deliverable timelines, and revision records to the appropriate client.</li>
+        </ul>
+        <p>We do not sell, rent, trade, or share your personal information with any third parties for marketing or commercial purposes. Your data remains strictly within NGCS for operational use only.</p>
+      </div>
+
+      <!-- 3. Security -->
+      <div class="policy-card fade-up">
+        <h2>
+          <span class="section-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </span>
+          03 — Data Security
+        </h2>
+        <p>We take the protection of your information seriously. The following measures are in place to safeguard your data:</p>
+        <ul>
+          <li>All <span class="highlight-inline">Client Dashboards</span> are protected with unique, password-authenticated login credentials.</li>
+          <li>Access to client project data is restricted to the client themselves and authorized NGCS team members directly assigned to the project.</li>
+          <li>Our platform is hosted on GitHub Pages with HTTPS enforced, ensuring encrypted transmission of all data in transit.</li>
+        </ul>
+        <p>While we implement industry-standard security practices, no method of electronic storage or transmission over the internet is 100% secure. We encourage clients to use strong, unique passwords for their portal accounts.</p>
+      </div>
+
+      <!-- 4. Cookies -->
+      <div class="policy-card fade-up">
+        <h2>
+          <span class="section-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+          </span>
+          04 — Cookies
+        </h2>
+        <p>Our website uses minimal functional cookies that are strictly necessary for the site to operate correctly. These cookies enable features such as session management on the Client Login Portal and do not track personal browsing behavior across other websites.</p>
+        <p>We do not use advertising cookies, cross-site tracking pixels, or analytics platforms that profile individual users. By continuing to use our website, you consent to the use of these functional cookies.</p>
+      </div>
+
+      <!-- 5. Contact -->
+      <div class="policy-card fade-up">
+        <h2>
+          <span class="section-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </span>
+          05 — Questions & Contact
+        </h2>
+        <p>If you have any questions, concerns, or requests regarding this Privacy Policy or the handling of your personal data, please reach out to us directly:</p>
+        <ul>
+          <li>Via our <a href="contact.html" style="color:var(--accent);text-decoration:none;font-weight:600;">Contact Form</a> on the website.</li>
+          <li>By emailing us at <span class="highlight-inline">hello@nexgenixcreative.com</span></li>
+          <li>We are based in Zamboanga City, Philippines.</li>
+        </ul>
+        <p>We aim to respond to all privacy-related inquiries within 3–5 business days.</p>
+      </div>
+
+      <!-- Return to Home -->
+      <div class="return-wrap fade-up">
+        <a href="index.html" class="btn-return">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          Return to Home
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Nex<span>Genix</span> Creative Solutions</div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About</a>
+        <a href="our-work.html">Work</a>
+        <a href="careers.html">Careers</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy-policy.html" class="active">Privacy Policy</a>
+      </div>
+      <div class="footer-copy">
+        © 2025 Nex Genix Creative Solutions<br/>Zamboanga City, Philippines
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── ANIMATED CODE BACKGROUND SCRIPT ────────────────────── -->
+  <script>
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const chars = '01{}[]()<>/=;:const let var function return import export async await class extends if else for while true false null undefined'.split(' ').join('').split('');
+    const fontSize = 13;
+    let cols = Math.floor(canvas.width / fontSize);
+    let drops = Array(cols).fill(1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(10,10,10,0.06)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#39FF14';
+      ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
+
+      drops.forEach((y, i) => {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(char, i * fontSize, y * fontSize);
+        if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      });
+
+      cols = Math.floor(canvas.width / fontSize);
+      if (drops.length < cols) drops.push(...Array(cols - drops.length).fill(1));
+    }
+
+    setInterval(draw, 60);
+  </script>
+
+</body>
+</html>
