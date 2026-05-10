@@ -170,7 +170,165 @@
     }
 
     /* ═══════════════════════════════════════════════════════════════
-       LARGE SCREEN / TV OVERRIDES  (≥ 1400px)
+       PREVIEW MODE BANNER
+    ═══════════════════════════════════════════════════════════════ */
+    #previewBanner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 9999;
+      background: linear-gradient(90deg, rgba(232,180,0,0.92) 0%, rgba(232,212,77,0.92) 100%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,220,0,0.5);
+      padding: 0.45rem 1rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    #previewBanner.show { display: flex; }
+    .preview-banner-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #1a1200;
+      text-transform: uppercase;
+    }
+    .preview-banner-text span { font-weight: 400; text-transform: none; opacity: 0.85; font-family: 'Montserrat Alternates', sans-serif; font-size: 0.72rem; letter-spacing: 0; }
+    .preview-exit-btn {
+      padding: 0.28rem 0.75rem;
+      background: rgba(0,0,0,0.15);
+      border: 1px solid rgba(0,0,0,0.25);
+      border-radius: 4px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #1a1200;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .preview-exit-btn:hover { background: rgba(0,0,0,0.28); }
+    /* Push everything down when banner is showing */
+    body.preview-mode .dashboard-wrapper { padding-top: 34px; }
+    body.preview-mode .sidebar { top: 34px !important; }
+
+    /* Preview mode login overlay */
+    #previewLoginOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 8000;
+      background: rgba(6,6,9,0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    #previewLoginOverlay.show { display: flex; }
+    .preview-login-box {
+      background: var(--surface, #111);
+      border: 1px solid rgba(57,255,20,0.35);
+      border-radius: 12px;
+      padding: 2rem 2rem 1.75rem;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(57,255,20,0.08);
+    }
+    .preview-login-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--neon, #39FF14);
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+    }
+    .preview-login-icon { font-size: 2.2rem; margin-bottom: 0.75rem; }
+    .preview-login-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text, #e8e8e8);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+    .preview-login-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted, #888);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .preview-login-divider {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.58rem;
+      color: var(--text-muted, #888);
+      letter-spacing: 0.1em;
+    }
+    .preview-login-divider::before,
+    .preview-login-divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+    .preview-mode-btn {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: rgba(57,255,20,0.08);
+      border: 1px solid rgba(57,255,20,0.4);
+      border-radius: 8px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--neon, #39FF14);
+      cursor: pointer;
+      transition: all 0.25s;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .preview-mode-btn:hover {
+      background: var(--neon, #39FF14);
+      color: #000;
+      box-shadow: 0 0 24px rgba(57,255,20,0.3);
+    }
+    .preview-login-note {
+      font-size: 0.65rem;
+      color: var(--text-muted, #888);
+      line-height: 1.5;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .preview-login-note strong { color: var(--yellow, #e8d44d); }
+    .preview-real-login-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-top: 0.6rem;
+      padding: 0.55rem 1.25rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      color: var(--text-muted, #888);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .preview-real-login-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text, #e8e8e8); }
+
+    @media (max-width: 480px) {
+      .preview-login-box { padding: 1.5rem 1.25rem; }
+    }
        Caps content width, locks service grids to sane column counts,
        and ensures no element overflows or invisibly stretches on
        wide viewports like Smart TVs (1920px+).
@@ -715,7 +873,38 @@
 </head>
 
 <body>
-  <div class="floating-code-container" id="floatingCodeContainer"></div>
+
+  <!-- ══ PREVIEW MODE BANNER (shown while in preview) ══════════════ -->
+  <div id="previewBanner">
+    <span class="preview-banner-text">
+      👁 Preview Mode
+      <span>— This is a demo view. No real account data is shown.</span>
+    </span>
+    <button class="preview-exit-btn" onclick="exitPreviewMode()">✕ Exit Preview</button>
+  </div>
+
+  <!-- ══ PREVIEW LOGIN OVERLAY (shown instead of redirect to login page) ══ -->
+  <div id="previewLoginOverlay">
+    <div class="preview-login-box">
+      <div class="preview-login-logo">Nex Genix Creative Solutions</div>
+      <div class="preview-login-icon">🔐</div>
+      <div class="preview-login-title">Client Dashboard</div>
+      <div class="preview-login-sub">Sign in to access your projects, orders, and profile — or explore a live preview of the dashboard.</div>
+      <a href="https://nexgenixcreativesolutions.github.io/login-signup" class="preview-mode-btn" style="text-decoration:none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        Log In / Sign Up
+      </a>
+      <div class="preview-login-divider">or</div>
+      <button class="preview-mode-btn" style="background:rgba(232,212,77,0.07);border-color:rgba(232,212,77,0.35);color:var(--yellow,#e8d44d);" onclick="enterPreviewMode()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Preview Dashboard
+      </button>
+      <div class="preview-login-note">
+        <strong>⚠ Preview only.</strong> Sample data is displayed. No real account, orders, or files are accessible in this mode.<br>
+        Supabase login is temporarily unavailable — <strong>real accounts will be restored soon.</strong>
+      </div>
+    </div>
+  </div>
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
   <div class="dashboard-wrapper">
@@ -1345,6 +1534,96 @@
     window.setOrdersFilter=setOrdersFilter;window.handleAvatarUpload=handleAvatarUpload;
     window.setSidebarActive=setSidebarActive;window.handleAuthSection=handleAuthSection;window.applyAuthState=applyAuthState;
     Object.defineProperty(window,'emailInput',{get(){return document.getElementById('profileEmail');}});
+
+    /* ═══════════════════════════════════════════════════════════════
+       PREVIEW MODE
+       ─ ENABLE:  set PREVIEW_MODE_ENABLED = true  (current setting)
+       ─ DISABLE: set PREVIEW_MODE_ENABLED = false  once Supabase is back
+       When enabled, the login overlay shows a "Preview Dashboard" button.
+       Clicking it calls applyAuthState(true) with dummy data and shows
+       the amber banner. No Supabase calls are made in preview mode.
+    ═══════════════════════════════════════════════════════════════ */
+    var PREVIEW_MODE_ENABLED = true; // ← flip to false to restore normal login
+
+    function enterPreviewMode(){
+      // Populate dummy display data so authenticated sections look real
+      var dn = document.getElementById('displayNameInput');
+      var pe = document.getElementById('profileEmail');
+      var ai = document.getElementById('avatarInitials');
+      if(dn) dn.value = 'Preview Client';
+      if(pe) pe.value = 'preview@example.com';
+      if(ai) ai.textContent = 'PC';
+
+      // Trigger the existing auth state machine — shows all auth-only blocks
+      if(typeof applyAuthState === 'function') applyAuthState(true);
+
+      // Show the amber preview banner and push layout down
+      var banner = document.getElementById('previewBanner');
+      if(banner) banner.classList.add('show');
+      document.body.classList.add('preview-mode');
+
+      // Hide the overlay
+      var overlay = document.getElementById('previewLoginOverlay');
+      if(overlay) overlay.classList.remove('show');
+
+      // Animate portal progress bars if user lands on portal
+      if(typeof ppInitAnimations === 'function') setTimeout(ppInitAnimations, 300);
+
+      // Store flag so page refreshes stay in preview within the session
+      try { sessionStorage.setItem('ngcs_preview', '1'); } catch(e){}
+    }
+
+    function exitPreviewMode(){
+      document.body.classList.remove('preview-mode');
+      var banner = document.getElementById('previewBanner');
+      if(banner) banner.classList.remove('show');
+
+      // Restore guest state
+      if(typeof applyAuthState === 'function') applyAuthState(false);
+
+      // Show the overlay again
+      if(PREVIEW_MODE_ENABLED){
+        var overlay = document.getElementById('previewLoginOverlay');
+        if(overlay) overlay.classList.add('show');
+      }
+      try { sessionStorage.removeItem('ngcs_preview'); } catch(e){}
+    }
+
+    window.enterPreviewMode = enterPreviewMode;
+    window.exitPreviewMode  = exitPreviewMode;
+
+    // On page load: if preview mode is enabled AND Supabase has not
+    // authenticated a real user, show the preview login overlay.
+    // dashboard-script.js calls applyAuthState(true/false) after its
+    // onAuthStateChange fires — we wait for that first, then check.
+    (function(){
+      if(!PREVIEW_MODE_ENABLED) return;
+
+      // Restore preview session across refreshes
+      try {
+        if(sessionStorage.getItem('ngcs_preview') === '1'){
+          enterPreviewMode(); return;
+        }
+      } catch(e){}
+
+      // Wait for dashboard-script.js to resolve auth, then decide
+      var waited = 0;
+      var interval = setInterval(function(){
+        waited += 120;
+        var isLoggedIn = document.body.classList.contains('is-logged-in');
+        if(isLoggedIn){
+          // Real Supabase session found — do nothing, let normal flow run
+          clearInterval(interval); return;
+        }
+        if(waited >= 3000){
+          // Supabase didn't authenticate within 3 s → show the overlay
+          clearInterval(interval);
+          var overlay = document.getElementById('previewLoginOverlay');
+          if(overlay && !document.body.classList.contains('preview-mode'))
+            overlay.classList.add('show');
+        }
+      }, 120);
+    })();
   </script>
 
   <!-- Go to Top — always in DOM, visibility handled by CSS class -->
