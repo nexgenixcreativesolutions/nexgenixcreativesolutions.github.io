@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — Nex Genix Creative Solutions</title>
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
+  <!-- Orbitron Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ======================================================
+       FLOATING CODE BACKGROUND  (matches index.html exactly)
+    ====================================================== */
+    .floating-code-container {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .code-line {
+      position: absolute;
+      white-space: nowrap;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: rgba(57, 255, 20, 0.4);
+      text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+      animation: floatCode linear infinite;
+      opacity: 0;
+    }
+    @keyframes floatCode {
+      0%   { transform: translateX(100vw); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateX(-100%); opacity: 0; }
+    }
+    @media (min-width: 768px) { .code-line { font-size: 16px; } }
+
+    /* ======================================================
+       NAVBAR  (exact copy of index.html navbar block)
+    ====================================================== */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 50px;
+      padding: 5px 20px;
+      background-color: #121212;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      box-sizing: border-box;
+    }
+    #navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    #navbar .logo img {
+      height: 30px; width: 30px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    #navbar .logo-title a,
+    #navbar .short-title a { text-decoration: none; }
+    #navbar .nav-list {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0; padding: 0;
+    }
+    #navbar .nav-list li { display: inline-block; }
+    #navbar .nav-list a {
+      text-decoration: none;
+      color: white;
+      font-size: 12px;
+      padding: 8px 10px;
+      transition: color 0.3s ease;
+    }
+    #navbar .nav-list a:hover,
+    #navbar .nav-list a.active { color: #39FF14; }
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+      position: absolute;
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+      align-items: center;
+    }
+
+    /* ======================================================
+       SHARED TOKENS  (pulled from index.html style block)
+    ====================================================== */
+    .gradient-text {
+      background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ======================================================
+       HERO SECTION
+    ====================================================== */
+    .faq-hero {
+      position: relative;
+      min-height: 42vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 1.5rem 60px;
+      background: linear-gradient(135deg, #000000 0%, #0d1a00 50%, #000000 100%);
+      overflow: hidden;
+    }
+    /* Ambient glow */
+    .faq-hero::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, rgba(57,255,20,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .faq-hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .faq-eyebrow {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #39FF14;
+      margin-bottom: 1.1rem;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease forwards;
+    }
+    /* Matches .section-title */
+    .faq-hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease 0.15s forwards;
+    }
+    /* Matches .section-subtitle */
+    .faq-hero-sub {
+      font-size: 1.1rem;
+      color: #9ca3af;
+      line-height: 1.75;
+      max-width: 620px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease 0.3s forwards;
+    }
+
+    /* ======================================================
+       SEARCH BAR
+    ====================================================== */
+    .faq-search-wrap {
+      display: flex;
+      align-items: center;
+      max-width: 520px;
+      margin: 2rem auto 0;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid #1f2937;
+      border-radius: 0.6rem;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease 0.45s forwards;
+    }
+    .faq-search-wrap:focus-within {
+      border-color: #39FF14;
+      box-shadow: 0 0 16px rgba(57,255,20,0.1);
+    }
+    .faq-search-icon {
+      padding: 0 1rem;
+      color: #39FF14;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .faq-search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.8rem 0.5rem 0.8rem 0;
+    }
+    .faq-search-input::placeholder { color: #4b5563; }
+    .faq-search-clear {
+      background: none;
+      border: none;
+      color: #4b5563;
+      cursor: pointer;
+      padding: 0 0.9rem;
+      font-size: 0.85rem;
+      transition: color 0.2s ease;
+      display: none;
+    }
+    .faq-search-clear.visible { display: block; }
+    .faq-search-clear:hover { color: #9ca3af; }
+
+    /* ======================================================
+       MAIN FAQ BODY
+    ====================================================== */
+    /* Matches categories-section / info-section padding */
+    .faq-body {
+      position: relative;
+      padding: 5rem 1rem 4rem;
+      background: transparent;
+    }
+    /* Matches categories-container max-width */
+    .faq-container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ── Category group ── */
+    .faq-category {
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .faq-category.visible {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    /* Category label row */
+    .faq-cat-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .faq-cat-icon {
+      width: 2.5rem; height: 2.5rem;
+      border-radius: 0.6rem;
+      background: rgba(57,255,20,0.08);
+      border: 1px solid rgba(57,255,20,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.3s ease;
+    }
+    .faq-cat-icon i {
+      font-size: 1rem;
+      color: #39FF14;
+    }
+    /* Matches .category-title */
+    .faq-cat-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .faq-cat-count {
+      margin-left: auto;
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.7rem;
+      color: #39FF14;
+      opacity: 0.6;
+      letter-spacing: 1px;
+    }
+
+    /* ── Accordion item ── */
+    .faq-item {
+      border: 1px solid #1f2937;
+      border-radius: 0.75rem;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(17,24,39,0.5), rgba(0,0,0,0.7));
+      backdrop-filter: blur(8px);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .faq-item:hover,
+    .faq-item.open {
+      border-color: rgba(57,255,20,0.4);
+    }
+    .faq-item.open {
+      box-shadow: 0 8px 32px rgba(57,255,20,0.08);
+    }
+
+    /* Question button */
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem 1.4rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      transition: color 0.25s ease;
+    }
+    .faq-question:hover { color: #39FF14; }
+    .faq-item.open .faq-question { color: #39FF14; }
+
+    /* Chevron icon */
+    .faq-chevron {
+      flex-shrink: 0;
+      width: 1.6rem; height: 1.6rem;
+      border-radius: 50%;
+      background: rgba(57,255,20,0.08);
+      border: 1px solid rgba(57,255,20,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.35s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+    .faq-chevron i {
+      font-size: 0.65rem;
+      color: #39FF14;
+      transition: transform 0.35s ease;
+    }
+    .faq-item.open .faq-chevron {
+      background: rgba(57,255,20,0.15);
+      border-color: rgba(57,255,20,0.5);
+      transform: rotate(180deg);
+    }
+
+    /* Answer panel — max-height accordion */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.35s ease;
+      padding: 0 1.4rem;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 600px;
+      padding: 0 1.4rem 1.4rem;
+    }
+
+    /* Answer inner content */
+    .faq-answer-inner {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 1rem;
+      /* Matches .category-description typography */
+      color: #9ca3af;
+      font-size: 0.9rem;
+      line-height: 1.75;
+    }
+    .faq-answer-inner p { margin-bottom: 0.75rem; }
+    .faq-answer-inner p:last-child { margin-bottom: 0; }
+    .faq-answer-inner ul {
+      margin: 0.5rem 0 0.75rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .faq-answer-inner li { line-height: 1.6; }
+    .faq-answer-inner strong { color: #fff; font-weight: 600; }
+    .faq-answer-inner a {
+      color: #39FF14;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(57,255,20,0.3);
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .faq-answer-inner a:hover {
+      color: #2ecc71;
+      border-color: #2ecc71;
+    }
+
+    /* Inline tag / badge inside answer */
+    .faq-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(57,255,20,0.1);
+      border: 1px solid rgba(57,255,20,0.3);
+      color: #39FF14;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      margin-right: 0.4rem;
+      vertical-align: middle;
+    }
+
+    /* ── No-results state ── */
+    .faq-no-results {
+      display: none;
+      text-align: center;
+      padding: 4rem 1rem;
+      color: #4b5563;
+    }
+    .faq-no-results i {
+      font-size: 2.5rem;
+      color: rgba(57,255,20,0.2);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .faq-no-results p {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      color: #4b5563;
+    }
+
+    /* ======================================================
+       "STILL HAVE QUESTIONS?" CTA SECTION
+    ====================================================== */
+    /* Mirrors .cta-section / .testimonials-section spacing */
+    .faq-cta-section {
+      position: relative;
+      padding: 5rem 1rem 6rem;
+      background: linear-gradient(135deg, rgba(57,255,20,0.04), rgba(0,0,0,0.6));
+      text-align: center;
+    }
+    .faq-cta-container {
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .faq-cta-container.visible {
+      animation: fadeInUp 0.7s ease forwards;
+    }
+    /* Matches .section-title */
+    .faq-cta-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1.1rem;
+    }
+    /* Matches .section-subtitle */
+    .faq-cta-desc {
+      font-size: 1.1rem;
+      color: #9ca3af;
+      line-height: 1.75;
+      margin-bottom: 2.25rem;
+    }
+    /* Matches .btn-primary visual from product-landing / how-it-works */
+    .faq-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2.25rem;
+      background: #39FF14;
+      color: #000;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat Alternates', sans-serif;
+      box-shadow: 0 0 20px rgba(57,255,20,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 0 0.5rem;
+    }
+    .faq-btn-primary:hover {
+      background: #2ee80f;
+      transform: translateY(-2px);
+      box-shadow: 0 0 32px rgba(57,255,20,0.8), 0 5px 20px rgba(57,255,20,0.4);
+    }
+    /* Matches .btn-secondary outline style */
+    .faq-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2.25rem;
+      background: transparent;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 0.5rem;
+      border: 2px solid rgba(255,255,255,0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat Alternates', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 0 0.5rem;
+    }
+    .faq-btn-secondary:hover {
+      border-color: #39FF14;
+      color: #39FF14;
+      transform: translateY(-2px);
+      box-shadow: 0 0 16px rgba(57,255,20,0.15);
+    }
+    .faq-cta-btns { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem; }
+
+    /* ======================================================
+       RESPONSIVE
+    ====================================================== */
+    @media (max-width: 768px) {
+      .faq-hero { padding: 100px 1rem 50px; min-height: auto; }
+      .faq-hero-title { font-size: 2rem; }
+      .faq-hero-sub   { font-size: 0.95rem; }
+      .faq-body { padding: 3.5rem 1rem 3rem; }
+      .faq-cta-section { padding: 3.5rem 1rem 4rem; }
+      .faq-cta-title   { font-size: 1.75rem; }
+      .faq-question    { font-size: 0.88rem; padding: 1rem 1.1rem; }
+      .faq-item.open .faq-answer { padding: 0 1.1rem 1.1rem; }
+      .faq-answer-inner { font-size: 0.85rem; }
+    }
+    @media (max-width: 480px) {
+      .faq-hero-title { font-size: 1.6rem; }
+      .faq-cta-title  { font-size: 1.45rem; }
+      .faq-cat-title  { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Floating Code Background -->
+<div class="floating-code-container" id="floatingCodeContainer"></div>
+
+<!-- ================================================================
+     NAVIGATION BAR — exact copy from index.html
+================================================================ -->
+<nav id="navbar">
+  <div class="logo">
+    <img src="assets/images/logo.png" alt="logo" class="logo">
+    <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
+    <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
+  </div>
+  <!-- Hamburger Menu Icon -->
+  <div class="hamburger-menu" onclick="toggleMenu()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+  <ul class="nav-list">
+    <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io#services">Services</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io#reviews">Reviews</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/contact">Contact</a></li>
+  </ul>
+  <!--
+    AUTH BUTTONS — controlled by auth.js
+    • nav-login-btn     → shown when logged OUT  (hidden when logged in)
+    • nav-dashboard-btn → shown when logged IN   (hidden when logged out)
+    • nav-logout-btn    → shown when logged IN   (hidden when logged out)
+    auth.js toggles display automatically — do not remove any of these.
+  -->
+  <div class="auth-buttons" id="auth-buttons">
+    <a href="login-signup.html" class="dashboard-btn" id="nav-login-btn" style="display:none">Log In</a>
+    <a href="dashboard.html"    class="dashboard-btn" id="nav-dashboard-btn" style="display:none">Dashboard</a>
+    <button class="logout-btn" id="nav-logout-btn" style="display:none" onclick="NGCS_Auth.logout()">Log Out</button>
+  </div>
+</nav>
+
+<!-- ================================================================
+     HERO SECTION
+================================================================ -->
+<section class="faq-hero">
+  <div class="faq-hero-content">
+    <p class="faq-eyebrow">Support &amp; Knowledge Base</p>
+    <h1 class="faq-hero-title">
+      Frequently Asked <span class="gradient-text">Questions</span>
+    </h1>
+    <p class="faq-hero-sub">
+      Everything you need to know about our pricing, services, dashboard, certificates, and revision policy — answered clearly and honestly.
+    </p>
+    <!-- Search -->
+    <div class="faq-search-wrap">
+      <span class="faq-search-icon"><i class="fas fa-search"></i></span>
+      <input
+        type="text"
+        class="faq-search-input"
+        id="faqSearch"
+        placeholder="Search questions…"
+        autocomplete="off"
+        aria-label="Search FAQ"
+      />
+      <button class="faq-search-clear" id="faqSearchClear" aria-label="Clear search">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FAQ ACCORDION BODY
+================================================================ -->
+<section class="faq-body">
+  <div class="faq-container" id="faqContainer">
+
+    <!-- ── CATEGORY 1: PRICING ── -->
+    <div class="faq-category" data-category="pricing">
+      <div class="faq-cat-label">
+        <div class="faq-cat-icon"><i class="fas fa-tags"></i></div>
+        <h2 class="faq-cat-title">Pricing</h2>
+        <span class="faq-cat-count">4 questions</span>
+      </div>
+
+      <div class="faq-item" data-question="How does your flexible pricing model work?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          How does your flexible pricing model work?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>At Nex Genix, we don't believe in one-size-fits-all pricing. Every business has a different scope, timeline, and budget — so our rates are <strong>scoped per project</strong> after a free discovery consultation.</p>
+            <p>During that initial call (or via our intake form), we'll ask about your deliverables, target deadline, and complexity. From there you'll receive a <strong>fixed quote</strong> with a clear itemised breakdown — no surprise invoices, no hidden fees.</p>
+            <p>General starting ranges for reference:</p>
+            <ul>
+              <li><span class="faq-tag"><i class="fas fa-palette"></i> Design</span> Logo design from ₱1,500 / Branding packages from ₱5,000</li>
+              <li><span class="faq-tag"><i class="fas fa-laptop-code"></i> Web</span> Landing pages from ₱8,000 / Full websites from ₱18,000</li>
+              <li><span class="faq-tag"><i class="fas fa-pen-fancy"></i> Writing</span> Business proposals from ₱1,200 / Content packages from ₱800/mo</li>
+              <li><span class="faq-tag"><i class="fas fa-graduation-cap"></i> Courses</span> Free to ₱2,750 depending on the programme</li>
+            </ul>
+            <p>All prices are quoted in PHP and can be settled via GCash or PayPal. USD pricing is available on request.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-question="Are there any hidden fees or setup charges?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          Are there any hidden fees or setup charges?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p><strong>No.</strong> The quote you approve is the price you pay. We do not charge separately for tools, plugins, stock photos included in scope, or internal project management.</p>
+            <p>The only additional costs you might encounter are <strong>optional</strong>: third-party domain registration, premium hosting plans, or licensed stock assets not covered in your package — and these will always be discussed and approved before any commitment is made.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-question="Do you offer payment in installments?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          Do you offer payment in installments?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Yes — for projects over ₱5,000, we offer a <strong>50% upfront / 50% on delivery</strong> payment structure as our standard arrangement. This protects both parties and keeps the project moving.</p>
+            <p>For larger engagements (₱20,000+), a milestone-based payment schedule can be arranged — e.g., 30% at kickoff, 40% at design approval, 30% at final delivery. This is discussed and agreed in writing before work begins.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-question="What payment methods do you accept?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          What payment methods do you accept?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>We currently accept:</p>
+            <ul>
+              <li><strong>GCash</strong> — for local Philippine clients (instant settlement)</li>
+              <li><strong>PayPal</strong> — for international clients or USD-denominated projects</li>
+            </ul>
+            <p>Receipts and invoices are issued for every transaction and are downloadable directly from your <a href="login-signup.html" onclick="if(typeof NGCS_Auth!=='undefined'&&NGCS_Auth.isLoggedIn()){window.location.href='dashboard.html';event.preventDefault();}">client dashboard</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /category: pricing -->
+
+    <!-- ── CATEGORY 2: PROJECT TRACKING ── -->
+    <div class="faq-category" data-category="tracking">
+      <div class="faq-cat-label">
+        <div class="faq-cat-icon"><i class="fas fa-satellite-dish"></i></div>
+        <h2 class="faq-cat-title">Project Tracking &amp; Dashboard</h2>
+        <span class="faq-cat-count">4 questions</span>
+      </div>
+
+      <div class="faq-item" data-question="How does the client dashboard work?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          How does the client dashboard work?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Once your project is confirmed and underway, you'll receive login credentials for your <strong>personal client dashboard</strong> at <a href="dashboard.html">nexgenixcreativesolutions.github.io/dashboard</a>.</p>
+            <p>From the dashboard you can:</p>
+            <ul>
+              <li>View your project's <strong>real-time completion percentage</strong> and milestone status</li>
+              <li>Review and download <strong>deliverable files</strong> as they're completed</li>
+              <li>Download your <strong>quote and invoice</strong> in PDF format</li>
+              <li>Submit and track <strong>revision requests</strong></li>
+              <li>Send messages directly to your assigned team member</li>
+            </ul>
+            <p>You don't need to chase us for updates — everything is visible the moment it changes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-question="Who gets access to the dashboard?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          Who gets access to the dashboard?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Dashboard access is granted to every client with an active or recently completed project. There is <strong>no additional fee</strong> for dashboard access — it is included with every service engagement.</p>
+            <p>Trainees enrolled in a paid NexGenix Business School (NGBS) course also receive a learner portal login to track course progress and access their certificate upon completion.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-question="Can I see real-time progress on my project?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          Can I see real-time progress on my project?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Yes — the dashboard shows a <strong>live progress bar</strong> and a milestone checklist that updates as each phase is completed. Milestones are typically:</p>
+            <ul>
+              <li>Discovery &amp; Brief</li>
+              <li>Research &amp; Concept Approval</li>
+              <li>Design / Development</li>
+              <li>Client Review &amp; Revisions</li>
+              <li>QA &amp; Testing</li>
+              <li>Final Delivery &amp; Handoff</li>
+            </ul>
+            <p>Each milestone is marked as <strong style="color:#39FF14;">Complete</strong>, <strong style="color:#ffff00;">In Progress</strong>, or Pending — so you always know exactly where things stand.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-question="What if I forgot my login credentials?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          What if I forgot my login credentials?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Use the <strong>"Forgot Password"</strong> link on the <a href="login-signup.html">login page</a> to receive a password reset email within a few minutes. If you don't receive it, check your spam folder or <a href="https://nexgenixcreativesolutions.github.io/contact">contact us directly</a> and we'll sort it out promptly.</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /category: tracking -->
+
+    <!-- ── CATEGORY 3: CERTIFICATES ── -->
+    <div class="faq-category" data-category="certificates">
+      <div class="faq-cat-label">
+        <div class="faq-cat-icon"><i class="fas fa-certificate"></i></div>
+        <h2 class="faq-cat-title">Certificates &amp; QR Verification</h2>
+        <span class="faq-cat-count">4 questions</span>
+      </div>
+
+      <div class="faq-item" data-question="What is the QR code verification on certificates?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          What is the QR code verification on certificates?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Every certificate issued by <strong>NexGenix Business School (NGBS)</strong> includes a unique QR code printed directly on the document. Scanning the QR code with any phone camera will open a secure verification page at:</p>
+            <p><code style="color:#39FF14; font-family:'Courier New',monospace; font-size:0.85rem;">nexgenixbusinessschool.github.io/verify-certificate?id=XXXXXX</code></p>
+            <p>The verification page displays the graduate's <strong>name, course title, completion date, and certificate ID</strong> — confirming its authenticity to any employer, institution, or partner who wishes to check.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-question="How long does verification take, and is it free?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          How long does verification take, and is it free?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Verification is <strong>instant</strong> — the QR scan resolves in seconds. The verification page is publicly accessible at no cost to either the graduate or the verifying party. There is nothing to download, no account required, and no fee charged.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-question="Can I add my certificate to LinkedIn?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          Can I add my certificate to LinkedIn?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Yes — the certificate verification page includes a direct <strong>"Add to LinkedIn Profile"</strong> button that pre-fills your LinkedIn Licenses &amp; Certifications section with:</p>
+            <ul>
+              <li>Course name and issuing organisation (NexGenix Business School)</li>
+              <li>Issue date and credential ID</li>
+              <li>A direct verification URL</li>
+            </ul>
+            <p>You can also copy a shareable verification link or print the page for physical submission.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-question="What courses include certificates?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          What courses include certificates?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p><strong>All</strong> NGBS courses — both free and premium — include a certificate upon successful completion. Free courses require completing all lessons and passing the final assessment. Premium courses additionally include a graded project submission reviewed by our instructors.</p>
+            <p>Current certificate-eligible courses include:</p>
+            <ul>
+              <li>International Business Fundamentals</li>
+              <li>Digital Marketing Mastery</li>
+              <li>E-Commerce Essentials</li>
+              <li>Mandarin Chinese Level 1</li>
+              <li>Japanese Language Basics</li>
+            </ul>
+            <p>Visit <a href="https://nexgenixbusinessschool.github.io">nexgenixbusinessschool.github.io</a> for the full course catalogue.</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /category: certificates -->
+
+    <!-- ── CATEGORY 4: REVISIONS ── -->
+    <div class="faq-category" data-category="revisions">
+      <div class="faq-cat-label">
+        <div class="faq-cat-icon"><i class="fas fa-sync-alt"></i></div>
+        <h2 class="faq-cat-title">Revisions &amp; Edits</h2>
+        <span class="faq-cat-count">4 questions</span>
+      </div>
+
+      <div class="faq-item" data-question="How many revisions are included in a design project?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          How many revisions are included in a design project?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Standard revision inclusions by service type:</p>
+            <ul>
+              <li><strong>Logo Design</strong> — 3 rounds of revisions</li>
+              <li><strong>Brand Identity Package</strong> — 2 rounds per deliverable</li>
+              <li><strong>Web Design (mockup stage)</strong> — 2 rounds</li>
+              <li><strong>Web Development (live build)</strong> — 1 round of consolidated feedback</li>
+              <li><strong>UI/UX Design</strong> — 2 rounds of wireframe revisions + 1 round at high-fidelity</li>
+              <li><strong>Video Ads</strong> — 2 rounds of edit revisions before final render</li>
+            </ul>
+            <p>A "revision round" means one consolidated set of feedback — not one individual change. We encourage clients to batch their feedback clearly to make the most of each round.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-question="How many revisions are included in a writing project?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          How many revisions are included in a writing project?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Writing services include the following revision rounds:</p>
+            <ul>
+              <li><strong>Business Proposal</strong> — 2 revision rounds</li>
+              <li><strong>Content Writing Package</strong> — 1 round per article/post</li>
+              <li><strong>Website Copywriting</strong> — 2 rounds for the full copy deck</li>
+            </ul>
+            <p>Revisions cover changes to tone, structure, accuracy, and length. Scope changes (e.g., adding entirely new sections not in the original brief) may be quoted as additional work.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-question="What happens if I need more revisions than included?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          What happens if I need more revisions than included?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Additional revision rounds beyond the included allowance are available at a flat rate:</p>
+            <ul>
+              <li><strong>Design revisions</strong> — ₱500 per additional round</li>
+              <li><strong>Writing revisions</strong> — ₱300 per additional round</li>
+            </ul>
+            <p>We'll always let you know before charging anything. In practice, most projects complete within the included rounds when the initial brief is clear — which is why we invest time in the discovery phase.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-question="Can I request changes after the project is delivered?">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          Can I request changes after the project is delivered?
+          <span class="faq-chevron"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Yes — within <strong>7 days of final delivery</strong>, minor bug fixes and small copy corrections are handled free of charge. These cover errors on our side (typos in delivered text, broken links, missed spec items).</p>
+            <p>For new feature requests, design changes, or content updates after the 7-day window, we're happy to provide a separate maintenance or support quote. Many of our clients retain us on a monthly basis for exactly this reason.</p>
+            <p>Post-project requests can be submitted through your <a href="login-signup.html" onclick="if(typeof NGCS_Auth!=='undefined'&&NGCS_Auth.isLoggedIn()){window.location.href='dashboard.html';event.preventDefault();}">client dashboard</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /category: revisions -->
+
+    <!-- No results state -->
+    <div class="faq-no-results" id="faqNoResults">
+      <i class="fas fa-search-minus"></i>
+      <p>No questions match your search.</p>
+      <p style="font-family:'Montserrat Alternates',sans-serif; font-size:0.85rem; margin-top:0.5rem;">Try different keywords or <a href="https://nexgenixcreativesolutions.github.io/contact" style="color:#39FF14;">ask us directly</a>.</p>
+    </div>
+
+  </div><!-- /#faqContainer -->
+</section>
+
+<!-- ================================================================
+     STILL HAVE QUESTIONS? — CTA
+================================================================ -->
+<section class="faq-cta-section">
+  <div class="faq-cta-container" id="faqCta">
+    <!-- Decorative icon -->
+    <div style="margin-bottom:1.5rem;">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:3.5rem;height:3.5rem;border-radius:50%;background:rgba(57,255,20,0.1);border:1px solid rgba(57,255,20,0.3);">
+        <i class="fas fa-comment-dots" style="font-size:1.4rem;color:#39FF14;"></i>
+      </span>
+    </div>
+    <h2 class="faq-cta-title">Still Have <span class="gradient-text">Questions?</span></h2>
+    <p class="faq-cta-desc">
+      Can't find what you're looking for? Our team typically responds within a few hours — reach out and we'll walk you through everything.
+    </p>
+    <div class="faq-cta-btns">
+      <a href="https://nexgenixcreativesolutions.github.io/contact" class="faq-btn-primary">
+        <i class="fas fa-paper-plane"></i> Contact Us
+      </a>
+      <a href="login-signup.html" class="faq-btn-secondary"
+         onclick="if(typeof NGCS_Auth!=='undefined'&&NGCS_Auth.isLoggedIn()){window.location.href='dashboard.html';event.preventDefault();}">
+        <i class="fas fa-sign-in-alt"></i> Client Login
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Social / Contact Buttons (exact copy from index.html) -->
+<div class="contact-buttons">
+  <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
+    <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
+  </a>
+  <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
+    <button class="contact-btn"><i class="fab fa-instagram"></i></button>
+  </a>
+  <a href="https://www.reddit.com/user/nexgenix" target="_blank">
+    <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
+  </a>
+  <a href="mailto:nexgenixcreativesolutions@gmail.com">
+    <button class="contact-btn"><i class="fas fa-envelope"></i></button>
+  </a>
+  <a href="https://wa.me/+639171063504" target="_blank">
+    <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
+  </a>
+</div>
+
+<!-- ================================================================
+     FOOTER — exact copy from index.html
+================================================================ -->
+<footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
+
+<!-- External JS -->
+<script src="script.js"></script>
+<!-- Auth Guard — must load before any auth-dependent logic -->
+<script src="auth.js"></script>
+
+<script>
+  /* ==============================================================
+     FLOATING CODE BACKGROUND  (same pattern as index.html)
+  ============================================================== */
+  const codeSnippets = [
+    'const nexgenix = () => {', 'function createSolution() {',
+    'import { Innovation } from "future"', '<div className="digital">',
+    'async function buildDreams() {', 'export default Excellence;',
+    'return <Success />;', 'const vision = await design();',
+    'npm install creativity', 'git commit -m "launch"',
+    'SELECT * FROM solutions;', 'CREATE TABLE success;',
+    '{ transform: "ideas" }', '.future { display: flex; }',
+    'onClick={() => innovate()}', 'useState(creativity);',
+    'useEffect(() => grow());', 'class Digital extends Tech {',
+    'interface Vision { }', 'type Success = Promise<Growth>;'
+  ];
+
+  function createFloatingCodeBackground() {
+    const container = document.getElementById('floatingCodeContainer');
+    for (let i = 0; i < 15; i++) {
+      const el = document.createElement('div');
+      el.className = 'code-line';
+      el.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+      el.style.top = `${5 + i * 6}%`;
+      el.style.animationDuration = `${15 + Math.random() * 10}s`;
+      el.style.animationDelay = `${Math.random() * 20}s`;
+      container.appendChild(el);
+    }
+  }
+
+  /* ==============================================================
+     TOGGLE MOBILE MENU  (same function name as index.html)
+  ============================================================== */
+  function toggleMenu() {
+    document.querySelector('.nav-list').classList.toggle('active');
+    document.querySelector('.hamburger-menu').classList.toggle('open');
+  }
+
+  /* ==============================================================
+     ACCORDION
+     — Self-contained; does NOT touch any index.html functions.
+     — Uses max-height CSS transition (already defined in <style>).
+     — aria-expanded updated for accessibility.
+  ============================================================== */
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+
+    // Close all other open items (only one open at a time per UX)
+    document.querySelectorAll('.faq-item.open').forEach(openItem => {
+      if (openItem !== item) {
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Toggle clicked item
+    item.classList.toggle('open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  }
+
+  /* ==============================================================
+     FAQ SEARCH
+     — Filters questions by matching text inside data-question
+       and .faq-answer-inner content.
+     — Shows/hides entire category groups; shows no-results state.
+  ============================================================== */
+  function initFaqSearch() {
+    const input   = document.getElementById('faqSearch');
+    const clearBtn = document.getElementById('faqSearchClear');
+    const noResults = document.getElementById('faqNoResults');
+
+    if (!input) return;
+
+    function doSearch(query) {
+      const q = query.trim().toLowerCase();
+      clearBtn.classList.toggle('visible', q.length > 0);
+
+      const categories = document.querySelectorAll('.faq-category');
+      let totalVisible = 0;
+
+      categories.forEach(cat => {
+        const items = cat.querySelectorAll('.faq-item');
+        let catVisible = 0;
+
+        items.forEach(item => {
+          const questionText = (item.dataset.question || '').toLowerCase();
+          const answerText   = (item.querySelector('.faq-answer-inner')?.textContent || '').toLowerCase();
+          const match = !q || questionText.includes(q) || answerText.includes(q);
+
+          item.style.display = match ? '' : 'none';
+          if (match) catVisible++;
+        });
+
+        // Hide entire category section if nothing matches
+        cat.style.display = catVisible > 0 ? '' : 'none';
+        totalVisible += catVisible;
+      });
+
+      noResults.style.display = totalVisible === 0 && q ? 'block' : 'none';
+    }
+
+    input.addEventListener('input', () => doSearch(input.value));
+
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      doSearch('');
+      input.focus();
+    });
+  }
+
+  /* ==============================================================
+     SCROLL ANIMATIONS  (IntersectionObserver — same pattern)
+  ============================================================== */
+  function initScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.faq-category, .faq-cta-container').forEach(el => {
+      observer.observe(el);
+    });
+  }
+
+  /* ==============================================================
+     INIT
+  ============================================================== */
+  document.addEventListener('DOMContentLoaded', function () {
+    createFloatingCodeBackground();
+    initScrollAnimations();
+    initFaqSearch();
+  });
+</script>
+
+</body>
+</html>
