@@ -401,6 +401,300 @@
         font-size: 0.85rem;
       }
     }
+
+    /* =================== SPECIFIC DELIVERABLES SECTION =================== */
+    /* Mirrors .info-section spacing and typography exactly */
+    .deliverables-section {
+      position: relative;
+      padding: 4rem 1rem;
+      background: transparent;
+    }
+
+    .deliverables-container {
+      max-width: 900px;   /* matches .info-container */
+      margin: 0 auto;
+    }
+
+    .deliverables-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;        /* matches .info-title */
+      font-weight: 700;
+      margin-bottom: 1.5rem;  /* matches .info-title */
+      color: white;
+      text-align: center;
+    }
+
+    .deliverables-intro {
+      font-size: 1.1rem;      /* matches .info-text */
+      color: #9ca3af;
+      line-height: 1.8;
+      margin-bottom: 2rem;    /* matches .info-text */
+      text-align: justify;
+    }
+
+    .deliverables-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .deliverable-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.7));
+      border: 1px solid #1f2937;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .deliverable-item.visible {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .deliverable-item:hover {
+      border-color: #39FF14;
+      box-shadow: 0 8px 30px rgba(57, 255, 20, 0.12);
+    }
+
+    .deliverable-icon {
+      width: 2.75rem;
+      height: 2.75rem;
+      flex-shrink: 0;
+      background: rgba(57, 255, 20, 0.1);
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+
+    .deliverable-item:hover .deliverable-icon {
+      background: rgba(57, 255, 20, 0.2);
+    }
+
+    .deliverable-icon i {
+      font-size: 1.15rem;
+      color: #39FF14;
+    }
+
+    .deliverable-text h4 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.35rem;
+    }
+
+    .deliverable-text p {
+      font-size: 0.875rem;   /* matches .service-description */
+      color: #9ca3af;
+      line-height: 1.65;
+    }
+
+    .track-progress-note {
+      text-align: center;
+      font-size: 1rem;
+      color: #9ca3af;
+      line-height: 1.8;
+      margin-top: 1rem;
+    }
+
+    .track-progress-note a {
+      color: #39FF14;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(57, 255, 20, 0.4);
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .track-progress-note a:hover {
+      color: #2ecc71;
+      border-color: #2ecc71;
+    }
+
+    /* =================== PROCESS TIMELINE SECTION =================== */
+    .timeline-section {
+      position: relative;
+      padding: 4rem 1rem;             /* matches .info-section */
+      background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%); /* matches .info-section */
+    }
+
+    .timeline-container {
+      max-width: 900px;               /* matches .info-container */
+      margin: 0 auto;
+    }
+
+    .timeline-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;                /* matches .info-title */
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: white;
+      text-align: center;
+    }
+
+    .timeline-intro {
+      font-size: 1.1rem;              /* matches .info-text */
+      color: #9ca3af;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      text-align: justify;
+    }
+
+    /* Vertical line */
+    .timeline-track {
+      position: relative;
+    }
+
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      left: 1.35rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #39FF14, rgba(57, 255, 20, 0.1));
+    }
+
+    .timeline-step {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 0 0 2.5rem 0;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .timeline-step.visible {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .timeline-step:last-child {
+      padding-bottom: 0;
+    }
+
+    /* Numbered node on the timeline */
+    .timeline-node {
+      flex-shrink: 0;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 50%;
+      background: #000;
+      border: 2px solid #39FF14;
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .timeline-node span {
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.85rem;
+      color: #39FF14;
+      line-height: 1;
+    }
+
+    .timeline-body {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.7));
+      border: 1px solid #1f2937;
+      border-radius: 1rem;
+      padding: 1.25rem 1.5rem;
+      flex: 1;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .timeline-step:hover .timeline-body {
+      border-color: #39FF14;
+      box-shadow: 0 8px 30px rgba(57, 255, 20, 0.12);
+    }
+
+    .timeline-step-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-step-meta {
+      font-size: 0.75rem;
+      color: #39FF14;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .timeline-step-meta i {
+      font-size: 0.7rem;
+    }
+
+    .timeline-step-desc {
+      font-size: 0.875rem;   /* matches .service-description */
+      color: #9ca3af;
+      line-height: 1.65;
+    }
+
+    /* Responsive adjustments for the two new sections */
+    @media (max-width: 768px) {
+      .deliverables-section,
+      .timeline-section {
+        padding: 2.5rem 1rem;
+      }
+
+      .deliverables-title,
+      .timeline-title {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+      }
+
+      .deliverables-intro,
+      .timeline-intro {
+        font-size: 0.9rem;
+        line-height: 1.7;
+      }
+
+      .deliverables-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .deliverable-item,
+      .timeline-body {
+        padding: 1.1rem;
+      }
+
+      .deliverable-text h4,
+      .timeline-step-title {
+        font-size: 0.85rem;
+      }
+
+      .deliverable-text p,
+      .timeline-step-desc {
+        font-size: 0.82rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .deliverables-title,
+      .timeline-title {
+        font-size: 1.2rem;
+      }
+
+      .deliverables-intro,
+      .timeline-intro {
+        font-size: 0.85rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -581,6 +875,146 @@
     </div>
   </section>
 
+  <!-- =================== SPECIFIC DELIVERABLES =================== -->
+  <section class="deliverables-section" id="deliverables">
+    <div class="deliverables-container">
+      <h2 class="deliverables-title">Specific <span class="gradient-text">Deliverables</span></h2>
+      <p class="deliverables-intro">
+        Every project we take on comes with a clearly defined set of deliverables so you always know what you're getting. No ambiguity — just tangible, measurable outputs that move your business forward.
+      </p>
+
+      <div class="deliverables-grid">
+
+        <div class="deliverable-item">
+          <div class="deliverable-icon"><i class="fas fa-file-code"></i></div>
+          <div class="deliverable-text">
+            <h4>Source Files</h4>
+            <p>All original design files (Figma, PSD, AI) and production code delivered to you upon project completion.</p>
+          </div>
+        </div>
+
+        <div class="deliverable-item">
+          <div class="deliverable-icon"><i class="fas fa-mobile-alt"></i></div>
+          <div class="deliverable-text">
+            <h4>Responsive Builds</h4>
+            <p>Pixel-perfect, fully responsive layouts tested across desktop, tablet, and mobile breakpoints.</p>
+          </div>
+        </div>
+
+        <div class="deliverable-item">
+          <div class="deliverable-icon"><i class="fas fa-palette"></i></div>
+          <div class="deliverable-text">
+            <h4>Brand Style Guide</h4>
+            <p>A concise style guide covering color tokens, typography, spacing rules, and icon usage for your project.</p>
+          </div>
+        </div>
+
+        <div class="deliverable-item">
+          <div class="deliverable-icon"><i class="fas fa-images"></i></div>
+          <div class="deliverable-text">
+            <h4>Asset Library</h4>
+            <p>Exported image, icon, and media assets in web-optimized formats (WebP, SVG, MP4) ready for deployment.</p>
+          </div>
+        </div>
+
+        <div class="deliverable-item">
+          <div class="deliverable-icon"><i class="fas fa-vial"></i></div>
+          <div class="deliverable-text">
+            <h4>QA &amp; Testing Report</h4>
+            <p>A documented cross-browser and cross-device testing pass confirming performance, accessibility, and compatibility.</p>
+          </div>
+        </div>
+
+        <div class="deliverable-item">
+          <div class="deliverable-icon"><i class="fas fa-book-open"></i></div>
+          <div class="deliverable-text">
+            <h4>Handoff Documentation</h4>
+            <p>Clear written instructions covering how to update content, manage assets, and maintain the delivered work.</p>
+          </div>
+        </div>
+
+      </div><!-- /.deliverables-grid -->
+
+      <p class="track-progress-note">
+        Already a client?
+        <a href="login-signup.html" onclick="typeof NGCS_Auth !== 'undefined' && NGCS_Auth.isLoggedIn() ? (window.location.href='dashboard.html', event.preventDefault()) : null">
+          Track your project's progress
+        </a>
+        in real time from your client dashboard.
+      </p>
+    </div><!-- /.deliverables-container -->
+  </section>
+
+  <!-- =================== PROCESS TIMELINE =================== -->
+  <section class="timeline-section" id="process">
+    <div class="timeline-container">
+      <h2 class="timeline-title">Process <span class="gradient-text">Timeline</span></h2>
+      <p class="timeline-intro">
+        We follow a structured, collaborative process designed to keep you informed and in control at every stage. Here's what to expect from the moment you reach out to the final handoff.
+      </p>
+
+      <div class="timeline-track">
+
+        <div class="timeline-step">
+          <div class="timeline-node"><span>01</span></div>
+          <div class="timeline-body">
+            <p class="timeline-step-meta"><i class="fas fa-clock"></i> Day 1 – 2</p>
+            <h3 class="timeline-step-title">Discovery &amp; Brief</h3>
+            <p class="timeline-step-desc">We start with a focused intake call or form to understand your brand, goals, target audience, and technical requirements. This brief becomes the foundation for everything that follows.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-node"><span>02</span></div>
+          <div class="timeline-body">
+            <p class="timeline-step-meta"><i class="fas fa-clock"></i> Day 3 – 5</p>
+            <h3 class="timeline-step-title">Research &amp; Concept</h3>
+            <p class="timeline-step-desc">Our team audits competitors, defines visual direction, and produces initial mood boards or wireframes for your approval before any production begins.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-node"><span>03</span></div>
+          <div class="timeline-body">
+            <p class="timeline-step-meta"><i class="fas fa-clock"></i> Day 6 – 12</p>
+            <h3 class="timeline-step-title">Design &amp; Development</h3>
+            <p class="timeline-step-desc">High-fidelity mockups are built and approved, then coded into production-ready pages. You'll have access to a live staging link so you can review progress in real time.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-node"><span>04</span></div>
+          <div class="timeline-body">
+            <p class="timeline-step-meta"><i class="fas fa-clock"></i> Day 13 – 15</p>
+            <h3 class="timeline-step-title">Review &amp; Revisions</h3>
+            <p class="timeline-step-desc">You submit consolidated feedback; we action revisions within the agreed revision rounds. This stage ends when you are fully satisfied with the output.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-node"><span>05</span></div>
+          <div class="timeline-body">
+            <p class="timeline-step-meta"><i class="fas fa-clock"></i> Day 16 – 17</p>
+            <h3 class="timeline-step-title">QA &amp; Final Testing</h3>
+            <p class="timeline-step-desc">A full quality assurance pass covers performance, accessibility, mobile responsiveness, and cross-browser compatibility before anything goes live.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-node"><span>06</span></div>
+          <div class="timeline-body">
+            <p class="timeline-step-meta"><i class="fas fa-clock"></i> Day 18</p>
+            <h3 class="timeline-step-title">Launch &amp; Handoff</h3>
+            <p class="timeline-step-desc">All source files, assets, and documentation are packaged and delivered. Post-launch support is available through your
+              <a href="login-signup.html" style="color:#39FF14; text-decoration:none; font-weight:600; border-bottom:1px solid rgba(57,255,20,0.4);" onclick="typeof NGCS_Auth !== 'undefined' && NGCS_Auth.isLoggedIn() ? (window.location.href='dashboard.html', event.preventDefault()) : null">client dashboard</a>.
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /.timeline-track -->
+    </div><!-- /.timeline-container -->
+  </section>
+
   <!-- Additional Info Section -->
   <section class="info-section">
     <div class="info-container">
@@ -674,8 +1108,8 @@
         });
       }, { threshold: 0.1 });
 
-      document.querySelectorAll('.service-card').forEach(card => {
-        observer.observe(card);
+      document.querySelectorAll('.service-card, .deliverable-item, .timeline-step').forEach(el => {
+        observer.observe(el);
       });
     }
 
