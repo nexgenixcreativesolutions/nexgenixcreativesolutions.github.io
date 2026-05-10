@@ -744,6 +744,131 @@
           font-size: 1.75rem;
         }
       }
+
+      /* =================== STICKY ORDER BAR =================== */
+      #sticky-order-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 990; /* below navbar (1000), above content */
+        background: linear-gradient(90deg, #000000 0%, #0d1a00 60%, #000000 100%);
+        border-top: 1px solid rgba(57, 255, 20, 0.35);
+        box-shadow: 0 -4px 30px rgba(57, 255, 20, 0.12);
+        padding: 0.85rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        /* Hidden by default — JS reveals it after hero scroll */
+        opacity: 0;
+        transform: translateY(100%);
+        pointer-events: none;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+      }
+
+      #sticky-order-bar.bar-visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .sob-product-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        min-width: 0;
+      }
+
+      .sob-product-name {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        letter-spacing: 0.5px;
+      }
+
+      .sob-price {
+        font-family: 'Courier New', monospace;
+        font-size: 0.8rem;
+        color: #39FF14;
+        text-shadow: 0 0 6px rgba(57, 255, 20, 0.5);
+        letter-spacing: 0.5px;
+      }
+
+      .sob-tagline {
+        font-size: 0.7rem;
+        color: #9ca3af;
+        letter-spacing: 0.5px;
+      }
+
+      .sob-cta-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-shrink: 0;
+      }
+
+      .sob-btn {
+        padding: 0.65rem 1.75rem;
+        background: #39FF14;
+        color: #000;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.85rem;
+        border-radius: 0.5rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat Alternates', sans-serif;
+        box-shadow: 0 0 16px rgba(57, 255, 20, 0.45);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+      }
+
+      .sob-btn:hover {
+        background: #2ee80f;
+        transform: translateY(-2px);
+        box-shadow: 0 0 26px rgba(57, 255, 20, 0.75), 0 4px 16px rgba(57, 255, 20, 0.35);
+      }
+
+      .sob-dismiss {
+        background: none;
+        border: none;
+        color: #4b5563;
+        cursor: pointer;
+        font-size: 1.1rem;
+        line-height: 1;
+        padding: 0.25rem;
+        transition: color 0.2s ease;
+        flex-shrink: 0;
+      }
+
+      .sob-dismiss:hover {
+        color: #9ca3af;
+      }
+
+      /* On mobile, stack product name + price inline and shrink padding */
+      @media (max-width: 600px) {
+        #sticky-order-bar {
+          padding: 0.75rem 1rem;
+          gap: 0.75rem;
+        }
+        .sob-product-name {
+          font-size: 0.75rem;
+        }
+        .sob-tagline {
+          display: none; /* hide tagline to save space */
+        }
+        .sob-btn {
+          padding: 0.6rem 1.1rem;
+          font-size: 0.78rem;
+        }
+      }
     </style>
   </head>
 
@@ -934,6 +1059,19 @@
     <!-- Footer -->
     <footer>&copy; 2023-2026 <span>NEX GENIX Creative Solutions | Business School</span> All rights reserved.</footer>
 
+    <!-- Sticky Order Bar — appears after scrolling past hero -->
+    <div id="sticky-order-bar" role="complementary" aria-label="Quick order bar">
+      <div class="sob-product-info">
+        <span class="sob-product-name">NEX GENIX Products &amp; Services</span>
+        <span class="sob-price">Starting at <strong>Free</strong> — Courses &amp; Services</span>
+        <span class="sob-tagline">Courses · Web Design · Branding · Content Writing</span>
+      </div>
+      <div class="sob-cta-wrap">
+        <a href="#products" class="sob-btn">Order Now</a>
+        <button class="sob-dismiss" aria-label="Dismiss order bar" onclick="dismissOrderBar()">&#10005;</button>
+      </div>
+    </div>
+
     <!-- JavaScript -->
     <script>
       // Product Data
@@ -1123,7 +1261,39 @@
         createFloatingCodeBackground();
         renderProducts();
         initScrollAnimations();
+        initStickyOrderBar();
       });
+
+      // =================== STICKY ORDER BAR ===================
+      function initStickyOrderBar() {
+        const bar = document.getElementById('sticky-order-bar');
+        const hero = document.querySelector('.hero-section');
+        if (!bar || !hero) return;
+
+        let dismissed = false;
+
+        function onScroll() {
+          if (dismissed) return;
+          const heroBottom = hero.getBoundingClientRect().bottom;
+          // Show once the user has scrolled past the hero
+          if (heroBottom < 0) {
+            bar.classList.add('bar-visible');
+          } else {
+            bar.classList.remove('bar-visible');
+          }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll(); // run once on load in case page is already scrolled
+      }
+
+      function dismissOrderBar() {
+        const bar = document.getElementById('sticky-order-bar');
+        if (!bar) return;
+        bar.classList.remove('bar-visible');
+        // Remove scroll listener permanently for this session
+        bar.style.display = 'none';
+      }
     </script>
   </body>
 </html>
