@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How It Works — Nex Genix Creative Solutions</title>
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
+  <!-- Orbitron Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* =================== FLOATING CODE BACKGROUND =================== */
+    .floating-code-container {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .code-line {
+      position: absolute;
+      white-space: nowrap;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: rgba(57, 255, 20, 0.4);
+      text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+      animation: floatCode linear infinite;
+      opacity: 0;
+    }
+    @keyframes floatCode {
+      0%   { transform: translateX(100vw); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateX(-100%); opacity: 0; }
+    }
+
+    /* =================== GRADIENT TEXT =================== */
+    .gradient-text {
+      background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* =================== HERO SECTION =================== */
+    .hiw-hero {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 20px 70px;
+      background: linear-gradient(135deg, #000000 0%, #0d1a00 50%, #000000 100%);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    /* Radial glow behind title */
+    .hiw-hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(57, 255, 20, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hiw-hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .hiw-eyebrow {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #39FF14;
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease forwards;
+    }
+
+    .hiw-hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease 0.15s forwards;
+    }
+
+    .hiw-hero-sub {
+      font-size: 1.15rem;
+      color: #9ca3af;
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease 0.3s forwards;
+    }
+
+    .hiw-hero-cta-wrap {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease 0.45s forwards;
+    }
+
+    /* Reuse btn-primary / btn-secondary visual style inline */
+    .btn-primary {
+      padding: 0.9rem 2.25rem;
+      background: #39FF14;
+      color: #000;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat Alternates', sans-serif;
+      box-shadow: 0 0 20px rgba(57, 255, 20, 0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background: #2ee80f;
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(57, 255, 20, 0.8), 0 5px 20px rgba(57, 255, 20, 0.4);
+    }
+
+    .btn-secondary {
+      padding: 0.9rem 2.25rem;
+      background: transparent;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 0.5rem;
+      border: 2px solid rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat Alternates', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-block;
+    }
+    .btn-secondary:hover {
+      border-color: #39FF14;
+      color: #39FF14;
+      transform: translateY(-2px);
+      box-shadow: 0 0 16px rgba(57, 255, 20, 0.2);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =================== SECTION SHARED TOKENS =================== */
+    /* Matches categories-container / testimonials-container max-width */
+    .hiw-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .hiw-section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /* Matches .section-title */
+    .hiw-section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    /* Matches .section-subtitle */
+    .hiw-section-sub {
+      color: #9ca3af;
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* =================== 4-STEP JOURNEY =================== */
+    .hiw-steps-section {
+      position: relative;
+      padding: 6rem 1rem 4rem;
+      background: transparent;
+    }
+
+    .hiw-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      position: relative;
+    }
+
+    /* Connecting dashed line on desktop */
+    .hiw-steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 3.2rem; /* vertically centred with the step-number circle */
+      left: calc(12.5% + 1rem); /* starts after half of first card */
+      right: calc(12.5% + 1rem);
+      height: 2px;
+      background: repeating-linear-gradient(
+        to right,
+        rgba(57, 255, 20, 0.35) 0px,
+        rgba(57, 255, 20, 0.35) 8px,
+        transparent 8px,
+        transparent 16px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Individual step card ── */
+    .hiw-step-card {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.55), rgba(0, 0, 0, 0.75));
+      border: 1px solid #1f2937;
+      border-radius: 1rem;
+      padding: 2rem 1.75rem 2rem;
+      transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+      opacity: 0;
+      transform: translateY(40px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .hiw-step-card.visible {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .hiw-step-card:hover {
+      border-color: #39FF14;
+      box-shadow: 0 16px 50px rgba(57, 255, 20, 0.15);
+      transform: translateY(-8px);
+    }
+
+    /* Highlight on the Live Tracking card */
+    .hiw-step-card.hiw-highlight {
+      border-color: rgba(57, 255, 20, 0.35);
+      background: linear-gradient(135deg, rgba(57, 255, 20, 0.04), rgba(0, 0, 0, 0.75));
+    }
+    .hiw-step-card.hiw-highlight:hover {
+      border-color: #39FF14;
+      box-shadow: 0 16px 50px rgba(57, 255, 20, 0.25);
+    }
+
+    /* Step number badge */
+    .hiw-step-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.25rem;
+      height: 3.25rem;
+      border-radius: 50%;
+      background: #000;
+      border: 2px solid #39FF14;
+      box-shadow: 0 0 14px rgba(57, 255, 20, 0.4);
+      margin-bottom: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .hiw-step-num span {
+      font-family: 'Silkscreen', monospace;
+      font-size: 1rem;
+      color: #39FF14;
+      line-height: 1;
+    }
+
+    /* Icon inside the step number badge on active card */
+    .hiw-step-num i {
+      font-size: 1.1rem;
+      color: #39FF14;
+    }
+
+    .hiw-step-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #39FF14;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Matches .category-title */
+    .hiw-step-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.875rem;
+      line-height: 1.3;
+    }
+
+    /* Matches .category-description */
+    .hiw-step-desc {
+      color: #9ca3af;
+      line-height: 1.7;
+      font-size: 0.9rem;
+      flex: 1;
+    }
+
+    .hiw-step-action {
+      margin-top: 1.5rem;
+      width: 100%;
+    }
+
+    /* Login CTA in the Live Tracking card */
+    .hiw-login-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.4rem;
+      background: #39FF14;
+      color: #000;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat Alternates', sans-serif;
+      box-shadow: 0 0 16px rgba(57, 255, 20, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      width: 100%;
+      justify-content: center;
+    }
+    .hiw-login-btn:hover {
+      background: #2ee80f;
+      box-shadow: 0 0 28px rgba(57, 255, 20, 0.7);
+      transform: translateY(-2px);
+    }
+
+    /* Live badge on Step 3 */
+    .hiw-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(57, 255, 20, 0.12);
+      border: 1px solid rgba(57, 255, 20, 0.35);
+      color: #39FF14;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+    .hiw-live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #39FF14;
+      box-shadow: 0 0 6px #39FF14;
+      animation: livePulse 1.2s ease-in-out infinite;
+    }
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.75); }
+    }
+
+    /* =================== DASHBOARD PREVIEW =================== */
+    .hiw-preview-section {
+      position: relative;
+      padding: 5rem 1rem 6rem;
+      background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+    }
+
+    .hiw-mockup-wrap {
+      margin-top: 3rem;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .hiw-mockup-wrap.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Browser chrome strip */
+    .hiw-mockup-chrome {
+      background: #1a1a1a;
+      border: 1px solid #2d2d2d;
+      border-radius: 1rem 1rem 0 0;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hiw-chrome-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .hiw-chrome-dot:nth-child(1) { background: #ff5f57; }
+    .hiw-chrome-dot:nth-child(2) { background: #febc2e; }
+    .hiw-chrome-dot:nth-child(3) { background: #28c840; }
+    .hiw-chrome-url {
+      flex: 1;
+      background: #111;
+      border-radius: 0.35rem;
+      height: 1.5rem;
+      margin-left: 0.5rem;
+      display: flex;
+      align-items: center;
+      padding: 0 0.75rem;
+    }
+    .hiw-chrome-url span {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      color: #39FF14;
+      opacity: 0.7;
+    }
+
+    /* Dashboard body */
+    .hiw-mockup-body {
+      background: linear-gradient(135deg, rgba(10, 10, 10, 0.98), rgba(17, 24, 39, 0.98));
+      border: 1px solid #1f2937;
+      border-top: none;
+      border-radius: 0 0 1rem 1rem;
+      padding: 2rem;
+    }
+
+    /* Top row: avatar + project name */
+    .hiw-db-toprow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .hiw-db-avatar {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff0000, #ffff00, #39FF14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .hiw-db-avatar span {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #000;
+    }
+    .hiw-db-meta h4 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+    .hiw-db-meta p {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    /* Status cards row */
+    .hiw-db-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .hiw-db-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid #1f2937;
+      border-radius: 0.75rem;
+      padding: 1rem;
+    }
+    .hiw-db-card-label {
+      font-size: 0.65rem;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.4rem;
+    }
+    .hiw-db-card-value {
+      font-family: 'Silkscreen', monospace;
+      font-size: 1.25rem;
+      color: #39FF14;
+      text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);
+    }
+    .hiw-db-card-value.yellow { color: #ffff00; text-shadow: 0 0 8px rgba(255,255,0,0.4); }
+    .hiw-db-card-value.white  { color: #ffffff; text-shadow: none; }
+
+    /* Progress bar block */
+    .hiw-db-progress-block {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid #1f2937;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .hiw-db-progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .hiw-db-progress-header h5 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .hiw-db-progress-pct {
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.85rem;
+      color: #39FF14;
+      text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);
+    }
+    .hiw-db-bar-bg {
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      height: 10px;
+      overflow: hidden;
+    }
+    .hiw-db-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(to right, #39FF14, #2ee80f);
+      box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+      transition: width 1.4s ease;
+      width: 0; /* JS animates this to target value */
+    }
+
+    /* Milestone checklist */
+    .hiw-db-milestones {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid #1f2937;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+    }
+    .hiw-db-milestones h5 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .hiw-milestone-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.8rem;
+    }
+    .hiw-milestone-row:last-child { border-bottom: none; }
+    .hiw-milestone-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.65rem;
+    }
+    .hiw-milestone-icon.done {
+      background: rgba(57, 255, 20, 0.15);
+      color: #39FF14;
+    }
+    .hiw-milestone-icon.active {
+      background: rgba(255, 255, 0, 0.1);
+      color: #ffff00;
+    }
+    .hiw-milestone-icon.pending {
+      background: rgba(255,255,255,0.06);
+      color: #4b5563;
+    }
+    .hiw-milestone-label { color: #d1d5db; flex: 1; }
+    .hiw-milestone-label.done   { color: #d1d5db; }
+    .hiw-milestone-label.active { color: #fff; font-weight: 600; }
+    .hiw-milestone-label.pending{ color: #4b5563; }
+    .hiw-milestone-status {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .hiw-milestone-status.done    { color: #39FF14; }
+    .hiw-milestone-status.active  { color: #ffff00; }
+    .hiw-milestone-status.pending { color: #374151; }
+
+    /* Mockup caption */
+    .hiw-mockup-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #4b5563;
+      margin-top: 1rem;
+      font-style: italic;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* =================== CTA SECTION =================== */
+    .hiw-cta-section {
+      position: relative;
+      padding: 6rem 1rem;
+      background: linear-gradient(135deg, rgba(57, 255, 20, 0.04), rgba(0, 0, 0, 0.6));
+      text-align: center;
+    }
+    .hiw-cta-container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .hiw-cta-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    .hiw-cta-title.visible {
+      animation: fadeInUp 0.7s ease forwards;
+    }
+    .hiw-cta-desc {
+      font-size: 1.1rem;
+      color: #9ca3af;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    .hiw-cta-desc.visible {
+      animation: fadeInUp 0.7s ease 0.15s forwards;
+    }
+    .hiw-cta-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    .hiw-cta-btns.visible {
+      animation: fadeInUp 0.7s ease 0.3s forwards;
+    }
+
+    /* =================== RESPONSIVE =================== */
+    @media (max-width: 1024px) {
+      .hiw-steps-grid::before { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .hiw-hero { padding: 100px 1rem 50px; min-height: auto; }
+      .hiw-hero-title { font-size: 2.25rem; }
+      .hiw-hero-sub   { font-size: 1rem; }
+      .hiw-steps-section { padding: 4rem 1rem 3rem; }
+      .hiw-section-title { font-size: 2rem; }
+      .hiw-steps-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .hiw-db-cards { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+      .hiw-db-card-value { font-size: 1rem; }
+      .hiw-cta-title { font-size: 2rem; }
+      .hiw-preview-section { padding: 3.5rem 1rem 4rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hiw-hero-title { font-size: 1.7rem; }
+      .hiw-section-title { font-size: 1.65rem; }
+      .hiw-db-cards { grid-template-columns: 1fr; }
+      .hiw-cta-title { font-size: 1.6rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Floating Code Background -->
+<div class="floating-code-container" id="floatingCodeContainer"></div>
+
+<!-- =================== NAVIGATION BAR (exact copy from index.html) =================== -->
+<nav id="navbar">
+  <div class="logo">
+    <img src="assets/images/logo.png" alt="logo" class="logo">
+    <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
+    <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
+  </div>
+  <!-- Hamburger Menu Icon -->
+  <div class="hamburger-menu" onclick="toggleMenu()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+  <ul class="nav-list">
+    <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io#services">Services</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io#reviews">Reviews</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/contact">Contact</a></li>
+  </ul>
+  <!--
+    AUTH BUTTONS — controlled by auth.js
+    • nav-login-btn     → shown when logged OUT  (hidden when logged in)
+    • nav-dashboard-btn → shown when logged IN   (hidden when logged out)
+    • nav-logout-btn    → shown when logged IN   (hidden when logged out)
+    auth.js toggles display automatically — do not remove any of these.
+  -->
+  <div class="auth-buttons" id="auth-buttons">
+    <!-- Logged OUT state -->
+    <a href="login-signup.html" class="dashboard-btn" id="nav-login-btn" style="display:none">
+      Log In
+    </a>
+    <!-- Logged IN state -->
+    <a href="dashboard.html" class="dashboard-btn" id="nav-dashboard-btn" style="display:none">
+      Dashboard
+    </a>
+    <button class="logout-btn" id="nav-logout-btn" style="display:none" onclick="NGCS_Auth.logout()">
+      Log Out
+    </button>
+  </div>
+</nav>
+
+<!-- =================== HERO SECTION =================== -->
+<section class="hiw-hero">
+  <div class="hiw-hero-content">
+    <p class="hiw-eyebrow">Transparent by Design</p>
+    <h1 class="hiw-hero-title">
+      Our Creative <span class="gradient-text">Process</span>
+    </h1>
+    <p class="hiw-hero-sub">
+      From the first conversation to the final file handoff — here's exactly how we turn your ideas into polished, high-impact digital products. No black boxes. No guesswork.
+    </p>
+    <div class="hiw-hero-cta-wrap">
+      <a href="https://nexgenixcreativesolutions.github.io/contact" class="btn-primary">
+        <i class="fas fa-paper-plane" style="margin-right:0.5rem;"></i> Start Your Project
+      </a>
+      <a href="login-signup.html" class="btn-secondary"
+         onclick="if(typeof NGCS_Auth!=='undefined'&&NGCS_Auth.isLoggedIn()){window.location.href='dashboard.html';event.preventDefault();}">
+        <i class="fas fa-lock-open" style="margin-right:0.5rem;"></i> Client Login
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =================== 4-STEP JOURNEY =================== -->
+<section class="hiw-steps-section" id="process">
+  <div class="hiw-container">
+
+    <div class="hiw-section-header">
+      <h2 class="hiw-section-title">The 4-Step <span class="gradient-text">Journey</span></h2>
+      <p class="hiw-section-sub">
+        A structured workflow built for clarity, speed, and results — at every stage you know exactly where your project stands.
+      </p>
+    </div>
+
+    <div class="hiw-steps-grid">
+
+      <!-- STEP 01 — Discovery -->
+      <div class="hiw-step-card">
+        <div class="hiw-step-num"><span>01</span></div>
+        <p class="hiw-step-label">Step One</p>
+        <h3 class="hiw-step-title">Discovery &amp; Consulting</h3>
+        <p class="hiw-step-desc">
+          We kick off with a focused discovery session — a call or a detailed intake brief — to understand your vision, brand identity, target audience, technical constraints, and project goals. This brief becomes our contract with your concept.
+        </p>
+        <ul style="margin-top:1rem; padding-left:1.25rem; color:#9ca3af; font-size:0.85rem; line-height:1.9;">
+          <li>Initial consultation call or form</li>
+          <li>Competitor &amp; audience research</li>
+          <li>Scope, timeline &amp; budget alignment</li>
+        </ul>
+      </div>
+
+      <!-- STEP 02 — Strategy & Design -->
+      <div class="hiw-step-card">
+        <div class="hiw-step-num"><span>02</span></div>
+        <p class="hiw-step-label">Step Two</p>
+        <h3 class="hiw-step-title">Strategy &amp; Design</h3>
+        <p class="hiw-step-desc">
+          Our team translates the brief into tangible creative work — mood boards, wireframes, high-fidelity mockups, and finally production-ready code or assets. Every visual decision is intentional and tied back to your brand goals.
+        </p>
+        <ul style="margin-top:1rem; padding-left:1.25rem; color:#9ca3af; font-size:0.85rem; line-height:1.9;">
+          <li>Mood boards &amp; concept direction</li>
+          <li>Wireframes → high-fidelity mockups</li>
+          <li>Iterative design &amp; development</li>
+        </ul>
+      </div>
+
+      <!-- STEP 03 — Live Tracking (HIGHLIGHTED) -->
+      <div class="hiw-step-card hiw-highlight">
+        <div class="hiw-step-num">
+          <i class="fas fa-satellite-dish"></i>
+        </div>
+        <div class="hiw-live-badge">
+          <span class="hiw-live-dot"></span> Live Feature
+        </div>
+        <p class="hiw-step-label">Step Three</p>
+        <h3 class="hiw-step-title">Live Tracking &amp; Client Dashboard</h3>
+        <p class="hiw-step-desc">
+          Once your project is underway, you get access to your personal <strong style="color:#fff;">Client Dashboard</strong>. Log in at any time to see real-time progress, review deliverables as they're completed, and communicate directly with your assigned team — no more chasing updates by email.
+        </p>
+        <ul style="margin-top:0.75rem; padding-left:1.25rem; color:#9ca3af; font-size:0.85rem; line-height:1.9;">
+          <li>Real-time completion percentage</li>
+          <li>Milestone-by-milestone status view</li>
+          <li>Direct messaging &amp; file sharing</li>
+          <li>Downloadable invoices &amp; quotes</li>
+        </ul>
+        <div class="hiw-step-action">
+          <a href="login-signup.html" class="hiw-login-btn"
+             onclick="if(typeof NGCS_Auth!=='undefined'&&NGCS_Auth.isLoggedIn()){window.location.href='dashboard.html';event.preventDefault();}">
+            <i class="fas fa-sign-in-alt"></i> Client Login — Track Your Project
+          </a>
+        </div>
+      </div>
+
+      <!-- STEP 04 — Delivery & Support -->
+      <div class="hiw-step-card">
+        <div class="hiw-step-num"><span>04</span></div>
+        <p class="hiw-step-label">Step Four</p>
+        <h3 class="hiw-step-title">Delivery &amp; Ongoing Support</h3>
+        <p class="hiw-step-desc">
+          We wrap up with a thorough QA pass, package all source files, and walk you through the handoff documentation. Post-launch, we're available for revisions, maintenance, and strategic support as your business grows.
+        </p>
+        <ul style="margin-top:1rem; padding-left:1.25rem; color:#9ca3af; font-size:0.85rem; line-height:1.9;">
+          <li>Full QA &amp; cross-device testing</li>
+          <li>Source files + handoff documentation</li>
+          <li>Post-launch support &amp; maintenance</li>
+        </ul>
+      </div>
+
+    </div><!-- /.hiw-steps-grid -->
+  </div><!-- /.hiw-container -->
+</section>
+
+<!-- =================== DASHBOARD PREVIEW / MOCKUP =================== -->
+<section class="hiw-preview-section" id="dashboard-preview">
+  <div class="hiw-container">
+
+    <div class="hiw-section-header">
+      <h2 class="hiw-section-title">Your <span class="gradient-text">Dashboard</span> — At a Glance</h2>
+      <p class="hiw-section-sub">
+        A preview of what you'll see after logging in. Your project's live status, milestones, and team updates — all in one place.
+      </p>
+    </div>
+
+    <!-- Browser-chrome mockup wrapper -->
+    <div class="hiw-mockup-wrap" id="dashboardMockup">
+
+      <!-- Fake browser chrome -->
+      <div class="hiw-mockup-chrome">
+        <span class="hiw-chrome-dot"></span>
+        <span class="hiw-chrome-dot"></span>
+        <span class="hiw-chrome-dot"></span>
+        <div class="hiw-chrome-url">
+          <span>nexgenixcreativesolutions.github.io/dashboard</span>
+        </div>
+      </div>
+
+      <!-- Dashboard body -->
+      <div class="hiw-mockup-body">
+
+        <!-- Top row -->
+        <div class="hiw-db-toprow">
+          <div class="hiw-db-avatar"><span>C</span></div>
+          <div class="hiw-db-meta">
+            <h4>Custom Website Design — Branding Package</h4>
+            <p>Project ID #2024-0087 &nbsp;·&nbsp; Started May 3, 2026 &nbsp;·&nbsp; Est. Delivery May 21, 2026</p>
+          </div>
+        </div>
+
+        <!-- Stat cards -->
+        <div class="hiw-db-cards">
+          <div class="hiw-db-card">
+            <p class="hiw-db-card-label">Overall Progress</p>
+            <p class="hiw-db-card-value" id="progressDisplay">0%</p>
+          </div>
+          <div class="hiw-db-card">
+            <p class="hiw-db-card-label">Days Remaining</p>
+            <p class="hiw-db-card-value yellow">10</p>
+          </div>
+          <div class="hiw-db-card">
+            <p class="hiw-db-card-label">Open Revisions</p>
+            <p class="hiw-db-card-value white">2</p>
+          </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="hiw-db-progress-block">
+          <div class="hiw-db-progress-header">
+            <h5>Status: Design &amp; Development Phase</h5>
+            <span class="hiw-db-progress-pct" id="barPct">75%</span>
+          </div>
+          <div class="hiw-db-bar-bg">
+            <div class="hiw-db-bar-fill" id="progressBar"></div>
+          </div>
+        </div>
+
+        <!-- Milestone checklist -->
+        <div class="hiw-db-milestones">
+          <h5>Project Milestones</h5>
+
+          <div class="hiw-milestone-row">
+            <div class="hiw-milestone-icon done"><i class="fas fa-check"></i></div>
+            <span class="hiw-milestone-label done">Discovery &amp; Brief</span>
+            <span class="hiw-milestone-status done">Complete</span>
+          </div>
+          <div class="hiw-milestone-row">
+            <div class="hiw-milestone-icon done"><i class="fas fa-check"></i></div>
+            <span class="hiw-milestone-label done">Mood Board &amp; Wireframes Approved</span>
+            <span class="hiw-milestone-status done">Complete</span>
+          </div>
+          <div class="hiw-milestone-row">
+            <div class="hiw-milestone-icon done"><i class="fas fa-check"></i></div>
+            <span class="hiw-milestone-label done">High-Fidelity Mockups</span>
+            <span class="hiw-milestone-status done">Complete</span>
+          </div>
+          <div class="hiw-milestone-row">
+            <div class="hiw-milestone-icon active"><i class="fas fa-code"></i></div>
+            <span class="hiw-milestone-label active">Development &amp; Responsive Build</span>
+            <span class="hiw-milestone-status active">In Progress</span>
+          </div>
+          <div class="hiw-milestone-row">
+            <div class="hiw-milestone-icon pending"><i class="fas fa-vial"></i></div>
+            <span class="hiw-milestone-label pending">QA &amp; Cross-Device Testing</span>
+            <span class="hiw-milestone-status pending">Pending</span>
+          </div>
+          <div class="hiw-milestone-row">
+            <div class="hiw-milestone-icon pending"><i class="fas fa-box-open"></i></div>
+            <span class="hiw-milestone-label pending">Final Handoff &amp; Asset Delivery</span>
+            <span class="hiw-milestone-status pending">Pending</span>
+          </div>
+
+        </div><!-- /.hiw-db-milestones -->
+      </div><!-- /.hiw-mockup-body -->
+    </div><!-- /.hiw-mockup-wrap -->
+
+    <p class="hiw-mockup-caption">// This is a visual preview — actual dashboard data is live and unique to each client project.</p>
+
+    <!-- Login CTA below mockup -->
+    <div style="text-align:center; margin-top:2.5rem;">
+      <a href="login-signup.html" class="btn-primary"
+         onclick="if(typeof NGCS_Auth!=='undefined'&&NGCS_Auth.isLoggedIn()){window.location.href='dashboard.html';event.preventDefault();}">
+        <i class="fas fa-tachometer-alt" style="margin-right:0.5rem;"></i> Go to My Dashboard
+      </a>
+    </div>
+
+  </div><!-- /.hiw-container -->
+</section>
+
+<!-- =================== FINAL CTA SECTION =================== -->
+<section class="hiw-cta-section">
+  <div class="hiw-cta-container">
+    <h2 class="hiw-cta-title" id="ctaTitle">Ready to <span class="gradient-text">Get Started?</span></h2>
+    <p class="hiw-cta-desc" id="ctaDesc">
+      Tell us about your project — we'll send you a tailored quote and timeline within 24 hours. No commitment required.
+    </p>
+    <div class="hiw-cta-btns" id="ctaBtns">
+      <a href="https://nexgenixcreativesolutions.github.io/contact" class="btn-primary">
+        <i class="fas fa-paper-plane" style="margin-right:0.5rem;"></i> Start Your Project
+      </a>
+      <a href="login-signup.html" class="btn-secondary"
+         onclick="if(typeof NGCS_Auth!=='undefined'&&NGCS_Auth.isLoggedIn()){window.location.href='dashboard.html';event.preventDefault();}">
+        <i class="fas fa-sign-in-alt" style="margin-right:0.5rem;"></i> Client Login
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Social / Contact Buttons (exact copy from index.html) -->
+<div class="contact-buttons">
+  <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
+    <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
+  </a>
+  <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
+    <button class="contact-btn"><i class="fab fa-instagram"></i></button>
+  </a>
+  <a href="https://www.reddit.com/user/nexgenix" target="_blank">
+    <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
+  </a>
+  <a href="mailto:nexgenixcreativesolutions@gmail.com">
+    <button class="contact-btn"><i class="fas fa-envelope"></i></button>
+  </a>
+  <a href="https://wa.me/+639171063504" target="_blank">
+    <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
+  </a>
+</div>
+
+<!-- =================== FOOTER (exact copy from index.html) =================== -->
+<footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
+
+<!-- External JS -->
+<script src="script.js"></script>
+<!-- Auth Guard -->
+<script src="auth.js"></script>
+
+<script>
+  // =================== FLOATING CODE BACKGROUND ===================
+  const codeSnippets = [
+    'const nexgenix = () => {', 'function createSolution() {',
+    'import { Innovation } from "future"', '<div className="digital">',
+    'async function buildDreams() {', 'export default Excellence;',
+    'return <Success />;', 'const vision = await design();',
+    'npm install creativity', 'git commit -m "launch"',
+    'SELECT * FROM solutions;', 'CREATE TABLE success;',
+    '{ transform: "ideas" }', '.future { display: flex; }',
+    'onClick={() => innovate()}', 'useState(creativity);',
+    'useEffect(() => grow());', 'class Digital extends Tech {',
+    'interface Vision { }', 'type Success = Promise<Growth>;'
+  ];
+
+  function createFloatingCodeBackground() {
+    const container = document.getElementById('floatingCodeContainer');
+    for (let i = 0; i < 15; i++) {
+      const codeLine = document.createElement('div');
+      codeLine.className = 'code-line';
+      codeLine.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+      const yPosition = 5 + (i * 6);
+      codeLine.style.top = `${yPosition}%`;
+      codeLine.style.animationDuration = `${15 + Math.random() * 10}s`;
+      codeLine.style.animationDelay = `${Math.random() * 20}s`;
+      container.appendChild(codeLine);
+    }
+  }
+
+  // =================== TOGGLE MOBILE MENU ===================
+  function toggleMenu() {
+    document.querySelector('.nav-list').classList.toggle('active');
+    document.querySelector('.hamburger-menu').classList.toggle('open');
+  }
+
+  // =================== SCROLL ANIMATIONS ===================
+  function initScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+
+    // Step cards
+    document.querySelectorAll('.hiw-step-card').forEach((el, i) => {
+      el.style.animationDelay = `${i * 0.12}s`;
+      observer.observe(el);
+    });
+
+    // Dashboard mockup
+    const mockup = document.getElementById('dashboardMockup');
+    if (mockup) observer.observe(mockup);
+
+    // CTA section elements
+    ['ctaTitle', 'ctaDesc', 'ctaBtns'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  }
+
+  // =================== PROGRESS BAR ANIMATION ===================
+  function initProgressBar() {
+    const bar       = document.getElementById('progressBar');
+    const display   = document.getElementById('progressDisplay');
+    const targetPct = 75;
+
+    if (!bar || !display) return;
+
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Animate fill
+          bar.style.width = `${targetPct}%`;
+
+          // Count-up the percentage number
+          let current = 0;
+          const step = Math.ceil(targetPct / 60);
+          const tick = setInterval(() => {
+            current = Math.min(current + step, targetPct);
+            display.textContent = `${current}%`;
+            if (current >= targetPct) clearInterval(tick);
+          }, 25);
+
+          barObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+
+    barObserver.observe(bar);
+  }
+
+  // =================== INIT ===================
+  document.addEventListener('DOMContentLoaded', function () {
+    createFloatingCodeBackground();
+    initScrollAnimations();
+    initProgressBar();
+  });
+</script>
+
+</body>
+</html>
