@@ -8,6 +8,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    // Defined early so the QR img onerror inline attr can call it before the body script runs
+    function ppQrFallback(){
+      var cells='';
+      var on=[0,1,2,3,4,5,6,7,14,21,28,35,42,43,44,45,46,47,48,8,15,22,9,10,11,12,13,16,23,30,37,38,39,40,41];
+      for(var i=0;i<49;i++){cells+='<span style="background:'+(on.indexOf(i)>=0?'#39FF14':'#111')+'"></span>';}
+      return '<div style="width:68px;height:68px;background:#111;padding:4px;border-radius:3px;display:grid;grid-template-columns:repeat(7,1fr);gap:1px;">'+cells+'</div>';
+    }
+    window.ppQrFallback=ppQrFallback;
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -158,6 +168,549 @@
       .datetime { font-size:0.56rem !important; }
       .guest-badge { display:none !important; } /* at very small size just hide the badge, login is in bottom nav */
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LARGE SCREEN / TV OVERRIDES  (≥ 1400px)
+       Caps content width, locks service grids to sane column counts,
+       and ensures no element overflows or invisibly stretches on
+       wide viewports like Smart TVs (1920px+).
+    ═══════════════════════════════════════════════════════════════ */
+    @media (min-width: 1400px) {
+
+      /* Cap the entire main content area so it never stretches beyond a
+         readable width — centre it with auto margins */
+      .main-content {
+        max-width: 1280px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      /* Content sections get a max-width so inner elements don't sprawl */
+      .content-section {
+        max-width: 1200px !important;
+      }
+
+      /* Service card grids — force a 3-column max so cards stay readable */
+      .service-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 1rem !important;
+      }
+
+      /* Package category headers & content boxes */
+      .package-category { max-width: 100% !important; }
+      .content-box      { max-width: 100% !important; }
+
+      /* Customisation panel */
+      .customization-panel {
+        max-width: 860px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      /* Invoice preview */
+      .invoice-preview {
+        max-width: 820px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      /* Order type selector and filter bar — centre and cap */
+      .order-type-selector,
+      .service-filter-bar,
+      .currency-selector-standalone {
+        max-width: 1100px !important;
+      }
+
+      /* Profile & support boxes */
+      #profile   .content-box,
+      #support   .content-box,
+      #my-orders .content-box {
+        max-width: 860px !important;
+      }
+
+      /* Portal stat strip: keep 4 columns on wide screens */
+      .pp-stat-strip {
+        grid-template-columns: repeat(4, 1fr) !important;
+      }
+
+      /* Portal project cards */
+      .pp-project-card {
+        max-width: 100% !important;
+      }
+
+      /* Portal deliverables: up to 5 columns on very wide screens */
+      .pp-deliverables-grid {
+        grid-template-columns: repeat(5, 1fr) !important;
+      }
+    }
+
+    /* Extra wide (1920px+ / Full HD TVs) */
+    @media (min-width: 1920px) {
+      .main-content {
+        max-width: 1440px !important;
+      }
+      .service-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+      }
+      .pp-deliverables-grid {
+        grid-template-columns: repeat(6, 1fr) !important;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       PROJECT PORTAL — NEW STYLES
+       All classes are prefixed pp- to avoid collisions with existing CSS
+    ═══════════════════════════════════════════════════════════════ */
+
+    /* ── Portal section wrapper ── */
+    #project-portal { animation: ppFadeIn 0.45s ease; }
+    @keyframes ppFadeIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+
+    /* ── Portal top stat strip ── */
+    .pp-stat-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .pp-stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius);
+      padding: 0.875rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: border-color 0.2s;
+    }
+    .pp-stat-card:hover { border-color: var(--border); }
+    .pp-stat-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--neon-dim);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .pp-stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--neon);
+      line-height: 1;
+    }
+    .pp-stat-label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-top: 0.18rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Status pill badges ── */
+    .pp-pill {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .pp-pill::before { content:''; width:6px; height:6px; border-radius:50%; background:currentColor; flex-shrink:0; }
+    .pp-pill-green  { background:rgba(57,255,20,0.1);  color:var(--neon);   border:1px solid rgba(57,255,20,0.3); }
+    .pp-pill-amber  { background:rgba(232,212,77,0.1); color:var(--yellow); border:1px solid rgba(232,212,77,0.3); }
+    .pp-pill-blue   { background:rgba(96,165,250,0.1); color:#60a5fa;       border:1px solid rgba(96,165,250,0.3); }
+    .pp-pill-red    { background:rgba(255,100,100,0.1);color:#ff6464;       border:1px solid rgba(255,100,100,0.3); }
+    .pp-pill-gray   { background:rgba(150,150,150,0.1);color:#999;          border:1px solid rgba(150,150,150,0.3); }
+
+    /* ── Project card ── */
+    .pp-project-card {
+      background: var(--surface);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem 1.5rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .pp-project-card:hover {
+      border-color: rgba(57,255,20,0.3);
+      box-shadow: 0 0 24px rgba(57,255,20,0.05);
+    }
+    .pp-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .pp-card-title-group { flex: 1; min-width: 0; }
+    .pp-project-id {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .pp-project-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.02em;
+      margin-bottom: 0.35rem;
+    }
+    .pp-card-meta {
+      display: flex; gap: 0.875rem; flex-wrap: wrap;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+    .pp-card-meta span { display:flex; align-items:center; gap:0.25rem; }
+
+    /* ── Progress bar ── */
+    .pp-progress-wrap { margin: 0.75rem 0 1rem; }
+    .pp-progress-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.4rem;
+    }
+    .pp-progress-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .pp-progress-pct {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--neon);
+    }
+    .pp-progress-track {
+      height: 6px;
+      background: var(--surface-2);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border-dim);
+    }
+    .pp-progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--neon) 0%, #7fff45 100%);
+      box-shadow: 0 0 8px rgba(57,255,20,0.4);
+      transition: width 1s cubic-bezier(0.4,0,0.2,1);
+      width: 0; /* animated on load via JS */
+    }
+    .pp-progress-fill.amber {
+      background: linear-gradient(90deg, #e8d44d 0%, #f5c842 100%);
+      box-shadow: 0 0 8px rgba(232,212,77,0.4);
+    }
+    .pp-progress-fill.blue {
+      background: linear-gradient(90deg, #60a5fa 0%, #93c5fd 100%);
+      box-shadow: 0 0 8px rgba(96,165,250,0.4);
+    }
+
+    /* ── Milestone stepper ── */
+    .pp-stepper {
+      display: flex;
+      align-items: center;
+      margin: 0.6rem 0 1rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+    }
+    .pp-stepper::-webkit-scrollbar { height: 3px; }
+    .pp-stepper::-webkit-scrollbar-track { background: transparent; }
+    .pp-stepper::-webkit-scrollbar-thumb { background: var(--border-dim); border-radius: 99px; }
+    .pp-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      flex: 1;
+      min-width: 70px;
+      position: relative;
+    }
+    .pp-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 11px;
+      left: calc(50% + 11px);
+      right: calc(-50% + 11px);
+      height: 2px;
+      background: var(--border-dim);
+      z-index: 0;
+    }
+    .pp-step.done:not(:last-child)::after  { background: var(--neon); }
+    .pp-step.active:not(:last-child)::after { background: linear-gradient(90deg, var(--neon) 40%, var(--border-dim) 100%); }
+    .pp-step-dot {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--border-dim);
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      position: relative; z-index: 1;
+      transition: all 0.25s;
+    }
+    .pp-step.done  .pp-step-dot { border-color:var(--neon); background:var(--neon-dim); color:var(--neon); }
+    .pp-step.active .pp-step-dot {
+      border-color: var(--neon);
+      background: var(--neon);
+      color: #000;
+      box-shadow: 0 0 12px rgba(57,255,20,0.5);
+    }
+    .pp-step-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.54rem;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .pp-step.active .pp-step-label { color: var(--neon); font-weight: 700; }
+    .pp-step.done  .pp-step-label  { color: var(--text); }
+
+    /* ── Card bottom actions ── */
+    .pp-card-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+      padding-top: 0.875rem;
+      border-top: 1px solid var(--border-dim);
+    }
+    .pp-action-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.45rem 0.875rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid var(--border-dim);
+      background: var(--surface-2);
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .pp-action-btn:hover { border-color:var(--neon); background:var(--neon-dim); color:var(--neon); }
+    .pp-action-btn.primary { border-color:rgba(57,255,20,0.4); background:rgba(57,255,20,0.08); color:var(--neon); }
+    .pp-action-btn.primary:hover { background:var(--neon); color:#000; }
+    .pp-action-btn svg { width:12px; height:12px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
+
+    /* ── Deliverables section ── */
+    .pp-section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      color: var(--neon);
+      text-transform: uppercase;
+      margin: 1.5rem 0 0.75rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .pp-section-title::after {
+      content:''; flex:1; height:1px; background:var(--border-dim);
+    }
+
+    .pp-deliverables-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+    }
+    .pp-file-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border-dim);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.875rem;
+      display: flex; align-items: center; gap: 0.65rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.22s;
+    }
+    .pp-file-card:hover { border-color:var(--neon); background:var(--neon-dim); }
+    .pp-file-icon {
+      width: 32px; height: 32px;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+      font-weight: 800;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.04em;
+    }
+    .pp-file-icon.pdf  { background:rgba(239,68,68,0.12);  color:#ef4444; border:1px solid rgba(239,68,68,0.25); }
+    .pp-file-icon.png  { background:rgba(96,165,250,0.12); color:#60a5fa; border:1px solid rgba(96,165,250,0.25); }
+    .pp-file-icon.docx { background:rgba(59,130,246,0.12); color:#3b82f6; border:1px solid rgba(59,130,246,0.25); }
+    .pp-file-icon.zip  { background:rgba(232,212,77,0.12); color:var(--yellow); border:1px solid rgba(232,212,77,0.25); }
+    .pp-file-icon.fig  { background:rgba(167,139,250,0.12);color:#a78bfa; border:1px solid rgba(167,139,250,0.25); }
+    .pp-file-name {
+      font-size: 0.72rem;
+      color: var(--text);
+      line-height: 1.3;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .pp-file-size { font-size:0.62rem; color:var(--text-muted); margin-top:0.1rem; }
+    .pp-file-locked { opacity:0.5; cursor:not-allowed; pointer-events:none; }
+    .pp-file-locked .pp-file-name::after { content:' 🔒'; font-size:0.6rem; }
+
+    /* ── Message modal ── */
+    .pp-msg-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      z-index: 900;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .pp-msg-overlay.open { opacity:1; pointer-events:all; }
+    .pp-msg-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 480px;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+    .pp-msg-overlay.open .pp-msg-box { transform: none; }
+    .pp-msg-head {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+    .pp-msg-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--neon);
+      letter-spacing: 0.06em;
+    }
+    .pp-msg-sub { font-size:0.7rem; color:var(--text-muted); margin-top:0.2rem; }
+    .pp-msg-close {
+      background:none; border:none; cursor:pointer;
+      color:var(--text-muted); font-size:1.2rem; line-height:1;
+      padding:0; transition:color 0.2s;
+    }
+    .pp-msg-close:hover { color:var(--text); }
+    .pp-msg-textarea {
+      width:100%; min-height:120px; resize:vertical;
+      background:var(--surface-2); border:1px solid var(--border-dim);
+      border-radius:var(--radius-sm); color:var(--text);
+      font-family:'Montserrat Alternates',sans-serif; font-size:0.82rem;
+      padding:0.75rem; outline:none; transition:border-color 0.2s;
+      margin-bottom:0.75rem;
+    }
+    .pp-msg-textarea:focus { border-color:var(--neon); }
+    .pp-msg-actions { display:flex; gap:0.5rem; justify-content:flex-end; }
+    .pp-msg-send {
+      padding:0.55rem 1.25rem;
+      background:var(--neon); color:#000;
+      border:none; border-radius:var(--radius-sm);
+      font-family:'Orbitron',sans-serif; font-size:0.7rem;
+      font-weight:700; letter-spacing:0.06em;
+      cursor:pointer; transition:all 0.2s;
+    }
+    .pp-msg-send:hover { background:#5aff3a; box-shadow:0 0 14px var(--neon-glow); }
+    .pp-msg-cancel {
+      padding:0.55rem 1rem;
+      background:var(--surface-2); color:var(--text-muted);
+      border:1px solid var(--border-dim); border-radius:var(--radius-sm);
+      font-family:'Orbitron',sans-serif; font-size:0.7rem;
+      cursor:pointer; transition:all 0.2s;
+    }
+    .pp-msg-cancel:hover { border-color:var(--border); color:var(--text); }
+
+    /* ── Certificate card ── */
+    .pp-cert-card {
+      background: linear-gradient(135deg, rgba(57,255,20,0.04) 0%, var(--surface) 60%);
+      border: 1px solid rgba(57,255,20,0.3);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .pp-cert-info { flex: 1; min-width: 160px; }
+    .pp-cert-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.03em;
+      margin-bottom: 0.3rem;
+    }
+    .pp-cert-meta { font-size:0.72rem; color:var(--text-muted); margin-bottom:0.6rem; }
+    .pp-cert-actions { display:flex; gap:0.4rem; flex-wrap:wrap; }
+    .pp-qr-wrap {
+      width: 80px; height: 80px;
+      background: #fff;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 6px;
+      flex-shrink: 0;
+    }
+    .pp-qr-wrap img { width:100%; height:100%; object-fit:contain; }
+    .pp-qr-placeholder {
+      width: 68px; height: 68px;
+      display: grid; grid-template-columns:repeat(5,1fr); gap:2px;
+    }
+    .pp-qr-placeholder span {
+      border-radius:1px;
+      background:#000;
+    }
+    .pp-qr-placeholder span.w { background:#fff; }
+
+    /* ── Empty / guest state for portal ── */
+    .pp-empty {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: var(--surface);
+      border: 1px dashed var(--border-dim);
+      border-radius: var(--radius);
+      color: var(--text-muted);
+    }
+    .pp-empty-icon { font-size:2.5rem; margin-bottom:0.75rem; }
+    .pp-empty h3 {
+      font-family:'Orbitron',sans-serif;
+      font-size:0.88rem; color:var(--text);
+      letter-spacing:0.04em; margin-bottom:0.5rem;
+    }
+    .pp-empty p { font-size:0.8rem; line-height:1.6; max-width:340px; margin:0 auto; }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .pp-stat-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .pp-stat-strip { grid-template-columns: repeat(2, 1fr); gap:0.5rem; }
+      .pp-project-card { padding:1rem; }
+      .pp-stepper { gap:0; }
+      .pp-step-label { font-size:0.48rem; }
+      .pp-deliverables-grid { grid-template-columns:repeat(2, 1fr); }
+      .pp-cert-card { flex-direction:column; gap:1rem; }
+      .pp-qr-wrap { width:64px; height:64px; }
+    }
+    @media (max-width: 400px) {
+      .pp-stat-strip { grid-template-columns: 1fr 1fr; }
+      .pp-deliverables-grid { grid-template-columns:1fr 1fr; }
+    }
   </style>
 </head>
 
@@ -175,6 +728,7 @@
           <li onclick="showSection('order')"   class="sidebar-top-item active">🛒 Order Service</li>
           <li onclick="handleAuthSection('profile')"   class="sidebar-top-item auth-nav-item" id="sidebar-profile-item">👤 View Profile</li>
           <li onclick="handleAuthSection('my-orders')" class="sidebar-top-item auth-nav-item" id="sidebar-orders-item">🛍️ Services Purchased</li>
+          <li onclick="handleAuthSection('project-portal')" class="sidebar-top-item auth-nav-item" id="sidebar-portal-item">📊 Project Portal</li>
           <li onclick="showSection('support')" class="sidebar-top-item">💬 Contact Support</li>
         </ul>
         <div class="sidebar-bottom-actions">
@@ -304,6 +858,321 @@
         </div>
       </div>
 
+      <!-- PROJECT PORTAL -->
+      <div id="project-portal" class="content-section">
+        <h1 class="welcome-title">Client Project Portal</h1>
+
+        <!-- Guest wall -->
+        <div class="guest-wall guest-only-block">
+          <div class="guest-wall-icon">📊</div>
+          <h3>Sign In to Access Your Portal</h3>
+          <p>Track your active projects, download deliverables, and communicate with your project lead — all in one place.</p>
+          <a href="https://nexgenixcreativesolutions.github.io/login-signup" class="guest-wall-btn">🔐 Log In / Sign Up</a>
+        </div>
+
+        <!-- Authenticated portal -->
+        <div class="auth-only-block" id="portalContent" style="display:none;">
+
+          <!-- Stat Strip -->
+          <div class="pp-stat-strip">
+            <div class="pp-stat-card">
+              <div class="pp-stat-icon">📁</div>
+              <div>
+                <div class="pp-stat-value" id="pp-stat-total">2</div>
+                <div class="pp-stat-label">Active Projects</div>
+              </div>
+            </div>
+            <div class="pp-stat-card">
+              <div class="pp-stat-icon">✅</div>
+              <div>
+                <div class="pp-stat-value" id="pp-stat-done">1</div>
+                <div class="pp-stat-label">Completed</div>
+              </div>
+            </div>
+            <div class="pp-stat-card">
+              <div class="pp-stat-icon">📎</div>
+              <div>
+                <div class="pp-stat-value" id="pp-stat-files">4</div>
+                <div class="pp-stat-label">Deliverables Ready</div>
+              </div>
+            </div>
+            <div class="pp-stat-card">
+              <div class="pp-stat-icon">🎓</div>
+              <div>
+                <div class="pp-stat-value" id="pp-stat-certs">1</div>
+                <div class="pp-stat-label">Certificates Earned</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Project Card 1: In Progress ── -->
+          <div class="pp-section-title">Subscribed Projects</div>
+
+          <div class="pp-project-card">
+            <div class="pp-card-top">
+              <div class="pp-card-title-group">
+                <div class="pp-project-id">Project ID: NGCS-2026-014</div>
+                <div class="pp-project-name">Business Website — 5-Page Web Development</div>
+                <div class="pp-card-meta">
+                  <span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    Started: Apr 20, 2026
+                  </span>
+                  <span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Due: May 30, 2026
+                  </span>
+                  <span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Lead: Arriane D.
+                  </span>
+                </div>
+              </div>
+              <span class="pp-pill pp-pill-amber">In Progress</span>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="pp-progress-wrap">
+              <div class="pp-progress-header">
+                <span class="pp-progress-label">Overall Completion</span>
+                <span class="pp-progress-pct">60%</span>
+              </div>
+              <div class="pp-progress-track">
+                <div class="pp-progress-fill amber" data-pct="60" style="width:0"></div>
+              </div>
+            </div>
+
+            <!-- Milestone Stepper -->
+            <div class="pp-stepper">
+              <div class="pp-step done">
+                <div class="pp-step-dot">✓</div>
+                <div class="pp-step-label">Kickoff</div>
+              </div>
+              <div class="pp-step done">
+                <div class="pp-step-dot">✓</div>
+                <div class="pp-step-label">Drafts</div>
+              </div>
+              <div class="pp-step active">
+                <div class="pp-step-dot">3</div>
+                <div class="pp-step-label">Revisions</div>
+              </div>
+              <div class="pp-step">
+                <div class="pp-step-dot">4</div>
+                <div class="pp-step-label">Final Delivery</div>
+              </div>
+            </div>
+
+            <!-- Deliverables -->
+            <div class="pp-section-title" style="margin-top:0.5rem;">Your Deliverables</div>
+            <div class="pp-deliverables-grid">
+              <a href="#" class="pp-file-card" title="Download project brief PDF" onclick="ppDownload(event,'project-brief.pdf')">
+                <div class="pp-file-icon pdf">PDF</div>
+                <div>
+                  <div class="pp-file-name">Project Brief</div>
+                  <div class="pp-file-size">124 KB</div>
+                </div>
+              </a>
+              <a href="#" class="pp-file-card" title="Download wireframe mockup PNG" onclick="ppDownload(event,'wireframe-v2.png')">
+                <div class="pp-file-icon png">PNG</div>
+                <div>
+                  <div class="pp-file-name">Wireframe v2</div>
+                  <div class="pp-file-size">2.4 MB</div>
+                </div>
+              </a>
+              <a href="#" class="pp-file-card pp-file-locked" title="Locked — available after Final Delivery">
+                <div class="pp-file-icon zip">ZIP</div>
+                <div>
+                  <div class="pp-file-name">Source Files</div>
+                  <div class="pp-file-size">Pending</div>
+                </div>
+              </a>
+              <a href="#" class="pp-file-card pp-file-locked" title="Locked — available after Final Delivery">
+                <div class="pp-file-icon docx">DOCX</div>
+                <div>
+                  <div class="pp-file-name">Handover Doc</div>
+                  <div class="pp-file-size">Pending</div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Actions -->
+            <div class="pp-card-actions">
+              <button class="pp-action-btn primary" onclick="ppOpenMessage('NGCS-2026-014','Business Website — 5-Page Web Development')">
+                <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                Contact Project Lead
+              </button>
+              <a href="mailto:info@nexgenixcreativesolutions.com?subject=Re%3A%20Project%20NGCS-2026-014" class="pp-action-btn">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Send Email
+              </a>
+              <button class="pp-action-btn" onclick="ppViewTimeline('NGCS-2026-014')">
+                <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                View Timeline
+              </button>
+            </div>
+          </div>
+
+          <!-- ── Project Card 2: Final Review ── -->
+          <div class="pp-project-card">
+            <div class="pp-card-top">
+              <div class="pp-card-title-group">
+                <div class="pp-project-id">Project ID: NGCS-2026-009</div>
+                <div class="pp-project-name">Logo Design + Brand Identity Pack</div>
+                <div class="pp-card-meta">
+                  <span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    Started: Mar 5, 2026
+                  </span>
+                  <span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Due: May 14, 2026
+                  </span>
+                  <span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Lead: Gioia P.
+                  </span>
+                </div>
+              </div>
+              <span class="pp-pill pp-pill-green">Final Review</span>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="pp-progress-wrap">
+              <div class="pp-progress-header">
+                <span class="pp-progress-label">Overall Completion</span>
+                <span class="pp-progress-pct">90%</span>
+              </div>
+              <div class="pp-progress-track">
+                <div class="pp-progress-fill" data-pct="90" style="width:0"></div>
+              </div>
+            </div>
+
+            <!-- Milestone Stepper -->
+            <div class="pp-stepper">
+              <div class="pp-step done">
+                <div class="pp-step-dot">✓</div>
+                <div class="pp-step-label">Kickoff</div>
+              </div>
+              <div class="pp-step done">
+                <div class="pp-step-dot">✓</div>
+                <div class="pp-step-label">Drafts</div>
+              </div>
+              <div class="pp-step done">
+                <div class="pp-step-dot">✓</div>
+                <div class="pp-step-label">Revisions</div>
+              </div>
+              <div class="pp-step active">
+                <div class="pp-step-dot">4</div>
+                <div class="pp-step-label">Final Delivery</div>
+              </div>
+            </div>
+
+            <!-- Deliverables -->
+            <div class="pp-section-title" style="margin-top:0.5rem;">Your Deliverables</div>
+            <div class="pp-deliverables-grid">
+              <a href="#" class="pp-file-card" onclick="ppDownload(event,'logo-primary.png')">
+                <div class="pp-file-icon png">PNG</div>
+                <div>
+                  <div class="pp-file-name">Logo Primary</div>
+                  <div class="pp-file-size">890 KB</div>
+                </div>
+              </a>
+              <a href="#" class="pp-file-card" onclick="ppDownload(event,'brand-guidelines.pdf')">
+                <div class="pp-file-icon pdf">PDF</div>
+                <div>
+                  <div class="pp-file-name">Brand Guidelines</div>
+                  <div class="pp-file-size">3.2 MB</div>
+                </div>
+              </a>
+              <a href="#" class="pp-file-card" onclick="ppDownload(event,'logo-source.fig')">
+                <div class="pp-file-icon fig">FIG</div>
+                <div>
+                  <div class="pp-file-name">Figma Source</div>
+                  <div class="pp-file-size">5.1 MB</div>
+                </div>
+              </a>
+              <a href="#" class="pp-file-card" onclick="ppDownload(event,'brand-package.zip')">
+                <div class="pp-file-icon zip">ZIP</div>
+                <div>
+                  <div class="pp-file-name">Full Brand Pack</div>
+                  <div class="pp-file-size">12.4 MB</div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Actions -->
+            <div class="pp-card-actions">
+              <button class="pp-action-btn primary" onclick="ppOpenMessage('NGCS-2026-009','Logo Design + Brand Identity Pack')">
+                <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                Contact Project Lead
+              </button>
+              <a href="mailto:info@nexgenixcreativesolutions.com?subject=Re%3A%20Project%20NGCS-2026-009" class="pp-action-btn">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Send Email
+              </a>
+              <button class="pp-action-btn" onclick="ppApprove('NGCS-2026-009')">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                Approve &amp; Close
+              </button>
+            </div>
+          </div>
+
+          <!-- ── Education / Certificate Track ── -->
+          <div class="pp-section-title" id="pp-cert-section-title">Earned Certificates</div>
+          <div id="pp-cert-area">
+            <div class="pp-cert-card">
+              <div class="pp-cert-info">
+                <div class="pp-cert-name">Digital Branding Fundamentals</div>
+                <div class="pp-cert-meta">
+                  NexGenix Business School &nbsp;·&nbsp; Completed Apr 12, 2026 &nbsp;·&nbsp; <span class="pp-pill pp-pill-green" style="font-size:0.52rem;padding:0.15rem 0.5rem;">Verified</span>
+                </div>
+                <div class="pp-cert-actions">
+                  <a href="#" class="pp-action-btn primary" onclick="ppDownloadCert(event,'digital-branding-cert.pdf')">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download PDF
+                  </a>
+                  <button class="pp-action-btn" onclick="ppShareCert('NGBS-CERT-2026-042')">
+                    <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                    Share
+                  </button>
+                </div>
+              </div>
+              <!-- QR code placeholder (replace src with actual QR image) -->
+              <div class="pp-qr-wrap" title="Certificate ID: NGBS-CERT-2026-042">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=68x68&data=NGBS-CERT-2026-042&bgcolor=ffffff&color=000000" alt="QR Code" onerror="this.parentNode.innerHTML=ppQrFallback()" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty state if no certs (hidden by default) -->
+          <div id="pp-no-certs" style="display:none;" class="pp-empty">
+            <div class="pp-empty-icon">🎓</div>
+            <h3>No Certificates Yet</h3>
+            <p>Complete an NGBS course to earn a verifiable certificate.</p>
+          </div>
+
+        </div><!-- /auth-only-block -->
+
+        <!-- Quick Message Modal -->
+        <div class="pp-msg-overlay" id="ppMsgOverlay">
+          <div class="pp-msg-box">
+            <div class="pp-msg-head">
+              <div>
+                <div class="pp-msg-title">📩 Message Project Lead</div>
+                <div class="pp-msg-sub" id="ppMsgProjectLabel">Project: —</div>
+              </div>
+              <button class="pp-msg-close" onclick="ppCloseMessage()">✕</button>
+            </div>
+            <textarea class="pp-msg-textarea" id="ppMsgText" placeholder="Type your message, question, or revision request here…"></textarea>
+            <div class="pp-msg-actions">
+              <button class="pp-msg-cancel" onclick="ppCloseMessage()">Cancel</button>
+              <button class="pp-msg-send" onclick="ppSendMessage()">Send Message ›</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /#project-portal -->
+
       <!-- MY ORDERS -->
       <div id="my-orders" class="content-section">
         <h1 class="welcome-title">Services Purchased</h1>
@@ -333,6 +1202,7 @@
     <a class="bottom-nav-item" href="https://nexgenixcreativesolutions.github.io" title="Home" style="text-decoration:none;"><svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></a>
     <button class="bottom-nav-item active" onclick="showSection('order');setBottomActive(this)" title="Services"><svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span>Services</span></button>
     <button class="bottom-nav-item" onclick="handleAuthSection('my-orders');setBottomActive(this)" title="My Orders"><svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span>Orders</span></button>
+    <button class="bottom-nav-item auth-nav-item" onclick="handleAuthSection('project-portal');setBottomActive(this)" title="Project Portal"><svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h2v5H7zM11 6h2v7h-2zM15 10h2v3h-2z"/></svg><span>Portal</span></button>
     <button class="bottom-nav-item" onclick="handleAuthSection('profile');setBottomActive(this)" title="Profile"><svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></button>
     <button class="bottom-nav-item logout-item" id="bottomLogoutBtn" onclick="logout()" title="Logout" style="display:none;"><svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>Logout</span></button>
     <a class="bottom-nav-item login-item" id="bottomLoginBtn" href="https://nexgenixcreativesolutions.github.io/login-signup" title="Login" style="text-decoration:none;"><svg class="bottom-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg><span>Login</span></a>
@@ -340,12 +1210,109 @@
 
   <script src="dashboard-script.js"></script>
   <script>
+    // Safety shim: setBottomActive is defined in dashboard-script.js.
+    // This no-op fallback prevents ReferenceErrors if the external script
+    // hasn't run yet or fails to load. The real function will override this.
+    if(typeof setBottomActive==='undefined'){
+      window.setBottomActive=function(el){
+        document.querySelectorAll('.bottom-nav-item').forEach(function(b){b.classList.remove('active');});
+        if(el) el.classList.add('active');
+      };
+    }
     function toggleMultiDrop(id,el){document.querySelectorAll('.multi-select-dropdown.open').forEach(d=>{if(d.id!==id){d.classList.remove('open');d.previousElementSibling?.classList.remove('open');}});const d=document.getElementById(id),disp=el||d.previousElementSibling;d.classList.toggle('open');disp.classList.toggle('open');}
     function updateMultiSelect(textId,group,cb){const d=cb.closest('.multi-select-dropdown'),checked=Array.from(d.querySelectorAll('input:checked')).map(i=>i.value);if(typeof bizSelections!=='undefined')bizSelections[group]=checked;const t=document.getElementById(textId);if(t){t.textContent=checked.length?checked.join(', '):('Select '+group+'…');t.classList.toggle('has-value',checked.length>0);}if(typeof updateInvoice==='function')updateInvoice();}
     document.addEventListener('click',e=>{if(!e.target.closest('.multi-select-wrap'))document.querySelectorAll('.multi-select-dropdown.open').forEach(d=>{d.classList.remove('open');if(d.previousElementSibling)d.previousElementSibling.classList.remove('open');});});
-    function setSidebarActive(id){document.querySelectorAll('.sidebar-top-item').forEach(l=>l.classList.remove('active'));const map={'order':0,'profile':1,'my-orders':2,'support':3},items=document.querySelectorAll('.sidebar-top-item');if(map[id]!==undefined&&items[map[id]])items[map[id]].classList.add('active');}
-    const _orig=window.showSection;window.showSection=function(id){if(typeof _orig==='function')_orig(id);setSidebarActive(id);};
+    function setSidebarActive(id){document.querySelectorAll('.sidebar-top-item').forEach(l=>l.classList.remove('active'));const map={'order':0,'profile':1,'my-orders':2,'project-portal':3,'support':4},items=document.querySelectorAll('.sidebar-top-item');if(map[id]!==undefined&&items[map[id]])items[map[id]].classList.add('active');}
+    const _orig=window.showSection;window.showSection=function(id){if(typeof _orig==='function')_orig(id);setSidebarActive(id);if(id==='project-portal')ppInitAnimations();};
     function handleAuthSection(id){showSection(id);}
+
+    /* ─── Project Portal helpers ─────────────────────────────── */
+    var _ppMsgProject='';
+
+    function ppInitAnimations(){
+      // Animate progress bars on first reveal
+      setTimeout(function(){
+        document.querySelectorAll('.pp-progress-fill[data-pct]').forEach(function(bar){
+          bar.style.width = bar.getAttribute('data-pct') + '%';
+        });
+      }, 120);
+    }
+
+    function ppDownload(e, filename){
+      e.preventDefault();
+      // Replace with real file URL from your storage when integrating
+      var toast = document.createElement('div');
+      toast.textContent = '⬇ Downloading: ' + filename;
+      toast.style.cssText = 'position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%);background:var(--neon);color:#000;font-family:Orbitron,sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;padding:0.6rem 1.2rem;border-radius:8px;z-index:9999;box-shadow:0 4px 20px rgba(57,255,20,0.4);white-space:nowrap;';
+      document.body.appendChild(toast);
+      setTimeout(function(){toast.remove();}, 2400);
+    }
+
+    function ppDownloadCert(e, filename){ ppDownload(e, filename); }
+
+    function ppShareCert(certId){
+      var url = 'https://nexgenixcreativesolutions.github.io/verify?id=' + certId;
+      if(navigator.share){
+        navigator.share({title:'My NGBS Certificate', text:'Certificate ID: '+certId, url:url});
+      } else if(navigator.clipboard){
+        navigator.clipboard.writeText(url).then(function(){
+          alert('Verification URL copied to clipboard:\n' + url);
+        });
+      } else {
+        prompt('Copy your certificate verification URL:', url);
+      }
+    }
+
+    function ppOpenMessage(projectId, projectName){
+      _ppMsgProject = projectId;
+      var overlay = document.getElementById('ppMsgOverlay');
+      var label = document.getElementById('ppMsgProjectLabel');
+      var textarea = document.getElementById('ppMsgText');
+      if(label) label.textContent = 'Project: ' + projectName + ' [' + projectId + ']';
+      if(textarea) textarea.value = '';
+      if(overlay){ overlay.classList.add('open'); textarea && textarea.focus(); }
+    }
+
+    function ppCloseMessage(){
+      var overlay = document.getElementById('ppMsgOverlay');
+      if(overlay) overlay.classList.remove('open');
+    }
+
+    function ppSendMessage(){
+      var textarea = document.getElementById('ppMsgText');
+      var msg = textarea ? textarea.value.trim() : '';
+      if(!msg){ textarea && textarea.focus(); return; }
+      var subject = encodeURIComponent('Re: Project ' + _ppMsgProject);
+      var body = encodeURIComponent(msg + '\n\n— Sent via NGCS Client Portal\nProject ID: ' + _ppMsgProject);
+      window.location.href = 'mailto:info@nexgenixcreativesolutions.com?subject=' + subject + '&body=' + body;
+      ppCloseMessage();
+    }
+
+    function ppViewTimeline(projectId){
+      alert('Timeline view for ' + projectId + ':\n\nApr 20 – Kickoff call completed\nApr 28 – Initial draft delivered\nMay 5  – Revision round 1\nMay 9  – Revision round 2\nMay 30 – Final delivery (estimated)');
+    }
+
+    function ppApprove(projectId){
+      if(confirm('Mark project ' + projectId + ' as approved and closed?\nThis will notify your project lead.')){
+        var cards = document.querySelectorAll('.pp-project-card');
+        cards.forEach(function(c){
+          if(c.querySelector('.pp-project-id') && c.querySelector('.pp-project-id').textContent.indexOf(projectId)>=0){
+            var pill = c.querySelector('.pp-pill');
+            if(pill){ pill.className='pp-pill pp-pill-gray'; pill.textContent=''; pill.textContent='Completed'; }
+          }
+        });
+      }
+    }
+
+    // Close message modal on overlay click
+    document.getElementById('ppMsgOverlay') && document.getElementById('ppMsgOverlay').addEventListener('click',function(e){
+      if(e.target===this) ppCloseMessage();
+    });
+
+    window.ppDownload=ppDownload;window.ppDownloadCert=ppDownloadCert;window.ppShareCert=ppShareCert;
+    window.ppOpenMessage=ppOpenMessage;window.ppCloseMessage=ppCloseMessage;window.ppSendMessage=ppSendMessage;
+    window.ppViewTimeline=ppViewTimeline;window.ppApprove=ppApprove;window.ppQrFallback=ppQrFallback;
+    window.ppInitAnimations=ppInitAnimations;
     function setOrdersFilter(f){document.querySelectorAll('.orders-tab').forEach(t=>t.classList.remove('active'));const t=document.getElementById('otab-'+f);if(t)t.classList.add('active');}
     function handleAvatarUpload(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{const img=document.getElementById('avatarImg'),init=document.getElementById('avatarInitials');img.src=ev.target.result;img.style.display='block';init.style.display='none';localStorage.setItem('ngcs_avatar',ev.target.result);};r.readAsDataURL(f);}
     (function(){const s=localStorage.getItem('ngcs_avatar');if(s){const img=document.getElementById('avatarImg'),init=document.getElementById('avatarInitials');if(img){img.src=s;img.style.display='block';}if(init)init.style.display='none';}})();
