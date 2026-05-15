@@ -3,21 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEX GENIX Creative Solutions | Business School</title>
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+    <title>Products & Services | NexGenix Creative Solutions</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Silkscreen:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="responsive.css" />
+
     <style>
-      /* =================== GLOBAL RESET & BASE =================== */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+      /* =================== PAGE-LEVEL OVERRIDES =================== */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
 
       html, body {
         max-width: 100%;
@@ -26,1274 +23,887 @@
       }
 
       body {
-        font-family: 'Montserrat Alternates', sans-serif;
+        font-family: 'Roboto', sans-serif;
         background-color: #000;
         color: white;
         position: relative;
         min-height: 100vh;
-      }
-
-      /* =================== FLOATING CODE BACKGROUND =================== */
-      .floating-code-container {
-        position: fixed;
-        inset: 0;
-        overflow: hidden;
-        pointer-events: none;
-        z-index: 0;
-      }
-
-      .code-line {
-        position: absolute;
-        white-space: nowrap;
-        font-family: 'Courier New', monospace;
-        font-size: 14px;
-        color: rgba(57, 255, 20, 0.4);
-        text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
-        animation: floatCode linear infinite;
-        opacity: 0;
-      }
-
-      @keyframes floatCode {
-        0% {
-          transform: translateX(100vw);
-          opacity: 0;
-        }
-        10% {
-          opacity: 1;
-        }
-        90% {
-          opacity: 1;
-        }
-        100% {
-          transform: translateX(-100%);
-          opacity: 0;
-        }
-      }
-
-      /* =================== NAVBAR =================== */
-      #navbar {
-        position: fixed;
-        top: 0;
-        left: 0;
+        padding: 0;
         width: 100%;
-        height: 50px;
-        padding: 5px 20px;
-        background-color: #121212;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        z-index: 1000;
+        max-width: 100%;
+        text-align: left;
       }
 
-      #navbar .logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
+      /* ── Floating Code BG ── */
+      .floating-code-container {
+        position: fixed; inset: 0;
+        overflow: hidden; pointer-events: none; z-index: 0;
+      }
+      .code-line {
+        position: absolute; white-space: nowrap;
+        font-family: 'Courier New', monospace; font-size: 13px;
+        color: rgba(57,255,20,0.35); text-shadow: 0 0 8px rgba(57,255,20,0.25);
+        animation: floatCode linear infinite; opacity: 0;
+      }
+      @keyframes floatCode {
+        0%   { transform: translateX(100vw); opacity: 0; }
+        10%  { opacity: 1; }
+        90%  { opacity: 1; }
+        100% { transform: translateX(-100%); opacity: 0; }
       }
 
-      #navbar .logo img {
-        height: 30px;
-        width: 30px;
-        border-radius: 8px;
-        object-fit: cover;
+      /* ── Scanline overlay ── */
+      body::before {
+        content: '';
+        position: fixed; inset: 0; pointer-events: none; z-index: 1;
+        background-image: repeating-linear-gradient(
+          0deg, transparent, transparent 3px,
+          rgba(57,255,20,0.012) 3px, rgba(57,255,20,0.012) 4px
+        );
       }
 
-      #navbar .logo a {
-        color: #39FF14;
-        text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
-        font-size: 14px;
-        font-weight: bold;
-        text-decoration: none;
-        font-family: 'Courier New', monospace;
-      }
+      /* ── Main content wrapper ── */
+      .page-wrapper { position: relative; z-index: 2; }
 
-      .short-title {
-        display: none;
-      }
-
-      #navbar .nav-list {
-        list-style: none;
-        display: flex;
-        gap: 10px;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-
-      #navbar .nav-list li {
-        display: inline-block;
-      }
-
-      #navbar .nav-list a {
-        text-decoration: none;
-        color: white;
-        font-size: 12px;
-        padding: 8px 10px;
-        transition: color 0.3s ease;
-      }
-
-      #navbar .nav-list a:hover {
-        color: #39FF14;
-      }
-
-      .hamburger-menu {
-        display: none;
-      }
-
-
-
-      /* =================== HERO SECTION =================== */
+      /* =================== HERO =================== */
       .hero-section {
         position: relative;
-        min-height: 70vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 100px 20px 60px;
-        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
-        overflow: hidden;
+        min-height: 75vh;
+        display: flex; align-items: center; justify-content: center;
+        padding: 120px 20px 80px;
+        background: linear-gradient(135deg, #000000 0%, #0a1a00 50%, #000000 100%);
+        overflow: hidden; text-align: center;
       }
-
-      .hero-content {
-        max-width: 1200px;
-        text-align: center;
-        position: relative;
-        z-index: 1;
+      .hero-section::after {
+        content: '';
+        position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(57,255,20,0.07) 0%, transparent 70%);
       }
+      .hero-content { max-width: 900px; position: relative; z-index: 1; }
 
       .hero-eyebrow {
         font-family: 'Orbitron', sans-serif;
-        font-size: 0.9rem;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        color: #39FF14;
-        margin-bottom: 1.5rem;
-        opacity: 0;
-        animation: fadeInUp 0.8s ease forwards;
+        font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase;
+        color: #39FF14; margin-bottom: 1.5rem;
+        opacity: 0; animation: fadeInUp 0.8s ease 0.1s forwards;
       }
-
       .hero-title {
         font-family: 'Orbitron', sans-serif;
-        font-size: 3.5rem;
-        font-weight: 800;
-        line-height: 1.2;
-        margin-bottom: 1.5rem;
-        opacity: 0;
-        animation: fadeInUp 0.8s ease 0.2s forwards;
+        font-size: clamp(2rem, 5vw, 3.8rem); font-weight: 800;
+        line-height: 1.15; margin-bottom: 1.5rem;
+        opacity: 0; animation: fadeInUp 0.8s ease 0.25s forwards;
       }
-
       .gradient-text {
-        background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        background: linear-gradient(90deg, #ff4500, #ffcc00, #39FF14);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         background-clip: text;
       }
-
       .hero-subtitle {
-        font-size: 1.2rem;
-        color: #9ca3af;
-        max-width: 700px;
-        margin: 0 auto 2.5rem;
-        line-height: 1.7;
-        opacity: 0;
-        animation: fadeInUp 0.8s ease 0.4s forwards;
+        font-size: 1.1rem; color: #9ca3af;
+        max-width: 680px; margin: 0 auto 2.5rem;
+        line-height: 1.8;
+        opacity: 0; animation: fadeInUp 0.8s ease 0.4s forwards;
       }
-
       .hero-cta {
-        display: flex;
-        gap: 1.5rem;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        opacity: 0;
-        animation: fadeInUp 0.8s ease 0.6s forwards;
+        display: flex; gap: 1.25rem; justify-content: center;
+        align-items: center; flex-wrap: wrap;
+        opacity: 0; animation: fadeInUp 0.8s ease 0.55s forwards;
       }
 
+      /* Shared buttons */
       .btn-primary {
-        padding: 1rem 2.5rem;
-        background: #39FF14;
-        color: #000;
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 1rem;
-        border-radius: 0.5rem;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-family: 'Montserrat Alternates', sans-serif;
-        box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        padding: 0.9rem 2.2rem; background: #39FF14; color: #000;
+        text-decoration: none; font-weight: 700; font-size: 0.95rem;
+        border-radius: 0.5rem; border: none; cursor: pointer;
+        transition: all 0.3s ease; font-family: 'Montserrat Alternates', sans-serif;
+        box-shadow: 0 0 20px rgba(57,255,20,0.45); text-transform: uppercase;
+        letter-spacing: 0.5px; display: inline-block;
       }
-
       .btn-primary:hover {
-        background: #2ee80f;
-        transform: translateY(-2px);
-        box-shadow: 0 0 30px rgba(57, 255, 20, 0.8), 0 5px 20px rgba(57, 255, 20, 0.4);
+        background: #2ee80f; transform: translateY(-2px);
+        box-shadow: 0 0 32px rgba(57,255,20,0.8), 0 5px 20px rgba(57,255,20,0.4);
       }
-
       .btn-secondary {
-        padding: 1rem 2.5rem;
-        background: transparent;
-        color: #fff;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 1rem;
-        border-radius: 0.5rem;
-        border: 2px solid #fff;
-        cursor: pointer;
-        transition: all 0.3s ease;
+        padding: 0.9rem 2.2rem; background: transparent; color: #fff;
+        text-decoration: none; font-weight: 600; font-size: 0.95rem;
+        border-radius: 0.5rem; border: 2px solid rgba(255,255,255,0.5);
+        cursor: pointer; transition: all 0.3s ease;
         font-family: 'Montserrat Alternates', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        text-transform: uppercase; letter-spacing: 0.5px; display: inline-block;
       }
-
       .btn-secondary:hover {
-        background: #fff;
-        color: #000;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+        background: #fff; color: #000; transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(255,255,255,0.25);
       }
 
       @keyframes fadeInUp {
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        from {
-          transform: translateY(30px);
-        }
+        from { opacity: 0; transform: translateY(28px); }
+        to   { opacity: 1; transform: translateY(0); }
       }
 
-      /* =================== CATEGORIES SECTION =================== */
-      .categories-section {
-        position: relative;
-        padding: 6rem 1rem;
-        background: transparent;
+      /* =================== SECTION COMMONS =================== */
+      section { padding: 6rem 1.5rem; }
+      .section-inner { max-width: 1200px; margin: 0 auto; }
+      .section-header { text-align: center; margin-bottom: 4rem; }
+      .section-header p.section-eyebrow {
+        font-family: 'Orbitron', sans-serif; font-size: 0.75rem;
+        letter-spacing: 4px; text-transform: uppercase; color: #39FF14;
+        margin-bottom: 0.75rem;
       }
-
-      .categories-container {
-        max-width: 1280px;
-        margin: 0 auto;
-      }
-
-      .section-header {
-        text-align: center;
-        margin-bottom: 4rem;
-        opacity: 0;
-        animation: fadeInUp 0.8s ease forwards;
-      }
-
       .section-title {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: white;
-        margin-bottom: 1rem;
+        font-family: 'Orbitron', sans-serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+        font-weight: 800; color: white; margin-bottom: 1rem;
       }
-
       .section-subtitle {
-        color: #9ca3af;
-        font-size: 1.1rem;
-        max-width: 700px;
-        margin: 0 auto;
+        color: #9ca3af; font-size: 1rem;
+        max-width: 600px; margin: 0 auto; line-height: 1.7;
       }
 
+      /* ── Green divider ── */
+      .neon-divider {
+        width: 60px; height: 3px; background: #39FF14;
+        box-shadow: 0 0 12px #39FF14; margin: 1rem auto 0;
+        border-radius: 2px;
+      }
+
+      /* =================== CATEGORIES =================== */
+      .categories-section { background: transparent; }
       .categories-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2rem;
-        margin-bottom: 4rem;
       }
-
       .category-card {
-        position: relative;
-        background: linear-gradient(135deg, rgba(17, 24, 39, 0.6), rgba(0, 0, 0, 0.8));
-        border: 1px solid #1f2937;
-        border-radius: 1rem;
-        padding: 2.5rem;
-        transition: all 0.4s ease;
+        background: linear-gradient(135deg, rgba(17,24,39,0.65), rgba(0,0,0,0.85));
+        border: 1px solid #1f2937; border-radius: 1rem;
+        padding: 2.5rem 2rem; transition: all 0.4s ease;
         backdrop-filter: blur(10px);
-        opacity: 0;
-        transform: translateY(50px);
+        opacity: 0; transform: translateY(40px);
       }
-
-      .category-card.visible {
-        animation: fadeInUp 0.6s ease forwards;
-      }
-
+      .category-card.visible { animation: fadeInUp 0.6s ease forwards; }
       .category-card:hover {
-        transform: translateY(-10px);
         border-color: #39FF14;
-        box-shadow: 0 15px 50px rgba(57, 255, 20, 0.2);
+        box-shadow: 0 15px 50px rgba(57,255,20,0.18);
+        transform: translateY(-8px);
       }
-
       .category-icon {
-        width: 4rem;
-        height: 4rem;
-        background: rgba(57, 255, 20, 0.1);
-        border-radius: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1.5rem;
-        transition: all 0.3s ease;
+        width: 4rem; height: 4rem;
+        background: rgba(57,255,20,0.1); border-radius: 1rem;
+        display: flex; align-items: center; justify-content: center;
+        margin-bottom: 1.5rem; transition: all 0.3s ease;
       }
-
       .category-card:hover .category-icon {
-        background: rgba(57, 255, 20, 0.2);
-        transform: scale(1.1);
+        background: rgba(57,255,20,0.22); transform: scale(1.1);
       }
-
-      .category-icon i {
-        font-size: 2rem;
-        color: #39FF14;
-      }
-
+      .category-icon i { font-size: 1.8rem; color: #39FF14; }
       .category-title {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: white;
-        margin-bottom: 1rem;
+        font-family: 'Orbitron', sans-serif; font-size: 1.2rem;
+        font-weight: 700; color: white; margin-bottom: 0.75rem;
       }
-
       .category-description {
-        color: #9ca3af;
-        line-height: 1.7;
-        margin-bottom: 1.5rem;
+        color: #9ca3af; line-height: 1.7; margin-bottom: 1.5rem;
+        font-size: 0.92rem;
       }
-
       .category-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #39FF14;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        color: #39FF14; text-decoration: none; font-weight: 600;
+        font-size: 0.9rem; transition: gap 0.3s ease;
       }
+      .category-link:hover { gap: 1rem; }
+      .category-link i { transition: transform 0.3s ease; }
+      .category-link:hover i { transform: translateX(5px); }
 
-      .category-link:hover {
-        gap: 1rem;
-      }
-
-      .category-link i {
-        transition: transform 0.3s ease;
-      }
-
-      .category-link:hover i {
-        transform: translateX(5px);
-      }
-
-      /* =================== PRODUCTS SECTION =================== */
+      /* =================== PRODUCTS GRID =================== */
       .products-section {
-        position: relative;
-        padding: 6rem 1rem;
-        background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
+        background: linear-gradient(180deg, #000 0%, #060606 100%);
       }
-
-      .products-container {
-        max-width: 1280px;
-        margin: 0 auto;
-      }
-
       .products-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 2.5rem;
-      }
-
-      .product-card {
-        position: relative;
-        background: linear-gradient(135deg, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.7));
-        border: 1px solid #1f2937;
-        border-radius: 1rem;
-        overflow: hidden;
-        transition: all 0.4s ease;
-        opacity: 0;
-        transform: translateY(50px);
-      }
-
-      .product-card.visible {
-        animation: fadeInUp 0.6s ease forwards;
-      }
-
-      .product-card:hover {
-        transform: translateY(-10px);
-        border-color: #39FF14;
-        box-shadow: 0 20px 60px rgba(57, 255, 20, 0.15);
-      }
-
-      .product-image {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-bottom: 1px solid #1f2937;
-      }
-
-      .product-image i {
-        font-size: 4rem;
-        color: #39FF14;
-        opacity: 0.3;
-      }
-
-      .product-content {
-        padding: 2rem;
-      }
-
-      .product-category {
-        font-size: 0.75rem;
-        color: #39FF14;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 0.5rem;
-        font-weight: 600;
-      }
-
-      .product-title {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: white;
-        margin-bottom: 0.75rem;
-      }
-
-      .product-description {
-        color: #9ca3af;
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-        font-size: 0.9rem;
-      }
-
-      .product-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-top: 1px solid #1f2937;
-        padding-top: 1.5rem;
-      }
-
-      .product-price {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #39FF14;
-      }
-
-      .product-price.free {
-        color: #ffff00;
-      }
-
-      .btn-product {
-        padding: 0.75rem 1.5rem;
-        background: transparent;
-        color: #39FF14;
-        border: 1px solid #39FF14;
-        border-radius: 0.5rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        font-size: 0.9rem;
-      }
-
-      .btn-product:hover {
-        background: #39FF14;
-        color: #000;
-        transform: scale(1.05);
-      }
-
-      /* =================== FEATURES SECTION =================== */
-      .features-section {
-        position: relative;
-        padding: 6rem 1rem;
-        background: transparent;
-      }
-
-      .features-container {
-        max-width: 1280px;
-        margin: 0 auto;
-      }
-
-      .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
         gap: 2rem;
       }
+      .product-card {
+        background: linear-gradient(135deg, rgba(17,24,39,0.55), rgba(0,0,0,0.75));
+        border: 1px solid #1f2937; border-radius: 1rem;
+        overflow: hidden; transition: all 0.4s ease;
+        opacity: 0; transform: translateY(40px);
+        display: flex; flex-direction: column;
+      }
+      .product-card.visible { animation: fadeInUp 0.6s ease forwards; }
+      .product-card:hover {
+        border-color: #39FF14;
+        box-shadow: 0 20px 60px rgba(57,255,20,0.15);
+        transform: translateY(-8px);
+      }
+      .product-image {
+        width: 100%; height: 160px;
+        background: linear-gradient(135deg, #0a1a00, #0a0a0a);
+        display: flex; align-items: center; justify-content: center;
+        border-bottom: 1px solid #1f2937;
+      }
+      .product-image i { font-size: 3.5rem; color: #39FF14; opacity: 0.28; }
+      .product-content { padding: 1.75rem; flex: 1; display: flex; flex-direction: column; }
+      .product-category {
+        font-size: 0.72rem; color: #39FF14; text-transform: uppercase;
+        letter-spacing: 1.5px; margin-bottom: 0.5rem; font-weight: 600;
+      }
+      .product-title {
+        font-family: 'Orbitron', sans-serif; font-size: 1.1rem;
+        font-weight: 700; color: white; margin-bottom: 0.75rem;
+      }
+      .product-description {
+        color: #9ca3af; line-height: 1.6; margin-bottom: 1.5rem;
+        font-size: 0.88rem; flex: 1; text-align: left;
+      }
+      .product-footer {
+        display: flex; align-items: center; justify-content: space-between;
+        border-top: 1px solid #1f2937; padding-top: 1.25rem;
+      }
+      .product-price {
+        font-family: 'Orbitron', sans-serif; font-size: 1.3rem;
+        font-weight: 700; color: #39FF14;
+      }
+      .product-price.free { color: #facc15; }
+      .btn-product {
+        padding: 0.6rem 1.25rem; background: transparent;
+        color: #39FF14; border: 1px solid #39FF14; border-radius: 0.45rem;
+        font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+        text-decoration: none; font-size: 0.85rem;
+      }
+      .btn-product:hover { background: #39FF14; color: #000; transform: scale(1.05); }
 
+      /* =================== CASE STUDIES (was "Our Portfolio") =================== */
+      .casestudies-section { background: transparent; }
+      .casestudies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+      .cs-card {
+        position: relative; border-radius: 1rem; overflow: hidden;
+        border: 1px solid #1f2937;
+        background: linear-gradient(135deg, rgba(17,24,39,0.7), rgba(0,0,0,0.9));
+        transition: all 0.4s ease; cursor: pointer;
+        opacity: 0; transform: translateY(40px);
+      }
+      .cs-card.visible { animation: fadeInUp 0.6s ease forwards; }
+      .cs-card:hover { border-color: #39FF14; box-shadow: 0 16px 50px rgba(57,255,20,0.18); transform: translateY(-8px); }
+      .cs-card-image {
+        width: 100%; height: 200px;
+        background: linear-gradient(135deg, #0a1a00, #1a0a00);
+        display: flex; align-items: center; justify-content: center;
+        border-bottom: 1px solid #1f2937; position: relative; overflow: hidden;
+      }
+      .cs-card-image i { font-size: 4rem; color: #39FF14; opacity: 0.22; }
+      .cs-label {
+        position: absolute; top: 1rem; left: 1rem;
+        background: rgba(57,255,20,0.12); border: 1px solid rgba(57,255,20,0.35);
+        color: #39FF14; font-size: 0.7rem; padding: 0.3rem 0.7rem;
+        border-radius: 2rem; font-weight: 600; text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .cs-card-content { padding: 1.75rem; }
+      .cs-client {
+        font-size: 0.72rem; color: #9ca3af; text-transform: uppercase;
+        letter-spacing: 1.5px; margin-bottom: 0.5rem;
+      }
+      .cs-title {
+        font-family: 'Orbitron', sans-serif; font-size: 1.05rem;
+        font-weight: 700; color: white; margin-bottom: 0.75rem;
+      }
+      .cs-description {
+        color: #9ca3af; font-size: 0.88rem; line-height: 1.6;
+        margin-bottom: 1.25rem; text-align: left;
+      }
+      .cs-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+      .cs-tag {
+        font-size: 0.72rem; background: rgba(57,255,20,0.08);
+        border: 1px solid rgba(57,255,20,0.22); color: #39FF14;
+        padding: 0.25rem 0.65rem; border-radius: 2rem; font-weight: 500;
+      }
+
+      /* =================== FEATURES =================== */
+      .features-section { background: linear-gradient(180deg, #000 0%, #060606 100%); }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 2rem;
+      }
       .feature-item {
-        text-align: center;
-        padding: 2rem;
-        opacity: 0;
-        transform: translateY(30px);
+        text-align: center; padding: 2.5rem 1.5rem;
+        background: rgba(255,255,255,0.03); border: 1px solid #1f2937;
+        border-radius: 1rem; transition: all 0.3s ease;
+        opacity: 0; transform: translateY(30px);
       }
-
-      .feature-item.visible {
-        animation: fadeInUp 0.6s ease forwards;
-      }
-
+      .feature-item.visible { animation: fadeInUp 0.6s ease forwards; }
+      .feature-item:hover { border-color: rgba(57,255,20,0.35); background: rgba(57,255,20,0.04); }
       .feature-icon {
-        width: 4rem;
-        height: 4rem;
-        background: rgba(57, 255, 20, 0.1);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 1.5rem;
-        transition: all 0.3s ease;
+        width: 4rem; height: 4rem; background: rgba(57,255,20,0.1);
+        border-radius: 50%; display: flex; align-items: center;
+        justify-content: center; margin: 0 auto 1.5rem; transition: all 0.3s ease;
       }
-
-      .feature-item:hover .feature-icon {
-        background: rgba(57, 255, 20, 0.2);
-        transform: scale(1.1) rotate(10deg);
-      }
-
-      .feature-icon i {
-        font-size: 1.8rem;
-        color: #39FF14;
-      }
-
+      .feature-item:hover .feature-icon { background: rgba(57,255,20,0.22); transform: scale(1.1) rotate(10deg); }
+      .feature-icon i { font-size: 1.6rem; color: #39FF14; }
       .feature-title {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: white;
-        margin-bottom: 0.75rem;
+        font-family: 'Orbitron', sans-serif; font-size: 1rem;
+        font-weight: 700; color: white; margin-bottom: 0.75rem;
       }
+      .feature-description { color: #9ca3af; line-height: 1.6; font-size: 0.88rem; }
 
-      .feature-description {
-        color: #9ca3af;
-        line-height: 1.6;
-        font-size: 0.9rem;
-      }
-
-      /* =================== CTA SECTION =================== */
+      /* =================== CTA BAND =================== */
       .cta-section {
-        position: relative;
-        padding: 6rem 1rem;
-        background: linear-gradient(135deg, rgba(57, 255, 20, 0.05), rgba(0, 0, 0, 0.5));
+        background: linear-gradient(135deg, rgba(57,255,20,0.06), rgba(0,0,0,0.6));
         text-align: center;
       }
-
-      .cta-container {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
+      .cta-container { max-width: 750px; margin: 0 auto; }
       .cta-title {
         font-family: 'Orbitron', sans-serif;
-        font-size: 2.5rem;
-        font-weight: 800;
-        margin-bottom: 1.5rem;
+        font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 800; margin-bottom: 1.25rem;
       }
-
-      .cta-description {
-        font-size: 1.2rem;
-        color: #9ca3af;
-        margin-bottom: 2.5rem;
-        line-height: 1.7;
-      }
-
-      /* =================== FOOTER =================== */
-      footer {
-        position: relative;
-        background: #000;
-        color: #fff;
-        text-align: center;
-        padding: 20px;
-        font-family: 'Courier New', monospace;
-        font-size: 12px;
-        border-top: 1px solid #1f2937;
-      }
-
-      footer span {
-        color: #39FF14;
-        text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
-      }
-
-      /* =================== RESPONSIVE DESIGN =================== */
-      @media (max-width: 1030px) {
-        .hamburger-menu {
-          display: flex;
-          flex-direction: column;
-          cursor: pointer;
-          position: absolute;
-          top: 50%;
-          right: 15px;
-          transform: translateY(-50%) scale(0.7);
-          z-index: 1000;
-        }
-
-        .hamburger-menu .bar {
-          background-color: white;
-          height: 2px;
-          width: 20px;
-          margin: 3px 0;
-          transition: 0.3s;
-        }
-
-        .nav-list {
-          display: flex;
-          flex-direction: column;
-          background: #333;
-          width: 100%;
-          position: absolute;
-          top: 50px;
-          left: 0;
-          text-align: center;
-          padding: 10px 0;
-          transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-          z-index: 999;
-          opacity: 0;
-          transform: translateY(-10px);
-          visibility: hidden;
-        }
-
-        .nav-list.active {
-          opacity: 1;
-          transform: translateY(0);
-          visibility: visible;
-        }
-
-        .nav-list li {
-          margin: 10px 0;
-        }
-
-        .hamburger-menu.open .bar:nth-child(1) {
-          transform: rotate(-45deg) translate(-4px, 5px);
-        }
-
-        .hamburger-menu.open .bar:nth-child(2) {
-          opacity: 0;
-        }
-
-        .hamburger-menu.open .bar:nth-child(3) {
-          transform: rotate(45deg) translate(-4px, -5px);
-        }
-      }
-
-      @media (max-width: 768px) {
-        .hero-title {
-          font-size: 2.5rem;
-        }
-
-        .section-title {
-          font-size: 2rem;
-        }
-
-        .categories-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .products-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .hero-cta {
-          flex-direction: column;
-        }
-
-        .btn-primary,
-        .btn-secondary {
-          width: 100%;
-          max-width: 300px;
-        }
-      }
-
-      @media (max-width: 500px) {
-        .logo-title {
-          display: none;
-        }
-
-        .short-title {
-          display: block;
-          color: #39FF14;
-          text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
-          font-size: 16px;
-          font-weight: bold;
-          text-decoration: none;
-          font-family: 'Courier New', monospace;
-        }
-
-        .hero-title {
-          font-size: 2rem;
-        }
-
-        .section-title {
-          font-size: 1.75rem;
-        }
-
-        .auth-buttons {
-          right: 30px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .hero-title {
-          font-size: 1.75rem;
-        }
-
-        .cta-title {
-          font-size: 1.75rem;
-        }
-      }
+      .cta-description { font-size: 1.05rem; color: #9ca3af; margin-bottom: 2.5rem; line-height: 1.7; }
 
       /* =================== STICKY ORDER BAR =================== */
       #sticky-order-bar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        z-index: 990; /* below navbar (1000), above content */
-        background: linear-gradient(90deg, #000000 0%, #0d1a00 60%, #000000 100%);
-        border-top: 1px solid rgba(57, 255, 20, 0.35);
-        box-shadow: 0 -4px 30px rgba(57, 255, 20, 0.12);
+        position: fixed; bottom: 0; left: 0; width: 100%; z-index: 990;
+        background: linear-gradient(90deg, #000 0%, #0d1a00 60%, #000 100%);
+        border-top: 1px solid rgba(57,255,20,0.35);
+        box-shadow: 0 -4px 30px rgba(57,255,20,0.12);
         padding: 0.85rem 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        /* Hidden by default — JS reveals it after hero scroll */
-        opacity: 0;
-        transform: translateY(100%);
-        pointer-events: none;
+        display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        opacity: 0; transform: translateY(100%); pointer-events: none;
         transition: opacity 0.4s ease, transform 0.4s ease;
       }
-
-      #sticky-order-bar.bar-visible {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-      }
-
-      .sob-product-info {
-        display: flex;
-        flex-direction: column;
-        gap: 0.15rem;
-        min-width: 0;
-      }
-
+      #sticky-order-bar.bar-visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+      .sob-product-info { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
       .sob-product-name {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: #ffffff;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        letter-spacing: 0.5px;
+        font-family: 'Orbitron', sans-serif; font-size: 0.85rem;
+        font-weight: 700; color: #fff; white-space: nowrap;
+        overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.5px;
       }
-
       .sob-price {
-        font-family: 'Courier New', monospace;
-        font-size: 0.8rem;
-        color: #39FF14;
-        text-shadow: 0 0 6px rgba(57, 255, 20, 0.5);
-        letter-spacing: 0.5px;
+        font-family: 'Courier New', monospace; font-size: 0.8rem;
+        color: #39FF14; text-shadow: 0 0 6px rgba(57,255,20,0.5); letter-spacing: 0.5px;
       }
-
-      .sob-tagline {
-        font-size: 0.7rem;
-        color: #9ca3af;
-        letter-spacing: 0.5px;
-      }
-
-      .sob-cta-wrap {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        flex-shrink: 0;
-      }
-
+      .sob-tagline { font-size: 0.7rem; color: #9ca3af; letter-spacing: 0.5px; }
+      .sob-cta-wrap { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
       .sob-btn {
-        padding: 0.65rem 1.75rem;
-        background: #39FF14;
-        color: #000;
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 0.85rem;
-        border-radius: 0.5rem;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-family: 'Montserrat Alternates', sans-serif;
-        box-shadow: 0 0 16px rgba(57, 255, 20, 0.45);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        white-space: nowrap;
+        padding: 0.65rem 1.75rem; background: #39FF14; color: #000;
+        text-decoration: none; font-weight: 700; font-size: 0.85rem;
+        border-radius: 0.5rem; border: none; cursor: pointer;
+        transition: all 0.3s ease; font-family: 'Montserrat Alternates', sans-serif;
+        box-shadow: 0 0 16px rgba(57,255,20,0.45); text-transform: uppercase;
+        letter-spacing: 0.5px; white-space: nowrap;
       }
-
-      .sob-btn:hover {
-        background: #2ee80f;
-        transform: translateY(-2px);
-        box-shadow: 0 0 26px rgba(57, 255, 20, 0.75), 0 4px 16px rgba(57, 255, 20, 0.35);
-      }
-
+      .sob-btn:hover { background: #2ee80f; transform: translateY(-2px); }
       .sob-dismiss {
-        background: none;
-        border: none;
-        color: #4b5563;
-        cursor: pointer;
-        font-size: 1.1rem;
-        line-height: 1;
-        padding: 0.25rem;
+        background: none; border: none; color: #4b5563; cursor: pointer;
+        font-size: 1.1rem; line-height: 1; padding: 0.25rem;
+        transition: color 0.2s ease; flex-shrink: 0;
+      }
+      .sob-dismiss:hover { color: #9ca3af; }
+
+      /* =================== FOOTER =================== */
+      .site-footer {
+        background: #000;
+        border-top: 1px solid rgba(57,255,20,0.15);
+        padding: 60px 1.5rem 0;
+        font-family: 'Courier New', monospace;
+        position: relative; z-index: 2;
+      }
+      .footer-inner {
+        max-width: 1200px; margin: 0 auto;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 3rem;
+        padding-bottom: 3rem;
+        border-bottom: 1px solid rgba(57,255,20,0.1);
+      }
+      .footer-brand .footer-logo {
+        display: flex; align-items: center; gap: 10px;
+        text-decoration: none; margin-bottom: 1.25rem;
+      }
+      .footer-brand .footer-logo img {
+        width: 34px; height: 34px; border-radius: 7px; object-fit: cover;
+      }
+      .footer-brand .footer-logo span {
+        font-size: 13px; font-weight: bold; color: #39FF14;
+        text-shadow: 0 0 8px rgba(57,255,20,0.55); letter-spacing: 0.5px;
+      }
+      .footer-brand p {
+        color: #6b7280; font-size: 0.82rem; line-height: 1.7;
+        max-width: 280px; text-align: left; margin-bottom: 1.5rem;
+      }
+      .footer-social { display: flex; gap: 0.75rem; }
+      .footer-social a {
+        width: 36px; height: 36px; border-radius: 50%;
+        background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+        display: flex; align-items: center; justify-content: center;
+        color: #9ca3af; font-size: 0.85rem; text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      .footer-social a:hover {
+        background: rgba(57,255,20,0.12); border-color: rgba(57,255,20,0.4);
+        color: #39FF14; box-shadow: 0 0 10px rgba(57,255,20,0.3);
+        transform: translateY(-2px);
+      }
+      .footer-col h4 {
+        font-family: 'Orbitron', sans-serif; font-size: 0.7rem;
+        font-weight: 700; color: #39FF14; text-transform: uppercase;
+        letter-spacing: 2px; margin-bottom: 1.25rem;
+      }
+      .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+      .footer-col ul li a {
+        color: #6b7280; text-decoration: none; font-size: 0.82rem;
+        transition: color 0.2s ease; letter-spacing: 0.3px;
+      }
+      .footer-col ul li a:hover { color: #39FF14; }
+      .footer-contact-item {
+        display: flex; align-items: flex-start; gap: 0.6rem;
+        margin-bottom: 0.75rem;
+      }
+      .footer-contact-item i { color: #39FF14; font-size: 0.85rem; margin-top: 2px; flex-shrink: 0; }
+      .footer-contact-item span { color: #6b7280; font-size: 0.82rem; line-height: 1.5; text-align: left; }
+      .footer-bottom {
+        padding: 1.5rem 0;
+        display: flex; align-items: center; justify-content: space-between;
+        flex-wrap: wrap; gap: 0.75rem;
+      }
+      .footer-bottom p { font-size: 0.78rem; color: #4b5563; }
+      .footer-bottom p span { color: #39FF14; text-shadow: 0 0 5px #39FF14; }
+      .footer-bottom-links { display: flex; gap: 1.5rem; }
+      .footer-bottom-links a {
+        color: #4b5563; text-decoration: none; font-size: 0.78rem;
         transition: color 0.2s ease;
-        flex-shrink: 0;
       }
+      .footer-bottom-links a:hover { color: #39FF14; }
 
-      .sob-dismiss:hover {
-        color: #9ca3af;
+      /* =================== RESPONSIVE =================== */
+      @media (max-width: 900px) {
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .footer-brand { grid-column: 1 / -1; }
       }
-
-      /* On mobile, stack product name + price inline and shrink padding */
       @media (max-width: 600px) {
-        #sticky-order-bar {
-          padding: 0.75rem 1rem;
-          gap: 0.75rem;
-        }
-        .sob-product-name {
-          font-size: 0.75rem;
-        }
-        .sob-tagline {
-          display: none; /* hide tagline to save space */
-        }
-        .sob-btn {
-          padding: 0.6rem 1.1rem;
-          font-size: 0.78rem;
+        .footer-grid { grid-template-columns: 1fr; }
+        .footer-bottom { flex-direction: column; text-align: center; }
+        .footer-bottom-links { justify-content: center; }
+        #sticky-order-bar { padding: 0.75rem 1rem; gap: 0.75rem; }
+        .sob-tagline { display: none; }
+        .sob-btn { padding: 0.6rem 1.1rem; font-size: 0.78rem; }
+        .casestudies-grid, .categories-grid, .features-grid { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 1030px) {
+        .hamburger-menu {
+          display: flex; flex-direction: column; justify-content: center;
+          gap: 4px; cursor: pointer; position: absolute;
+          top: 50%; right: 13px; transform: translateY(-50%);
+          z-index: 1001; padding: 5px;
         }
       }
     </style>
   </head>
 
   <body>
-    <!-- Floating Code Background -->
     <div class="floating-code-container" id="floatingCodeContainer"></div>
 
-    <!-- Navigation Bar -->
-    <nav id="navbar">
-      <div class="logo">
-        <img src="assets/images/logo.png" alt="Logo" />
-        <a href="https:nexgenixcretivesolutions.github.io" class="logo-title">NEX GENIX Creative Solutions | Business School</a>
-        <a href="https:nexgenixcretivesolutions.github.io" class="short-title">NGCS | NGBS</a>
-      </div>
-
-      <!-- Hamburger Menu (Mobile) -->
-      <div class="hamburger-menu" onclick="toggleMenu()">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-      </div>
-
-      <!-- Navigation Links -->
-      <ul class="nav-list">
-        <li><a href="https://nexgenixcreativesolutions.github.io">CREATIVE SOLUTIONS</a></li>
-        <li><a href="https://nexgenixbusinessschool.github.io">BUSINESS SCHOOL</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/digital-design-and-visual-communication-services">DIGITAL SERVICES</a></li>
-        <li><a href="https://nexgenixbusinessschool.github.io/business-excellence">BUSINESS EXCELLENCE COURSES</a></li>
-<li><a href="https://nexgenixbusinessschool.github.io/language-mastery">LANGUAGE MASTERY</a></li>
-        
-      </ul>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <p class="hero-eyebrow">Innovative Digital Solutions</p>
-        <h1 class="hero-title">
-          Explore Our <span class="gradient-text">Premium Products</span>
-        </h1>
-        <p class="hero-subtitle">
-          From cutting-edge courses to professional services, discover everything you need to elevate your digital presence and master new skills.
-        </p>
-        <div class="hero-cta">
-          <a href="#products" class="btn-primary">Browse Products</a>
-          <a href="login-signup.html" class="btn-secondary">Get Started Free</a>
+    <div class="page-wrapper">
+      <!-- ── NAVBAR ── -->
+      <nav id="navbar">
+        <div class="logo">
+          <img src="assets/images/logo.png" alt="NGCS Logo" />
+          <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NexGenix Creative Solutions</a></p>
+          <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
         </div>
-      </div>
-    </section>
+        <div class="hamburger-menu" id="hamburgerMenu">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+        <ul class="nav-list" id="navList">
+          <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
+          <li><a href="https://nexgenixcreativesolutions.github.io/our-work">Our Work</a></li>
+          <li><a href="https://nexgenixcreativesolutions.github.io/how-it-works">How It Works</a></li>
+          <li><a href="https://nexgenixcreativesolutions.github.io/product-landing" class="active">Products</a></li>
+          <li><a href="https://nexgenixcreativesolutions.github.io/quote">Get a Quote</a></li>
+          <li><a href="https://nexgenixcreativesolutions.github.io/faq">FAQ</a></li>
+        </ul>
+        <div class="auth-buttons">
+          <a href="dashboard.html" class="dashboard-btn">Dashboard</a>
+        </div>
+      </nav>
 
-    <!-- Categories Section -->
-    <section class="categories-section">
-      <div class="categories-container">
-        <div class="section-header">
-          <h2 class="section-title">Product <span class="gradient-text">Categories</span></h2>
-          <p class="section-subtitle">
-            Explore our comprehensive range of digital products and services designed to help you succeed
+      <!-- ── HERO ── -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <p class="hero-eyebrow">Comprehensive Digital Solutions</p>
+          <h1 class="hero-title">
+            Explore Our <span class="gradient-text">Products & Services</span>
+          </h1>
+          <p class="hero-subtitle">
+            From premium online courses to professional creative services — everything your business needs to grow, stand out, and succeed in the digital landscape.
           </p>
-        </div>
-
-        <div class="categories-grid">
-          <div class="category-card">
-            <div class="category-icon">
-              <i class="fas fa-graduation-cap"></i>
-            </div>
-            <h3 class="category-title">Online Courses</h3>
-            <p class="category-description">
-              Master new skills with our expertly crafted courses in business, language, and technology. Both free and premium options available.
-            </p>
-            <a href="#courses" class="category-link">
-              Explore Courses <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-
-          <div class="category-card">
-            <div class="category-icon">
-              <i class="fas fa-pen-fancy"></i>
-            </div>
-            <h3 class="category-title">Writing Services</h3>
-            <p class="category-description">
-              Professional business writing, content creation, and editing services to help you communicate effectively.
-            </p>
-            <a href="#writing" class="category-link">
-              View Services <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-
-          <div class="category-card">
-            <div class="category-icon">
-              <i class="fas fa-palette"></i>
-            </div>
-            <h3 class="category-title">Design Solutions</h3>
-            <p class="category-description">
-              Custom digital design, web development, and branding services to make your business stand out online.
-            </p>
-            <a href="#design" class="category-link">
-              Explore Design <i class="fas fa-arrow-right"></i>
-            </a>
+          <div class="hero-cta">
+            <a href="#products" class="btn-primary">Browse All Products</a>
+            <a href="quote.html" class="btn-secondary">Request a Quote</a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Products Section -->
-    <section class="products-section" id="products">
-      <div class="products-container">
-        <div class="section-header">
-          <h2 class="section-title">Featured <span class="gradient-text">Products</span></h2>
-          <p class="section-subtitle">
-            Discover our most popular courses and services
-          </p>
-        </div>
-
-        <div class="products-grid" id="productsGrid">
-          <!-- Products will be dynamically loaded here -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section">
-      <div class="features-container">
-        <div class="section-header">
-          <h2 class="section-title">Why Choose <span class="gradient-text">Nex Genix</span></h2>
-          <p class="section-subtitle">
-            We deliver excellence in every product and service
-          </p>
-        </div>
-
-        <div class="features-grid">
-          <div class="feature-item">
-            <div class="feature-icon">
-              <i class="fas fa-certificate"></i>
-            </div>
-            <h3 class="feature-title">Certified Quality</h3>
-            <p class="feature-description">
-              All our courses include professional certificates upon completion
+      <!-- ── CATEGORIES ── -->
+      <section class="categories-section">
+        <div class="section-inner">
+          <div class="section-header">
+            <p class="section-eyebrow">What We Offer</p>
+            <h2 class="section-title">Product <span class="gradient-text">Categories</span></h2>
+            <div class="neon-divider"></div>
+            <p class="section-subtitle" style="margin-top:1rem;">
+              A comprehensive range of digital products and services designed to help your business thrive.
             </p>
           </div>
-
-          <div class="feature-item">
-            <div class="feature-icon">
-              <i class="fas fa-headset"></i>
+          <div class="categories-grid">
+            <div class="category-card">
+              <div class="category-icon"><i class="fas fa-graduation-cap"></i></div>
+              <h3 class="category-title">Online Courses</h3>
+              <p class="category-description">Master new skills with expertly crafted courses in business, language, and technology — free and premium options available through NexGenix Business School.</p>
+              <a href="https://nexgenixbusinessschool.github.io" class="category-link">Explore Courses <i class="fas fa-arrow-right"></i></a>
             </div>
-            <h3 class="feature-title">Expert Support</h3>
-            <p class="feature-description">
-              Get personalized assistance from industry professionals
-            </p>
-          </div>
-
-          <div class="feature-item">
-            <div class="feature-icon">
-              <i class="fas fa-clock"></i>
+            <div class="category-card">
+              <div class="category-icon"><i class="fas fa-pen-fancy"></i></div>
+              <h3 class="category-title">Content & Writing</h3>
+              <p class="category-description">Professional business writing, content creation, and editing services to help you communicate effectively with your audience and drive results.</p>
+              <a href="#writing" class="category-link">View Services <i class="fas fa-arrow-right"></i></a>
             </div>
-            <h3 class="feature-title">Lifetime Access</h3>
-            <p class="feature-description">
-              Purchase once and access your content forever
-            </p>
-          </div>
-
-          <div class="feature-item">
-            <div class="feature-icon">
-              <i class="fas fa-shield-alt"></i>
+            <div class="category-card">
+              <div class="category-icon"><i class="fas fa-laptop-code"></i></div>
+              <h3 class="category-title">Web & Digital Design</h3>
+              <p class="category-description">Custom websites, UI/UX design, branding, and video production services that make your business stand out and convert visitors into clients.</p>
+              <a href="#design" class="category-link">Explore Design <i class="fas fa-arrow-right"></i></a>
             </div>
-            <h3 class="feature-title">Secure Payment</h3>
-            <p class="feature-description">
-              Safe and encrypted transactions for your peace of mind
-            </p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-      <div class="cta-container">
-        <h2 class="cta-title">Ready to Get <span class="gradient-text">Started?</span></h2>
-        <p class="cta-description">
-          Join thousands of satisfied customers and take your skills to the next level with our premium products and services.
-        </p>
-        <div class="hero-cta">
-          <a href="login-signup.html" class="btn-primary">Create Account</a>
-          <a href="index.html#about-us" class="btn-secondary">Learn More</a>
+      <!-- ── PRODUCTS ── -->
+      <section class="products-section" id="products">
+        <div class="section-inner">
+          <div class="section-header">
+            <p class="section-eyebrow">Featured Offerings</p>
+            <h2 class="section-title">Products & <span class="gradient-text">Services</span></h2>
+            <div class="neon-divider"></div>
+            <p class="section-subtitle" style="margin-top:1rem;">Discover our most popular courses and professional services.</p>
+          </div>
+          <div class="products-grid" id="productsGrid"></div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Footer -->
-    <footer>&copy; 2023-2026 <span>NEX GENIX Creative Solutions | Business School</span> All rights reserved.</footer>
+      <!-- ── CASE STUDIES ── -->
+      <section class="casestudies-section" id="case-studies">
+        <div class="section-inner">
+          <div class="section-header">
+            <p class="section-eyebrow">Real Results</p>
+            <h2 class="section-title">Client <span class="gradient-text">Case Studies</span></h2>
+            <div class="neon-divider"></div>
+            <p class="section-subtitle" style="margin-top:1rem;">
+              A look at how we've delivered measurable impact for our clients across industries.
+            </p>
+          </div>
+          <div class="casestudies-grid">
+            <div class="cs-card">
+              <div class="cs-card-image">
+                <i class="fas fa-heart"></i>
+                <span class="cs-label">Branding</span>
+              </div>
+              <div class="cs-card-content">
+                <p class="cs-client">Marahuyo Designs</p>
+                <h3 class="cs-title">Handmade Bouquet Shop — Brand Identity & Web Presence</h3>
+                <p class="cs-description">Full brand development for a handcrafted fuzzy wired bouquet shop — covering logo design, visual identity, website build, and a custom scroll-triggered zipper animation that brought the brand's delicate, artisan character to life.</p>
+                <div class="cs-tags">
+                  <span class="cs-tag">Branding</span>
+                  <span class="cs-tag">Web Design</span>
+                  <span class="cs-tag">UI Animation</span>
+                </div>
+              </div>
+            </div>
+            <div class="cs-card">
+              <div class="cs-card-image">
+                <i class="fas fa-camera-retro"></i>
+                <span class="cs-label">Web Design</span>
+              </div>
+              <div class="cs-card-content">
+                <p class="cs-client">Nostalgic Trails</p>
+                <h3 class="cs-title">Photography Service Website</h3>
+                <p class="cs-description">Designed a warm, story-led website for a photography service specializing in weddings, debuts, self-portraits, and infant photography — capturing the emotional depth of each milestone through thoughtful layout and visual storytelling.</p>
+                <div class="cs-tags">
+                  <span class="cs-tag">Web Development</span>
+                  <span class="cs-tag">UI/UX</span>
+                  <span class="cs-tag">Content Strategy</span>
+                </div>
+              </div>
+            </div>
+            <div class="cs-card">
+              <div class="cs-card-image">
+                <i class="fas fa-hamburger"></i>
+                <span class="cs-label">Video Production</span>
+              </div>
+              <div class="cs-card-content">
+                <p class="cs-client">Charito's Food & Beverage</p>
+                <h3 class="cs-title">Brand Video & Digital Menu Design</h3>
+                <p class="cs-description">Produced promotional video content and a polished digital menu for a burger restaurant also serving pasta, murtabak, shawarma, silogs, and Filipino viands — helping the brand present its diverse offerings in a cohesive, appetizing way.</p>
+                <div class="cs-tags">
+                  <span class="cs-tag">Video Production</span>
+                  <span class="cs-tag">Graphic Design</span>
+                  <span class="cs-tag">Branding</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center; margin-top:2.5rem;">
+            <a href="our-work.html" class="btn-secondary">View All Case Studies <i class="fas fa-arrow-right" style="margin-left:6px;"></i></a>
+          </div>
+        </div>
+      </section>
 
-    <!-- Sticky Order Bar — appears after scrolling past hero -->
+      <!-- ── WHY NGCS ── -->
+      <section class="features-section">
+        <div class="section-inner">
+          <div class="section-header">
+            <p class="section-eyebrow">Our Promise</p>
+            <h2 class="section-title">Why Choose <span class="gradient-text">NexGenix</span></h2>
+            <div class="neon-divider"></div>
+          </div>
+          <div class="features-grid">
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+              <h3 class="feature-title">Certified Quality</h3>
+              <p class="feature-description">All courses include verifiable digital certificates upon completion, recognized for professional development.</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-headset"></i></div>
+              <h3 class="feature-title">Dedicated Support</h3>
+              <p class="feature-description">Direct access to professionals throughout your project or course — not chatbots, not ticketing queues.</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-bullseye"></i></div>
+              <h3 class="feature-title">Results-Driven</h3>
+              <p class="feature-description">Every deliverable is built around your business objectives, not just aesthetics. We measure success by your outcomes.</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+              <h3 class="feature-title">Transparent Process</h3>
+              <p class="feature-description">Clear pricing, clear timelines, and clear communication at every stage — no surprises, no hidden fees.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CTA ── -->
+      <section class="cta-section">
+        <div class="cta-container">
+          <h2 class="cta-title">Ready to Get <span class="gradient-text">Started?</span></h2>
+          <p class="cta-description">Let's build something that actually moves the needle for your business. Get in touch today.</p>
+          <div class="hero-cta">
+            <a href="quote.html" class="btn-primary">Request a Quote</a>
+            <a href="how-it-works.html" class="btn-secondary">See How It Works</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── FOOTER ── -->
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <div class="footer-grid">
+            <!-- Brand -->
+            <div class="footer-brand">
+              <a href="https://nexgenixcreativesolutions.github.io" class="footer-logo">
+                <img src="assets/images/logo.png" alt="NGCS Logo" />
+                <span>NexGenix Creative Solutions</span>
+              </a>
+              <p>A digital creative agency based in Zamboanga City, Philippines — delivering web design, branding, video production, and online education for forward-thinking businesses.</p>
+              <div class="footer-social">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+              </div>
+            </div>
+            <!-- Services -->
+            <div class="footer-col">
+              <h4>Services</h4>
+              <ul>
+                <li><a href="#">Web Design & Development</a></li>
+                <li><a href="#">UI/UX Design</a></li>
+                <li><a href="#">Brand Identity</a></li>
+                <li><a href="#">Video Production</a></li>
+                <li><a href="#">Content Writing</a></li>
+                <li><a href="#">Online Tutoring (K-12)</a></li>
+              </ul>
+            </div>
+            <!-- Company -->
+            <div class="footer-col">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
+                <li><a href="our-work.html">Our Work</a></li>
+                <li><a href="how-it-works.html">How It Works</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="https://nexgenixbusinessschool.github.io">Business School</a></li>
+              </ul>
+            </div>
+            <!-- Contact -->
+            <div class="footer-col">
+              <h4>Get In Touch</h4>
+              <div class="footer-contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>nexgenixcreativesolutions@gmail.com</span>
+              </div>
+              <div class="footer-contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Zamboanga City, Philippines</span>
+              </div>
+              <div class="footer-contact-item">
+                <i class="fas fa-clock"></i>
+                <span>Mon – Fri, 8 AM – 6 PM PHT</span>
+              </div>
+              <div style="margin-top:1.25rem;">
+                <a href="quote.html" class="btn-primary" style="font-size:0.78rem; padding:0.6rem 1.25rem;">Get a Free Quote</a>
+              </div>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2023–2026 <span>NexGenix Creative Solutions</span>. All rights reserved.</p>
+            <div class="footer-bottom-links">
+              <a href="privacy-policy.html">Privacy Policy</a>
+              <a href="faq.html">FAQ</a>
+              <a href="quote.html">Get a Quote</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- ── STICKY ORDER BAR ── -->
     <div id="sticky-order-bar" role="complementary" aria-label="Quick order bar">
       <div class="sob-product-info">
-        <span class="sob-product-name">NEX GENIX Products &amp; Services</span>
-        <span class="sob-price">Starting at <strong>Free</strong> — Courses &amp; Services</span>
-        <span class="sob-tagline">Courses · Web Design · Branding · Content Writing</span>
+        <span class="sob-product-name">NexGenix Products & Services</span>
+        <span class="sob-price">Starting at <strong>Free</strong> — Courses & Services</span>
+        <span class="sob-tagline">Courses · Web Design · Branding · Video · Writing</span>
       </div>
       <div class="sob-cta-wrap">
-        <a href="#products" class="sob-btn">Order Now</a>
-        <button class="sob-dismiss" aria-label="Dismiss order bar" onclick="dismissOrderBar()">&#10005;</button>
+        <a href="quote.html" class="sob-btn">Order Now</a>
+        <button class="sob-dismiss" aria-label="Dismiss" onclick="dismissOrderBar()">&#10005;</button>
       </div>
     </div>
 
-    <!-- JavaScript -->
     <script>
-      // Product Data
+      // ── Products data ──
       const products = [
-        {
-          id: 1,
-          category: 'Course',
-          title: 'International Business Fundamentals',
-          description: 'Master the essentials of global commerce, cross-border trade, and international market strategies.',
-          price: 'Free',
-          isFree: true,
-          icon: 'fas fa-globe'
-        },
-        {
-          id: 2,
-          category: 'Course',
-          title: 'Digital Marketing Mastery',
-          description: 'Learn modern marketing techniques, social media strategies, and analytics for business growth.',
-          price: 'Free',
-          isFree: true,
-          icon: 'fas fa-chart-line'
-        },
-        {
-          id: 3,
-          category: 'Course',
-          title: 'Mandarin Chinese Level 1',
-          description: 'Start your journey to fluency with comprehensive lessons in speaking, reading, and writing.',
-          price: '$49',
-          isFree: false,
-          icon: 'fas fa-language'
-        },
-        {
-          id: 4,
-          category: 'Course',
-          title: 'Japanese Language Basics',
-          description: 'Introduction to Japanese grammar, vocabulary, and cultural context for beginners.',
-          price: '$49',
-          isFree: false,
-          icon: 'fas fa-yen-sign'
-        },
-        {
-          id: 5,
-          category: 'Service',
-          title: 'Business Proposal Writing',
-          description: 'Professional writing service for compelling proposals that win clients and secure funding.',
-          price: '$199',
-          isFree: false,
-          icon: 'fas fa-file-alt'
-        },
-        {
-          id: 6,
-          category: 'Service',
-          title: 'Custom Website Design',
-          description: 'Bespoke web design and development tailored to your brand and business objectives.',
-          price: '$499',
-          isFree: false,
-          icon: 'fas fa-laptop-code'
-        },
-        {
-          id: 7,
-          category: 'Service',
-          title: 'Content Writing Package',
-          description: 'SEO-optimized blog posts, articles, and web content to boost your online presence.',
-          price: '$149',
-          isFree: false,
-          icon: 'fas fa-pencil-alt'
-        },
-        {
-          id: 8,
-          category: 'Service',
-          title: 'Brand Identity Design',
-          description: 'Complete branding package including logo, color palette, and brand guidelines.',
-          price: '$299',
-          isFree: false,
-          icon: 'fas fa-paint-brush'
-        },
-        {
-          id: 9,
-          category: 'Course',
-          title: 'E-Commerce Essentials',
-          description: 'Build and grow your online store with proven strategies and practical techniques.',
-          price: 'Free',
-          isFree: true,
-          icon: 'fas fa-shopping-cart'
-        }
+        // type: 'course' | 'writing' | 'creative'
+        { id:1, type:'course',   category:'Course',   title:'International Business Fundamentals', description:'Master global commerce, cross-border trade, and international market strategies.', badge:'Free', icon:'fas fa-globe' },
+        { id:2, type:'course',   category:'Course',   title:'Digital Marketing Mastery',           description:'Modern marketing techniques, social media strategies, and analytics for business growth.', badge:'Free', icon:'fas fa-chart-line' },
+        { id:3, type:'course',   category:'Course',   title:'Spanish Language — Level 1',          description:'Build real conversational confidence in Spanish through structured lessons in grammar, vocabulary, and everyday dialogue.', badge:'Premium', icon:'fas fa-comments' },
+        { id:4, type:'course',   category:'Course',   title:'English Language Mastery',            description:'Sharpen your professional and academic English — from grammar essentials to confident business communication.', badge:'Premium', icon:'fas fa-spell-check' },
+        { id:5, type:'writing',  category:'Service',  title:'Business Proposal Writing',           description:'Compelling, professionally written proposals that win clients, secure funding, and close deals.', icon:'fas fa-file-alt' },
+        { id:6, type:'creative', category:'Service',  title:'Custom Website Design',               description:'Bespoke web design and development tailored to your brand identity and business objectives.', icon:'fas fa-laptop-code' },
+        { id:7, type:'writing',  category:'Service',  title:'Content Writing Package',             description:'SEO-optimized blog posts, articles, and web copy crafted to boost your online presence and authority.', icon:'fas fa-pencil-alt' },
+        { id:8, type:'creative', category:'Service',  title:'Brand Identity Design',               description:'Logo, color palette, typography, and brand guidelines — a complete visual identity built from scratch.', icon:'fas fa-paint-brush' },
+        { id:9, type:'course',   category:'Course',   title:'E-Commerce Essentials',               description:'Build and grow your online store with proven strategies and practical, actionable techniques.', badge:'Free', icon:'fas fa-shopping-cart' },
+        { id:10, type:'creative', category:'Service', title:'Video Production',                    description:'Promotional videos, brand reels, and digital ads produced with professional editing and color grading.', icon:'fas fa-video' },
       ];
 
-      // Render Products
       function renderProducts() {
         const grid = document.getElementById('productsGrid');
-        
-        products.forEach((product, index) => {
+        products.forEach((p, i) => {
           const card = document.createElement('div');
           card.className = 'product-card';
-          card.style.animationDelay = `${index * 0.1}s`;
-          
+          card.style.animationDelay = `${i * 0.08}s`;
+
+          let badgeHTML = '';
+          let btnHTML = '';
+
+          if (p.type === 'course') {
+            const isFree = p.badge === 'Free';
+            badgeHTML = `<span class="product-price ${isFree ? 'free' : ''}">${isFree ? 'Free' : 'Premium'}</span>`;
+            btnHTML   = `<a href="dashboard.html" class="btn-product">${isFree ? 'Enroll Free' : 'Enroll Now'}</a>`;
+          } else if (p.type === 'writing') {
+            badgeHTML = `<span class="product-price" style="color:#9ca3af; font-size:0.78rem; font-family:'Courier New',monospace;">Writing Service</span>`;
+            btnHTML   = `<a href="dashboard.html" class="btn-product">Learn More</a>`;
+          } else if (p.type === 'creative') {
+            badgeHTML = `<span class="product-price" style="color:#9ca3af; font-size:0.78rem; font-family:'Courier New',monospace;">Creative Service</span>`;
+            btnHTML   = `<a href="quote.html" class="btn-product">Get a Quote</a>`;
+          }
+
           card.innerHTML = `
-            <div class="product-image">
-              <i class="${product.icon}"></i>
-            </div>
+            <div class="product-image"><i class="${p.icon}"></i></div>
             <div class="product-content">
-              <p class="product-category">${product.category}</p>
-              <h3 class="product-title">${product.title}</h3>
-              <p class="product-description">${product.description}</p>
+              <p class="product-category">${p.category}</p>
+              <h3 class="product-title">${p.title}</h3>
+              <p class="product-description">${p.description}</p>
               <div class="product-footer">
-                <span class="product-price ${product.isFree ? 'free' : ''}">${product.price}</span>
-                <a href="${product.isFree ? 'login-signup.html' : '#'}" class="btn-product">
-                  ${product.isFree ? 'Enroll Now' : 'Learn More'}
-                </a>
+                ${badgeHTML}
+                ${btnHTML}
               </div>
-            </div>
-          `;
-          
+            </div>`;
           grid.appendChild(card);
         });
       }
 
-      // Floating Code Background
+      // ── Floating code bg ──
       const codeSnippets = [
-        'const nexgenix = () => {',
-        'function createSolution() {',
-        'import { Innovation } from "future"',
-        '<div className="digital">',
-        'async function buildDreams() {',
-        'export default Excellence;',
-        'return <Success />;',
-        'const vision = await design();',
-        'npm install creativity',
-        'git commit -m "launch"',
-        'SELECT * FROM solutions;',
-        'CREATE TABLE success;',
-        '{ transform: "ideas" }',
-        '.future { display: flex; }',
-        'onClick={() => innovate()}',
-        'useState(creativity);',
-        'useEffect(() => grow());',
-        'class Digital extends Tech {',
-        'interface Vision { }',
-        'type Success = Promise<Growth>;'
+        'const ngcs = () => createSolutions();','function buildBrand() {','import { Innovation } from "future"',
+        '<div class="digital">','async function launchProject() {','export default Excellence;',
+        'return <Success />;','const vision = await design();','npm install creativity',
+        'git commit -m "go live"','SELECT * FROM solutions;','{ transform: "ideas→results" }',
+        '.future { display: flex; }','useState(creativity);','class Digital extends Tech {',
       ];
-
       function createFloatingCodeBackground() {
         const container = document.getElementById('floatingCodeContainer');
-        
         for (let i = 0; i < 15; i++) {
-          const codeLine = document.createElement('div');
-          codeLine.className = 'code-line';
-          
-          const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-          codeLine.textContent = randomSnippet;
-          
-          const yPosition = 5 + (i * 6);
-          const duration = 15 + Math.random() * 10;
-          const delay = Math.random() * 20;
-          
-          codeLine.style.top = `${yPosition}%`;
-          codeLine.style.animationDuration = `${duration}s`;
-          codeLine.style.animationDelay = `${delay}s`;
-          
-          container.appendChild(codeLine);
+          const el = document.createElement('div');
+          el.className = 'code-line';
+          el.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+          el.style.top = `${5 + i * 6}%`;
+          el.style.animationDuration = `${15 + Math.random() * 10}s`;
+          el.style.animationDelay = `${Math.random() * 20}s`;
+          container.appendChild(el);
         }
       }
 
-      // Intersection Observer for scroll animations
+      // ── Scroll animations ──
       function initScrollAnimations() {
         const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-            }
-          });
+          entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });
-
-        document.querySelectorAll('.category-card, .product-card, .feature-item').forEach(card => {
-          observer.observe(card);
-        });
+        document.querySelectorAll('.category-card, .product-card, .feature-item, .cs-card').forEach(el => observer.observe(el));
       }
 
-      // Toggle Mobile Menu
-      function toggleMenu() {
-        document.querySelector('.nav-list').classList.toggle('active');
-        document.querySelector('.hamburger-menu').classList.toggle('open');
+      // ── Mobile menu ──
+      document.getElementById('hamburgerMenu').addEventListener('click', function() {
+        document.getElementById('navList').classList.toggle('active');
+        this.classList.toggle('open');
+      });
+
+      // ── Sticky order bar ──
+      function initStickyOrderBar() {
+        const bar = document.getElementById('sticky-order-bar');
+        const hero = document.querySelector('.hero-section');
+        if (!bar || !hero) return;
+        let dismissed = false;
+        window.addEventListener('scroll', () => {
+          if (dismissed) return;
+          bar.classList.toggle('bar-visible', hero.getBoundingClientRect().bottom < 0);
+        }, { passive: true });
+      }
+      function dismissOrderBar() {
+        const bar = document.getElementById('sticky-order-bar');
+        if (bar) { bar.classList.remove('bar-visible'); bar.style.display = 'none'; }
       }
 
-      // Initialize on page load
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('DOMContentLoaded', () => {
         createFloatingCodeBackground();
         renderProducts();
         initScrollAnimations();
         initStickyOrderBar();
       });
-
-      // =================== STICKY ORDER BAR ===================
-      function initStickyOrderBar() {
-        const bar = document.getElementById('sticky-order-bar');
-        const hero = document.querySelector('.hero-section');
-        if (!bar || !hero) return;
-
-        let dismissed = false;
-
-        function onScroll() {
-          if (dismissed) return;
-          const heroBottom = hero.getBoundingClientRect().bottom;
-          // Show once the user has scrolled past the hero
-          if (heroBottom < 0) {
-            bar.classList.add('bar-visible');
-          } else {
-            bar.classList.remove('bar-visible');
-          }
-        }
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll(); // run once on load in case page is already scrolled
-      }
-
-      function dismissOrderBar() {
-        const bar = document.getElementById('sticky-order-bar');
-        if (!bar) return;
-        bar.classList.remove('bar-visible');
-        // Remove scroll listener permanently for this session
-        bar.style.display = 'none';
-      }
     </script>
   </body>
 </html>
