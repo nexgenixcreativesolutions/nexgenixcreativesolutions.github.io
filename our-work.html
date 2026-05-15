@@ -1,1394 +1,689 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Our Portfolio — NexGenix Creative Solutions</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Montserrat+Alternates:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Work | NexGenix Creative Solutions</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,400;0,600;0,700;0,800&family=Silkscreen:wght@400;700&family=Orbitron:wght@400;600;700;800;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="responsive.css" />
 
-  <style>
-    /* ============================================================
-       CSS VARIABLES — exact copy from our-work.html
-    ============================================================ */
-    :root {
-      --black:          #0a0a0a;
-      --black-2:        #111111;
-      --black-3:        #161616;
-      --neon:           #39ff14;
-      --neon-dim:       rgba(57,255,20,0.18);
-      --neon-glow:      0 0 18px rgba(57,255,20,0.55), 0 0 40px rgba(57,255,20,0.2);
-      --neon-text-glow: 0 0 10px rgba(57,255,20,0.8);
-      --white:          #ffffff;
-      --off-white:      #e8e8e8;
-      --muted:          #888;
-      --border:         rgba(57,255,20,0.15);
-      --border-bright:  rgba(57,255,20,0.5);
-      --card-bg:        rgba(255,255,255,0.03);
-      --z-base:    1;
-      --z-content: 10;
-      --z-nav:     200;
-      --z-overlay: 9999;
-      --nav-height: 72px;
-    }
-
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Montserrat Alternates', sans-serif;
-      overflow-x: hidden;
-    }
-    a { text-decoration: none; color: inherit; }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { max-width: 100%; overflow-x: hidden; scroll-behavior: smooth; }
+      body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #000; color: white;
+        position: relative; min-height: 100vh;
+        padding: 0; width: 100%; max-width: 100%; text-align: left;
       }
-      html { scroll-behavior: auto; }
-    }
-    :focus-visible {
-      outline: 2px solid var(--neon);
-      outline-offset: 3px;
-      box-shadow: var(--neon-glow);
-    }
 
-    /* Noise overlay — exact from our-work.html */
-    body::after {
-      content: '';
-      position: fixed; inset: 0;
-      pointer-events: none;
-      z-index: var(--z-overlay);
-      opacity: 0.022;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
+      /* Scanline */
+      body::before {
+        content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+        background-image: repeating-linear-gradient(
+          0deg, transparent, transparent 3px,
+          rgba(57,255,20,0.012) 3px, rgba(57,255,20,0.012) 4px
+        );
+      }
 
-    /* ============================================================
-       NAV — exact copy from our-work.html
-    ============================================================ */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: var(--z-nav);
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 60px;
-      height: var(--nav-height);
-      background: rgba(10,10,10,0.92);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.75rem; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--neon); text-shadow: var(--neon-text-glow);
-    }
-    .nav-logo span {
-      display: block; font-size: 0.6rem; color: var(--muted);
-      letter-spacing: 0.35em; font-weight: 400; text-shadow: none; margin-top: 3px;
-    }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a {
-      font-family: 'Montserrat Alternates', sans-serif;
-      font-size: 0.7rem; font-weight: 500;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--muted); transition: color 0.3s;
-      position: relative; padding-bottom: 4px;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: 0; left: 0;
-      width: 0; height: 1px;
-      background: var(--neon); box-shadow: var(--neon-glow);
-      transition: width 0.3s ease;
-    }
-    .nav-links a:hover, .nav-links a.active {
-      color: var(--neon); text-shadow: var(--neon-text-glow);
-    }
-    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+      /* Floating code bg */
+      .floating-code-container { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+      .code-line {
+        position: absolute; white-space: nowrap;
+        font-family: 'Courier New', monospace; font-size: 13px;
+        color: rgba(57,255,20,0.3); text-shadow: 0 0 8px rgba(57,255,20,0.2);
+        animation: floatCode linear infinite; opacity: 0;
+      }
+      @keyframes floatCode {
+        0%   { transform: translateX(100vw); opacity: 0; }
+        10%  { opacity: 1; }
+        90%  { opacity: 1; }
+        100% { transform: translateX(-100%); opacity: 0; }
+      }
 
-    .nav-hamburger {
-      display: none; flex-direction: column; gap: 5px;
-      cursor: pointer; padding: 6px;
-      background: none; border: none; color: inherit;
-    }
-    .nav-hamburger span {
-      display: block; width: 22px; height: 2px;
-      background: var(--muted);
-      transition: transform 0.3s, opacity 0.3s, background 0.3s;
-    }
-    .nav-hamburger[aria-expanded="true"] span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg); background: var(--neon);
-    }
-    .nav-hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-    .nav-hamburger[aria-expanded="true"] span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg); background: var(--neon);
-    }
+      .page-wrapper { position: relative; z-index: 2; }
 
-    .nav-mobile {
-      display: none; position: fixed;
-      top: var(--nav-height); left: 0; right: 0;
-      background: rgba(10,10,10,0.97);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      z-index: calc(var(--z-nav) - 1);
-      padding: 24px 32px; flex-direction: column; gap: 20px;
-      transform: translateY(-8px); opacity: 0;
-      transition: opacity 0.25s ease, transform 0.25s ease;
-    }
-    .nav-mobile.open { display: flex; opacity: 1; transform: translateY(0); }
-    .nav-mobile a {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.75rem; font-weight: 600;
-      letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--muted); transition: color 0.2s;
-    }
-    .nav-mobile a:hover { color: var(--neon); text-shadow: var(--neon-text-glow); }
+      /* ── Shared buttons ── */
+      .btn-primary {
+        padding: 0.9rem 2.2rem; background: #39FF14; color: #000;
+        text-decoration: none; font-weight: 700; font-size: 0.95rem;
+        border-radius: 0.5rem; border: none; cursor: pointer;
+        transition: all 0.3s ease; font-family: 'Montserrat Alternates', sans-serif;
+        box-shadow: 0 0 20px rgba(57,255,20,0.45); text-transform: uppercase;
+        letter-spacing: 0.5px; display: inline-block;
+      }
+      .btn-primary:hover { background: #2ee80f; transform: translateY(-2px); box-shadow: 0 0 32px rgba(57,255,20,0.8); }
+      .btn-secondary {
+        padding: 0.9rem 2.2rem; background: transparent; color: #fff;
+        text-decoration: none; font-weight: 600; font-size: 0.95rem;
+        border-radius: 0.5rem; border: 2px solid rgba(255,255,255,0.5);
+        cursor: pointer; transition: all 0.3s ease;
+        font-family: 'Montserrat Alternates', sans-serif;
+        text-transform: uppercase; letter-spacing: 0.5px; display: inline-block;
+      }
+      .btn-secondary:hover { background: #fff; color: #000; transform: translateY(-2px); }
 
-    [id] { scroll-margin-top: calc(var(--nav-height) + 20px); }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(28px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
 
-    /* ============================================================
-       ANIMATION KEYFRAMES
-    ============================================================ */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
+      /* ── Section commons ── */
+      section { padding: 6rem 1.5rem; }
+      .section-inner { max-width: 1200px; margin: 0 auto; }
+      .section-header { text-align: center; margin-bottom: 4rem; }
+      .section-eyebrow {
+        font-family: 'Orbitron', sans-serif; font-size: 0.75rem;
+        letter-spacing: 4px; text-transform: uppercase; color: #39FF14;
+        margin-bottom: 0.75rem;
+      }
+      .section-title {
+        font-family: 'Orbitron', sans-serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+        font-weight: 800; color: white; margin-bottom: 1rem;
+      }
+      .section-subtitle { color: #9ca3af; font-size: 1rem; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+      .gradient-text {
+        background: linear-gradient(90deg, #ff4500, #ffcc00, #39FF14);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      }
+      .neon-divider {
+        width: 60px; height: 3px; background: #39FF14;
+        box-shadow: 0 0 12px #39FF14; margin: 1rem auto 0; border-radius: 2px;
+      }
 
-    /* ============================================================
-       SCROLL REVEAL — exact from our-work.html
-    ============================================================ */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
+      /* =================== HERO =================== */
+      .hero-section {
+        position: relative; min-height: 65vh;
+        display: flex; align-items: center; justify-content: center;
+        padding: 120px 20px 80px; text-align: center;
+        background: linear-gradient(135deg, #000 0%, #0a1a00 50%, #000 100%);
+        overflow: hidden;
+      }
+      .hero-section::after {
+        content: ''; position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(57,255,20,0.07) 0%, transparent 70%);
+      }
+      .hero-content { max-width: 800px; position: relative; z-index: 1; }
+      .hero-eyebrow {
+        font-family: 'Orbitron', sans-serif; font-size: 0.8rem;
+        letter-spacing: 4px; text-transform: uppercase; color: #39FF14;
+        margin-bottom: 1.5rem; opacity: 0; animation: fadeInUp 0.8s ease 0.1s forwards;
+      }
+      .hero-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800;
+        line-height: 1.15; margin-bottom: 1.5rem;
+        opacity: 0; animation: fadeInUp 0.8s ease 0.25s forwards;
+      }
+      .hero-subtitle {
+        font-size: 1.1rem; color: #9ca3af; max-width: 660px;
+        margin: 0 auto 2.5rem; line-height: 1.8;
+        opacity: 0; animation: fadeInUp 0.8s ease 0.4s forwards;
+      }
+      .hero-cta {
+        display: flex; gap: 1.25rem; justify-content: center;
+        align-items: center; flex-wrap: wrap;
+        opacity: 0; animation: fadeInUp 0.8s ease 0.55s forwards;
+      }
 
-    /* ============================================================
-       SHARED SECTION STRUCTURE — exact from our-work.html
-    ============================================================ */
-    .section-tag {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.6rem; letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: var(--neon); text-shadow: var(--neon-text-glow);
-      margin-bottom: 16px;
-    }
-    .section-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(1.6rem, 4vw, 2.8rem);
-      font-weight: 700; letter-spacing: -0.01em;
-    }
-    .section-title em {
-      font-style: normal;
-      color: var(--neon); text-shadow: var(--neon-text-glow);
-    }
+      /* =================== STATS STRIP =================== */
+      .stats-strip { background: rgba(57,255,20,0.04); border-top: 1px solid rgba(57,255,20,0.12); border-bottom: 1px solid rgba(57,255,20,0.12); padding: 3rem 1.5rem; }
+      .stats-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+      .stat-item {}
+      .stat-number {
+        font-family: 'Silkscreen', sans-serif; font-size: 2.4rem;
+        color: #39FF14; text-shadow: 0 0 10px #39FF14; display: block; line-height: 1;
+      }
+      .stat-label { font-family: 'Courier New', monospace; font-size: 0.75rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 0.5rem; display: block; }
 
-    /* ============================================================
-       HERO — bold 'Our Portfolio' version
-    ============================================================ */
-    .hero {
-      min-height: 65vh;
-      display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      text-align: center;
-      padding: calc(var(--nav-height) + 60px) 24px 80px;
-      position: relative; overflow: hidden;
-    }
-    .hero-grid-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background-image:
-        linear-gradient(rgba(57,255,20,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(57,255,20,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-    .hero-glow {
-      position: absolute;
-      width: 700px; height: 700px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(57,255,20,0.07) 0%, transparent 70%);
-      top: 50%; left: 50%; transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-    .hero-content { position: relative; z-index: var(--z-content); max-width: 900px; }
+      /* =================== FILTER BAR =================== */
+      .filter-section { padding: 2rem 1.5rem 0; }
+      .filter-bar { max-width: 1200px; margin: 0 auto; display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+      .filter-btn {
+        padding: 0.55rem 1.3rem; background: transparent;
+        color: #9ca3af; border: 1px solid #2a2a2a;
+        border-radius: 2rem; font-family: 'Courier New', monospace;
+        font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px;
+        cursor: pointer; transition: all 0.25s ease;
+      }
+      .filter-btn:hover, .filter-btn.active {
+        background: rgba(57,255,20,0.1); border-color: rgba(57,255,20,0.4);
+        color: #39FF14; box-shadow: 0 0 10px rgba(57,255,20,0.15);
+      }
 
-    .hero-tag {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.65rem; letter-spacing: 0.5em; text-transform: uppercase;
-      color: var(--neon); text-shadow: var(--neon-text-glow);
-      margin-bottom: 28px;
-      display: flex; align-items: center; justify-content: center; gap: 16px;
-      opacity: 0; animation: fadeUp 0.9s 0.2s forwards;
-    }
-    .hero-tag::before, .hero-tag::after {
-      content: ''; width: 48px; height: 1px;
-      background: var(--neon); box-shadow: var(--neon-glow);
-    }
-    .hero h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(2.6rem, 6vw, 5rem);
-      font-weight: 900; line-height: 1.1; letter-spacing: -0.01em;
-      margin-bottom: 24px;
-      opacity: 0; animation: fadeUp 0.9s 0.4s forwards;
-    }
-    .hero h1 em { font-style: normal; color: var(--neon); text-shadow: var(--neon-text-glow); }
-    .hero-sub {
-      font-size: 1rem; font-weight: 300;
-      color: var(--muted); letter-spacing: 0.06em;
-      max-width: 600px; margin: 0 auto 48px; line-height: 1.7;
-      opacity: 0; animation: fadeUp 0.9s 0.6s forwards;
-    }
-    .hero-stats {
-      display: flex; gap: 60px; justify-content: center; flex-wrap: wrap;
-      opacity: 0; animation: fadeUp 0.9s 0.8s forwards;
-    }
-    .stat { text-align: center; }
-    .stat-num {
-      font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 700;
-      color: var(--neon); text-shadow: var(--neon-text-glow); display: block;
-    }
-    .stat-label {
-      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted);
-    }
+      /* =================== CASE STUDIES GRID =================== */
+      .work-section { padding: 3rem 1.5rem 6rem; }
+      .work-grid {
+        max-width: 1200px; margin: 0 auto;
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem;
+      }
 
-    /* ============================================================
-       FILTER BAR
-    ============================================================ */
-    .filter-bar-section {
-      max-width: 1200px; margin: 0 auto;
-      padding: 0 32px 56px;
-    }
-    .filter-bar {
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0;
-    }
-    .filter-btn {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.6rem; font-weight: 600;
-      letter-spacing: 0.25em; text-transform: uppercase;
-      background: none; border: none; cursor: pointer;
-      color: var(--muted); padding: 14px 20px;
-      position: relative; transition: color 0.25s ease;
-    }
-    .filter-btn::after {
-      content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
-      height: 2px; background: var(--neon); box-shadow: var(--neon-glow);
-      transform: scaleX(0); transition: transform 0.3s ease;
-    }
-    .filter-btn:hover { color: var(--off-white); }
-    .filter-btn.active {
-      color: var(--neon); text-shadow: var(--neon-text-glow);
-    }
-    .filter-btn.active::after { transform: scaleX(1); }
+      /* Featured = spans 2 cols */
+      .cs-card {
+        background: linear-gradient(135deg, rgba(17,24,39,0.7), rgba(0,0,0,0.9));
+        border: 1px solid #1f2937; border-radius: 1rem; overflow: hidden;
+        transition: all 0.4s ease; display: flex; flex-direction: column;
+        opacity: 0; transform: translateY(40px);
+      }
+      .cs-card.visible { animation: fadeInUp 0.6s ease forwards; }
+      .cs-card:hover { border-color: #39FF14; box-shadow: 0 16px 50px rgba(57,255,20,0.18); transform: translateY(-8px); }
+      .cs-card.featured { grid-column: span 2; flex-direction: row; }
 
-    /* Result count badge */
-    .filter-count {
-      margin-left: auto;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.55rem; letter-spacing: 0.2em;
-      color: var(--muted);
-    }
-    .filter-count span {
-      color: var(--neon); text-shadow: var(--neon-text-glow);
-    }
+      .cs-card-image {
+        width: 100%; height: 220px;
+        background: linear-gradient(135deg, #0a1a00, #1a0500);
+        display: flex; align-items: center; justify-content: center;
+        border-bottom: 1px solid #1f2937; position: relative; overflow: hidden; flex-shrink: 0;
+      }
+      .cs-card.featured .cs-card-image { width: 45%; height: auto; border-bottom: none; border-right: 1px solid #1f2937; }
+      .cs-card-image i { font-size: 4rem; color: #39FF14; opacity: 0.2; }
+      .cs-label {
+        position: absolute; top: 1rem; left: 1rem;
+        background: rgba(57,255,20,0.12); border: 1px solid rgba(57,255,20,0.35);
+        color: #39FF14; font-size: 0.7rem; padding: 0.3rem 0.75rem;
+        border-radius: 2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+        font-family: 'Courier New', monospace;
+      }
+      .cs-card-content { padding: 2rem; flex: 1; display: flex; flex-direction: column; }
+      .cs-client { font-size: 0.72rem; color: #39FF14; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; font-family: 'Courier New', monospace; }
+      .cs-title { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 0.75rem; }
+      .cs-card.featured .cs-title { font-size: 1.4rem; }
+      .cs-description { color: #9ca3af; font-size: 0.88rem; line-height: 1.7; margin-bottom: 1.25rem; text-align: left; flex: 1; }
+      .cs-outcomes { margin-bottom: 1.25rem; }
+      .cs-outcome-item { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+      .cs-outcome-item i { color: #39FF14; font-size: 0.75rem; flex-shrink: 0; }
+      .cs-outcome-item span { color: #d1d5db; font-size: 0.84rem; }
+      .cs-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+      .cs-tag {
+        font-size: 0.72rem; background: rgba(57,255,20,0.07); border: 1px solid rgba(57,255,20,0.2);
+        color: #39FF14; padding: 0.25rem 0.7rem; border-radius: 2rem;
+        font-family: 'Courier New', monospace;
+      }
+      .cs-link {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        color: #39FF14; text-decoration: none; font-size: 0.85rem;
+        font-weight: 600; transition: gap 0.3s ease; margin-top: auto;
+      }
+      .cs-link:hover { gap: 0.85rem; }
+      .cs-link i { transition: transform 0.3s ease; }
+      .cs-link:hover i { transform: translateX(4px); }
 
-    /* ============================================================
-       PORTFOLIO GRID
-    ============================================================ */
-    #portfolio {
-      max-width: 1200px; margin: 0 auto;
-      padding: 0 32px 80px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-    }
+      /* =================== PROCESS TEASER =================== */
+      .process-section { background: linear-gradient(180deg, #000 0%, #060606 100%); }
+      .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+      .process-step {
+        text-align: center; padding: 2rem 1rem;
+        border: 1px solid #1f2937; border-radius: 1rem;
+        background: rgba(255,255,255,0.02); transition: all 0.3s ease;
+        opacity: 0; transform: translateY(30px);
+      }
+      .process-step.visible { animation: fadeInUp 0.6s ease forwards; }
+      .process-step:hover { border-color: rgba(57,255,20,0.35); background: rgba(57,255,20,0.03); }
+      .step-number {
+        font-family: 'Silkscreen', sans-serif; font-size: 2rem;
+        color: #39FF14; text-shadow: 0 0 10px #39FF14; display: block; margin-bottom: 1rem;
+      }
+      .step-title { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 700; color: white; margin-bottom: 0.5rem; }
+      .step-desc { color: #9ca3af; font-size: 0.84rem; line-height: 1.6; }
 
-    /* ── Project Card ── */
-    .port-card {
-      position: relative;
-      background: var(--black-2);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      overflow: hidden;
-      cursor: pointer;
-      transition:
-        border-color 0.35s ease,
-        box-shadow    0.35s ease,
-        transform     0.35s ease;
-      /* Accessible hide/show for filter */
-    }
-    .port-card[aria-hidden="true"] {
-      display: none;
-    }
-    .port-card:hover {
-      border-color: var(--border-bright);
-      box-shadow: var(--neon-glow);
-      transform: translateY(-6px);
-    }
+      /* =================== CTA =================== */
+      .cta-section { background: linear-gradient(135deg, rgba(57,255,20,0.06), rgba(0,0,0,0.6)); text-align: center; }
+      .cta-container { max-width: 750px; margin: 0 auto; }
+      .cta-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 800; margin-bottom: 1.25rem; }
+      .cta-description { font-size: 1.05rem; color: #9ca3af; margin-bottom: 2.5rem; line-height: 1.7; }
 
-    /* Image wrapper */
-    .port-thumb {
-      position: relative;
-      width: 100%; padding-top: 64%; /* 16:10 aspect */
-      overflow: hidden;
-    }
-    .port-thumb img, .port-thumb-placeholder {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease, filter 0.4s ease;
-    }
-    .port-card:hover .port-thumb img,
-    .port-card:hover .port-thumb-placeholder {
-      transform: scale(1.06);
-      filter: brightness(0.45);
-    }
+      /* =================== FOOTER =================== */
+      .site-footer {
+        background: #000; border-top: 1px solid rgba(57,255,20,0.15);
+        padding: 60px 1.5rem 0; font-family: 'Courier New', monospace;
+        position: relative; z-index: 2;
+      }
+      .footer-inner { max-width: 1200px; margin: 0 auto; }
+      .footer-grid {
+        display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 3rem; padding-bottom: 3rem;
+        border-bottom: 1px solid rgba(57,255,20,0.1);
+      }
+      .footer-brand .footer-logo {
+        display: flex; align-items: center; gap: 10px;
+        text-decoration: none; margin-bottom: 1.25rem;
+      }
+      .footer-brand .footer-logo img { width: 34px; height: 34px; border-radius: 7px; object-fit: cover; }
+      .footer-brand .footer-logo span { font-size: 13px; font-weight: bold; color: #39FF14; text-shadow: 0 0 8px rgba(57,255,20,0.55); letter-spacing: 0.5px; }
+      .footer-brand p { color: #6b7280; font-size: 0.82rem; line-height: 1.7; max-width: 280px; text-align: left; margin-bottom: 1.5rem; }
+      .footer-social { display: flex; gap: 0.75rem; }
+      .footer-social a {
+        width: 36px; height: 36px; border-radius: 50%;
+        background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+        display: flex; align-items: center; justify-content: center;
+        color: #9ca3af; font-size: 0.85rem; text-decoration: none; transition: all 0.3s ease;
+      }
+      .footer-social a:hover { background: rgba(57,255,20,0.12); border-color: rgba(57,255,20,0.4); color: #39FF14; box-shadow: 0 0 10px rgba(57,255,20,0.3); transform: translateY(-2px); }
+      .footer-col h4 { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 700; color: #39FF14; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.25rem; }
+      .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+      .footer-col ul li a { color: #6b7280; text-decoration: none; font-size: 0.82rem; transition: color 0.2s ease; letter-spacing: 0.3px; }
+      .footer-col ul li a:hover { color: #39FF14; }
+      .footer-contact-item { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.75rem; }
+      .footer-contact-item i { color: #39FF14; font-size: 0.85rem; margin-top: 2px; flex-shrink: 0; }
+      .footer-contact-item span { color: #6b7280; font-size: 0.82rem; line-height: 1.5; text-align: left; }
+      .footer-bottom { padding: 1.5rem 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+      .footer-bottom p { font-size: 0.78rem; color: #4b5563; }
+      .footer-bottom p span { color: #39FF14; text-shadow: 0 0 5px #39FF14; }
+      .footer-bottom-links { display: flex; gap: 1.5rem; }
+      .footer-bottom-links a { color: #4b5563; text-decoration: none; font-size: 0.78rem; transition: color 0.2s ease; }
+      .footer-bottom-links a:hover { color: #39FF14; }
 
-    /* Placeholder gradient fills (no external image requests) */
-    .port-thumb-placeholder {
-      display: flex; align-items: center; justify-content: center;
-    }
-    .ph-marahuyo   { background: linear-gradient(135deg, #0a0a0a 0%, #1a0a00 50%, #3a1a00 100%); }
-    .ph-nostalgic  { background: linear-gradient(135deg, #0a0a14 0%, #0a1428 50%, #142840 100%); }
-    .ph-charitos   { background: linear-gradient(135deg, #0a0a0a 0%, #1a0014 50%, #280014 100%); }
-    .ph-shutter    { background: linear-gradient(135deg, #0a0014 0%, #14001e 50%, #1e0028 100%); }
-    .ph-ngbs       { background: linear-gradient(135deg, #000a14 0%, #001428 50%, #002846 100%); }
-    .ph-proposal   { background: linear-gradient(135deg, #0a0a00 0%, #141400 50%, #281e00 100%); }
-    .ph-branding   { background: linear-gradient(135deg, #00140a 0%, #002814 50%, #003c1e 100%); }
-    .ph-video      { background: linear-gradient(135deg, #140000 0%, #280000 50%, #3c0000 100%); }
-    .ph-manuscript { background: linear-gradient(135deg, #000014 0%, #000028 50%, #00003c 100%); }
+      /* ── Responsive ── */
+      @media (max-width: 900px) {
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .footer-brand { grid-column: 1 / -1; }
+        .cs-card.featured { flex-direction: column; grid-column: span 1; }
+        .cs-card.featured .cs-card-image { width: 100%; height: 220px; border-right: none; border-bottom: 1px solid #1f2937; }
+        .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 600px) {
+        .footer-grid { grid-template-columns: 1fr; }
+        .footer-bottom { flex-direction: column; text-align: center; }
+        .footer-bottom-links { justify-content: center; }
+        .work-grid { grid-template-columns: 1fr; }
+        .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .stat-number { font-size: 1.8rem; }
+      }
+      @media (max-width: 1030px) {
+        .hamburger-menu {
+          display: flex; flex-direction: column; justify-content: center;
+          gap: 4px; cursor: pointer; position: absolute;
+          top: 50%; right: 13px; transform: translateY(-50%); z-index: 1001; padding: 5px;
+        }
+      }
+    </style>
+  </head>
 
-    /* Placeholder inner SVG / emoji art */
-    .ph-art {
-      font-size: 3.5rem; opacity: 0.25; user-select: none;
-      transition: opacity 0.3s ease;
-    }
-    .port-card:hover .ph-art { opacity: 0.08; }
+  <body>
+    <div class="floating-code-container" id="floatingCodeContainer"></div>
 
-    /* ── Hover overlay ── */
-    .port-overlay {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 14px;
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      pointer-events: none;
-    }
-    .port-card:hover .port-overlay { opacity: 1; pointer-events: auto; }
+    <div class="page-wrapper">
+      <!-- ── NAVBAR ── -->
+      <nav id="navbar">
+        <div class="logo">
+          <img src="assets/images/logo.png" alt="NGCS Logo" />
+          <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NexGenix Creative Solutions</a></p>
+          <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
+        </div>
+        <div class="hamburger-menu" id="hamburgerMenu">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+        <ul class="nav-list" id="navList">
+          <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
+          <li><a href="our-work.html" class="active">Our Work</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="product-landing.html">Products</a></li>
+          <li><a href="quote.html">Get a Quote</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+        <div class="auth-buttons">
+          <a href="dashboard.html" class="dashboard-btn">Dashboard</a>
+        </div>
+      </nav>
 
-    .port-overlay-desc {
-      font-size: 0.78rem; font-weight: 300;
-      color: var(--off-white); text-align: center;
-      line-height: 1.6; max-width: 80%;
-      padding: 0 12px;
-    }
-    .port-overlay-btn {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.58rem; font-weight: 700;
-      letter-spacing: 0.25em; text-transform: uppercase;
-      background: var(--neon); color: var(--black);
-      border: none; cursor: pointer;
-      padding: 12px 28px;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-    }
-    .port-overlay-btn:hover {
-      box-shadow: var(--neon-glow);
-      transform: translateY(-2px);
-    }
+      <!-- ── HERO ── -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <p class="hero-eyebrow">Work That Speaks for Itself</p>
+          <h1 class="hero-title">Our <span class="gradient-text">Case Studies</span></h1>
+          <p class="hero-subtitle">
+            Real projects. Real clients. Real results. Explore how we've helped businesses establish their digital presence, communicate their brand, and grow with confidence.
+          </p>
+          <div class="hero-cta">
+            <a href="#work" class="btn-primary">Explore Projects</a>
+            <a href="quote.html" class="btn-secondary">Start Your Project</a>
+          </div>
+        </div>
+      </section>
 
-    /* ── Card meta (below image) ── */
-    .port-meta {
-      padding: 18px 20px 20px;
-    }
-    .port-tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.52rem; font-weight: 600; letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--neon); text-shadow: var(--neon-text-glow);
-      background: var(--neon-dim);
-      border: 1px solid var(--border);
-      padding: 4px 10px; margin-bottom: 10px;
-    }
-    .port-card-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.85rem; font-weight: 700;
-      letter-spacing: 0.05em;
-      color: var(--white); margin-bottom: 8px;
-      line-height: 1.35;
-    }
-    .port-card-sub {
-      font-size: 0.75rem; font-weight: 300;
-      color: var(--muted); line-height: 1.6;
-    }
-
-    /* ── Work-in-Progress special card ── */
-    .port-card-wip {
-      position: relative;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      overflow: hidden;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 40px 28px;
-      min-height: 360px;
-    }
-    /* Pulsing radial glow */
-    .port-card-wip::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at center, rgba(57,255,20,0.04) 0%, transparent 70%);
-      animation: wipPulse 3s ease-in-out infinite;
-    }
-    @keyframes wipPulse {
-      0%, 100% { opacity: 0.5; }
-      50%       { opacity: 1; }
-    }
-    .wip-pulse-ring {
-      width: 64px; height: 64px; border-radius: 50%;
-      border: 1px solid var(--border-bright);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px; position: relative; z-index: 1;
-      animation: ringPulse 2s ease-in-out infinite;
-    }
-    @keyframes ringPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(57,255,20,0.3); }
-      50%       { box-shadow: 0 0 0 12px rgba(57,255,20,0); }
-    }
-    .wip-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--neon); box-shadow: var(--neon-glow);
-    }
-    .wip-label {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.55rem; letter-spacing: 0.5em; text-transform: uppercase;
-      color: var(--neon); text-shadow: var(--neon-text-glow);
-      margin-bottom: 12px; position: relative; z-index: 1;
-    }
-    .wip-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.9rem; font-weight: 700;
-      line-height: 1.4; margin-bottom: 12px;
-      position: relative; z-index: 1;
-    }
-    .wip-title em {
-      font-style: normal; color: var(--neon); text-shadow: var(--neon-text-glow);
-    }
-    .wip-desc {
-      font-size: 0.8rem; font-weight: 300;
-      color: var(--muted); line-height: 1.7;
-      max-width: 260px; margin-bottom: 24px;
-      position: relative; z-index: 1;
-    }
-    .wip-login-btn {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.6rem; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      background: var(--neon); color: var(--black);
-      border: none; cursor: pointer; padding: 13px 28px;
-      transition: box-shadow 0.3s, transform 0.3s;
-      display: inline-block; position: relative; z-index: 1;
-    }
-    .wip-login-btn:hover {
-      box-shadow: var(--neon-glow); transform: translateY(-2px);
-    }
-
-    /* No-results state */
-    .portfolio-empty {
-      grid-column: 1 / -1;
-      text-align: center; padding: 80px 24px;
-      display: none;
-    }
-    .portfolio-empty.visible { display: block; }
-    .portfolio-empty p {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.8rem; letter-spacing: 0.2em;
-      color: var(--muted);
-    }
-
-    /* ============================================================
-       LIGHTBOX MODAL
-    ============================================================ */
-    #lightbox {
-      position: fixed; inset: 0; z-index: calc(var(--z-overlay) - 10);
-      background: rgba(0,0,0,0.92);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      display: flex; align-items: center; justify-content: center;
-      padding: 24px;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-    #lightbox.open { opacity: 1; pointer-events: auto; }
-
-    .lb-inner {
-      position: relative;
-      max-width: 900px; width: 100%;
-      background: var(--black-2);
-      border: 1px solid var(--border-bright);
-      box-shadow: var(--neon-glow);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      overflow: hidden;
-      transform: scale(0.94);
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    #lightbox.open .lb-inner { transform: scale(1); }
-
-    /* Close button */
-    .lb-close {
-      position: absolute; top: 16px; right: 16px; z-index: 2;
-      width: 36px; height: 36px;
-      background: rgba(0,0,0,0.6); border: 1px solid var(--border);
-      cursor: pointer; color: var(--muted); font-size: 1rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: color 0.2s ease, border-color 0.2s ease;
-    }
-    .lb-close:hover { color: var(--neon); border-color: var(--neon); }
-    .lb-close svg { pointer-events: none; }
-
-    /* Left: preview */
-    .lb-preview {
-      position: relative;
-      min-height: 340px;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-    .lb-preview .port-thumb-placeholder {
-      position: static; width: 100%; height: 100%;
-      min-height: 340px;
-    }
-
-    /* Right: info panel */
-    .lb-info {
-      padding: 40px 36px;
-      display: flex; flex-direction: column; justify-content: space-between;
-      overflow-y: auto;
-    }
-    .lb-tag {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.52rem; letter-spacing: 0.4em; text-transform: uppercase;
-      color: var(--neon); text-shadow: var(--neon-text-glow);
-      margin-bottom: 16px;
-    }
-    .lb-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(1rem, 2.5vw, 1.5rem); font-weight: 700;
-      line-height: 1.25; margin-bottom: 16px;
-    }
-    .lb-client {
-      font-size: 0.72rem; color: var(--muted);
-      letter-spacing: 0.1em; margin-bottom: 20px;
-    }
-    .lb-client span { color: var(--off-white); }
-    .lb-desc {
-      font-size: 0.85rem; font-weight: 300;
-      color: var(--muted); line-height: 1.75;
-      margin-bottom: 24px; flex: 1;
-    }
-    .lb-deliverables {
-      margin-bottom: 28px;
-    }
-    .lb-deliverables-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.55rem; letter-spacing: 0.35em; text-transform: uppercase;
-      color: var(--neon); margin-bottom: 10px;
-    }
-    .lb-deliverables ul {
-      list-style: none; display: flex; flex-direction: column; gap: 6px;
-    }
-    .lb-deliverables li {
-      font-size: 0.78rem; color: var(--muted);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .lb-deliverables li::before {
-      content: '›'; color: var(--neon); font-size: 1rem; line-height: 1;
-    }
-    .lb-cta-row {
-      display: flex; gap: 12px; flex-wrap: wrap;
-    }
-
-    /* ============================================================
-       BUTTONS — exact copies from our-work.html
-    ============================================================ */
-    .btn-primary {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      background: var(--neon); color: var(--black);
-      padding: 16px 36px;
-      transition: box-shadow 0.3s, transform 0.3s;
-      display: inline-block; will-change: transform; border: none; cursor: pointer;
-    }
-    .btn-primary:hover { box-shadow: var(--neon-glow); transform: translateY(-2px); }
-
-    .btn-outline {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.65rem; font-weight: 600;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      background: transparent; color: var(--white);
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 16px 36px;
-      transition: border-color 0.3s, color 0.3s, transform 0.3s;
-      display: inline-block; will-change: transform; cursor: pointer;
-    }
-    .btn-outline:hover { border-color: var(--neon); color: var(--neon); transform: translateY(-2px); }
-
-    /* ============================================================
-       CTA BANNER — exact structure from our-work.html
-    ============================================================ */
-    .cta-banner {
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      padding: 80px 32px; text-align: center;
-      position: relative; overflow: hidden;
-    }
-    .cta-banner::before {
-      content: ''; position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(57,255,20,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(57,255,20,0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-    .cta-glow {
-      position: absolute; width: 500px; height: 250px; border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(57,255,20,0.1) 0%, transparent 70%);
-      top: 50%; left: 50%; transform: translate(-50%, -50%);
-    }
-    .cta-content { position: relative; z-index: var(--z-content); max-width: 680px; margin: 0 auto; }
-    .cta-banner .section-tag { margin-bottom: 16px; }
-    .cta-h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(1.6rem, 4vw, 2.8rem);
-      font-weight: 900; line-height: 1.15; margin-bottom: 20px;
-    }
-    .cta-h2 em { font-style: normal; color: var(--neon); text-shadow: var(--neon-text-glow); }
-    .cta-p {
-      font-size: 0.9rem; font-weight: 300;
-      color: var(--muted); line-height: 1.7; margin-bottom: 36px;
-    }
-    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-
-    /* ============================================================
-       FOOTER — exact copy from our-work.html
-    ============================================================ */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 48px 60px 40px;
-      display: flex; flex-direction: column;
-      align-items: center; gap: 12px; text-align: center;
-    }
-    .footer-logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.9rem; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--neon); text-shadow: var(--neon-text-glow);
-    }
-    .footer-logo span {
-      display: block; font-size: 0.6rem; color: var(--muted);
-      letter-spacing: 0.35em; font-weight: 400;
-      text-shadow: none; margin-top: 4px;
-    }
-    footer p { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; }
-
-    /* ============================================================
-       RESPONSIVE
-    ============================================================ */
-    @media (max-width: 1024px) {
-      #portfolio { grid-template-columns: repeat(2, 1fr); }
-      .lb-inner  { grid-template-columns: 1fr; max-width: 560px; }
-      .lb-preview { min-height: 220px; }
-      .lb-preview .port-thumb-placeholder { min-height: 220px; }
-      .lb-info { padding: 28px 28px 32px; }
-    }
-    @media (max-width: 768px) {
-      nav { padding: 0 24px; }
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
-      footer { padding: 40px 24px; }
-      .filter-bar-section { padding: 0 20px 40px; }
-      .filter-btn { font-size: 0.55rem; padding: 12px 14px; }
-      .filter-count { display: none; }
-    }
-    @media (max-width: 600px) {
-      #portfolio { grid-template-columns: 1fr; padding: 0 20px 60px; }
-      .port-card-wip { min-height: 280px; }
-    }
-    @media (max-width: 480px) {
-      .hero h1 { font-size: 2.2rem; }
-      .hero-stats { gap: 32px; }
-    }
-  </style>
-</head>
-<body>
-
-<!-- ================================================================
-     NAVIGATION — exact structure from our-work.html
-================================================================ -->
-<nav aria-label="Main navigation">
-  <a href="/" class="nav-logo" aria-label="NexGenix Creative Solutions home">
-    NexGenix
-    <span>Creative Solutions</span>
-  </a>
-
-  <ul class="nav-links" role="list">
-    <li><a href="/">Home</a></li>
-    <li><a href="/our-work.html" class="active" aria-current="page">Our Work</a></li>
-    <li><a href="/how-it-works.html">How It Works</a></li>
-    <li><a href="/faq.html">FAQ</a></li>
-    <li><a href="mailto:nexgenixcreativesolutions@gmail.com">Contact</a></li>
-  </ul>
-
-  <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-mobile">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- Mobile nav drawer -->
-<div class="nav-mobile" id="nav-mobile" aria-hidden="true">
-  <a href="/">Home</a>
-  <a href="/our-work.html" aria-current="page">Our Work</a>
-  <a href="/how-it-works.html">How It Works</a>
-  <a href="/faq.html">FAQ</a>
-  <a href="mailto:nexgenixcreativesolutions@gmail.com">Contact</a>
-</div>
-
-<!-- ================================================================
-     HERO
-================================================================ -->
-<header class="hero" aria-labelledby="hero-heading">
-  <div class="hero-grid-bg" aria-hidden="true"></div>
-  <div class="hero-glow" aria-hidden="true"></div>
-
-  <div class="hero-content">
-    <p class="hero-tag" aria-hidden="true">NexGenix Portfolio</p>
-    <h1 id="hero-heading">
-      Our <em>Portfolio</em>
-    </h1>
-    <p class="hero-sub">
-      Transforming ideas into impact — a curated collection of design, development, branding, and writing projects that drove real results for real businesses.
-    </p>
-
-    <div class="hero-stats" aria-label="Portfolio statistics">
-      <div class="stat">
-        <span class="stat-num" id="stat-projects">0</span>
-        <span class="stat-label">Projects Completed</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num" id="stat-clients">0</span>
-        <span class="stat-label">Clients Served</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num" id="stat-certs">0</span>
-        <span class="stat-label">Certificates Granted</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num" id="stat-books">0</span>
-        <span class="stat-label">Books Sold</span>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- ================================================================
-     FILTER BAR
-================================================================ -->
-<div class="filter-bar-section reveal">
-  <nav class="filter-bar" aria-label="Portfolio filter">
-    <button class="filter-btn active" data-filter="all" aria-pressed="true">All Work</button>
-    <button class="filter-btn" data-filter="digital-design" aria-pressed="false">Digital Design</button>
-    <button class="filter-btn" data-filter="web-development" aria-pressed="false">Web Development</button>
-    <button class="filter-btn" data-filter="branding" aria-pressed="false">Branding</button>
-    <button class="filter-btn" data-filter="professional-writing" aria-pressed="false">Professional Writing</button>
-    <button class="filter-btn" data-filter="published-books" aria-pressed="false">Published Books</button>
-    <span class="filter-count">Showing <span id="visible-count">9</span> projects</span>
-  </nav>
-</div>
-
-<!-- ================================================================
-     PORTFOLIO GRID
-================================================================ -->
-<main>
-<section id="portfolio" aria-label="Portfolio grid">
-
-  <!-- 1. Marahuyo Designs — Branding + Web -->
-  <article class="port-card reveal"
-    data-filter="branding digital-design web-development"
-    data-title="Marahuyo Designs"
-    data-client="Marahuyo Designs"
-    data-category="Branding / Web Design"
-    data-desc="A full brand identity and e-commerce website for a Filipino artisan apparel label. Included a scroll-triggered zipper animation, glassmorphism product cards, and a cohesive visual language that doubled the client's social engagement within the first month."
-    data-deliverables='["Logo system & brand style guide","E-commerce landing page","Scroll-triggered zipper animation","Social media asset templates","Custom color palette & typography set"]'
-    aria-label="Marahuyo Designs project">
-    <div class="port-thumb">
-      <div class="port-thumb-placeholder ph-marahuyo">
-        <span class="ph-art">🧵</span>
-      </div>
-      <div class="port-overlay" aria-hidden="true">
-        <p class="port-overlay-desc">Full brand identity &amp; animated e-commerce experience for a Filipino artisan label.</p>
-        <button class="port-overlay-btn" onclick="openLightbox(this.closest('.port-card'))">View Project</button>
-      </div>
-    </div>
-    <div class="port-meta">
-      <div class="port-tag">Branding</div>
-      <h2 class="port-card-title">Marahuyo Designs</h2>
-      <p class="port-card-sub">Brand identity, e-commerce UI, and custom scroll animation for a Filipino apparel label.</p>
-    </div>
-  </article>
-
-  <!-- 2. Nostalgic Trails — UI/UX + Video -->
-  <article class="port-card reveal reveal-delay-1"
-    data-filter="digital-design web-development"
-    data-title="Nostalgic Trails"
-    data-client="Nostalgic Trails"
-    data-category="UI/UX Design / Video Production"
-    data-desc="An editorial-inspired travel platform with a vintage Fujifilm Instax aesthetic. Delivered a complete UI/UX overhaul, promotional video ads, and a fully responsive landing page that increased demo sign-ups by 40% in the first two weeks."
-    data-deliverables='["Full UI/UX redesign (Figma → code)","Responsive landing page","Promotional video ads (30s, 60s cuts)","Photography direction & editing","Instax-inspired color grade system"]'
-    aria-label="Nostalgic Trails project">
-    <div class="port-thumb">
-      <div class="port-thumb-placeholder ph-nostalgic">
-        <span class="ph-art">🗺️</span>
-      </div>
-      <div class="port-overlay" aria-hidden="true">
-        <p class="port-overlay-desc">Vintage-inspired travel platform with editorial UI and short-form video ads.</p>
-        <button class="port-overlay-btn" onclick="openLightbox(this.closest('.port-card'))">View Project</button>
-      </div>
-    </div>
-    <div class="port-meta">
-      <div class="port-tag">UI/UX Design</div>
-      <h2 class="port-card-title">Nostalgic Trails</h2>
-      <p class="port-card-sub">Editorial travel UI, promotional video production, and Instax-inspired visual system.</p>
-    </div>
-  </article>
-
-  <!-- 3. Charito's Food & Beverage — Branding + Web -->
-  <article class="port-card reveal reveal-delay-2"
-    data-filter="branding digital-design web-development"
-    data-title="Charito's Food & Beverage"
-    data-client="Charito's Food & Beverage"
-    data-category="Branding / Web Development"
-    data-desc="End-to-end digital presence for a local F&B brand. From logo design and menu layout to social media assets and a fully responsive website with an online ordering flow — giving Charito's a premium look on a startup budget."
-    data-deliverables='["Logo & brand identity system","Responsive website with ordering flow","Menu design (print & digital)","Social media templates (12 posts)","Business card & packaging design"]'
-    aria-label="Charito's Food and Beverage project">
-    <div class="port-thumb">
-      <div class="port-thumb-placeholder ph-charitos">
-        <span class="ph-art">🍽️</span>
-      </div>
-      <div class="port-overlay" aria-hidden="true">
-        <p class="port-overlay-desc">Complete brand system and ordering website for a local Filipino food business.</p>
-        <button class="port-overlay-btn" onclick="openLightbox(this.closest('.port-card'))">View Project</button>
-      </div>
-    </div>
-    <div class="port-meta">
-      <div class="port-tag">Branding</div>
-      <h2 class="port-card-title">Charito's Food &amp; Beverage</h2>
-      <p class="port-card-sub">Full brand system, menu design, and ordering website for a Zamboanga F&B brand.</p>
-    </div>
-  </article>
-
-  <!-- 4. Shutter Zone Media — Web Redesign -->
-  <article class="port-card reveal"
-    data-filter="digital-design web-development"
-    data-title="Shutter Zone Media"
-    data-client="Shutter Zone Media"
-    data-category="Web Design / Visual Identity"
-    data-desc="A full colour-scheme redesign and custom SVG logo recreation for a Wisconsin/Illinois real estate photography company. Inspired by editorial and Fujifilm Instax aesthetics, the redesign elevated the brand's positioning in the premium property market."
-    data-deliverables='["Custom SVG logo recreation","Navy/blue colour-scheme redesign","Proposal page (HTML & .docx)","Editorial vintage aesthetic system","Photography preset mood guide"]'
-    aria-label="Shutter Zone Media project">
-    <div class="port-thumb">
-      <div class="port-thumb-placeholder ph-shutter">
-        <span class="ph-art">📸</span>
-      </div>
-      <div class="port-overlay" aria-hidden="true">
-        <p class="port-overlay-desc">Navy redesign &amp; SVG logo for a premium real estate photography studio.</p>
-        <button class="port-overlay-btn" onclick="openLightbox(this.closest('.port-card'))">View Project</button>
-      </div>
-    </div>
-    <div class="port-meta">
-      <div class="port-tag">Web Design</div>
-      <h2 class="port-card-title">Shutter Zone Media</h2>
-      <p class="port-card-sub">Editorial redesign and SVG logo for a Wisconsin real estate photography studio.</p>
-    </div>
-  </article>
-
-  <!-- 5. NGBS Platform — Web Development -->
-  <article class="port-card reveal reveal-delay-1"
-    data-filter="web-development digital-design"
-    data-title="NexGenix Business School"
-    data-client="NGBS (Internal)"
-    data-category="Web Development / EdTech"
-    data-desc="Design and development of the full NexGenix Business School web platform — including a dark navy design system, complimentary and premium course pages, QR-code certificate verification with LinkedIn deep-linking, and a shareable URL architecture."
-    data-deliverables='["Complimentary & premium course pages","QR code certificate verification system","LinkedIn Add to Profile deep-linking","Shareable URL architecture","Dark navy design system (CSS variables)"]'
-    aria-label="NexGenix Business School platform project">
-    <div class="port-thumb">
-      <div class="port-thumb-placeholder ph-ngbs">
-        <span class="ph-art">🎓</span>
-      </div>
-      <div class="port-overlay" aria-hidden="true">
-        <p class="port-overlay-desc">Full EdTech platform with QR certificate verification and LinkedIn integration.</p>
-        <button class="port-overlay-btn" onclick="openLightbox(this.closest('.port-card'))">View Project</button>
-      </div>
-    </div>
-    <div class="port-meta">
-      <div class="port-tag">Web Development</div>
-      <h2 class="port-card-title">NexGenix Business School</h2>
-      <p class="port-card-sub">EdTech platform with certificate verification, dark design system, and LinkedIn integration.</p>
-    </div>
-  </article>
-
-  <!-- 6. NGCS Client Dashboard — Web Development -->
-  <article class="port-card reveal reveal-delay-2"
-    data-filter="web-development digital-design"
-    data-title="NGCS Client Dashboard"
-    data-client="NGCS (Internal)"
-    data-category="Web App / UI Design"
-    data-desc="A fully featured client-facing dashboard with Supabase authentication, real-time project status tracking, jsPDF invoice generation in dark-themed A4 format, currency switching (PHP/USD at ÷56.50), and an interactive quotation calculator."
-    data-deliverables='["Supabase auth integration","Real-time project status tracker","jsPDF invoice generator (dark A4)","PHP/USD currency switcher","Interactive quotation calculator"]'
-    aria-label="NGCS Client Dashboard project">
-    <div class="port-thumb">
-      <div class="port-thumb-placeholder ph-proposal">
-        <span class="ph-art">📊</span>
-      </div>
-      <div class="port-overlay" aria-hidden="true">
-        <p class="port-overlay-desc">Client dashboard with Supabase auth, invoice generation, and quotation calculator.</p>
-        <button class="port-overlay-btn" onclick="openLightbox(this.closest('.port-card'))">View Project</button>
-      </div>
-    </div>
-    <div class="port-meta">
-      <div class="port-tag">Web App</div>
-      <h2 class="port-card-title">NGCS Client Dashboard</h2>
-      <p class="port-card-sub">Supabase-powered client portal with real-time tracking, PDF invoices, and quotation tools.</p>
-    </div>
-  </article>
-
-  <!-- 7. Brand Identity System — Branding -->
-  <article class="port-card reveal"
-    data-filter="branding digital-design"
-    data-title="SME Brand Identity System"
-    data-client="Multiple SME Clients"
-    data-category="Branding"
-    data-desc="A series of brand identity packages delivered to small and medium enterprises across the Philippines. Each package included a full logo system, brand style guide, colour palette, typography set, and a starter kit of print-ready collateral."
-    data-deliverables='["Primary, secondary & icon logos","Brand style guide (24-page PDF)","Business card & letterhead design","Social media profile kit","Print-ready collateral files"]'
-    aria-label="SME Brand Identity project">
-    <div class="port-thumb">
-      <div class="port-thumb-placeholder ph-branding">
-        <span class="ph-art">🎨</span>
-      </div>
-      <div class="port-overlay" aria-hidden="true">
-        <p class="port-overlay-desc">Full brand identity packages for Philippine SMEs — logo to print-ready collateral.</p>
-        <button class="port-overlay-btn" onclick="openLightbox(this.closest('.port-card'))">View Project</button>
-      </div>
-    </div>
-    <div class="port-meta">
-      <div class="port-tag">Branding</div>
-      <h2 class="port-card-title">SME Brand Identity Series</h2>
-      <p class="port-card-sub">Logo systems, style guides, and print-ready collateral for Philippine small businesses.</p>
-    </div>
-  </article>
-
-  <!-- 8. Video Ad Production — Digital Design -->
-  <article class="port-card reveal reveal-delay-1"
-    data-filter="digital-design"
-    data-title="Video Ad Campaigns"
-    data-client="Multiple Clients"
-    data-category="Video Production"
-    data-desc="A collection of short-form video advertisements produced for social media distribution. Deliverables covered concept, script, motion graphics, colour grading, and multi-format exports optimised for Facebook, Instagram, and TikTok placements."
-    data-deliverables='["Concept & script development","Motion graphics & transitions","Professional colour grading","Multi-format exports (16:9, 9:16, 1:1)","Ad caption & hashtag copy"]'
-    aria-label="Video Ad Campaigns project">
-    <div class="port-thumb">
-      <div class="port-thumb-placeholder ph-video">
-        <span class="ph-art">🎬</span>
-      </div>
-      <div class="port-overlay" aria-hidden="true">
-        <p class="port-overlay-desc">Social-first video ads — concept to multi-format delivery for Facebook, Instagram &amp; TikTok.</p>
-        <button class="port-overlay-btn" onclick="openLightbox(this.closest('.port-card'))">View Project</button>
-      </div>
-    </div>
-    <div class="port-meta">
-      <div class="port-tag">Video Production</div>
-      <h2 class="port-card-title">Video Ad Campaigns</h2>
-      <p class="port-card-sub">Social-first video ads with motion graphics, colour grading, and multi-format delivery.</p>
-    </div>
-  </article>
-
-  <!-- 9. Manuscript — Professional Writing -->
-  <article class="port-card reveal reveal-delay-2"
-    data-filter="professional-writing published-books"
-    data-title="Published Business Manuscripts"
-    data-client="SME Founders"
-    data-category="Professional Writing / Publishing"
-    data-desc="Ghost-written and co-authored business manuscripts, investor proposals, and company profiles for Philippine entrepreneurs. Each project involved deep research, structured narrative development, and professional layout for print and digital distribution."
-    data-deliverables='["Ghost-writing & co-authoring","Investor pitch deck narrative","Company profile & brand story","Print-ready interior layout","Digital PDF & eBook formatting"]'
-    aria-label="Published Business Manuscripts project">
-    <div class="port-thumb">
-      <div class="port-thumb-placeholder ph-manuscript">
-        <span class="ph-art">📖</span>
-      </div>
-      <div class="port-overlay" aria-hidden="true">
-        <p class="port-overlay-desc">Ghost-written manuscripts, investor proposals, and company profiles for Philippine founders.</p>
-        <button class="port-overlay-btn" onclick="openLightbox(this.closest('.port-card'))">View Project</button>
-      </div>
-    </div>
-    <div class="port-meta">
-      <div class="port-tag">Manuscript</div>
-      <h2 class="port-card-title">Business Manuscripts &amp; Proposals</h2>
-      <p class="port-card-sub">Ghost-written manuscripts, investor decks, and company profiles for Philippine entrepreneurs.</p>
-    </div>
-  </article>
-
-  <!-- WORK IN PROGRESS CARD -->
-  <div class="port-card-wip reveal reveal-delay-3"
-    role="complementary"
-    aria-label="Work in Progress — active projects">
-    <div class="wip-pulse-ring" aria-hidden="true">
-      <div class="wip-dot"></div>
-    </div>
-    <p class="wip-label">Currently Active</p>
-    <h3 class="wip-title">
-      <em>5</em> Projects in Progress
-    </h3>
-    <p class="wip-desc">
-      We're currently working on 5 active client projects. Are you a client? Log in to your dashboard to track real-time status, review milestones, and download your latest deliverables.
-    </p>
-    <a href="login-signup.html"
-       class="wip-login-btn"
-       onclick="if(typeof NGCS_Auth!=='undefined'&&NGCS_Auth.isLoggedIn()){window.location.href='dashboard.html';event.preventDefault();}">
-      Log In to Track Your Project
-    </a>
-  </div>
-
-  <!-- No results state -->
-  <div class="portfolio-empty" id="portfolioEmpty" aria-live="polite">
-    <p>No projects match this filter.</p>
-  </div>
-
-</section>
-</main>
-
-<!-- ================================================================
-     CTA BANNER — exact structure from our-work.html
-================================================================ -->
-<section class="cta-banner reveal" aria-labelledby="cta-heading">
-  <div class="cta-glow" aria-hidden="true"></div>
-  <div class="cta-content">
-    <div class="section-tag">Let's Create Together</div>
-    <div class="cta-h2" id="cta-heading">
-      Ready to be our next <em>Success Story?</em>
-    </div>
-    <p class="cta-p">
-      Whether you need a bold brand identity, a high-converting website, or a manuscript that commands attention — we're here to make it happen. Let's talk.
-    </p>
-    <div class="cta-buttons">
-      <a href="mailto:nexgenixcreativesolutions@gmail.com" class="btn-primary">Start a Project</a>
-      <a href="how-it-works.html" class="btn-outline">See How We Work</a>
-    </div>
-  </div>
-</section>
-
-<!-- ================================================================
-     FOOTER — exact copy from our-work.html
-================================================================ -->
-<footer>
-  <div class="footer-logo">
-    NexGenix
-    <span>Creative Solutions</span>
-  </div>
-  <p>© 2026 NexGenix Creative Solutions. All Rights Reserved.</p>
-  <p>Web Design · Branding · Digital Identity · Professional Writing</p>
-</footer>
-
-<!-- ================================================================
-     LIGHTBOX MODAL
-================================================================ -->
-<div id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-title-text" aria-hidden="true">
-  <div class="lb-inner">
-    <button class="lb-close" id="lb-close-btn" aria-label="Close project preview">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-    </button>
-
-    <!-- Left: visual preview -->
-    <div class="lb-preview" id="lb-preview"></div>
-
-    <!-- Right: project info -->
-    <div class="lb-info">
-      <div>
-        <p class="lb-tag" id="lb-category"></p>
-        <h2 class="lb-title" id="lb-title-text"></h2>
-        <p class="lb-client">Client: <span id="lb-client"></span></p>
-        <p class="lb-desc" id="lb-desc"></p>
-        <div class="lb-deliverables">
-          <p class="lb-deliverables-title">Key Deliverables</p>
-          <ul id="lb-deliverables-list"></ul>
+      <!-- ── STATS STRIP ── -->
+      <div class="stats-strip">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-number">4.8k+</span>
+            <span class="stat-label">Projects Delivered</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Client Satisfaction</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">300+</span>
+            <span class="stat-label">Templates</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">1.3k</span>
+            <span class="stat-label">Clients Served</span>
+          </div>
         </div>
       </div>
-      <div class="lb-cta-row">
-        <a href="mailto:nexgenixcreativesolutions@gmail.com" class="btn-primary" style="font-size:0.58rem; padding:13px 24px;">Start a Similar Project</a>
-        <button class="btn-outline" style="font-size:0.58rem; padding:13px 20px;" onclick="closeLightbox()">Close</button>
+
+      <!-- ── FILTER BAR ── -->
+      <div class="filter-section">
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All Projects</button>
+          <button class="filter-btn" data-filter="branding">Branding</button>
+          <button class="filter-btn" data-filter="web">Web Design</button>
+          <button class="filter-btn" data-filter="video">Video Production</button>
+          <button class="filter-btn" data-filter="uiux">UI/UX</button>
+        </div>
       </div>
+
+      <!-- ── WORK GRID ── -->
+      <section class="work-section" id="work">
+        <div class="work-grid" id="workGrid">
+
+          <!-- Featured: Marahuyo -->
+          <div class="cs-card featured" data-category="branding web uiux">
+            <div class="cs-card-image">
+              <i class="fas fa-tshirt"></i>
+              <span class="cs-label">⭐ Featured</span>
+            </div>
+            <div class="cs-card-content">
+              <p class="cs-client">Marahuyo Designs</p>
+              <h3 class="cs-title">Apparel Brand Identity & Interactive Web Experience</h3>
+              <p class="cs-description">
+                A full-scale brand development project for a Filipino apparel label — encompassing logo creation, color system definition, typography pairing, and a custom website featuring a scroll-triggered zipper unzip animation that reinforced the brand's bold, tactile identity. We resolved complex iframe scroll environment issues to deliver a seamless and memorable product reveal experience.
+              </p>
+              <div class="cs-outcomes">
+                <div class="cs-outcome-item"><i class="fas fa-check-circle"></i><span>Custom SVG scroll animation tied to brand story</span></div>
+                <div class="cs-outcome-item"><i class="fas fa-check-circle"></i><span>Complete visual identity system developed from scratch</span></div>
+                <div class="cs-outcome-item"><i class="fas fa-check-circle"></i><span>Mobile-responsive, performance-optimized site</span></div>
+              </div>
+              <div class="cs-tags">
+                <span class="cs-tag">Branding</span>
+                <span class="cs-tag">Web Design</span>
+                <span class="cs-tag">UI Animation</span>
+                <span class="cs-tag">UI/UX</span>
+              </div>
+              <a href="#" class="cs-link">View Case Study <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Nostalgic Trails -->
+          <div class="cs-card" data-category="web uiux">
+            <div class="cs-card-image">
+              <i class="fas fa-route"></i>
+              <span class="cs-label">Web Design</span>
+            </div>
+            <div class="cs-card-content">
+              <p class="cs-client">Nostalgic Trails</p>
+              <h3 class="cs-title">Travel Experience Website</h3>
+              <p class="cs-description">
+                An immersive, story-driven web experience for a travel brand specializing in cultural and heritage tours. We transformed dry itinerary copy into emotionally resonant journeys, improving visitor engagement and boosting inquiry conversion.
+              </p>
+              <div class="cs-outcomes">
+                <div class="cs-outcome-item"><i class="fas fa-check-circle"></i><span>Story-first content architecture</span></div>
+                <div class="cs-outcome-item"><i class="fas fa-check-circle"></i><span>Increased inquiry conversions</span></div>
+              </div>
+              <div class="cs-tags">
+                <span class="cs-tag">Web Development</span>
+                <span class="cs-tag">UI/UX</span>
+                <span class="cs-tag">Content Strategy</span>
+              </div>
+              <a href="#" class="cs-link">View Case Study <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Charito's -->
+          <div class="cs-card" data-category="video branding">
+            <div class="cs-card-image">
+              <i class="fas fa-utensils"></i>
+              <span class="cs-label">Video Production</span>
+            </div>
+            <div class="cs-card-content">
+              <p class="cs-client">Charito's Food & Beverage</p>
+              <h3 class="cs-title">Brand Video & Digital Menu System</h3>
+              <p class="cs-description">
+                Produced polished promotional video content and designed a digital menu system that elevated the F&B brand's visual presentation. The deliverables helped the client attract a broader customer base and communicate their offerings more effectively.
+              </p>
+              <div class="cs-outcomes">
+                <div class="cs-outcome-item"><i class="fas fa-check-circle"></i><span>Promotional video with professional editing & color grading</span></div>
+                <div class="cs-outcome-item"><i class="fas fa-check-circle"></i><span>Print-ready & digital menu design</span></div>
+              </div>
+              <div class="cs-tags">
+                <span class="cs-tag">Video Production</span>
+                <span class="cs-tag">Graphic Design</span>
+                <span class="cs-tag">Branding</span>
+              </div>
+              <a href="#" class="cs-link">View Case Study <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Shutter Zone Media -->
+          <div class="cs-card" data-category="branding web">
+            <div class="cs-card-image">
+              <i class="fas fa-camera"></i>
+              <span class="cs-label">Branding</span>
+            </div>
+            <div class="cs-card-content">
+              <p class="cs-client">Shutter Zone Media</p>
+              <h3 class="cs-title">Real Estate Photography Brand Overhaul</h3>
+              <p class="cs-description">
+                A comprehensive brand refresh for a Wisconsin/Illinois-based real estate photography company — including a color-scheme redesign to navy and blue tones, a custom SVG logo recreation, a restyled proposal page aligned to the NGCS brand system, and a DOCX proposal version for client presentations.
+              </p>
+              <div class="cs-outcomes">
+                <div class="cs-outcome-item"><i class="fas fa-check-circle"></i><span>SVG logo rebuilt from scratch for scalability</span></div>
+                <div class="cs-outcome-item"><i class="fas fa-check-circle"></i><span>Cohesive navy/blue brand identity system</span></div>
+              </div>
+              <div class="cs-tags">
+                <span class="cs-tag">Logo Design</span>
+                <span class="cs-tag">Brand Identity</span>
+                <span class="cs-tag">Proposal Design</span>
+              </div>
+              <a href="#" class="cs-link">View Case Study <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- NGCS Dashboard -->
+          <div class="cs-card" data-category="web uiux">
+            <div class="cs-card-image" style="background: linear-gradient(135deg, #001a0a, #0a0a1a);">
+              <i class="fas fa-th-large"></i>
+              <span class="cs-label">UI/UX</span>
+            </div>
+            <div class="cs-card-content">
+              <p class="cs-client">NexGenix Creative Solutions</p>
+              <h3 class="cs-title">Client-Facing Service Dashboard</h3>
+              <p class="cs-description">
+                Built an internal client dashboard with Supabase authentication, EmailJS integration, jsPDF invoice generation, a PHP/USD currency switcher, and an interactive quotation calculator — giving clients a seamless self-serve ordering and project-tracking experience.
+              </p>
+              <div class="cs-outcomes">
+                <div class="cs-outcome-item"><i class="fas fa-check-circle"></i><span>Supabase auth with guest ordering support</span></div>
+                <div class="cs-outcome-item"><i class="fas fa-check-circle"></i><span>A4 dark-themed PDF invoice generation</span></div>
+              </div>
+              <div class="cs-tags">
+                <span class="cs-tag">Web App</span>
+                <span class="cs-tag">UI/UX</span>
+                <span class="cs-tag">Supabase</span>
+                <span class="cs-tag">JavaScript</span>
+              </div>
+              <a href="dashboard.html" class="cs-link">View Live Dashboard <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ── PROCESS TEASER ── -->
+      <section class="process-section">
+        <div class="section-inner">
+          <div class="section-header">
+            <p class="section-eyebrow">How We Work</p>
+            <h2 class="section-title">Our <span class="gradient-text">Process</span></h2>
+            <div class="neon-divider"></div>
+            <p class="section-subtitle" style="margin-top:1rem;">Every great result starts with a clear, structured approach.</p>
+          </div>
+          <div class="process-steps">
+            <div class="process-step">
+              <span class="step-number">01</span>
+              <h4 class="step-title">Discovery</h4>
+              <p class="step-desc">We learn your business, goals, and audience before we write a single line of code or design a single pixel.</p>
+            </div>
+            <div class="process-step">
+              <span class="step-number">02</span>
+              <h4 class="step-title">Strategy</h4>
+              <p class="step-desc">A tailored roadmap is built around your objectives — no templates, no one-size-fits-all packages.</p>
+            </div>
+            <div class="process-step">
+              <span class="step-number">03</span>
+              <h4 class="step-title">Execution</h4>
+              <p class="step-desc">Our team delivers with precision, keeping you informed at every milestone with transparent communication.</p>
+            </div>
+            <div class="process-step">
+              <span class="step-number">04</span>
+              <h4 class="step-title">Launch & Support</h4>
+              <p class="step-desc">We don't disappear after delivery — post-launch support ensures everything runs exactly as intended.</p>
+            </div>
+          </div>
+          <div style="text-align:center; margin-top:3rem;">
+            <a href="how-it-works.html" class="btn-secondary">See the Full Process <i class="fas fa-arrow-right" style="margin-left:6px;"></i></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CTA ── -->
+      <section class="cta-section">
+        <div class="cta-container">
+          <h2 class="cta-title">Ready to Be Our <span class="gradient-text">Next Case Study?</span></h2>
+          <p class="cta-description">Let's create something remarkable together. Tell us about your project and get a free quote within 24 hours.</p>
+          <div class="hero-cta">
+            <a href="quote.html" class="btn-primary">Get a Free Quote</a>
+            <a href="how-it-works.html" class="btn-secondary">Learn How It Works</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── FOOTER ── -->
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <div class="footer-grid">
+            <div class="footer-brand">
+              <a href="https://nexgenixcreativesolutions.github.io" class="footer-logo">
+                <img src="assets/images/logo.png" alt="NGCS Logo" />
+                <span>NexGenix Creative Solutions</span>
+              </a>
+              <p>A digital creative agency based in Zamboanga City, Philippines — delivering web design, branding, video production, and online education for forward-thinking businesses.</p>
+              <div class="footer-social">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+              </div>
+            </div>
+            <div class="footer-col">
+              <h4>Services</h4>
+              <ul>
+                <li><a href="#">Web Design & Development</a></li>
+                <li><a href="#">UI/UX Design</a></li>
+                <li><a href="#">Brand Identity</a></li>
+                <li><a href="#">Video Production</a></li>
+                <li><a href="#">Content Writing</a></li>
+                <li><a href="#">Online Tutoring (K-12)</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
+                <li><a href="https://nexgenixcreativesolutions.github.io/our-work">Our Work</a></li>
+                <li><a href="https://nexgenixcreativesolutions.github.io/how-it-works">How It Works</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="https://nexgenixcreativesolutions.github.io/privacy-policy">Privacy Policy</a></li>
+                <li><a href="https://nexgenixbusinessschool.github.io">Business School</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Get In Touch</h4>
+              <div class="footer-contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>nexgenixcreativesolutions@gmail.com</span>
+              </div>
+              <div class="footer-contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Zamboanga City, Philippines</span>
+              </div>
+              <div class="footer-contact-item">
+                <i class="fas fa-clock"></i>
+                <span>Mon – Fri, 8 AM – 6 PM PHT</span>
+              </div>
+              <div style="margin-top:1.25rem;">
+                <a href="quote.html" class="btn-primary" style="font-size:0.78rem; padding:0.6rem 1.25rem;">Get a Free Quote</a>
+              </div>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2023–2026 <span>NexGenix Creative Solutions</span>. All rights reserved.</p>
+            <div class="footer-bottom-links">
+              <a href="privacy-policy.html">Privacy Policy</a>
+              <a href="faq.html">FAQ</a>
+              <a href="quote.html">Get a Quote</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
-  </div>
-</div>
 
-<!-- ================================================================
-     SCRIPTS
-================================================================ -->
-<!-- Auth Guard (optional, non-blocking) -->
-<script src="auth.js" defer></script>
-
-<script>
-  /* ============================================================
-     SCROLL REVEAL — exact from our-work.html
-  ============================================================ */
-  const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        revealObserver.unobserve(e.target);
+    <script>
+      // Floating code bg
+      const snippets = ['const ngcs = buildBrand();','function createImpact() {','<section class="results">','async function deliverValue() {','export default Excellence;','git commit -m "ship it"','SELECT * FROM results;','{ border: "1px solid #39FF14" }','.brand { display: flex; }','npm run build:success'];
+      function initFloatingCode() {
+        const c = document.getElementById('floatingCodeContainer');
+        for (let i = 0; i < 14; i++) {
+          const el = document.createElement('div');
+          el.className = 'code-line';
+          el.textContent = snippets[Math.floor(Math.random() * snippets.length)];
+          el.style.top = `${5 + i * 6.5}%`;
+          el.style.animationDuration = `${15 + Math.random() * 10}s`;
+          el.style.animationDelay = `${Math.random() * 20}s`;
+          c.appendChild(el);
+        }
       }
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  /* ============================================================
-     ACTIVE NAV LINK ON SCROLL — exact from our-work.html
-  ============================================================ */
-  (function () {
-    const navLinks = document.querySelectorAll('.nav-links a');
-    const sections = ['portfolio'].map(id => document.getElementById(id));
-    const sectionObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          navLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+      // Scroll animations
+      function initScrollAnimations() {
+        const obs = new IntersectionObserver(entries => {
+          entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.cs-card, .process-step').forEach(el => obs.observe(el));
+      }
+
+      // Filter
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          const filter = this.dataset.filter;
+          document.querySelectorAll('.cs-card').forEach(card => {
+            const cats = card.dataset.category || '';
+            if (filter === 'all' || cats.includes(filter)) {
+              card.style.display = '';
+            } else {
+              card.style.display = 'none';
+            }
           });
-        }
-      });
-    }, { rootMargin: '-30% 0px -60% 0px' });
-    sections.forEach(s => s && sectionObserver.observe(s));
-  })();
-
-  /* ============================================================
-     HAMBURGER MENU — exact from our-work.html
-  ============================================================ */
-  (function () {
-    const btn    = document.querySelector('.nav-hamburger');
-    const drawer = document.getElementById('nav-mobile');
-    const links  = drawer.querySelectorAll('a');
-    btn.addEventListener('click', () => {
-      const open = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!open));
-      drawer.classList.toggle('open', !open);
-      drawer.setAttribute('aria-hidden', String(open));
-    });
-    links.forEach(link => {
-      link.addEventListener('click', () => {
-        btn.setAttribute('aria-expanded', 'false');
-        drawer.classList.remove('open');
-        drawer.setAttribute('aria-hidden', 'true');
-      });
-    });
-    document.addEventListener('click', e => {
-      if (!btn.contains(e.target) && !drawer.contains(e.target)) {
-        btn.setAttribute('aria-expanded', 'false');
-        drawer.classList.remove('open');
-        drawer.setAttribute('aria-hidden', 'true');
-      }
-    });
-  })();
-
-  /* ============================================================
-     STAT COUNTERS — exact targets from nexgenixcreativesolutions.github.io
-     Projects Completed : 4800 K+
-     Clients Served     : 1300 K+
-     Certificates Granted: 2500 K+
-     Books Sold         : 910 +
-  ============================================================ */
-  (function () {
-    function animateTo(el, target, suffix, duration) {
-      const isK   = suffix === 'K+';
-      const steps = 200;
-      const interval = duration / steps;
-      let step = 0;
-      const tick = () => {
-        step++;
-        const progress = step / steps;
-        const current  = Math.round(target * progress);
-        if (step >= steps) {
-          el.textContent = isK
-            ? (target / 1000).toFixed(1).replace(/\.0$/, '') + 'K+'
-            : target.toLocaleString() + suffix;
-        } else {
-          el.textContent = isK
-            ? (current / 1000).toFixed(1).replace(/\.0$/, '') + 'K+'
-            : current.toLocaleString() + suffix;
-          setTimeout(tick, interval);
-        }
-      };
-      tick();
-    }
-
-    let started = false;
-    const statsEl = document.querySelector('.hero-stats');
-    if (statsEl) {
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting && !started) {
-            started = true;
-            animateTo(document.getElementById('stat-projects'), 4800, 'K+', 1800);
-            animateTo(document.getElementById('stat-clients'),  1300, 'K+', 1800);
-            animateTo(document.getElementById('stat-certs'),    2500, 'K+', 1800);
-            animateTo(document.getElementById('stat-books'),     910, '+',  1600);
-            obs.disconnect();
-          }
         });
-      }, { threshold: 0.5 });
-      obs.observe(statsEl);
-    }
-  })();
-
-  /* ============================================================
-     PORTFOLIO FILTER
-  ============================================================ */
-  (function () {
-    const buttons     = document.querySelectorAll('.filter-btn');
-    const cards       = document.querySelectorAll('.port-card');
-    const countEl     = document.getElementById('visible-count');
-    const emptyState  = document.getElementById('portfolioEmpty');
-
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const filter = btn.dataset.filter;
-
-        // Update active button
-        buttons.forEach(b => {
-          b.classList.toggle('active', b === btn);
-          b.setAttribute('aria-pressed', String(b === btn));
-        });
-
-        // Show/hide cards
-        let visible = 0;
-        cards.forEach(card => {
-          const filters = (card.dataset.filter || '').split(' ');
-          const show = filter === 'all' || filters.includes(filter);
-          card.setAttribute('aria-hidden', String(!show));
-          if (show) visible++;
-        });
-
-        // Update count
-        if (countEl) countEl.textContent = visible;
-
-        // Empty state
-        if (emptyState) {
-          emptyState.classList.toggle('visible', visible === 0);
-        }
       });
-    });
-  })();
 
-  /* ============================================================
-     LIGHTBOX
-  ============================================================ */
-  const lightbox      = document.getElementById('lightbox');
-  const lbClose       = document.getElementById('lb-close-btn');
-  const lbPreview     = document.getElementById('lb-preview');
-  const lbCategory    = document.getElementById('lb-category');
-  const lbTitle       = document.getElementById('lb-title-text');
-  const lbClient      = document.getElementById('lb-client');
-  const lbDesc        = document.getElementById('lb-desc');
-  const lbDelivs      = document.getElementById('lb-deliverables-list');
+      // Mobile menu
+      document.getElementById('hamburgerMenu').addEventListener('click', function() {
+        document.getElementById('navList').classList.toggle('active');
+        this.classList.toggle('open');
+      });
 
-  // Placeholder classes map (keyed by first word of card title)
-  const placeholderMap = {
-    'Marahuyo':    'ph-marahuyo',
-    'Nostalgic':   'ph-nostalgic',
-    'Charito':     'ph-charitos',
-    'Shutter':     'ph-shutter',
-    'NexGenix':    'ph-ngbs',
-    'NGCS':        'ph-proposal',
-    'SME':         'ph-branding',
-    'Video':       'ph-video',
-    'Business':    'ph-manuscript',
-  };
-
-  function openLightbox(card) {
-    if (!card) return;
-
-    const title       = card.dataset.title      || '';
-    const client      = card.dataset.client     || '';
-    const category    = card.dataset.category   || '';
-    const desc        = card.dataset.desc       || '';
-    const deliverables = JSON.parse(card.dataset.deliverables || '[]');
-
-    // Build preview
-    const firstWord = title.split(' ')[0];
-    const phClass   = placeholderMap[firstWord] || 'ph-ngbs';
-    const art       = card.querySelector('.ph-art')?.textContent || '✦';
-    lbPreview.innerHTML = `
-      <div class="port-thumb-placeholder ${phClass}" style="width:100%;min-height:340px;display:flex;align-items:center;justify-content:center;">
-        <span style="font-size:5rem;opacity:0.2;">${art}</span>
-      </div>`;
-
-    // Populate info
-    lbCategory.textContent = category;
-    lbTitle.textContent    = title;
-    lbClient.textContent   = client;
-    lbDesc.textContent     = desc;
-    lbDelivs.innerHTML = deliverables
-      .map(d => `<li>${d}</li>`)
-      .join('');
-
-    // Open
-    lightbox.classList.add('open');
-    lightbox.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    lbClose.focus();
-  }
-
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    lightbox.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-
-  // Close on backdrop click
-  lightbox.addEventListener('click', e => {
-    if (e.target === lightbox) closeLightbox();
-  });
-
-  // Close on Escape
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
-  });
-
-  lbClose.addEventListener('click', closeLightbox);
-
-  // Also wire cards that don't use the overlay (keyboard / direct clicks on the card meta)
-  document.querySelectorAll('.port-card').forEach(card => {
-    card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openLightbox(card);
-      }
-    });
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('role', 'button');
-  });
-
-</script>
-</body>
+      document.addEventListener('DOMContentLoaded', () => {
+        initFloatingCode();
+        initScrollAnimations();
+      });
+    </script>
+  </body>
 </html>
