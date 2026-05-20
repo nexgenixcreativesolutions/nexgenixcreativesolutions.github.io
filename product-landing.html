@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Silkscreen:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/css/styles.css" />
-    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="responsive.css" />
 
     <style>
       /* =================== PAGE-LEVEL OVERRIDES =================== */
@@ -609,13 +609,13 @@
           <div class="casestudies-grid">
             <div class="cs-card">
               <div class="cs-card-image">
-                <i class="fas fa-heart"></i>
+                <i class="fas fa-tshirt"></i>
                 <span class="cs-label">Branding</span>
               </div>
               <div class="cs-card-content">
                 <p class="cs-client">Marahuyo Designs</p>
-                <h3 class="cs-title">Handmade Bouquet Shop — Brand Identity & Web Presence</h3>
-                <p class="cs-description">Full brand development for a handcrafted fuzzy wired bouquet shop — covering logo design, visual identity, website build, and a custom scroll-triggered zipper animation that brought the brand's delicate, artisan character to life.</p>
+                <h3 class="cs-title">Apparel Brand Identity & Web Presence</h3>
+                <p class="cs-description">Full brand development including logo design, color system, website, and a custom scroll-triggered zipper animation that reinforced the brand's bold, tactile identity.</p>
                 <div class="cs-tags">
                   <span class="cs-tag">Branding</span>
                   <span class="cs-tag">Web Design</span>
@@ -625,13 +625,13 @@
             </div>
             <div class="cs-card">
               <div class="cs-card-image">
-                <i class="fas fa-camera-retro"></i>
+                <i class="fas fa-route"></i>
                 <span class="cs-label">Web Design</span>
               </div>
               <div class="cs-card-content">
                 <p class="cs-client">Nostalgic Trails</p>
-                <h3 class="cs-title">Photography Service Website</h3>
-                <p class="cs-description">Designed a warm, story-led website for a photography service specializing in weddings, debuts, self-portraits, and infant photography — capturing the emotional depth of each milestone through thoughtful layout and visual storytelling.</p>
+                <h3 class="cs-title">Travel Experience Website</h3>
+                <p class="cs-description">Designed an immersive, story-driven web experience that turned tour packages into emotional journeys, improving engagement and inquiry conversion for the travel brand.</p>
                 <div class="cs-tags">
                   <span class="cs-tag">Web Development</span>
                   <span class="cs-tag">UI/UX</span>
@@ -641,13 +641,13 @@
             </div>
             <div class="cs-card">
               <div class="cs-card-image">
-                <i class="fas fa-hamburger"></i>
+                <i class="fas fa-utensils"></i>
                 <span class="cs-label">Video Production</span>
               </div>
               <div class="cs-card-content">
                 <p class="cs-client">Charito's Food & Beverage</p>
                 <h3 class="cs-title">Brand Video & Digital Menu Design</h3>
-                <p class="cs-description">Produced promotional video content and a polished digital menu for a burger restaurant also serving pasta, murtabak, shawarma, silogs, and Filipino viands — helping the brand present its diverse offerings in a cohesive, appetizing way.</p>
+                <p class="cs-description">Produced promotional video content and designed a polished digital menu system that elevated the brand's presentation and helped attract a wider customer base.</p>
                 <div class="cs-tags">
                   <span class="cs-tag">Video Production</span>
                   <span class="cs-tag">Graphic Design</span>
@@ -797,17 +797,15 @@
     <script>
       // ── Products data ──
       const products = [
-        // type: 'course' | 'writing' | 'creative'
-        { id:1, type:'course',   category:'Course',   title:'International Business Fundamentals', description:'Master global commerce, cross-border trade, and international market strategies.', badge:'Free', icon:'fas fa-globe' },
-        { id:2, type:'course',   category:'Course',   title:'Digital Marketing Mastery',           description:'Modern marketing techniques, social media strategies, and analytics for business growth.', badge:'Free', icon:'fas fa-chart-line' },
-        { id:3, type:'course',   category:'Course',   title:'Spanish Language — Level 1',          description:'Build real conversational confidence in Spanish through structured lessons in grammar, vocabulary, and everyday dialogue.', badge:'Premium', icon:'fas fa-comments' },
-        { id:4, type:'course',   category:'Course',   title:'English Language Mastery',            description:'Sharpen your professional and academic English — from grammar essentials to confident business communication.', badge:'Premium', icon:'fas fa-spell-check' },
-        { id:5, type:'writing',  category:'Service',  title:'Business Proposal Writing',           description:'Compelling, professionally written proposals that win clients, secure funding, and close deals.', icon:'fas fa-file-alt' },
-        { id:6, type:'creative', category:'Service',  title:'Custom Website Design',               description:'Bespoke web design and development tailored to your brand identity and business objectives.', icon:'fas fa-laptop-code' },
-        { id:7, type:'writing',  category:'Service',  title:'Content Writing Package',             description:'SEO-optimized blog posts, articles, and web copy crafted to boost your online presence and authority.', icon:'fas fa-pencil-alt' },
-        { id:8, type:'creative', category:'Service',  title:'Brand Identity Design',               description:'Logo, color palette, typography, and brand guidelines — a complete visual identity built from scratch.', icon:'fas fa-paint-brush' },
-        { id:9, type:'course',   category:'Course',   title:'E-Commerce Essentials',               description:'Build and grow your online store with proven strategies and practical, actionable techniques.', badge:'Free', icon:'fas fa-shopping-cart' },
-        { id:10, type:'creative', category:'Service', title:'Video Production',                    description:'Promotional videos, brand reels, and digital ads produced with professional editing and color grading.', icon:'fas fa-video' },
+        { id:1, category:'Course', title:'International Business Fundamentals', description:'Master global commerce, cross-border trade, and international market strategies.', price:'Free', isFree:true, icon:'fas fa-globe' },
+        { id:2, category:'Course', title:'Digital Marketing Mastery', description:'Modern marketing techniques, social media strategies, and analytics for business growth.', price:'Free', isFree:true, icon:'fas fa-chart-line' },
+        { id:3, category:'Course', title:'Mandarin Chinese Level 1', description:'Start your journey to fluency in speaking, reading, and writing Mandarin.', price:'₱2,800', isFree:false, icon:'fas fa-language' },
+        { id:4, category:'Course', title:'Japanese Language Basics', description:'Introduction to Japanese grammar, vocabulary, and cultural context for beginners.', price:'₱2,800', isFree:false, icon:'fas fa-torii-gate' },
+        { id:5, category:'Service', title:'Business Proposal Writing', description:'Compelling, professionally written proposals that win clients and secure funding.', price:'₱11,200+', isFree:false, icon:'fas fa-file-alt' },
+        { id:6, category:'Service', title:'Custom Website Design', description:'Bespoke web design and development tailored to your brand and business objectives.', price:'₱28,000+', isFree:false, icon:'fas fa-laptop-code' },
+        { id:7, category:'Service', title:'Content Writing Package', description:'SEO-optimized blog posts, articles, and web copy to boost your online presence.', price:'₱8,400+', isFree:false, icon:'fas fa-pencil-alt' },
+        { id:8, category:'Service', title:'Brand Identity Design', description:'Logo, color palette, typography, and brand guidelines — all in one complete package.', price:'₱16,900+', isFree:false, icon:'fas fa-paint-brush' },
+        { id:9, category:'Course', title:'E-Commerce Essentials', description:'Build and grow your online store with proven strategies and practical techniques.', price:'Free', isFree:true, icon:'fas fa-shopping-cart' },
       ];
 
       function renderProducts() {
@@ -816,22 +814,6 @@
           const card = document.createElement('div');
           card.className = 'product-card';
           card.style.animationDelay = `${i * 0.08}s`;
-
-          let badgeHTML = '';
-          let btnHTML = '';
-
-          if (p.type === 'course') {
-            const isFree = p.badge === 'Free';
-            badgeHTML = `<span class="product-price ${isFree ? 'free' : ''}">${isFree ? 'Free' : 'Premium'}</span>`;
-            btnHTML   = `<a href="dashboard.html" class="btn-product">${isFree ? 'Enroll Free' : 'Enroll Now'}</a>`;
-          } else if (p.type === 'writing') {
-            badgeHTML = `<span class="product-price" style="color:#9ca3af; font-size:0.78rem; font-family:'Courier New',monospace;">Writing Service</span>`;
-            btnHTML   = `<a href="dashboard.html" class="btn-product">Learn More</a>`;
-          } else if (p.type === 'creative') {
-            badgeHTML = `<span class="product-price" style="color:#9ca3af; font-size:0.78rem; font-family:'Courier New',monospace;">Creative Service</span>`;
-            btnHTML   = `<a href="quote.html" class="btn-product">Get a Quote</a>`;
-          }
-
           card.innerHTML = `
             <div class="product-image"><i class="${p.icon}"></i></div>
             <div class="product-content">
@@ -839,8 +821,10 @@
               <h3 class="product-title">${p.title}</h3>
               <p class="product-description">${p.description}</p>
               <div class="product-footer">
-                ${badgeHTML}
-                ${btnHTML}
+                <span class="product-price ${p.isFree ? 'free' : ''}">${p.price}</span>
+                <a href="${p.isFree ? 'https://nexgenixbusinessschool.github.io' : 'quote.html'}" class="btn-product">
+                  ${p.isFree ? 'Enroll Free' : 'Get a Quote'}
+                </a>
               </div>
             </div>`;
           grid.appendChild(card);
