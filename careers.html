@@ -29,22 +29,37 @@
       --font-mono: 'JetBrains Mono', monospace;
     }
 
-     ═══════════════════════════════════════════════════════
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { max-width: 100% !important; overflow-x: hidden; }
+    body {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-head);
+      font-size: 15px;
+      text-align: left !important;
+    }
+
+    /* ═══════════════════════════════════════════════════════
        UNIVERSAL FOOTER
     ═══════════════════════════════════════════════════════ */
     footer {
-      position: relative;
-      bottom: auto;
-      right: auto;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
       background: #000;
       color: #fff;
       text-align: center;
       padding: 10px;
-      width: 100%;
       font-family: 'Courier New', monospace;
       font-size: 12px;
       border-top: 1px solid var(--border);
-      z-index: 1;
+      z-index: 2;
     }
     footer span { color: #39FF14; text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14; }
 
@@ -273,7 +288,7 @@
     /* ═══════════════════════════════════════════════════════
        APPLICATION FORM
     ═══════════════════════════════════════════════════════ */
-    .apply-section { padding: 4rem 2rem 6rem; max-width: 820px; margin: 0 auto; text-align: left; }
+    .apply-section { padding: 4rem 2rem 6rem; padding-bottom: 80px; max-width: 820px; margin: 0 auto; text-align: left; }
     .form-card {
       background: var(--surface);
       border: 1px solid var(--border);
