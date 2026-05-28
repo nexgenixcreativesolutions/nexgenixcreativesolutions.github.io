@@ -7,25 +7,40 @@
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <link rel="stylesheet" href="assets/css/styles.css" />
     <link rel="stylesheet" href="assets/css/responsive.css" />
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
-    <!-- Orbitron Font -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   </head>
 
 <style>
-/* =================== HERO SECTION =================== */
 
+/* =================== BODY OVERRIDE ===================
+   styles.css sets body { width:90%; max-width:1100px; margin:auto; padding:60px 20px }
+   which breaks full-width elements. Override here so the
+   navbar, hero, and footer all span the full viewport.
+====================================================== */
+html, body {
+  max-width: 100% !important;
+  overflow-x: hidden;
+}
+body {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+  background-color: #0a0a0a;
+}
+
+/* =================== HERO SECTION =================== */
 #hero-section-outer {
   position: relative;
   width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  margin-top: -60px;
   height: calc(100vh + 60px);
   min-height: 100vh;
+  margin-top: -60px;
 }
 
 #hero-section {
@@ -44,7 +59,6 @@
   box-sizing: border-box;
 }
 
-/* Semi-transparent dark overlay — lets code animation bleed through */
 #hero-section::after {
   content: '';
   position: absolute;
@@ -54,7 +68,6 @@
   z-index: 0;
 }
 
-/* Arrow sits above the overlay */
 .hero-get-started-wrap {
   position: relative;
   z-index: 1;
@@ -63,7 +76,6 @@
   width: 100%;
 }
 
-/* Animated triple-chevron CTA */
 .hero-arrow-btn {
   display: flex;
   flex-direction: column;
@@ -83,27 +95,19 @@
   font-size: 2.2rem;
   line-height: 0.75;
   color: #39FF14;
-  /* rotate › to point downward */
   transform: rotate(90deg);
   opacity: 0.15;
   text-shadow: 0 0 8px #39FF14, 0 0 18px #39FF14;
   pointer-events: none;
 }
 
-/* Cascade glow: each chevron lights up in sequence */
 .hero-chevron.c1 { animation: chevronGlow 1.4s ease-in-out infinite 0s; }
 .hero-chevron.c2 { animation: chevronGlow 1.4s ease-in-out infinite 0.22s; }
 .hero-chevron.c3 { animation: chevronGlow 1.4s ease-in-out infinite 0.44s; }
 
 @keyframes chevronGlow {
-  0%, 100% {
-    opacity: 0.15;
-    text-shadow: 0 0 4px #39FF14;
-  }
-  50% {
-    opacity: 1;
-    text-shadow: 0 0 10px #39FF14, 0 0 24px #39FF14, 0 0 40px #39FF14;
-  }
+  0%, 100% { opacity: 0.15; text-shadow: 0 0 4px #39FF14; }
+  50%       { opacity: 1;    text-shadow: 0 0 10px #39FF14, 0 0 24px #39FF14, 0 0 40px #39FF14; }
 }
 
 @media (max-width: 768px) {
@@ -111,7 +115,6 @@
     height: calc(100svh + 60px);
     min-height: 100svh;
   }
-
   #hero-section {
     background-image: url('assets/images/banner-bg-mobile.jpeg');
     background-size: cover;
@@ -120,105 +123,30 @@
   }
 }
 
-/* ===== NAVBAR — match careers/contact layout exactly ===== */
+/* =================== NAVBAR — INDEX-SPECIFIC OVERRIDES ===================
+   All base navbar styles come from styles.css + responsive.css.
+   Only index-specific states (transparent hero overlay) are declared here.
+====================================================== */
 
-/* Override styles.css body-width constraint on the navbar itself */
-#navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  padding: 5px 20px;
-  background-color: #121212;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 1000;
-  box-sizing: border-box;
-}
-
-#navbar .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-#navbar .logo img {
-  height: 30px;
-  width: 30px;
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-/* Nav-list centered absolutely relative to the full viewport width */
-#navbar .nav-list {
-  list-style: none;
-  display: flex;
-  gap: 10px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 0;
-  padding: 0;
-}
-
-#navbar .nav-list li {
-  display: inline-block;
-}
-
-#navbar .nav-list a {
-  text-decoration: none;
-  color: white;
-  font-size: 12px;
-  padding: 8px 10px;
-  transition: color 0.3s ease;
-}
-
-#navbar .nav-list a:hover,
-#navbar .nav-list a.active {
-  color: #39FF14;
-}
-
-/* Auth buttons pinned to the right */
-.auth-buttons {
-  display: flex;
-  gap: 15px;
-  position: absolute;
-  right: 60px;
-  top: 50%;
-  transform: translateY(-50%);
-  align-items: center;
-}
-
-/* Remove underline from logo name */
-#navbar .logo-title a,
-#navbar .short-title a {
-  text-decoration: none;
-}
-
-/* Navbar transparent overlay when hero is in view */
+/* Transparent navbar while hero is in view */
 #navbar.nav-hero {
-  background: rgba(0,0,0,0.45) !important;
+  background: rgba(0, 0, 0, 0.38) !important;
+  border-bottom-color: transparent !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  border-bottom: none !important;
 }
 
+/* Extra contrast on hamburger bars over the hero image */
 #navbar.nav-hero .hamburger-menu .bar {
   box-shadow: 0 0 4px #39FF14,
-              0 1px 3px rgba(0,0,0,1),
+              0  1px 3px rgba(0,0,0,1),
               0 -1px 3px rgba(0,0,0,1),
-              1px 0 3px rgba(0,0,0,1),
+              1px 0  3px rgba(0,0,0,1),
               -1px 0 3px rgba(0,0,0,1);
 }
 
-
-
-/* Floating Code Background */
+/* =================== FLOATING CODE BACKGROUND =================== */
 .floating-code-container {
   position: fixed;
   inset: 0;
@@ -237,25 +165,13 @@
   opacity: 0;
 }
 @keyframes floatCode {
-  0% {
-    transform: translateX(100vw);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
+  0%   { transform: translateX(100vw); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(-100%); opacity: 0; }
 }
 @media (min-width: 768px) {
-  .code-line {
-    font-size: 16px;
-  }
+  .code-line { font-size: 16px; }
 }
 
 /* =================== CATEGORIES SECTION =================== */
@@ -295,7 +211,7 @@
   text-align: center;
 }
 
-/* =================== STATS SECTION (NGBS Style) =================== */
+/* =================== STATS SECTION =================== */
 .counter-section {
   display: flex;
   flex-direction: column;
@@ -305,7 +221,6 @@
   background-color: transparent;
   position: relative;
 }
-
 .counter-section-title {
   font-family: 'Orbitron', sans-serif;
   font-size: 2rem;
@@ -315,14 +230,12 @@
   margin-bottom: 2.5rem;
   letter-spacing: 1px;
 }
-
 .counter-section-title span {
   background: linear-gradient(to right, #ff0000, #ffff00, #39FF14);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-
 .counter-container {
   display: flex;
   justify-content: space-around;
@@ -331,7 +244,6 @@
   width: 90%;
   flex-wrap: nowrap;
 }
-
 .counter-item {
   display: flex;
   flex-direction: column;
@@ -348,23 +260,18 @@
   border: 1px solid rgba(57, 255, 20, 0.15);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
 .counter-item:hover {
   border-color: rgba(57, 255, 20, 0.5);
   box-shadow: 0 0 20px rgba(57, 255, 20, 0.15);
 }
-
 .counter {
   font-family: "Silkscreen", sans-serif;
-  font-weight: 400;
-  font-style: normal;
   font-size: 40px;
   color: #39FF14;
   text-shadow: 0 0 10px #39FF14;
   margin-bottom: 5px;
   line-height: 1;
 }
-
 .label {
   font-size: 14px;
   color: white;
@@ -373,6 +280,7 @@
   line-height: 1.2;
 }
 
+/* =================== CATEGORY CARDS =================== */
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -393,9 +301,7 @@
   flex-direction: column;
   min-height: 400px;
 }
-.category-card.visible {
-  animation: fadeInUp 0.6s ease forwards;
-}
+.category-card.visible { animation: fadeInUp 0.6s ease forwards; }
 .category-card:hover {
   transform: translateY(-10px);
   border-color: #39FF14;
@@ -416,10 +322,7 @@
   background: rgba(57, 255, 20, 0.2);
   transform: scale(1.1);
 }
-.category-icon i {
-  font-size: 2rem;
-  color: #39FF14;
-}
+.category-icon i { font-size: 2rem; color: #39FF14; }
 .category-title {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.5rem;
@@ -443,484 +346,263 @@
   transition: all 0.3s ease;
   margin-top: auto;
 }
-.category-link:hover {
-  gap: 1rem;
-}
-.category-link i {
-  transition: transform 0.3s ease;
-}
-.category-link:hover i {
-  transform: translateX(5px);
-}
+.category-link:hover { gap: 1rem; }
+.category-link i { transition: transform 0.3s ease; }
+.category-link:hover i { transform: translateX(5px); }
 
-/* Combined Testimonials Section Styles */
+/* =================== TESTIMONIALS =================== */
 .testimonials-section {
-    position: relative;
-    padding: 2rem 1rem 4rem 1rem;
-    background: transparent;
+  position: relative;
+  padding: 2rem 1rem 4rem 1rem;
+  background: transparent;
 }
-.testimonials-container {
-    max-width: 1280px;
-    margin: 0 auto;
-}
-/* Combined Headers */
+.testimonials-container { max-width: 1280px; margin: 0 auto; }
 .testimonials-header {
-    text-align: center;
-    margin-bottom: 4rem;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease forwards;
+  text-align: center;
+  margin-bottom: 4rem;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease forwards;
 }
 .testimonials-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: white;
-    margin: 0 0 1.5rem 0;
-    padding: 0;
-    line-height: 1.2;
-    font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  margin: 0 0 1.5rem 0;
+  padding: 0;
+  line-height: 1.2;
+  font-family: 'Montserrat Alternates', sans-serif;
 }
 .testimonials-subtitle {
-    color: #9ca3af;
-    max-width: 42rem;
-    margin: 0 auto;
-    padding: 0 1rem;
-    font-size: 1rem;
-    line-height: 1.6;
-    text-align: center;
+  color: #9ca3af;
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
 }
-/* Grid */
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 0 0.5rem;
-}
-/* Testimonial Card */
+.testimonials-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; padding: 0 0.5rem; }
 .testimonial-card {
-    position: relative;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
+  position: relative;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
-.testimonial-card.visible {
-    animation: fadeInUp 0.6s ease forwards;
-}
+.testimonial-card.visible { animation: fadeInUp 0.6s ease forwards; }
 .testimonial-card-inner {
-    position: relative;
-    height: 100%;
-    padding: 1.75rem;
-    border-radius: 1rem;
-    border: 1px solid #1f2937;
-    background: linear-gradient(to bottom, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.5));
-    backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
+  position: relative;
+  height: 100%;
+  padding: 1.75rem;
+  border-radius: 1rem;
+  border: 1px solid #1f2937;
+  background: linear-gradient(to bottom, rgba(17,24,39,0.5), rgba(0,0,0,0.5));
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 .testimonial-card:hover .testimonial-card-inner {
-    border-color: #39FF14;
-    transform: translateY(-5px);
-    box-shadow: 0 10px 40px rgba(57, 255, 20, 0.1);
+  border-color: #39FF14;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px rgba(57, 255, 20, 0.1);
 }
-/* Quote Icon */
 .quote-icon {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    width: 2rem;
-    height: 2rem;
-    color: rgba(57, 255, 20, 0.1);
-    transition: color 0.3s ease;
+  position: absolute;
+  top: 1.5rem; right: 1.5rem;
+  width: 2rem; height: 2rem;
+  color: rgba(57, 255, 20, 0.1);
+  transition: color 0.3s ease;
 }
-.testimonial-card:hover .quote-icon {
-    color: rgba(57, 255, 20, 0.2);
-}
-/* Rating Stars */
-.rating-stars {
-    display: flex;
-    gap: 0.25rem;
-    margin-bottom: 1.25rem;
-}
-.star {
-    width: 1.15rem;
-    height: 1.15rem;
-    color: #f5d400;
-    fill: #f5d400;
-}
-/* Content */
+.testimonial-card:hover .quote-icon { color: rgba(57, 255, 20, 0.2); }
+.rating-stars { display: flex; gap: 0.25rem; margin-bottom: 1.25rem; }
+.star { width: 1.15rem; height: 1.15rem; color: #f5d400; fill: #f5d400; }
 .testimonial-content {
-    color: #d1d5db;
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem;
-    text-align: justify;
-    flex: 1;
+  color: #d1d5db;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  text-align: justify;
+  flex: 1;
 }
-/* Author */
-.testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 0.875rem;
-    margin-top: auto;
-}
+.testimonial-author { display: flex; align-items: center; gap: 0.875rem; margin-top: auto; }
 .author-avatar {
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ff0000, #ffff00, #39FF14);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+  width: 2.75rem; height: 2.75rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff0000, #ffff00, #39FF14);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
 }
-.author-initial {
-    color: black;
-    font-weight: bold;
-    font-size: 1.1rem;
-    line-height: 1;
+.author-initial { color: black; font-weight: bold; font-size: 1.1rem; line-height: 1; }
+.author-info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 0.25rem; }
+.author-name { color: white; font-weight: 600; margin: 0; padding: 0; line-height: 1.2; font-size: 0.95rem; text-align: left; display: block; }
+.author-role { color: #39FF14; font-size: 0.8rem; margin: 0; padding: 0; line-height: 1.2; text-align: left; display: block; }
+
+/* =================== FEATURED PROJECTS =================== */
+.project-card { padding-top: 0; overflow: hidden; }
+.project-img-wrap {
+  position: relative;
+  width: calc(100% + 5rem);
+  margin-left: -2.5rem;
+  margin-top: 0;
+  overflow: hidden;
+  border-radius: 1rem 1rem 0 0;
+  flex-shrink: 0;
 }
-.author-info {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.25rem;
+.project-thumb {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  filter: brightness(0.85);
 }
-.author-name {
-    color: white;
-    font-weight: 600;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-    font-size: 0.95rem;
-    text-align: left;
-    display: block;
-}
-.author-role {
-    color: #39FF14;
-    font-size: 0.8rem;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-    text-align: left;
-    display: block;
+.project-card:hover .project-thumb { transform: scale(1.04); filter: brightness(1); }
+.project-tag {
+  position: absolute;
+  bottom: 0.75rem; left: 1rem;
+  background: rgba(57, 255, 20, 0.15);
+  border: 1px solid rgba(57, 255, 20, 0.4);
+  color: #39FF14;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
 }
 
-/* Responsive Design - Tablet */
+/* =================== FOOTER =================== */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #000;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  border-top: 1px solid rgba(57, 255, 20, 0.18);
+  z-index: 2;
+}
+footer span {
+  color: #39FF14;
+  text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+}
+
+/* =================== RESPONSIVE — PAGE CONTENT =================== */
 @media (min-width: 768px) {
-    .categories-section,
-    .testimonials-section {
-        padding: 5rem 2rem 3rem 2rem;
-    }
-    .section-title,
-    .testimonials-title {
-        font-size: 3.25rem;
-    }
-    .section-subtitle,
-    .testimonials-subtitle {
-        font-size: 1.125rem;
-    }
-    .categories-grid,
-    .testimonials-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-        padding: 0;
-    }
-    .testimonial-card-inner {
-        padding: 2rem;
-    }
-    .testimonial-content {
-        font-size: 0.95rem;
-    }
-    .author-avatar {
-        width: 3rem;
-        height: 3rem;
-    }
-    .author-initial {
-        font-size: 1.125rem;
-    }
-    .author-name {
-        font-size: 1rem;
-    }
-    .author-role {
-        font-size: 0.875rem;
-    }
-    .quote-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-    }
-    .star {
-        width: 1.25rem;
-        height: 1.25rem;
-    }
-    .category-title {
-        font-size: 1.375rem;
-    }
-    .counter {
-        font-size: 3rem;
-    }
-    .counter-section-title {
-        font-size: 2.5rem;
-    }
+  .categories-section, .testimonials-section { padding: 5rem 2rem 3rem 2rem; }
+  .section-title, .testimonials-title { font-size: 3.25rem; }
+  .section-subtitle, .testimonials-subtitle { font-size: 1.125rem; }
+  .categories-grid, .testimonials-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; padding: 0; }
+  .testimonial-card-inner { padding: 2rem; }
+  .testimonial-content { font-size: 0.95rem; }
+  .author-avatar { width: 3rem; height: 3rem; }
+  .author-initial { font-size: 1.125rem; }
+  .author-name { font-size: 1rem; }
+  .author-role { font-size: 0.875rem; }
+  .quote-icon { width: 2.5rem; height: 2.5rem; }
+  .star { width: 1.25rem; height: 1.25rem; }
+  .category-title { font-size: 1.375rem; }
+  .counter { font-size: 3rem; }
+  .counter-section-title { font-size: 2.5rem; }
+  .project-img-wrap { width: calc(100% + 4rem); margin-left: -2rem; }
 }
-/* Responsive Design - Desktop */
 @media (min-width: 1024px) {
-    .categories-section {
-        padding: 6rem 2rem 4rem 2rem;
-    }
-    .testimonials-section {
-        padding: 4rem 2rem 6rem 2rem;
-    }
-    .section-title,
-    .testimonials-title {
-        font-size: 3.75rem;
-    }
-    .categories-grid,
-    .testimonials-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-    }
-    .testimonial-content {
-        font-size: 1rem;
-    }
-    .category-title {
-        font-size: 1.5rem;
-    }
+  .categories-section { padding: 6rem 2rem 4rem 2rem; }
+  .testimonials-section { padding: 4rem 2rem 6rem 2rem; }
+  .section-title, .testimonials-title { font-size: 3.75rem; }
+  .categories-grid, .testimonials-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .testimonial-content { font-size: 1rem; }
+  .category-title { font-size: 1.5rem; }
 }
-/* Extra small screens */
-@media (max-width: 480px) {
-    .categories-section,
-    .testimonials-section {
-        padding: 3rem 0.75rem;
-    }
-    .section-title,
-    .testimonials-title {
-        font-size: 1.75rem;
-    }
-    .category-card {
-        padding: 1.75rem 1.25rem;
-        min-height: 320px;
-    }
-    .category-description {
-        font-size: 0.85rem;
-        line-height: 1.6;
-        margin-bottom: 1rem;
-    }
-    .category-link {
-        font-size: 0.875rem;
-    }
-    .testimonial-card-inner {
-        padding: 1.5rem;
-    }
-    .testimonial-content {
-        font-size: 0.85rem;
-        margin-bottom: 1.25rem;
-    }
-    .author-avatar {
-        width: 2.5rem;
-        height: 2.5rem;
-    }
-    .author-initial {
-        font-size: 1rem;
-    }
-    .author-name {
-        font-size: 0.9rem;
-    }
-    .author-role {
-        font-size: 0.75rem;
-    }
-    .quote-icon {
-        width: 1.75rem;
-        height: 1.75rem;
-        top: 1.25rem;
-        right: 1.25rem;
-    }
-    .star {
-        width: 1rem;
-        height: 1rem;
-    }
-    .counter-section {
-        padding: 2.5rem 0.75rem;
-    }
-    .counter-container {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    .counter-item {
-        max-width: 150px;
-        padding: 15px 10px;
-    }
-    .counter {
-        font-size: 24px;
-        margin-bottom: 5px;
-    }
-    .label {
-        font-size: 10px;
-        margin-top: 5px;
-    }
-    .counter-section-title {
-        font-size: 1.4rem;
-    }
-}
-
 @media (max-width: 768px) {
-    .categories-section {
-        padding: 3rem 1rem;
-    }
-    .section-title {
-        font-size: 2rem;
-    }
-    .section-subtitle {
-        font-size: 0.95rem;
-    }
-    .categories-grid {
-        grid-template-columns: 1fr;
-        gap: 1.75rem;
-    }
-    .category-card {
-        padding: 2rem 1.5rem;
-        min-height: 350px;
-    }
-    .category-title {
-        font-size: 1.25rem;
-        line-height: 1.35;
-    }
-    .category-description {
-        font-size: 0.9rem;
-        line-height: 1.65;
-    }
+  .categories-section { padding: 3rem 1rem; }
+  .section-title { font-size: 2rem; }
+  .section-subtitle { font-size: 0.95rem; }
+  .categories-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+  .category-card { padding: 2rem 1.5rem; min-height: 350px; }
+  .category-title { font-size: 1.25rem; line-height: 1.35; }
+  .category-description { font-size: 0.9rem; line-height: 1.65; }
+  .project-img-wrap { width: calc(100% + 3rem); margin-left: -1.5rem; }
+}
+@media (max-width: 480px) {
+  .categories-section, .testimonials-section { padding: 3rem 0.75rem; }
+  .section-title, .testimonials-title { font-size: 1.75rem; }
+  .category-card { padding: 1.75rem 1.25rem; min-height: 320px; }
+  .category-description { font-size: 0.85rem; line-height: 1.6; margin-bottom: 1rem; }
+  .category-link { font-size: 0.875rem; }
+  .testimonial-card-inner { padding: 1.5rem; }
+  .testimonial-content { font-size: 0.85rem; margin-bottom: 1.25rem; }
+  .author-avatar { width: 2.5rem; height: 2.5rem; }
+  .author-initial { font-size: 1rem; }
+  .author-name { font-size: 0.9rem; }
+  .author-role { font-size: 0.75rem; }
+  .quote-icon { width: 1.75rem; height: 1.75rem; top: 1.25rem; right: 1.25rem; }
+  .star { width: 1rem; height: 1rem; }
+  .counter-section { padding: 2.5rem 0.75rem; }
+  .counter-container { flex-wrap: wrap; gap: 10px; }
+  .counter-item { max-width: 150px; padding: 15px 10px; }
+  .counter { font-size: 24px; margin-bottom: 5px; }
+  .label { font-size: 10px; margin-top: 5px; }
+  .counter-section-title { font-size: 1.4rem; }
+  .project-img-wrap { width: calc(100% + 2.5rem); margin-left: -1.25rem; }
 }
 
 /* Animations */
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* =================== FEATURED PROJECTS SECTION =================== */
-.project-card {
-    padding-top: 0;
-    overflow: hidden;
-}
-.project-img-wrap {
-    position: relative;
-    width: calc(100% + 5rem);
-    margin-left: -2.5rem;
-    margin-top: 0;
-    overflow: hidden;
-    border-radius: 1rem 1rem 0 0;
-    flex-shrink: 0;
-}
-.project-thumb {
-    display: block;
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-    filter: brightness(0.85);
-}
-.project-card:hover .project-thumb {
-    transform: scale(1.04);
-    filter: brightness(1);
-}
-.project-tag {
-    position: absolute;
-    bottom: 0.75rem;
-    left: 1rem;
-    background: rgba(57, 255, 20, 0.15);
-    border: 1px solid rgba(57, 255, 20, 0.4);
-    color: #39FF14;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.65rem;
-    border-radius: 999px;
-    backdrop-filter: blur(6px);
-}
-@media (max-width: 768px) {
-    .project-img-wrap {
-        width: calc(100% + 3rem);
-        margin-left: -1.5rem;
-    }
-}
-@media (max-width: 480px) {
-    .project-img-wrap {
-        width: calc(100% + 2.5rem);
-        margin-left: -1.25rem;
-    }
-}
 </style>
 
-  <body>
+<body>
 
 <!-- Navigation Bar -->
 <nav id="navbar">
-    <div class="logo">
-        <img src="assets/images/logo.png" alt="logo" class="logo">
-        <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
-        <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
-    </div>
-    <!-- Hamburger Menu Icon -->
-    <div class="hamburger-menu" onclick="toggleMenu()">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    </div>
-    <ul class="nav-list">
-        <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#reviews">Reviews</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
-        <li><a href="https://nexgenixcreativesolutions.github.io/contact">Contact</a></li>
-    </ul>
-
-    <!--
-      AUTH BUTTONS — controlled by auth.js
-      • nav-login-btn    → shown when logged OUT  (hidden when logged in)
-      • nav-dashboard-btn → shown when logged IN  (hidden when logged out)
-      • nav-logout-btn   → shown when logged IN   (hidden when logged out)
-      auth.js toggles display automatically — do not remove any of these.
-    -->
-    <div class="auth-buttons" id="auth-buttons">
-        <!-- Logged OUT state -->
-        <a href="login-signup.html" class="dashboard-btn" id="nav-login-btn" style="display:none">
-            Log In
-        </a>
-        <!-- Logged IN state -->
-        <a href="dashboard.html" class="dashboard-btn" id="nav-dashboard-btn" style="display:none">
-            Dashboard
-        </a>
-        <button class="logout-btn" id="nav-logout-btn" style="display:none" onclick="NGCS_Auth.logout()">
-            Log Out
-        </button>
-    </div>
+  <div class="logo">
+    <img src="assets/images/logo.png" alt="logo">
+    <p class="logo-title"><a href="https://nexgenixcreativesolutions.github.io">NEX GENIX CREATIVE SOLUTIONS</a></p>
+    <p class="short-title"><a href="https://nexgenixcreativesolutions.github.io">NGCS</a></p>
+  </div>
+  <div class="hamburger-menu" onclick="toggleMenu()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+  <ul class="nav-list">
+    <li><a href="https://nexgenixcreativesolutions.github.io" class="active">Home</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/contact">Contact</a></li>
+  </ul>
+  <div class="auth-buttons" id="auth-buttons">
+    <a href="login-signup.html" class="dashboard-btn" id="nav-login-btn" style="display:none">Log In</a>
+    <a href="dashboard.html" class="dashboard-btn" id="nav-dashboard-btn" style="display:none">Dashboard</a>
+    <button class="logout-btn" id="nav-logout-btn" style="display:none" onclick="NGCS_Auth.logout()">Log Out</button>
+  </div>
 </nav>
 
 <!-- Hero Section -->
-<!-- Hero outer wrapper — reserves space in document flow -->
 <div id="hero-section-outer">
-    <!-- Hero inner — fixed positioned to escape body width/padding constraints -->
-    <section id="hero-section">
-        <div class="hero-get-started-wrap">
-            <button class="hero-arrow-btn" aria-label="Scroll down to explore" onclick="revealContent()">
-                <span class="hero-chevron c1">&#8250;</span>
-                <span class="hero-chevron c2">&#8250;</span>
-                <span class="hero-chevron c3">&#8250;</span>
-            </button>
-        </div>
-    </section>
+  <section id="hero-section">
+    <div class="hero-get-started-wrap">
+      <button class="hero-arrow-btn" aria-label="Scroll down to explore" onclick="revealContent()">
+        <span class="hero-chevron c1">&#8250;</span>
+        <span class="hero-chevron c2">&#8250;</span>
+        <span class="hero-chevron c3">&#8250;</span>
+      </button>
+    </div>
+  </section>
 </div>
 
 <!-- Page content revealed on arrow click -->
@@ -928,516 +610,336 @@
 
 <!-- Products and Services Section -->
 <section class="main-section categories-section" id="services">
-    <div class="categories-container">
-        <!-- Section header -->
-        <div class="section-header">
-            <h2 class="section-title">
-                Products & <span class="gradient-text">Services</span>
-            </h2>
-            <p class="section-subtitle">
-                Comprehensive digital solutions tailored to transform your vision into reality
-            </p>
-        </div>
-
-        <!-- Categories grid -->
-        <div class="categories-grid">
-            <!-- Digital Design Card -->
-            <div class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-palette"></i>
-                </div>
-                <h3 class="category-title">Digital Design and Visual Communication Services</h3>
-                <p class="category-description">
-                    Flexible pricing based on client needs. Visually appealing designs. Meaningful and thoughtful creations. Competitive and affordable rates.
-                </p>
-                <a href="https://nexgenixcreativesolutions.github.io/digital-design-and-visual-communication-services" class="category-link">
-                    Learn More <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-
-            <!-- Writing Services Card -->
-            <div class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-pen-fancy"></i>
-                </div>
-                <h3 class="category-title">Writing Services</h3>
-                <p class="category-description">
-                    Professional and polished. Versatile content. Industry-specific expertise. Error-free and engaging.
-                </p>
-                <a href="https://nexgenixcreativesolutions.github.io/writing-services" class="category-link">
-                    Learn More <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-
-            <!-- Education and Training Card -->
-            <div class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <h3 class="category-title">Education and Training</h3>
-                <p class="category-description">
-                    Flexible learning. Comprehensive curriculum. Practical and actionable. Includes a certificate with a QR code for easy verification.
-                </p>
-                <a href="https://nexgenixbusinessschool.github.io" class="category-link">
-                    Learn More <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
+  <div class="categories-container">
+    <div class="section-header">
+      <h2 class="section-title">Products & <span class="gradient-text">Services</span></h2>
+      <p class="section-subtitle">Comprehensive digital solutions tailored to transform your vision into reality</p>
     </div>
+    <div class="categories-grid">
+      <div class="category-card">
+        <div class="category-icon"><i class="fas fa-palette"></i></div>
+        <h3 class="category-title">Digital Design and Visual Communication Services</h3>
+        <p class="category-description">Flexible pricing based on client needs. Visually appealing designs. Meaningful and thoughtful creations. Competitive and affordable rates.</p>
+        <a href="https://nexgenixcreativesolutions.github.io/digital-design-and-visual-communication-services" class="category-link">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="category-card">
+        <div class="category-icon"><i class="fas fa-pen-fancy"></i></div>
+        <h3 class="category-title">Writing Services</h3>
+        <p class="category-description">Professional and polished. Versatile content. Industry-specific expertise. Error-free and engaging.</p>
+        <a href="https://nexgenixcreativesolutions.github.io/writing-services" class="category-link">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="category-card">
+        <div class="category-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h3 class="category-title">Education and Training</h3>
+        <p class="category-description">Flexible learning. Comprehensive curriculum. Practical and actionable. Includes a certificate with a QR code for easy verification.</p>
+        <a href="https://nexgenixbusinessschool.github.io" class="category-link">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- Featured Projects Section -->
 <section class="main-section categories-section" id="projects">
-    <div class="categories-container">
-        <!-- Section header -->
-        <div class="section-header">
-            <h2 class="section-title">
-                Featured <span class="gradient-text">Projects</span>
-            </h2>
-            <p class="section-subtitle">
-                A showcase of our finest work — crafted with precision, creativity, and purpose
-            </p>
+  <div class="categories-container">
+    <div class="section-header">
+      <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
+      <p class="section-subtitle">A showcase of our finest work — crafted with precision, creativity, and purpose</p>
+    </div>
+    <div class="categories-grid">
+      <div class="category-card project-card">
+        <div class="project-img-wrap">
+          <img src="https://placehold.co/600x340/0a0a0a/39FF14?text=Marahuyo+Designs" alt="Marahuyo Designs project preview" class="project-thumb" />
+          <span class="project-tag">Branding &amp; Web Design</span>
         </div>
-
-        <!-- Projects grid -->
-        <div class="categories-grid">
-
-            <!-- Project Card 1: Marahuyo Designs -->
-            <div class="category-card project-card">
-                <div class="project-img-wrap">
-                    <img
-                        src="https://placehold.co/600x340/0a0a0a/39FF14?text=Marahuyo+Designs"
-                        alt="Marahuyo Designs project preview"
-                        class="project-thumb"
-                    />
-                    <span class="project-tag">Branding &amp; Web Design</span>
-                </div>
-                <div class="category-icon" style="margin-top:1.5rem;">
-                    <i class="fas fa-paint-brush"></i>
-                </div>
-                <h3 class="category-title">Marahuyo Designs</h3>
-                <p class="category-description">
-                    Full brand identity and e-commerce web design for a Filipino artisan apparel label. Included logo system, color palette, and a scroll-animated product showcase.
-                </p>
-                <a href="#projects" class="category-link project-btn">
-                    View Details <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-
-            <!-- Project Card 2: Nostalgic Trails -->
-            <div class="category-card project-card">
-                <div class="project-img-wrap">
-                    <img
-                        src="https://placehold.co/600x340/0a0a0a/39FF14?text=Nostalgic+Trails"
-                        alt="Nostalgic Trails project preview"
-                        class="project-thumb"
-                    />
-                    <span class="project-tag">UI/UX &amp; Video Production</span>
-                </div>
-                <div class="category-icon" style="margin-top:1.5rem;">
-                    <i class="fas fa-film"></i>
-                </div>
-                <h3 class="category-title">Nostalgic Trails</h3>
-                <p class="category-description">
-                    Editorial-inspired travel platform with a vintage Fujifilm Instax aesthetic. Delivered a full UI/UX overhaul, promotional video ads, and responsive landing page.
-                </p>
-                <a href="#projects" class="category-link project-btn">
-                    View Details <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-
-            <!-- Project Card 3: Charito's Food & Beverage -->
-            <div class="category-card project-card">
-                <div class="project-img-wrap">
-                    <img
-                        src="https://placehold.co/600x340/0a0a0a/39FF14?text=Charito%27s+F%26B"
-                        alt="Charito's Food and Beverage project preview"
-                        class="project-thumb"
-                    />
-                    <span class="project-tag">Web Development &amp; Branding</span>
-                </div>
-                <div class="category-icon" style="margin-top:1.5rem;">
-                    <i class="fas fa-utensils"></i>
-                </div>
-                <h3 class="category-title">Charito's Food &amp; Beverage</h3>
-                <p class="category-description">
-                    End-to-end digital presence for a local F&amp;B brand — logo design, menu layout, social media assets, and a fully responsive website with online ordering flow.
-                </p>
-                <a href="#projects" class="category-link project-btn">
-                    View Details <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-
-        </div><!-- /.categories-grid -->
-    </div><!-- /.categories-container -->
+        <div class="category-icon" style="margin-top:1.5rem;"><i class="fas fa-paint-brush"></i></div>
+        <h3 class="category-title">Marahuyo Designs</h3>
+        <p class="category-description">Full brand identity and e-commerce web design for a Filipino artisan apparel label. Included logo system, color palette, and a scroll-animated product showcase.</p>
+        <a href="#projects" class="category-link">View Details <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="category-card project-card">
+        <div class="project-img-wrap">
+          <img src="https://placehold.co/600x340/0a0a0a/39FF14?text=Nostalgic+Trails" alt="Nostalgic Trails project preview" class="project-thumb" />
+          <span class="project-tag">UI/UX &amp; Video Production</span>
+        </div>
+        <div class="category-icon" style="margin-top:1.5rem;"><i class="fas fa-film"></i></div>
+        <h3 class="category-title">Nostalgic Trails</h3>
+        <p class="category-description">Editorial-inspired travel platform with a vintage Fujifilm Instax aesthetic. Delivered a full UI/UX overhaul, promotional video ads, and responsive landing page.</p>
+        <a href="#projects" class="category-link">View Details <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="category-card project-card">
+        <div class="project-img-wrap">
+          <img src="https://placehold.co/600x340/0a0a0a/39FF14?text=Charito%27s+F%26B" alt="Charito's Food and Beverage project preview" class="project-thumb" />
+          <span class="project-tag">Web Development &amp; Branding</span>
+        </div>
+        <div class="category-icon" style="margin-top:1.5rem;"><i class="fas fa-utensils"></i></div>
+        <h3 class="category-title">Charito's Food &amp; Beverage</h3>
+        <p class="category-description">End-to-end digital presence for a local F&amp;B brand — logo design, menu layout, social media assets, and a fully responsive website with online ordering flow.</p>
+        <a href="#projects" class="category-link">View Details <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- Reviews Section -->
 <section class="main-section testimonials-section" id="reviews">
-    <div class="testimonials-container">
-        <!-- Section header -->
-        <div class="testimonials-header">
-            <h2 class="testimonials-title">
-                Client <span class="gradient-text">Reviews</span>
-            </h2>
-            <p class="testimonials-subtitle">
-                Hear what our valued clients have to say about their experience
-            </p>
-        </div>
-        <!-- Testimonials grid — cards injected by JS -->
-        <div class="testimonials-grid" id="testimonials-grid"></div>
+  <div class="testimonials-container">
+    <div class="testimonials-header">
+      <h2 class="testimonials-title">Client <span class="gradient-text">Reviews</span></h2>
+      <p class="testimonials-subtitle">Hear what our valued clients have to say about their experience</p>
     </div>
+    <div class="testimonials-grid" id="testimonials-grid"></div>
+  </div>
 </section>
 
 <!-- Counter / Stats Section -->
 <section class="counter-section">
-    <h2 class="counter-section-title">Our Impact <span>in Numbers</span></h2>
-    <div class="counter-container">
-        <div class="counter-item">
-            <div class="counter" data-target="4800" data-suffix="K+">0</div>
-            <div class="label">Projects Completed</div>
-        </div>
-        <div class="counter-item">
-            <div class="counter" data-target="1300" data-suffix="K+">0</div>
-            <div class="label">Clients Served</div>
-        </div>
-        <div class="counter-item">
-            <div class="counter" data-target="2500" data-suffix="K+">0</div>
-            <div class="label">Certificates Granted</div>
-        </div>
-        <div class="counter-item">
-            <div class="counter" data-target="910" data-suffix="+">0</div>
-            <div class="label">Books Sold</div>
-        </div>
+  <h2 class="counter-section-title">Our Impact <span>in Numbers</span></h2>
+  <div class="counter-container">
+    <div class="counter-item">
+      <div class="counter" data-target="4800" data-suffix="K+">0</div>
+      <div class="label">Projects Completed</div>
     </div>
+    <div class="counter-item">
+      <div class="counter" data-target="1300" data-suffix="K+">0</div>
+      <div class="label">Clients Served</div>
+    </div>
+    <div class="counter-item">
+      <div class="counter" data-target="2500" data-suffix="K+">0</div>
+      <div class="label">Certificates Granted</div>
+    </div>
+    <div class="counter-item">
+      <div class="counter" data-target="910" data-suffix="+">0</div>
+      <div class="label">Books Sold</div>
+    </div>
+  </div>
 </section>
 
 <!-- Social / Contact Buttons -->
 <div class="contact-buttons">
-    <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
-        <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
-    </a>
-    <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
-        <button class="contact-btn"><i class="fab fa-instagram"></i></button>
-    </a>
-    <a href="https://www.reddit.com/user/nexgenix" target="_blank">
-        <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
-    </a>
-    <a href="/cdn-cgi/l/email-protection#4628233e2123282f3e25342327322f302335292a33322f29283506212b272f2a6825292b">
-        <button class="contact-btn"><i class="fas fa-envelope"></i></button>
-    </a>
-    <a href="https://wa.me/+639171063504" target="_blank">
-        <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
-    </a>
+  <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
+    <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
+  </a>
+  <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
+    <button class="contact-btn"><i class="fab fa-instagram"></i></button>
+  </a>
+  <a href="https://www.reddit.com/user/nexgenix" target="_blank">
+    <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
+  </a>
+  <a href="/cdn-cgi/l/email-protection#4628233e2123282f3e25342327322f302335292a33322f29283506212b272f2a6825292b">
+    <button class="contact-btn"><i class="fas fa-envelope"></i></button>
+  </a>
+  <a href="https://wa.me/+639171063504" target="_blank">
+    <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
+  </a>
 </div>
 
-<!-- Footer Section -->
+<!-- Footer -->
 <footer>&copy; 2026 <span>Nex Genix Creative Solutions</span> All rights reserved.</footer>
 
-<!-- External JavaScript -->
+</div><!-- /#page-content -->
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script src="script.js"></script>
-
-<!-- Auth Guard — must load before any auth-dependent logic -->
 <script src="auth.js"></script>
 
-<!-- Navbar Hero Transparency Script -->
+<!-- Navbar Hero Transparency -->
 <script>
-  (function () {
-    const navbar = document.getElementById('navbar');
-    const outer  = document.getElementById('hero-section-outer');
-    if (!navbar || !outer) return;
+(function () {
+  const navbar = document.getElementById('navbar');
+  const outer  = document.getElementById('hero-section-outer');
+  if (!navbar || !outer) return;
 
-    // Allow the full-bleed breakout to work by lifting overflow-x restriction
-    document.documentElement.style.overflowX = 'visible';
-    document.body.style.overflowX = 'visible';
+  document.documentElement.style.overflowX = 'visible';
+  document.body.style.overflowX = 'visible';
 
-    function updateNav() {
-      const outerBottom = outer.getBoundingClientRect().bottom;
-      const navH = navbar.offsetHeight;
-      if (outerBottom > navH) {
-        navbar.classList.add('nav-hero');
+  function updateNav() {
+    const outerBottom = outer.getBoundingClientRect().bottom;
+    const navH = navbar.offsetHeight;
+    if (outerBottom > navH) {
+      navbar.classList.add('nav-hero');
+    } else {
+      navbar.classList.remove('nav-hero');
+    }
+  }
+
+  updateNav();
+  window.addEventListener('scroll', updateNav, { passive: true });
+})();
+
+document.body.style.overflow = 'hidden';
+
+function revealContent() {
+  const pageContent = document.getElementById('page-content');
+  if (!pageContent) return;
+  pageContent.style.display = 'block';
+  document.body.style.overflow = '';
+  pageContent.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+<!-- Counter Animation -->
+<script>
+const counters = document.querySelectorAll('.counter');
+const animateCounters = () => {
+  counters.forEach(counter => {
+    const target = +counter.getAttribute('data-target');
+    const suffix = counter.getAttribute('data-suffix') || '';
+    const isK = suffix === 'K+';
+    const steps = 200;
+    const interval = 1800 / steps;
+    let step = 0;
+    const tick = () => {
+      step++;
+      const progress = step / steps;
+      const current = Math.round(target * progress);
+      if (step >= steps) {
+        counter.innerText = isK ? (target / 1000).toFixed(1) + 'K+' : target.toLocaleString() + suffix;
       } else {
-        navbar.classList.remove('nav-hero');
+        counter.innerText = isK ? (current / 1000).toFixed(1) + 'K+' : current.toLocaleString() + suffix;
+        setTimeout(tick, interval);
       }
-    }
-
-    updateNav();
-    window.addEventListener('scroll', updateNav, { passive: true });
-  })();
-
-  // Lock scroll while hero is showing
-  document.body.style.overflow = 'hidden';
-
-  // Reveal page content when arrow is clicked
-  function revealContent() {
-    const pageContent = document.getElementById('page-content');
-    if (!pageContent) return;
-
-    // Show content and unlock scroll
-    pageContent.style.display = 'block';
-    document.body.style.overflow = '';
-
-    // Smoothly scroll to content
-    pageContent.scrollIntoView({ behavior: 'smooth' });
-  }
-</script>
-
-<!-- Counter Animation Script -->
-<script>
-    const counters = document.querySelectorAll('.counter');
-
-    const animateCounters = () => {
-        counters.forEach(counter => {
-            const target = +counter.getAttribute('data-target');
-            const suffix = counter.getAttribute('data-suffix') || '';
-            const isK = suffix === 'K+';
-            const steps = 200;
-            const interval = 1800 / steps; // ~1.8s total
-            let step = 0;
-
-            const tick = () => {
-                step++;
-                const progress = step / steps;
-                const current = Math.round(target * progress);
-
-                if (step >= steps) {
-                    counter.innerText = isK
-                        ? (target / 1000).toFixed(1) + 'K+'
-                        : target.toLocaleString() + suffix;
-                } else {
-                    counter.innerText = isK
-                        ? (current / 1000).toFixed(1) + 'K+'
-                        : current.toLocaleString() + suffix;
-                    setTimeout(tick, interval);
-                }
-            };
-            tick();
-        });
     };
-
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounters();
-                observer.disconnect();
-            }
-        });
-    }, { threshold: 0.5 });
-
-    const counterContainer = document.querySelector('.counter-container');
-    if (counterContainer) {
-        observer.observe(counterContainer);
-    }
+    tick();
+  });
+};
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => { if (entry.isIntersecting) { animateCounters(); observer.disconnect(); } });
+}, { threshold: 0.5 });
+const counterContainer = document.querySelector('.counter-container');
+if (counterContainer) observer.observe(counterContainer);
 </script>
 
-<!-- Toggle Menu Script -->
+<!-- Toggle Menu -->
 <script>
-    function toggleMenu() {
-        document.querySelector('.nav-list').classList.toggle('active');
-        document.querySelector('.hamburger-menu').classList.toggle('open');
-    }
+function toggleMenu() {
+  document.querySelector('.nav-list').classList.toggle('active');
+  document.querySelector('.hamburger-menu').classList.toggle('open');
+}
 </script>
 
-<!-- Floating Code Background Script -->
+<!-- Floating Code Background -->
 <script>
-  const codeSnippets = [
-    'const nexgenix = () => {',
-    'function createSolution() {',
-    'import { Innovation } from "future"',
-    '<div className="digital">',
-    'async function buildDreams() {',
-    'export default Excellence;',
-    'return <Success />;',
-    'const vision = await design();',
-    'npm install creativity',
-    'git commit -m "launch"',
-    'SELECT * FROM solutions;',
-    'CREATE TABLE success;',
-    '{ transform: "ideas" }',
-    '.future { display: flex; }',
-    'onClick={() => innovate()}',
-    'useState(creativity);',
-    'useEffect(() => grow());',
-    'class Digital extends Tech {',
-    'interface Vision { }',
-    'type Success = Promise<Growth>;',
-  ];
-
-  function createFloatingCodeBackground() {
-    const container = document.createElement('div');
-    container.className = 'floating-code-container';
-
-    for (let i = 0; i < 15; i++) {
-      const codeLine = document.createElement('div');
-      codeLine.className = 'code-line';
-
-      const randomSnippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-      codeLine.textContent = randomSnippet;
-
-      const yPosition = 5 + (i * 6);
-      const duration = 15 + Math.random() * 10;
-      const delay = Math.random() * 20;
-
-      codeLine.style.top = `${yPosition}%`;
-      codeLine.style.animationDuration = `${duration}s`;
-      codeLine.style.animationDelay = `${delay}s`;
-
-      container.appendChild(codeLine);
-    }
-
-    document.body.insertBefore(container, document.body.firstChild);
+const codeSnippets = [
+  'const nexgenix = () => {', 'function createSolution() {',
+  'import { Innovation } from "future"', '<div className="digital">',
+  'async function buildDreams() {', 'export default Excellence;',
+  'return <Success />;', 'const vision = await design();',
+  'npm install creativity', 'git commit -m "launch"',
+  'SELECT * FROM solutions;', 'CREATE TABLE success;',
+  '{ transform: "ideas" }', '.future { display: flex; }',
+  'onClick={() => innovate()}', 'useState(creativity);',
+  'useEffect(() => grow());', 'class Digital extends Tech {',
+  'interface Vision { }', 'type Success = Promise<Growth>;',
+];
+function createFloatingCodeBackground() {
+  const container = document.createElement('div');
+  container.className = 'floating-code-container';
+  for (let i = 0; i < 15; i++) {
+    const codeLine = document.createElement('div');
+    codeLine.className = 'code-line';
+    codeLine.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+    codeLine.style.top = `${5 + (i * 6)}%`;
+    codeLine.style.animationDuration = `${15 + Math.random() * 10}s`;
+    codeLine.style.animationDelay = `${Math.random() * 20}s`;
+    container.appendChild(codeLine);
   }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', createFloatingCodeBackground);
-  } else {
-    createFloatingCodeBackground();
-  }
+  document.body.insertBefore(container, document.body.firstChild);
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', createFloatingCodeBackground);
+} else {
+  createFloatingCodeBackground();
+}
 </script>
 
-<!-- Categories Cards Scroll Animation Script -->
+<!-- Category Cards Scroll Animation -->
 <script>
-  function initCategories() {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.category-card').forEach(card => {
-      observer.observe(card);
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCategories);
-  } else {
-    initCategories();
-  }
+function initCategories() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.category-card').forEach(card => observer.observe(card));
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCategories);
+} else {
+  initCategories();
+}
 </script>
 
-<!-- Testimonials Script -->
+<!-- Testimonials -->
 <script>
-  const testimonials = [
-    {
-      name: 'Jude Trellier',
-      role: 'Digital Design Client',
-      content: "As someone new to the business world, I knew how important it was for my website to make a great first impression. This team made the entire process so easy and stress-free! They really listened to my ideas and delivered a design that looks professional, modern, and exactly how I imagined.",
-      rating: 5
-    },
-    {
-      name: 'Dyanne Tan',
-      role: 'Business Writing Client',
-      content: "I hired Miss Arriane to write a business proposal, and she exceeded my expectations. She was professional, detail-oriented, and took the time to understand my goals. The final proposal was clear, compelling, and well-structured.",
-      rating: 5
-    },
-    {
-      name: 'Gioia Pavan',
-      role: 'Learner',
-      content: "I recently enrolled in International Business Course and received my certification, and it was an excellent experience. The course was well-structured, informative, and provided valuable insights relevant to my field.",
-      rating: 5
-    }
-  ];
-
-  function createStarIcon() {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', 'star');
-    svg.setAttribute('viewBox', '0 0 24 24');
-    svg.setAttribute('fill', 'currentColor');
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z');
-    svg.appendChild(path);
-    return svg;
-  }
-
-  function createQuoteIcon() {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', 'quote-icon');
-    svg.setAttribute('viewBox', '0 0 24 24');
-    svg.setAttribute('fill', 'none');
-    svg.setAttribute('stroke', 'currentColor');
-    svg.setAttribute('stroke-width', '2');
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', 'M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z');
-    const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path2.setAttribute('d', 'M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z');
-    svg.appendChild(path);
-    svg.appendChild(path2);
-    return svg;
-  }
-
-  function createTestimonialCard(testimonial, index) {
-    const card = document.createElement('div');
-    card.className = 'testimonial-card';
-    card.style.animationDelay = `${index * 0.2}s`;
-    const cardInner = document.createElement('div');
-    cardInner.className = 'testimonial-card-inner';
-    cardInner.appendChild(createQuoteIcon());
-    const ratingDiv = document.createElement('div');
-    ratingDiv.className = 'rating-stars';
-    for (let i = 0; i < testimonial.rating; i++) {
-      ratingDiv.appendChild(createStarIcon());
-    }
-    cardInner.appendChild(ratingDiv);
-    const content = document.createElement('p');
-    content.className = 'testimonial-content';
-    content.textContent = `"${testimonial.content}"`;
-    cardInner.appendChild(content);
-    const authorDiv = document.createElement('div');
-    authorDiv.className = 'testimonial-author';
-    const avatar = document.createElement('div');
-    avatar.className = 'author-avatar';
-    const initial = document.createElement('span');
-    initial.className = 'author-initial';
-    initial.textContent = testimonial.name.charAt(0);
-    avatar.appendChild(initial);
-    const info = document.createElement('div');
-    info.className = 'author-info';
-    const name = document.createElement('h4');
-    name.className = 'author-name';
-    name.textContent = testimonial.name;
-    const role = document.createElement('p');
-    role.className = 'author-role';
-    role.textContent = testimonial.role;
-    info.appendChild(name);
-    info.appendChild(role);
-    authorDiv.appendChild(avatar);
-    authorDiv.appendChild(info);
-    cardInner.appendChild(authorDiv);
-    card.appendChild(cardInner);
-    return card;
-  }
-
-  function initTestimonials() {
-    const grid = document.getElementById('testimonials-grid');
-    if (!grid) return;
-    testimonials.forEach((testimonial, index) => {
-      const card = createTestimonialCard(testimonial, index);
-      grid.appendChild(card);
-    });
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.testimonial-card').forEach(card => {
-      observer.observe(card);
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTestimonials);
-  } else {
-    initTestimonials();
-  }
+const testimonials = [
+  { name: 'Jude Trellier', role: 'Digital Design Client', content: "As someone new to the business world, I knew how important it was for my website to make a great first impression. This team made the entire process so easy and stress-free! They really listened to my ideas and delivered a design that looks professional, modern, and exactly how I imagined.", rating: 5 },
+  { name: 'Dyanne Tan', role: 'Business Writing Client', content: "I hired Miss Arriane to write a business proposal, and she exceeded my expectations. She was professional, detail-oriented, and took the time to understand my goals. The final proposal was clear, compelling, and well-structured.", rating: 5 },
+  { name: 'Gioia Pavan', role: 'Learner', content: "I recently enrolled in International Business Course and received my certification, and it was an excellent experience. The course was well-structured, informative, and provided valuable insights relevant to my field.", rating: 5 }
+];
+function createStarIcon() {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'star'); svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'currentColor');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z');
+  svg.appendChild(path); return svg;
+}
+function createQuoteIcon() {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'quote-icon'); svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none'); svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '2');
+  const p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  p1.setAttribute('d', 'M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z');
+  const p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  p2.setAttribute('d', 'M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z');
+  svg.appendChild(p1); svg.appendChild(p2); return svg;
+}
+function createTestimonialCard(testimonial, index) {
+  const card = document.createElement('div');
+  card.className = 'testimonial-card';
+  card.style.animationDelay = `${index * 0.2}s`;
+  const inner = document.createElement('div');
+  inner.className = 'testimonial-card-inner';
+  inner.appendChild(createQuoteIcon());
+  const stars = document.createElement('div');
+  stars.className = 'rating-stars';
+  for (let i = 0; i < testimonial.rating; i++) stars.appendChild(createStarIcon());
+  inner.appendChild(stars);
+  const content = document.createElement('p');
+  content.className = 'testimonial-content';
+  content.textContent = `"${testimonial.content}"`;
+  inner.appendChild(content);
+  const author = document.createElement('div');
+  author.className = 'testimonial-author';
+  const avatar = document.createElement('div');
+  avatar.className = 'author-avatar';
+  const initial = document.createElement('span');
+  initial.className = 'author-initial';
+  initial.textContent = testimonial.name.charAt(0);
+  avatar.appendChild(initial);
+  const info = document.createElement('div');
+  info.className = 'author-info';
+  const name = document.createElement('h4');
+  name.className = 'author-name'; name.textContent = testimonial.name;
+  const role = document.createElement('p');
+  role.className = 'author-role'; role.textContent = testimonial.role;
+  info.appendChild(name); info.appendChild(role);
+  author.appendChild(avatar); author.appendChild(info);
+  inner.appendChild(author); card.appendChild(inner);
+  return card;
+}
+function initTestimonials() {
+  const grid = document.getElementById('testimonials-grid');
+  if (!grid) return;
+  testimonials.forEach((t, i) => grid.appendChild(createTestimonialCard(t, i)));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.testimonial-card').forEach(c => obs.observe(c));
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initTestimonials);
+} else {
+  initTestimonials();
+}
 </script>
-
-</div><!-- /#page-content -->
 
 </body>
 </html>
