@@ -1,492 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Careers | Nex Genix Creative Solutions</title>
-  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <link rel="stylesheet" href="assets/css/responsive.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Silkscreen:wght@400;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | Nex Genix Creative Solutions</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&family=Yellowtail&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  </head>
 
-  <style>
-    /* ─── CSS Variables ─── */
-    :root {
-      --neon: #39FF14;
-      --neon-dim: rgba(57,255,20,0.15);
-      --neon-glow: 0 0 18px rgba(57,255,20,0.55);
-      --bg: #0a0a0a;
-      --surface: #111111;
-      --surface2: #161616;
-      --border: rgba(57,255,20,0.18);
-      --text: #e5e5e5;
-      --muted: #6b7280;
-      --danger: #ff4444;
-      --font-head: 'Montserrat Alternates', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
+<style>
 
-    /* ─── Reset & Base ─── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { max-width: 100% !important; overflow-x: hidden; }
-    body {
-      width: 100% !important;
-      max-width: 100% !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-head);
-      font-size: 15px;
-      text-align: left !important;
-    }
+  /* ─── Reset & Base ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ═══════════════════════════════════════════════════════
-       UNIVERSAL FOOTER
-    ═══════════════════════════════════════════════════════ */
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #000;
-      color: #fff;
-      text-align: center;
-      padding: 10px;
-      font-family: 'Courier New', monospace;
-      font-size: 12px;
-      border-top: 1px solid var(--border);
-      z-index: 2;
-    }
-    footer span { color: #39FF14; text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14; }
+  html, body {
+    max-width: 100% !important;
+    overflow-x: hidden;
+  }
 
-    /* ═══════════════════════════════════════════════════════
-       FLOATING CODE BACKGROUND
-    ═══════════════════════════════════════════════════════ */
-    .floating-code-container {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .code-line {
-      position: absolute;
-      white-space: nowrap;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: rgba(57,255,20,0.25);
-      text-shadow: 0 0 8px rgba(57,255,20,0.2);
-      animation: floatCode linear infinite;
-      opacity: 0;
-    }
-    @keyframes floatCode {
-      0%   { transform: translateX(100vw); opacity: 0; }
-      8%   { opacity: 1; }
-      92%  { opacity: 1; }
-      100% { transform: translateX(-100%); opacity: 0; }
-    }
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #0a0a0a;
+    color: white;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 15px;
+    text-align: left !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
 
-    /* ─── Page Wrapper ─── */
-    .page-content { position: relative; z-index: 1; }
+  /* ─── Floating Code Background ─── */
+  .floating-bg-container {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    /* ═══════════════════════════════════════════════════════
-       HERO
-    ═══════════════════════════════════════════════════════ */
-    .careers-hero { padding: 8rem 2rem 4rem; text-align: center; }
-    .careers-hero .label {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.25em;
-      color: var(--neon);
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .careers-hero h1 { font-size: clamp(2.4rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; color: #fff; }
-    .careers-hero h1 .gradient-text {
-      background: linear-gradient(90deg, #ff4500, #ffcc00, #39FF14);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .careers-hero p {
-      max-width: 600px;
-      margin: 1.5rem auto 0;
-      font-size: 1.05rem;
-      color: var(--muted);
-      line-height: 1.8;
-      text-align: center;
-    }
+  .float-code {
+    position: absolute;
+    white-space: nowrap;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: rgba(57, 255, 20, 0.18);
+    text-shadow: 0 0 6px rgba(57, 255, 20, 0.15);
+    animation: driftCode linear infinite;
+    opacity: 0;
+  }
 
-    /* ─── Section Titles ─── */
-    .section-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
-    .section-subtitle {
-      font-size: 0.88rem;
-      color: var(--muted);
-      font-family: var(--font-mono);
-      letter-spacing: 0.1em;
-      margin-bottom: 2.5rem;
-    }
-    .neon { color: var(--neon); }
+  @keyframes driftCode {
+    0%   { transform: translateX(110vw); opacity: 0; }
+    8%   { opacity: 1; }
+    92%  { opacity: 1; }
+    100% { transform: translateX(-110%); opacity: 0; }
+  }
 
-    /* ─── Divider ─── */
-    .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+  /* ═══════════════════════════════════════════════════════
+     UNIVERSAL FOOTER
+  ═══════════════════════════════════════════════════════ */
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    border-top: 1px solid rgba(57, 255, 20, 0.18);
+    z-index: 2;
+  }
+  footer span {
+    color: #39FF14;
+    text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
+  }
 
-    /* ═══════════════════════════════════════════════════════
-       JOB LISTINGS
-    ═══════════════════════════════════════════════════════ */
-    .jobs-section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; text-align: left; }
-    .jobs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-      text-align: left;
-    }
-    .job-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.6rem;
-      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      text-align: left;
-    }
-    .job-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--neon), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .job-card:hover { border-color: var(--neon); box-shadow: var(--neon-glow); transform: translateY(-4px); }
-    .job-card:hover::before { opacity: 1; }
-    .job-card.active { border-color: var(--neon); box-shadow: var(--neon-glow); }
-    .job-card.active::before { opacity: 1; }
+  /* ═══════════════════════════════════════════════════════
+     PAGE WRAPPER
+  ═══════════════════════════════════════════════════════ */
+  .contact-page-wrapper {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .job-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
-    .job-icon {
-      width: 42px; height: 42px;
-      background: var(--neon-dim);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--neon);
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-    .job-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; text-align: left; }
-    .job-department {
-      font-size: 0.75rem;
-      color: var(--neon);
-      font-family: var(--font-mono);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-align: left;
-    }
-    .job-type-badge {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-family: var(--font-mono);
-      background: var(--neon-dim);
-      color: var(--neon);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 0.18rem 0.7rem;
-      margin-bottom: 0.5rem;
-    }
-    .job-salary {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.75rem;
-      font-family: var(--font-mono);
-      color: #a3a3a3;
-      margin-bottom: 0.9rem;
-    }
-    .job-salary i { font-size: 0.7rem; color: var(--neon); opacity: 0.7; }
+  /* ══════════════
+     CONTACT HERO
+  ═════════════════ */
+  .contact-hero {
+    text-align: center;
+    padding: 6rem 1rem 3rem 1rem;
+  }
 
-    /* Qualifications accordion */
-    .qualifications {
-      display: none;
-      margin-top: 0.8rem;
-      padding-top: 0.8rem;
-      border-top: 1px solid var(--border);
-      animation: fadeSlide 0.25s ease;
-      text-align: left;
-    }
-    .qualifications.open { display: block; }
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .qualifications h4 {
-      font-size: 0.78rem;
-      color: var(--neon);
-      font-family: var(--font-mono);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-      text-align: left;
-    }
-    .qualifications ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; text-align: left; }
-    .qualifications ul li {
-      font-size: 0.83rem;
-      color: #ccc;
-      line-height: 1.5;
-      padding-left: 1rem;
-      position: relative;
-      text-align: left;
-    }
-    .qualifications ul li::before { content: '▸'; position: absolute; left: 0; color: var(--neon); }
+  .contact-hero-eyebrow {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: #39FF14;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease 0.1s forwards;
+  }
 
-    .job-toggle-btn {
-      margin-top: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.8rem;
-      font-family: var(--font-mono);
-      color: var(--neon);
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      letter-spacing: 0.05em;
-      text-align: left;
-    }
-    .job-toggle-btn i { font-size: 0.75rem; transition: transform 0.2s; }
-    .job-toggle-btn.open i { transform: rotate(180deg); }
+  .contact-hero-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+    opacity: 0;
+    animation: fadeInUp 0.7s ease 0.2s forwards;
+  }
 
-    .apply-btn {
-      margin-top: 1rem;
-      width: 100%;
-      padding: 0.6rem 1rem;
-      background: var(--neon);
-      color: #000;
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 0.82rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s;
-    }
-    .apply-btn:hover { background: #52ff2a; box-shadow: var(--neon-glow); }
+  .contact-hero-title .gradient-text {
+    background: linear-gradient(to right, #39FF14, #b3ff85);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-    /* ═══════════════════════════════════════════════════════
-       APPLICATION FORM
-    ═══════════════════════════════════════════════════════ */
-    .apply-section { padding: 4rem 2rem 6rem; padding-bottom: 80px; max-width: 820px; margin: 0 auto; text-align: left; }
-    .form-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2.5rem;
-      box-shadow: 0 0 60px rgba(57,255,20,0.05);
-      text-align: left;
-    }
-    .form-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); text-align: left; }
-    .form-header .label {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--neon);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-      text-align: left;
-    }
-    .form-header h2 { font-size: 1.7rem; font-weight: 700; color: #fff; text-align: left; }
-    .form-header p { font-size: 0.88rem; color: var(--muted); margin-top: 0.4rem; line-height: 1.6; text-align: left; }
+  .contact-hero-subtitle {
+    color: #9ca3af;
+    font-size: 1.1rem;
+    max-width: 550px;
+    margin: 0 auto;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeInUp 0.7s ease 0.3s forwards;
+    text-align: center;
+  }
 
-    /* Selected Position Banner */
-    #selected-position-banner {
-      display: none;
-      background: var(--neon-dim);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.8rem 1.2rem;
-      margin-bottom: 1.8rem;
-      font-size: 0.88rem;
-      color: var(--neon);
-      font-family: var(--font-mono);
-      text-align: left;
-    }
-    #selected-position-banner.visible { display: flex; align-items: center; gap: 0.6rem; }
+  /* ═══════════════════════════════════════════════════════
+     CONTACT SECTION
+  ═══════════════════════════════════════════════════════ */
+  #contact {
+    padding: 2rem 1rem 6rem 1rem;
+    padding-bottom: 80px; /* clear fixed footer */
+    max-width: 820px;
+    margin: 0 auto;
+    width: 100%;
+  }
 
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; text-align: left; }
-    .form-group { display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.3rem; text-align: left; }
-    .form-group.full { grid-column: 1 / -1; }
+  /* Contact Form */
+  .contact-form {
+    background: linear-gradient(to bottom, rgba(17,24,39,0.5), rgba(0,0,0,0.5));
+    backdrop-filter: blur(8px);
+    border: 1px solid #1f2937;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    transition: border-color 0.3s ease;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.4s forwards;
+  }
+  .contact-form:hover {
+    border-color: rgba(57, 255, 20, 0.4);
+    box-shadow: 0 0 30px rgba(57, 255, 20, 0.06);
+  }
 
-    label {
-      font-size: 0.8rem;
-      font-family: var(--font-mono);
-      color: var(--neon);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-align: left;
-    }
-    label span.req { color: var(--danger); margin-left: 2px; }
+  .form-group { margin-bottom: 1.5rem; }
+  .form-group label {
+    display: block;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    text-align: left;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 0.95rem;
+    font-family: 'Montserrat Alternates', sans-serif;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    text-align: left;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #39FF14;
+    box-shadow: 0 0 0 3px rgba(57, 255, 20, 0.1);
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: #6b7280; }
+  .form-group select { cursor: pointer; }
+  .form-group select option { background: #111827; color: white; }
+  .form-group textarea { resize: vertical; min-height: 120px; }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    input[type="url"],
-    select,
-    textarea {
-      background: var(--surface2);
-      border: 1px solid rgba(57,255,20,0.22);
-      border-radius: 8px;
-      padding: 0.72rem 1rem;
-      color: #fff;
-      font-family: var(--font-head);
-      font-size: 0.88rem;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      width: 100%;
-      text-align: left;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--neon);
-      box-shadow: 0 0 0 3px rgba(57,255,20,0.12);
-    }
-    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.25); }
-    select {
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2339FF14' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.9rem center;
-      background-size: 12px;
-      padding-right: 2.5rem;
-      cursor: pointer;
-    }
-    select option { background: var(--surface2); color: #fff; }
-    textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+  /* Submit Button */
+  .btn-submit {
+    width: 100%;
+    padding: 1rem;
+    background: #39FF14;
+    border: none;
+    border-radius: 0.5rem;
+    color: black;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat Alternates', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 0 18px rgba(57, 255, 20, 0.35);
+  }
+  .btn-submit:hover {
+    background: #52ff2a;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(57, 255, 20, 0.4);
+  }
+  .btn-submit:active { transform: translateY(0); }
 
-    /* Phone with area code */
-    .phone-row { display: flex; gap: 0.6rem; text-align: left; }
-    .phone-row select { flex: 0 0 145px; }
-    .phone-row input { flex: 1; }
+  /* Divider */
+  .contact-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 3rem 0 2rem 0;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.5s forwards;
+  }
+  .contact-divider::before,
+  .contact-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #374151;
+  }
+  .contact-divider span {
+    color: #9ca3af;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
 
-    /* CV link helper note */
-    .cv-link-note {
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-family: var(--font-mono);
-      margin-top: 0.3rem;
-      line-height: 1.5;
-    }
-    .cv-link-note a { color: var(--neon); text-decoration: none; }
-    .cv-link-note a:hover { text-decoration: underline; }
+  /* Social Buttons */
+  .contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.6s forwards;
+  }
+  .contact-btn {
+    background-color: #121212;
+    border: 2px solid white;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .contact-btn:hover {
+    background-color: #39FF14;
+    border-color: #39FF14;
+    color: black;
+    transform: scale(1.1);
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.5);
+  }
+  .contact-buttons a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .contact-buttons a:visited { color: inherit; }
 
-    /* Submit */
-    .submit-btn {
-      width: 100%;
-      padding: 1rem 2rem;
-      background: var(--neon);
-      color: #000;
-      font-family: var(--font-head);
-      font-weight: 800;
-      font-size: 0.95rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
-      margin-top: 0.5rem;
-    }
-    .submit-btn:hover {
-      background: #52ff2a;
-      box-shadow: var(--neon-glow), 0 8px 30px rgba(57,255,20,0.25);
-      transform: translateY(-2px);
-    }
-    .submit-btn:active { transform: translateY(0); }
-    .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+  /* ─── Animations ─── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-    .form-note {
-      text-align: center;
-      font-size: 0.76rem;
-      font-family: var(--font-mono);
-      color: var(--muted);
-      margin-top: 1rem;
-      line-height: 1.8;
-    }
-    .form-note a { color: var(--neon); text-decoration: none; }
+  /* ═══════════════════════════════════════════════════════
+     PAGE-LEVEL RESPONSIVE (contact content only)
+  ═══════════════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    #contact { padding: 1.5rem 1rem 4rem 1rem; }
+    .contact-hero-title { font-size: 2.25rem; }
+    .contact-form { padding: 1.75rem; }
+  }
 
-    /* ─── Toast ─── */
-    #toast {
-      display: none;
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 9999;
-      background: var(--surface);
-      border: 1px solid var(--neon);
-      border-radius: 10px;
-      padding: 1rem 1.4rem;
-      font-size: 0.88rem;
-      color: #fff;
-      box-shadow: var(--neon-glow);
-      animation: slideUp 0.3s ease;
-      max-width: 360px;
-      line-height: 1.6;
-    }
-    #toast.error { border-color: var(--danger); box-shadow: 0 0 18px rgba(255,68,68,0.4); }
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+  @media (max-width: 480px) {
+    footer { padding: 1rem; font-size: 0.75rem; }
+    .contact-hero { padding: 5rem 1rem 2rem 1rem; }
+    .contact-hero-title { font-size: 2rem; }
+    #contact { padding: 1rem 1rem 4rem 1rem; }
+    .contact-form { padding: 1.5rem; }
+    .form-group label { font-size: 0.875rem; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea { font-size: 0.875rem; padding: 0.75rem; }
+    .btn-submit { font-size: 0.9rem; }
+  }
 
-    /* ═══════════════════════════════════════════════════════
-       RESPONSIVE — CAREERS PAGE CONTENT ONLY
-    ═══════════════════════════════════════════════════════ */
-    @media (max-width: 768px) {
-      .careers-hero { padding: 6rem 1.25rem 2.5rem; }
-      .careers-hero h1 { font-size: clamp(1.8rem, 7vw, 2.8rem); }
-      .careers-hero p { font-size: 0.95rem; }
-      .jobs-section { padding: 2.5rem 1.25rem; }
-      .jobs-grid { grid-template-columns: 1fr; gap: 1rem; }
-      .apply-section { padding: 2.5rem 1.25rem 4rem; }
-      .form-card { padding: 1.5rem; border-radius: 12px; }
-      .form-header h2 { font-size: 1.35rem; }
-      .form-row { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
-    @media (max-width: 480px) {
-      .careers-hero { padding: 5rem 1rem 2rem; }
-      .careers-hero h1 { font-size: 1.7rem; }
-      .jobs-section { padding: 2rem 1rem; }
-      .job-card { padding: 1.25rem; }
-      .job-title { font-size: 0.95rem; }
-      .apply-section { padding: 2rem 1rem 3rem; }
-      .form-card { padding: 1.25rem; border-radius: 10px; }
-      .phone-row { flex-direction: column; }
-      .phone-row select { flex: none; width: 100%; }
-      .submit-btn { font-size: 0.88rem; padding: 0.875rem 1.5rem; }
-      .section-title { font-size: 1.35rem; }
-      .section-subtitle { font-size: 0.78rem; }
-    }
-  </style>
-</head>
+  @media (min-width: 768px) {
+    .contact-hero-title { font-size: 4rem; }
+  }
+
+</style>
+
 <body>
 
-<!-- Floating Code Background -->
-<div class="floating-code-container" id="floatingCodeBg"></div>
+<!-- Floating Code Background — z-index: 0 -->
+<div class="floating-bg-container" id="floating-bg"></div>
 
-<!-- Navigation Bar -->
+<!-- Navbar — z-index: 100 -->
 <nav id="navbar">
   <div class="logo">
     <img src="assets/images/logo.png" alt="logo">
@@ -501,10 +350,10 @@
   <ul class="nav-list">
     <li><a href="https://nexgenixcreativesolutions.github.io">Home</a></li>
     <li><a href="https://nexgenixcreativesolutions.github.io/about-us">About Us</a></li>
-    <li><a href="https://nexgenixcreativesolutions.github.io#services">Services</a></li>
-    <li><a href="https://nexgenixcreativesolutions.github.io#reviews">Reviews</a></li>
-    <li><a href="https://nexgenixcreativesolutions.github.io/careers" class="active">Careers</a></li>
-    <li><a href="https://nexgenixcreativesolutions.github.io/contact">Contact</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/#services">Services</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/#reviews">Reviews</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/careers">Careers</a></li>
+    <li><a href="https://nexgenixcreativesolutions.github.io/contact" class="active">Contact</a></li>
   </ul>
   <div class="auth-buttons" id="auth-buttons">
     <a href="login-signup.html" class="dashboard-btn" id="nav-login-btn" style="display:none">Log In</a>
@@ -513,530 +362,92 @@
   </div>
 </nav>
 
-<div class="page-content">
+<!-- Page Content — z-index: 1 -->
+<div class="contact-page-wrapper">
 
-  <!-- Hero -->
-  <section class="careers-hero">
-    <p class="label">// we're hiring</p>
-    <h1>Build the Future<br>with <span class="gradient-text">Nex Genix</span></h1>
-    <p>Join a team of digital builders, strategists, and creatives pushing boundaries in web design, branding, and digital education. Explore open roles below.</p>
-  </section>
+  <div class="contact-hero">
+    <p class="contact-hero-eyebrow">Get In Touch</p>
+    <h1 class="contact-hero-title">Let's Build Something <span class="gradient-text">Great Together</span></h1>
+    <p class="contact-hero-subtitle">Have a project in mind or want to learn more about our services? We'd love to hear from you.</p>
+  </div>
 
-  <hr class="section-divider">
+  <section id="contact">
+    <article>
 
-  <!-- Job Listings -->
-  <section class="jobs-section">
-    <p class="section-title">Open <span class="neon">Positions</span></p>
-    <p class="section-subtitle">// Click a role to view qualifications, then hit Apply</p>
-
-    <div class="jobs-grid" id="jobsGrid">
-
-      <!-- 1. HR Manager -->
-      <div class="job-card" id="card-hr-manager">
-        <div class="job-header">
-          <div class="job-icon"><i class="fas fa-users-cog"></i></div>
-          <div>
-            <div class="job-title">Human Resource Manager</div>
-            <div class="job-department">People &amp; Culture</div>
-          </div>
-        </div>
-        <span class="job-type-badge">Full-Time</span>
-        <div class="job-salary"><i class="fas fa-coins"></i> ₱25,000 – ₱35,000 / mo</div>
-        <div class="qualifications" id="qual-hr-manager">
-          <h4>Qualifications</h4>
-          <ul>
-            <li>Bachelor's degree in Human Resources, Psychology, or related field</li>
-            <li>3+ years of HR management experience</li>
-            <li>Strong knowledge of labor laws and compliance</li>
-            <li>Experience with recruitment, onboarding, and talent development</li>
-            <li>Excellent interpersonal and conflict-resolution skills</li>
-            <li>Proficient in HR software and Microsoft Office</li>
-          </ul>
-        </div>
-        <button class="job-toggle-btn" onclick="toggleQual('hr-manager', this)">
-          <i class="fas fa-chevron-down"></i> View Qualifications
-        </button>
-        <button class="apply-btn" onclick="selectJob('Human Resource Manager', 'hr-manager')">Apply Now</button>
-      </div>
-
-      <!-- 2. Recruiter -->
-      <div class="job-card" id="card-recruiter">
-        <div class="job-header">
-          <div class="job-icon"><i class="fas fa-search"></i></div>
-          <div>
-            <div class="job-title">Recruiter</div>
-            <div class="job-department">People &amp; Culture</div>
-          </div>
-        </div>
-        <span class="job-type-badge">Full-Time</span>
-        <div class="job-salary"><i class="fas fa-coins"></i> ₱18,000 – ₱25,000 / mo</div>
-        <div class="qualifications" id="qual-recruiter">
-          <h4>Qualifications</h4>
-          <ul>
-            <li>Bachelor's degree in HR, Business Administration, or related field</li>
-            <li>2+ years of recruitment or talent acquisition experience</li>
-            <li>Familiarity with applicant tracking systems (ATS)</li>
-            <li>Strong sourcing skills — LinkedIn, job boards, referrals</li>
-            <li>Ability to assess candidates effectively and communicate feedback</li>
-            <li>Highly organized with excellent follow-through</li>
-          </ul>
-        </div>
-        <button class="job-toggle-btn" onclick="toggleQual('recruiter', this)">
-          <i class="fas fa-chevron-down"></i> View Qualifications
-        </button>
-        <button class="apply-btn" onclick="selectJob('Recruiter', 'recruiter')">Apply Now</button>
-      </div>
-
-      <!-- 3. Web Developer -->
-      <div class="job-card" id="card-web-dev">
-        <div class="job-header">
-          <div class="job-icon"><i class="fas fa-code"></i></div>
-          <div>
-            <div class="job-title">Web Developer</div>
-            <div class="job-department">Technology</div>
-          </div>
-        </div>
-        <span class="job-type-badge">Full-Time / Contract</span>
-        <div class="job-salary"><i class="fas fa-coins"></i> ₱30,000 – ₱50,000 / mo</div>
-        <div class="qualifications" id="qual-web-dev">
-          <h4>Qualifications</h4>
-          <ul>
-            <li>Bachelor's degree in Computer Science, IT, or equivalent experience</li>
-            <li>Proficient in HTML, CSS, JavaScript, and at least one JS framework (React, Vue)</li>
-            <li>Experience with CMS platforms (WordPress, Wix, Webflow)</li>
-            <li>Familiarity with version control (Git/GitHub)</li>
-            <li>Understanding of responsive design and web performance best practices</li>
-            <li>Experience with REST APIs and backend integration is a plus</li>
-          </ul>
-        </div>
-        <button class="job-toggle-btn" onclick="toggleQual('web-dev', this)">
-          <i class="fas fa-chevron-down"></i> View Qualifications
-        </button>
-        <button class="apply-btn" onclick="selectJob('Web Developer', 'web-dev')">Apply Now</button>
-      </div>
-
-      <!-- 4. Web Designer -->
-      <div class="job-card" id="card-web-designer">
-        <div class="job-header">
-          <div class="job-icon"><i class="fas fa-paint-brush"></i></div>
-          <div>
-            <div class="job-title">Web Designer</div>
-            <div class="job-department">Creative</div>
-          </div>
-        </div>
-        <span class="job-type-badge">Full-Time / Contract</span>
-        <div class="job-salary"><i class="fas fa-coins"></i> ₱25,000 – ₱40,000 / mo</div>
-        <div class="qualifications" id="qual-web-designer">
-          <h4>Qualifications</h4>
-          <ul>
-            <li>Bachelor's degree in Graphic Design, Multimedia Arts, or related field</li>
-            <li>Proficient in Figma, Adobe XD, or similar design tools</li>
-            <li>Strong portfolio demonstrating UI/UX design capabilities</li>
-            <li>Understanding of user-centered design principles</li>
-            <li>Basic knowledge of HTML/CSS to collaborate with developers</li>
-            <li>Eye for typography, color theory, and visual composition</li>
-          </ul>
-        </div>
-        <button class="job-toggle-btn" onclick="toggleQual('web-designer', this)">
-          <i class="fas fa-chevron-down"></i> View Qualifications
-        </button>
-        <button class="apply-btn" onclick="selectJob('Web Designer', 'web-designer')">Apply Now</button>
-      </div>
-
-      <!-- 5. Finance Officer -->
-      <div class="job-card" id="card-finance">
-        <div class="job-header">
-          <div class="job-icon"><i class="fas fa-chart-line"></i></div>
-          <div>
-            <div class="job-title">Finance Officer</div>
-            <div class="job-department">Finance &amp; Admin</div>
-          </div>
-        </div>
-        <span class="job-type-badge">Full-Time</span>
-        <div class="job-salary"><i class="fas fa-coins"></i> ₱22,000 – ₱32,000 / mo</div>
-        <div class="qualifications" id="qual-finance">
-          <h4>Qualifications</h4>
-          <ul>
-            <li>Bachelor's degree in Accountancy, Finance, or related field</li>
-            <li>CPA license is an advantage</li>
-            <li>2+ years of experience in bookkeeping or financial management</li>
-            <li>Proficient in accounting software (QuickBooks, Xero, or similar)</li>
-            <li>Detail-oriented with strong analytical and reporting skills</li>
-            <li>Understanding of BIR compliance and Philippine taxation is a plus</li>
-          </ul>
-        </div>
-        <button class="job-toggle-btn" onclick="toggleQual('finance', this)">
-          <i class="fas fa-chevron-down"></i> View Qualifications
-        </button>
-        <button class="apply-btn" onclick="selectJob('Finance Officer', 'finance')">Apply Now</button>
-      </div>
-
-      <!-- 6. Social Media Manager -->
-      <div class="job-card" id="card-socmed">
-        <div class="job-header">
-          <div class="job-icon"><i class="fas fa-share-alt"></i></div>
-          <div>
-            <div class="job-title">Social Media Manager</div>
-            <div class="job-department">Marketing &amp; Growth</div>
-          </div>
-        </div>
-        <span class="job-type-badge">Full-Time</span>
-        <div class="job-salary"><i class="fas fa-coins"></i> ₱20,000 – ₱30,000 / mo</div>
-        <div class="qualifications" id="qual-socmed">
-          <h4>Qualifications</h4>
-          <ul>
-            <li>Bachelor's degree in Marketing, Communications, or related field</li>
-            <li>2+ years managing social media accounts for a brand or agency</li>
-            <li>Strong copywriting and content creation skills</li>
-            <li>Proficient in Canva, Adobe Express, or similar graphic tools</li>
-            <li>Experience with Meta Ads, TikTok Ads, or similar platforms</li>
-            <li>Analytical mindset — comfortable reading insights and KPIs</li>
-          </ul>
-        </div>
-        <button class="job-toggle-btn" onclick="toggleQual('socmed', this)">
-          <i class="fas fa-chevron-down"></i> View Qualifications
-        </button>
-        <button class="apply-btn" onclick="selectJob('Social Media Manager', 'socmed')">Apply Now</button>
-      </div>
-
-      <!-- 7. Marketing Staff -->
-      <div class="job-card" id="card-mkt-staff">
-        <div class="job-header">
-          <div class="job-icon"><i class="fas fa-bullhorn"></i></div>
-          <div>
-            <div class="job-title">Marketing Staff</div>
-            <div class="job-department">Marketing &amp; Growth</div>
-          </div>
-        </div>
-        <span class="job-type-badge">Full-Time</span>
-        <div class="job-salary"><i class="fas fa-coins"></i> ₱16,000 – ₱22,000 / mo</div>
-        <div class="qualifications" id="qual-mkt-staff">
-          <h4>Qualifications</h4>
-          <ul>
-            <li>Bachelor's degree in Marketing, Business, or related field</li>
-            <li>1+ year in a marketing or digital communications role</li>
-            <li>Familiarity with email marketing tools and campaign management</li>
-            <li>Good understanding of SEO and content marketing basics</li>
-            <li>Creative thinker with strong written communication skills</li>
-            <li>Team player who can work under minimal supervision</li>
-          </ul>
-        </div>
-        <button class="job-toggle-btn" onclick="toggleQual('mkt-staff', this)">
-          <i class="fas fa-chevron-down"></i> View Qualifications
-        </button>
-        <button class="apply-btn" onclick="selectJob('Marketing Staff', 'mkt-staff')">Apply Now</button>
-      </div>
-
-      <!-- 8. Marketing Manager -->
-      <div class="job-card" id="card-mkt-mgr">
-        <div class="job-header">
-          <div class="job-icon"><i class="fas fa-funnel-dollar"></i></div>
-          <div>
-            <div class="job-title">Marketing Manager</div>
-            <div class="job-department">Marketing &amp; Growth</div>
-          </div>
-        </div>
-        <span class="job-type-badge">Full-Time</span>
-        <div class="job-salary"><i class="fas fa-coins"></i> ₱30,000 – ₱45,000 / mo</div>
-        <div class="qualifications" id="qual-mkt-mgr">
-          <h4>Qualifications</h4>
-          <ul>
-            <li>Bachelor's degree in Marketing, Business Administration, or related field</li>
-            <li>4+ years of marketing experience, with at least 2 in a managerial role</li>
-            <li>Proven track record in developing and executing marketing strategies</li>
-            <li>Strong leadership and team management capabilities</li>
-            <li>Experience with digital marketing channels, analytics, and ROI tracking</li>
-            <li>Excellent presentation and stakeholder communication skills</li>
-          </ul>
-        </div>
-        <button class="job-toggle-btn" onclick="toggleQual('mkt-mgr', this)">
-          <i class="fas fa-chevron-down"></i> View Qualifications
-        </button>
-        <button class="apply-btn" onclick="selectJob('Marketing Manager', 'mkt-mgr')">Apply Now</button>
-      </div>
-
-      <!-- 9. Sales Representative -->
-      <div class="job-card" id="card-sales">
-        <div class="job-header">
-          <div class="job-icon"><i class="fas fa-handshake"></i></div>
-          <div>
-            <div class="job-title">Sales Representative</div>
-            <div class="job-department">Sales</div>
-          </div>
-        </div>
-        <span class="job-type-badge">Full-Time</span>
-        <div class="job-salary"><i class="fas fa-coins"></i> ₱18,000 – ₱28,000 / mo</div>
-        <div class="qualifications" id="qual-sales">
-          <h4>Qualifications</h4>
-          <ul>
-            <li>Bachelor's degree in Business, Marketing, or related field (preferred)</li>
-            <li>1–3 years of experience in sales or business development</li>
-            <li>Excellent verbal communication and persuasion skills</li>
-            <li>Self-motivated with a drive to hit and exceed targets</li>
-            <li>Experience with CRM tools (HubSpot, Salesforce, or similar)</li>
-            <li>Comfortable with cold outreach, client calls, and virtual meetings</li>
-          </ul>
-        </div>
-        <button class="job-toggle-btn" onclick="toggleQual('sales', this)">
-          <i class="fas fa-chevron-down"></i> View Qualifications
-        </button>
-        <button class="apply-btn" onclick="selectJob('Sales Representative', 'sales')">Apply Now</button>
-      </div>
-
-      <!-- 10. Trainer -->
-      <div class="job-card" id="card-trainer">
-        <div class="job-header">
-          <div class="job-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-          <div>
-            <div class="job-title">Trainer</div>
-            <div class="job-department">Learning &amp; Development</div>
-          </div>
-        </div>
-        <span class="job-type-badge">Full-Time / Part-Time</span>
-        <div class="job-salary"><i class="fas fa-coins"></i> ₱20,000 – ₱32,000 / mo</div>
-        <div class="qualifications" id="qual-trainer">
-          <h4>Qualifications</h4>
-          <ul>
-            <li>Bachelor's degree in Education, Business, or a relevant field</li>
-            <li>2+ years of experience delivering training programs</li>
-            <li>Strong facilitation and presentation skills</li>
-            <li>Ability to design engaging training materials and modules</li>
-            <li>Knowledge of adult learning principles and instructional design</li>
-            <li>Experience with e-learning platforms is an advantage</li>
-          </ul>
-        </div>
-        <button class="job-toggle-btn" onclick="toggleQual('trainer', this)">
-          <i class="fas fa-chevron-down"></i> View Qualifications
-        </button>
-        <button class="apply-btn" onclick="selectJob('Trainer', 'trainer')">Apply Now</button>
-      </div>
-
-      <!-- 11. Online Tutor (K-12) -->
-      <div class="job-card" id="card-tutor">
-        <div class="job-header">
-          <div class="job-icon"><i class="fas fa-graduation-cap"></i></div>
-          <div>
-            <div class="job-title">Online Tutor (K-12 Series)</div>
-            <div class="job-department">NexGenix Business School</div>
-          </div>
-        </div>
-        <span class="job-type-badge">Part-Time / Remote</span>
-        <div class="job-salary"><i class="fas fa-coins"></i> ₱10,000 – ₱18,000 / mo</div>
-        <div class="qualifications" id="qual-tutor">
-          <h4>Qualifications</h4>
-          <ul>
-            <li>Bachelor's degree in Education or a subject-matter field (Math, Science, English, etc.)</li>
-            <li>Licensed Professional Teacher (LPT) is strongly preferred</li>
-            <li>1+ year of teaching or tutoring experience (K-12 level)</li>
-            <li>Comfortable with online teaching tools (Zoom, Google Meet, LMS)</li>
-            <li>Patient, encouraging, and adept at adapting lessons to different learning styles</li>
-            <li>Reliable internet connection and suitable home teaching environment</li>
-          </ul>
-        </div>
-        <button class="job-toggle-btn" onclick="toggleQual('tutor', this)">
-          <i class="fas fa-chevron-down"></i> View Qualifications
-        </button>
-        <button class="apply-btn" onclick="selectJob('Online Tutor (K-12 Series)', 'tutor')">Apply Now</button>
-      </div>
-
-    </div>
-  </section>
-
-  <hr class="section-divider">
-
-  <!-- Application Form -->
-  <section class="apply-section" id="applySection">
-    <div class="form-card">
-      <div class="form-header">
-        <p class="label">// submit application</p>
-        <h2>Apply to <span class="neon">NGCS</span></h2>
-        <p>Fill out the form below completely and include a link to your CV. Applications are reviewed on a rolling basis. We'll reach out within 24–48 hours.</p>
-      </div>
-
-      <div id="selected-position-banner">
-        <i class="fas fa-briefcase"></i>
-        <span id="banner-text">No position selected</span>
-      </div>
-
-      <form id="applicationForm" action="https://formspree.io/f/maqdqdqw" method="POST" novalidate>
-        <input type="hidden" name="_subject" value="Job Application — NexGenix Careers">
-        <input type="hidden" name="_source" value="Careers Page">
-
-        <!-- Position Select -->
+      <form action="https://formspree.io/f/maqdqdqw" method="POST" class="contact-form">
         <div class="form-group">
-          <label for="position">Position Applying For <span class="req">*</span></label>
-          <select id="position" name="position" required>
-            <option value="" disabled selected>— Select a position —</option>
-            <option value="Human Resource Manager">Human Resource Manager</option>
-            <option value="Recruiter">Recruiter</option>
-            <option value="Web Developer">Web Developer</option>
-            <option value="Web Designer">Web Designer</option>
-            <option value="Finance Officer">Finance Officer</option>
-            <option value="Social Media Manager">Social Media Manager</option>
-            <option value="Marketing Staff">Marketing Staff</option>
-            <option value="Marketing Manager">Marketing Manager</option>
-            <option value="Sales Representative">Sales Representative</option>
-            <option value="Trainer">Trainer</option>
-            <option value="Online Tutor (K-12 Series)">Online Tutor (K-12 Series)</option>
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" name="name" required placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+        </div>
+        <div class="form-group">
+          <label for="service">Service Interest *</label>
+          <select id="service" name="service" required>
+            <option value="">Select a service</option>
+            <option value="Digital Design">Digital Design and Visual Communication</option>
+            <option value="Writing Services">Writing Services</option>
+            <option value="Education">Education and Training</option>
+            <option value="Other">Other</option>
           </select>
         </div>
-
-        <!-- Full Legal Name -->
-        <div class="form-row">
-          <div class="form-group">
-            <label for="firstName">First Name (Legal) <span class="req">*</span></label>
-            <input type="text" id="firstName" name="firstName" placeholder="e.g. Maria" required>
-          </div>
-          <div class="form-group">
-            <label for="middleName">Middle Name</label>
-            <input type="text" id="middleName" name="middleName" placeholder="e.g. Santos">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="lastName">Last Name (Legal) <span class="req">*</span></label>
-            <input type="text" id="lastName" name="lastName" placeholder="e.g. Reyes" required>
-          </div>
-          <div class="form-group">
-            <label for="suffix">Suffix (if any)</label>
-            <select id="suffix" name="suffix">
-              <option value="">— None —</option>
-              <option value="Jr.">Jr.</option>
-              <option value="Sr.">Sr.</option>
-              <option value="II">II</option>
-              <option value="III">III</option>
-              <option value="IV">IV</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Email -->
         <div class="form-group">
-          <label for="email">Email Address <span class="req">*</span></label>
-          <input type="email" id="email" name="email" placeholder="you@email.com" required>
+          <label for="message">Message *</label>
+          <textarea id="message" name="message" rows="5" required placeholder="Tell us about your project or inquiry"></textarea>
         </div>
-
-        <!-- Phone -->
-        <div class="form-group">
-          <label>Phone Number <span class="req">*</span></label>
-          <div class="phone-row">
-            <select id="areaCode" name="areaCode" required>
-              <option value="+63" selected>🇵🇭 +63</option>
-              <option value="+1">🇺🇸 +1</option>
-              <option value="+44">🇬🇧 +44</option>
-              <option value="+61">🇦🇺 +61</option>
-              <option value="+64">🇳🇿 +64</option>
-              <option value="+65">🇸🇬 +65</option>
-              <option value="+60">🇲🇾 +60</option>
-              <option value="+971">🇦🇪 +971</option>
-              <option value="+966">🇸🇦 +966</option>
-              <option value="+81">🇯🇵 +81</option>
-              <option value="+82">🇰🇷 +82</option>
-              <option value="+91">🇮🇳 +91</option>
-              <option value="+86">🇨🇳 +86</option>
-              <option value="+49">🇩🇪 +49</option>
-              <option value="+33">🇫🇷 +33</option>
-              <option value="+39">🇮🇹 +39</option>
-              <option value="+34">🇪🇸 +34</option>
-              <option value="+55">🇧🇷 +55</option>
-              <option value="+52">🇲🇽 +52</option>
-              <option value="+27">🇿🇦 +27</option>
-              <option value="+234">🇳🇬 +234</option>
-            </select>
-            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="9XX XXX XXXX" required>
-          </div>
-        </div>
-
-        <!-- Mailing Address -->
-        <div class="form-group">
-          <label for="streetAddress">Street / Barangay Address <span class="req">*</span></label>
-          <input type="text" id="streetAddress" name="streetAddress" placeholder="House No., Street, Barangay" required>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="cityMunicipality">City / Municipality <span class="req">*</span></label>
-            <input type="text" id="cityMunicipality" name="cityMunicipality" placeholder="e.g. Zamboanga City" required>
-          </div>
-          <div class="form-group">
-            <label for="province">Province / State <span class="req">*</span></label>
-            <input type="text" id="province" name="province" placeholder="e.g. Zamboanga del Sur" required>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="zipCode">ZIP / Postal Code <span class="req">*</span></label>
-            <input type="text" id="zipCode" name="zipCode" placeholder="e.g. 7000" required>
-          </div>
-          <div class="form-group">
-            <label for="country">Country <span class="req">*</span></label>
-            <select id="country" name="country" required>
-              <option value="Philippines" selected>Philippines</option>
-              <option value="United States">United States</option>
-              <option value="Australia">Australia</option>
-              <option value="Canada">Canada</option>
-              <option value="United Kingdom">United Kingdom</option>
-              <option value="Singapore">Singapore</option>
-              <option value="Malaysia">Malaysia</option>
-              <option value="UAE">UAE</option>
-              <option value="Saudi Arabia">Saudi Arabia</option>
-              <option value="Japan">Japan</option>
-              <option value="South Korea">South Korea</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Cover Note -->
-        <div class="form-group">
-          <label for="coverNote">Brief Cover Note <span class="req">*</span></label>
-          <textarea id="coverNote" name="coverNote" placeholder="Tell us why you're a great fit for this role and what you bring to the team..." required></textarea>
-        </div>
-
-        <!-- CV / Resume Link -->
-        <div class="form-group">
-          <label for="cvLink">CV / Resume Link <span class="req">*</span></label>
-          <input type="url" id="cvLink" name="cvLink" placeholder="https://drive.google.com/your-cv-link" required>
-          <p class="cv-link-note">Upload your CV to <a href="https://drive.google.com" target="_blank">Google Drive</a>, <a href="https://www.dropbox.com" target="_blank">Dropbox</a>, or OneDrive and paste the shareable link here. Ensure access is set to <strong>Anyone with the link</strong>.</p>
-        </div>
-
-        <!-- LinkedIn -->
-        <div class="form-group">
-          <label for="linkedIn">LinkedIn Profile <span class="req">*</span></label>
-          <input type="url" id="linkedIn" name="linkedIn" placeholder="https://linkedin.com/in/your-profile" required>
-        </div>
-
-        <button type="submit" class="submit-btn">
-          <i class="fas fa-paper-plane"></i>&nbsp; Submit Application
-        </button>
-        <p class="form-note">
-          Your application will be sent to <a href="mailto:nexgenixcreativesolutions@gmail.com">nexgenixcreativesolutions@gmail.com</a>.<br>
-          Due to the volume of applications received, please allow 24–48 hours for a response.<br>
-          We handle all personal data in accordance with our Privacy Policy.
-        </p>
-
+        <button type="submit" class="btn-submit">Send Message</button>
       </form>
-    </div>
+
+      <div class="contact-divider">
+        <span>OR CONNECT WITH US</span>
+      </div>
+
+      <div class="contact-buttons">
+        <a href="https://www.facebook.com/nexgenix.creative.solutions" target="_blank">
+          <button class="contact-btn"><i class="fab fa-facebook-f"></i></button>
+        </a>
+        <a href="https://www.instagram.com/nexgenix.creative.solutions" target="_blank">
+          <button class="contact-btn"><i class="fab fa-instagram"></i></button>
+        </a>
+        <a href="https://www.reddit.com/user/nexgenix" target="_blank">
+          <button class="contact-btn"><i class="fab fa-reddit-alien"></i></button>
+        </a>
+        <a href="mailto:nexgenixcreativesolutions@gmail.com">
+          <button class="contact-btn"><i class="fas fa-envelope"></i></button>
+        </a>
+        <a href="https://wa.me/+639171063504" target="_blank">
+          <button class="contact-btn"><i class="fab fa-whatsapp"></i></button>
+        </a>
+      </div>
+
+    </article>
   </section>
 
-</div><!-- end .page-content -->
+</div><!-- end .contact-page-wrapper -->
 
-<!-- Toast Notification -->
-<div id="toast"></div>
-
-<!-- Footer -->
+<!-- Footer — z-index: 1, sticky bottom -->
 <footer>&copy; 2026 <span>Nex Genix Creative Solutions</span>. All rights reserved.</footer>
 
 <script src="script.js"></script>
 
 <script>
-  /* ─── Toggle Menu ─── */
   function toggleMenu() {
     document.querySelector('.nav-list').classList.toggle('active');
     document.querySelector('.hamburger-menu').classList.toggle('open');
   }
+</script>
 
-  /* ─── Floating Code Background ─── */
-  const codeSnippets = [
+<script>
+(function() {
+  const bg = document.getElementById('floating-bg');
+
+  const snippets = [
     'const nexgenix = () => {',
     'function createSolution() {',
     'import { Innovation } from "future"',
@@ -1048,127 +459,24 @@
     'npm install creativity',
     'git commit -m "launch"',
     'SELECT * FROM solutions;',
-    'CREATE TABLE success;',
     '{ transform: "ideas" }',
     '.future { display: flex; }',
+    'type Success = Promise<Growth>;',
+    'interface Vision extends Brand {}',
     'onClick={() => innovate()}',
     'useState(creativity);',
-    'useEffect(() => grow());',
-    'class Digital extends Tech {',
-    'interface Vision { }',
-    'type Success = Promise<Growth>;',
-    'JOIN careers SET future = true;',
-    'applyNow(candidate, position);',
   ];
 
-  (function createFloatingCode() {
-    const container = document.getElementById('floatingCodeBg');
-    for (let i = 0; i < 18; i++) {
-      const el = document.createElement('div');
-      el.className = 'code-line';
-      el.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-      el.style.top = `${3 + i * 5.3}%`;
-      el.style.animationDuration = `${16 + Math.random() * 12}s`;
-      el.style.animationDelay = `${Math.random() * 22}s`;
-      container.appendChild(el);
-    }
-  })();
-
-  /* ─── Qualification Toggle ─── */
-  function toggleQual(id, btn) {
-    const qual = document.getElementById('qual-' + id);
-    const isOpen = qual.classList.toggle('open');
-    btn.classList.toggle('open', isOpen);
-    btn.innerHTML = isOpen
-      ? '<i class="fas fa-chevron-up"></i> Hide Qualifications'
-      : '<i class="fas fa-chevron-down"></i> View Qualifications';
+  for (let i = 0; i < 16; i++) {
+    const el = document.createElement('div');
+    el.className = 'float-code';
+    el.textContent = snippets[Math.floor(Math.random() * snippets.length)];
+    el.style.top = `${3 + i * 6}%`;
+    el.style.animationDuration = `${18 + Math.random() * 14}s`;
+    el.style.animationDelay = `${Math.random() * 22}s`;
+    bg.appendChild(el);
   }
-
-  /* ─── Select Job & scroll to form ─── */
-  function selectJob(jobTitle, cardId) {
-    const select = document.getElementById('position');
-    for (let opt of select.options) {
-      if (opt.value === jobTitle) { opt.selected = true; break; }
-    }
-    const banner = document.getElementById('selected-position-banner');
-    document.getElementById('banner-text').textContent = 'Applying for: ' + jobTitle;
-    banner.classList.add('visible');
-    document.getElementById('applySection').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  /* ─── Sync position dropdown → banner ─── */
-  document.getElementById('position').addEventListener('change', function() {
-    if (this.value) {
-      document.getElementById('banner-text').textContent = 'Applying for: ' + this.value;
-      document.getElementById('selected-position-banner').classList.add('visible');
-    }
-  });
-
-  /* ─── Toast ─── */
-  function showToast(msg, isError = false) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = isError ? 'error' : '';
-    t.style.display = 'block';
-    setTimeout(() => { t.style.display = 'none'; }, 7000);
-  }
-
-  /* ─── Form Submission via Formspree ─── */
-  document.getElementById('applicationForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const required = this.querySelectorAll('[required]');
-    let valid = true;
-    required.forEach(field => {
-      if (!field.value.trim()) {
-        field.style.borderColor = 'var(--danger)';
-        valid = false;
-      } else {
-        field.style.borderColor = '';
-      }
-    });
-    if (!valid) {
-      showToast('Please complete all required fields before submitting.', true);
-      return;
-    }
-
-    const fn       = document.getElementById('firstName').value.trim();
-    const mn       = document.getElementById('middleName').value.trim();
-    const ln       = document.getElementById('lastName').value.trim();
-    const sfx      = document.getElementById('suffix').value;
-    const fullName = [fn, mn, ln, sfx].filter(Boolean).join(' ');
-
-    const formData = new FormData(this);
-    formData.set('full_name', fullName);
-
-    const submitBtn = this.querySelector('.submit-btn');
-    const originalHTML = submitBtn.innerHTML;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending…';
-
-    try {
-      const response = await fetch('https://formspree.io/f/maqdqdqw', {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (response.ok) {
-        showToast('Your application has been received. Please allow 24–48 hours for a response. We will be in touch shortly.');
-        this.reset();
-        document.getElementById('selected-position-banner').classList.remove('visible');
-      } else {
-        const data = await response.json();
-        const msg = data.errors ? data.errors.map(e => e.message).join(', ') : 'Submission failed. Please try again.';
-        showToast(msg, true);
-      }
-    } catch (err) {
-      showToast('A network error occurred. Please check your connection and try again.', true);
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalHTML;
-    }
-  });
+})();
 </script>
 
 <!-- Auth Guard -->
