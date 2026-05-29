@@ -145,6 +145,8 @@ p {
     z-index: 1000;
     box-sizing: border-box;
     transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    /* Allow dropdown panel to escape the navbar box */
+    overflow: visible;
 }
 
 /* Hero transparent state (index.html only) */
@@ -184,7 +186,6 @@ p {
     white-space: nowrap;
 }
 
-/* logo-title / short-title are <p> tags — strip default margins */
 .logo-title,
 .short-title {
     margin: 0;
@@ -196,7 +197,6 @@ p {
     display: none;
 }
 
-/* Hamburger — hidden on desktop */
 .hamburger-menu {
     display: none;
 }
@@ -210,7 +210,6 @@ p {
     transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-/* Hamburger bar extra shadow in hero transparent mode */
 #navbar.nav-hero .hamburger-menu .bar {
     box-shadow: 0 0 4px #39FF14,
                 0 1px 3px rgba(0, 0, 0, 1),
@@ -219,7 +218,6 @@ p {
                 -1px 0 3px rgba(0, 0, 0, 1);
 }
 
-/* Centered nav links */
 #navbar .nav-list {
     list-style: none;
     display: flex;
@@ -256,7 +254,6 @@ p {
     text-shadow: 0 0 6px rgba(57, 255, 20, 0.45);
 }
 
-/* Auth buttons */
 .auth-buttons {
     display: flex;
     align-items: center;
@@ -418,22 +415,23 @@ p {
 
 /* =================== FOOTER =================== */
 footer {
-    position: relative;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     background: #000;
     color: #fff;
     text-align: center;
     padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
     font-family: 'Courier New', monospace;
     font-size: 12px;
-    right: 5px;
+    border-top: 1px solid rgba(57, 255, 20, 0.18);
+    z-index: 999;
 }
 
 footer span {
-    color: #00ff00;
-    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
+    color: #39FF14;
+    text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14;
 }
 
 /* =================== MODALS / AUTH FORMS =================== */
