@@ -29,21 +29,7 @@
       --font-mono: 'JetBrains Mono', monospace;
     }
 
-    /* ─── Reset & Base ─── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { max-width: 100% !important; overflow-x: hidden; }
-    body {
-      width: 100% !important;
-      max-width: 100% !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-head);
-      font-size: 15px;
-      text-align: left !important;
-    }
-
+    
     /* ═══════════════════════════════════════════════════════
        UNIVERSAL FOOTER
     ═══════════════════════════════════════════════════════ */
@@ -335,7 +321,9 @@
       color: var(--neon);
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      text-align: left;
+      text-align: left !important;
+      display: block;
+      width: 100%;
     }
     label span.req { color: var(--danger); margin-left: 2px; }
 
