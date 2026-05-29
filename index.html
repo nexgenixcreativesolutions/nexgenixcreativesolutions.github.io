@@ -16,40 +16,6 @@
 
 <style>
 
-/* =================== BODY OVERRIDE ===================
-   styles.css sets body { width:90%; max-width:1100px; margin:auto; padding:60px 20px }
-   which breaks full-width elements. Override here so the
-   navbar, hero, and footer all span the full viewport.
-====================================================== */
-html, body {
-  max-width: 100% !important;
-  overflow-x: hidden;
-}
-body {
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  text-align: left !important;
-  background-color: #0a0a0a;
-}
-/* =================== NAVBAR DROPDOWN FIX ===================
-   Ensure the navbar never clips the fixed-position dropdown panel.
-   Also guarantee the dropdown top aligns with navbar height on mobile.
-====================================================== */
-#navbar {
-  overflow: visible !important;
-}
-
-@media (max-width: 1030px) {
-  .nav-list {
-    top: 50px !important;
-  }
-  .nav-list li {
-    display: block !important;
-    visibility: visible !important;
-  }
-}
 
 
 /* =================== HERO SECTION =================== */
