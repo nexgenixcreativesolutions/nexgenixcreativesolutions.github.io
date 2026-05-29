@@ -82,6 +82,16 @@
         pointer-events: auto;
     }
 
+    /* Higher specificity override: force dropdown to fixed position when open
+       so it appears below the navbar, not inside it */
+    #navbar .nav-list.active {
+        position: fixed;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        display: flex;
+    }
+
     .nav-list li {
         margin: 0;
         border-bottom: 1px solid rgba(57, 255, 20, 0.07);
