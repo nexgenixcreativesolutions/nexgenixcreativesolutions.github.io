@@ -21,7 +21,7 @@
     --text-muted: #888;
     --gold: #e8d44d;
     --red: #ff4040;
-    --PHP_RATE: 56.50; /* reference only */
+    --PHP_RATE: 56.50;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
 
@@ -121,6 +121,23 @@
   .pkg-features li .chk { color:var(--neon);font-size:0.65rem;margin-top:0.05rem;flex-shrink:0; }
   .pkg-features li.no .chk { color:#444; }
   .pkg-features li.no { opacity:0.45; }
+
+  /* ── Coupon badge on eligible cards ── */
+  .pkg-coupon-badge {
+    display:inline-flex;align-items:center;gap:0.3rem;
+    margin-bottom:0.6rem;
+    padding:0.22rem 0.55rem;
+    background:rgba(232,212,77,0.08);
+    border:1px dashed rgba(232,212,77,0.35);
+    border-radius:4px;
+    font-family:'Orbitron',sans-serif;
+    font-size:0.52rem;
+    letter-spacing:0.08em;
+    color:var(--gold);
+    text-transform:uppercase;
+  }
+  .pkg-coupon-badge::before { content:'🏷️';font-size:0.65rem; }
+
   .pkg-cta {
     display:block;width:100%;text-align:center;padding:0.55rem 0;
     border-radius:4px;font-family:'Orbitron',sans-serif;font-size:0.6rem;font-weight:700;
@@ -193,6 +210,13 @@
   .calc-item-desc { font-size:0.65rem;color:var(--text-muted);margin-top:0.15rem;line-height:1.4; }
   .calc-item-price { font-family:'Orbitron',sans-serif;font-size:0.78rem;font-weight:700;color:var(--gold);white-space:nowrap; }
 
+  /* Eligible-for-coupon indicator on calc items */
+  .calc-item[data-coupon-eligible="true"] .calc-item-name::after {
+    content:' 🏷️';
+    font-size:0.6rem;
+    opacity:0.7;
+  }
+
   /* Qty selector for pages */
   .calc-qty-wrap { display:flex;align-items:center;gap:0.35rem;margin-top:0.4rem; }
   .calc-qty-btn { width:22px;height:22px;background:var(--neon-dim);border:1px solid var(--border-dim);border-radius:3px;color:var(--neon);font-size:0.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s;flex-shrink:0; }
@@ -228,6 +252,94 @@
   .calc-line-price { font-family:'Orbitron',sans-serif;font-size:0.72rem;font-weight:700;color:var(--gold);white-space:nowrap; }
   .calc-line-remove { font-size:0.75rem;color:var(--text-muted);cursor:pointer;padding:0 0.25rem;transition:color 0.15s;flex-shrink:0; }
   .calc-line-remove:hover { color:var(--red); }
+
+  /* ── COUPON SECTION ── */
+  .calc-coupon-zone {
+    padding:0.75rem 1.25rem;
+    border-top:1px solid rgba(255,255,255,0.06);
+    background:rgba(232,212,77,0.025);
+  }
+  .calc-coupon-label {
+    font-family:'Orbitron',sans-serif;
+    font-size:0.55rem;
+    letter-spacing:0.15em;
+    color:var(--gold);
+    text-transform:uppercase;
+    margin-bottom:0.45rem;
+    display:flex;align-items:center;gap:0.4rem;
+  }
+  .calc-coupon-note {
+    font-size:0.6rem;
+    color:var(--text-muted);
+    margin-bottom:0.5rem;
+    line-height:1.5;
+  }
+  .calc-coupon-row {
+    display:flex;
+    gap:0.4rem;
+  }
+  .calc-coupon-input {
+    flex:1;
+    background:rgba(0,0,0,0.5);
+    border:1px solid rgba(232,212,77,0.25);
+    border-radius:5px;
+    color:var(--text);
+    font-family:'Orbitron',sans-serif;
+    font-size:0.7rem;
+    letter-spacing:0.12em;
+    padding:0.45rem 0.65rem;
+    text-transform:uppercase;
+    outline:none;
+    transition:border-color 0.2s, box-shadow 0.2s;
+  }
+  .calc-coupon-input::placeholder { color:#555;text-transform:none;letter-spacing:0; }
+  .calc-coupon-input:focus { border-color:rgba(232,212,77,0.55);box-shadow:0 0 8px rgba(232,212,77,0.12); }
+  .calc-coupon-input.valid   { border-color:var(--neon);box-shadow:0 0 8px rgba(57,255,20,0.18); }
+  .calc-coupon-input.invalid { border-color:var(--red);box-shadow:0 0 6px rgba(255,64,64,0.15); }
+  .calc-coupon-apply {
+    padding:0.45rem 0.875rem;
+    background:rgba(232,212,77,0.1);
+    border:1px solid rgba(232,212,77,0.35);
+    border-radius:5px;
+    font-family:'Orbitron',sans-serif;
+    font-size:0.6rem;
+    font-weight:700;
+    letter-spacing:0.08em;
+    color:var(--gold);
+    cursor:pointer;
+    transition:all 0.18s;
+    white-space:nowrap;
+  }
+  .calc-coupon-apply:hover { background:var(--gold);color:#000; }
+  .calc-coupon-msg {
+    margin-top:0.4rem;
+    font-size:0.62rem;
+    min-height:0.85rem;
+    transition:opacity 0.2s;
+  }
+  .calc-coupon-msg.success { color:var(--neon); }
+  .calc-coupon-msg.error   { color:var(--red); }
+  .calc-coupon-msg.warn    { color:var(--gold); }
+
+  /* Discount line in totals */
+  .calc-discount-row {
+    display:flex;justify-content:space-between;align-items:center;
+    padding:0.35rem 0;
+    border-bottom:1px dashed rgba(57,255,20,0.15);
+    margin-bottom:0.35rem;
+  }
+  .calc-discount-label {
+    font-family:'Orbitron',sans-serif;
+    font-size:0.58rem;
+    letter-spacing:0.1em;
+    color:var(--neon);
+  }
+  .calc-discount-amount {
+    font-family:'Orbitron',sans-serif;
+    font-size:0.72rem;
+    font-weight:700;
+    color:var(--neon);
+  }
 
   .calc-total-bar {
     padding:1rem 1.25rem;
@@ -273,6 +385,7 @@
     .calc-line-items { padding:0.65rem 0.875rem; }
     .calc-total-bar { padding:0.875rem 0.875rem; }
     .calc-quote-header { padding:0.75rem 0.875rem; }
+    .calc-coupon-zone { padding:0.65rem 0.875rem; }
     .pkg-price { font-size:1.15rem; }
   }
 </style>
@@ -309,8 +422,8 @@
     <div class="pkg-card">
       <div class="pkg-tier">Starter</div>
       <div class="pkg-name">TWO-PAGE Starter</div>
-      <div class="pkg-price" data-php="6500"></div>
-      <div class="pkg-price-php">₱6,500</div>
+      <div class="pkg-price" data-php="8000"></div><!-- ← updated from ₱6,500 -->
+      <div class="pkg-price-php">₱8,000</div>
       <div class="pkg-divider"></div>
       <ul class="pkg-features">
         <li><span class="chk">▸</span> 2 pages, mobile responsive</li>
@@ -372,6 +485,7 @@
       <div class="pkg-name">BASIC — Starter Business</div>
       <div class="pkg-price" data-php="18000"></div>
       <div class="pkg-price-php">₱18,000</div>
+      <div class="pkg-coupon-badge">Coupon Eligible</div>
       <div class="pkg-divider"></div>
       <ul class="pkg-features">
         <li><span class="chk">▸</span> 3–5 page website</li>
@@ -390,6 +504,7 @@
       <div class="pkg-name">PRO — Growing Business</div>
       <div class="pkg-price" data-php="26000"></div>
       <div class="pkg-price-php">₱26,000</div>
+      <div class="pkg-coupon-badge">Coupon Eligible</div>
       <div class="pkg-divider"></div>
       <ul class="pkg-features">
         <li><span class="chk">▸</span> 5–8 pages</li>
@@ -406,6 +521,7 @@
       <div class="pkg-name">PREMIUM — Corporate</div>
       <div class="pkg-price" data-php="52500"></div>
       <div class="pkg-price-php">₱52,500</div>
+      <div class="pkg-coupon-badge">Coupon Eligible</div>
       <div class="pkg-divider"></div>
       <ul class="pkg-features">
         <li><span class="chk">▸</span> 8–12 pages custom UI/UX</li>
@@ -428,6 +544,7 @@
       <div class="pkg-name">MULTI-PAGE Basic</div>
       <div class="pkg-price" data-php="12000"></div>
       <div class="pkg-price-php">₱12,000</div>
+      <div class="pkg-coupon-badge">Coupon Eligible</div>
       <div class="pkg-divider"></div>
       <ul class="pkg-features">
         <li><span class="chk">▸</span> 3–4 pages</li>
@@ -447,6 +564,7 @@
       <div class="pkg-name">MULTI-PAGE Standard</div>
       <div class="pkg-price" data-php="17000"></div>
       <div class="pkg-price-php">₱17,000</div>
+      <div class="pkg-coupon-badge">Coupon Eligible</div>
       <div class="pkg-divider"></div>
       <ul class="pkg-features">
         <li><span class="chk">▸</span> 5–7 pages</li>
@@ -464,6 +582,7 @@
       <div class="pkg-name">MULTI-PAGE Advanced</div>
       <div class="pkg-price" data-php="25000"></div>
       <div class="pkg-price-php">₱25,000</div>
+      <div class="pkg-coupon-badge">Coupon Eligible</div>
       <div class="pkg-divider"></div>
       <ul class="pkg-features">
         <li><span class="chk">▸</span> 8–12 pages</li>
@@ -483,7 +602,7 @@
     <div class="calc-header">
       <div class="section-divider"><span>🧮 Custom Quotation Calculator</span></div>
       <div class="calc-title">Build Your Own <span>Package</span></div>
-      <div class="calc-sub">Don't see a package that fits? Pick exactly what you need — mix and match services, add-ons, and features. Your quote updates in real time.</div>
+      <div class="calc-sub">Don't see a package that fits? Pick exactly what you need — mix and match services, add-ons, and features. Your quote updates in real time. <strong style="color:var(--gold);">🏷️ Coupon codes apply to multi-page packages.</strong></div>
     </div>
 
     <div class="calc-body">
@@ -493,22 +612,22 @@
 
         <!-- Web Design & Development -->
         <div class="calc-cat-header">🌐 Web Design & Development</div>
-        <div class="calc-item" data-id="webbasic" data-php="12000" onclick="toggleCalcItem(this)">
+        <div class="calc-item" data-id="webbasic" data-php="12000" data-coupon-eligible="true" onclick="toggleCalcItem(this)">
           <div class="calc-cb"></div>
           <div class="calc-item-info"><div class="calc-item-name">Multi-Page Basic Website</div><div class="calc-item-desc">3–4 pages, mobile responsive, contact form, domain + hosting</div></div>
           <div class="calc-item-price" data-php="12000"></div>
         </div>
-        <div class="calc-item" data-id="webstandard" data-php="17000" onclick="toggleCalcItem(this)">
+        <div class="calc-item" data-id="webstandard" data-php="17000" data-coupon-eligible="true" onclick="toggleCalcItem(this)">
           <div class="calc-cb"></div>
           <div class="calc-item-info"><div class="calc-item-name">Multi-Page Standard Website</div><div class="calc-item-desc">5–7 pages, improved UI, speed optimized, domain + hosting</div></div>
           <div class="calc-item-price" data-php="17000"></div>
         </div>
-        <div class="calc-item" data-id="webadvanced" data-php="25000" onclick="toggleCalcItem(this)">
+        <div class="calc-item" data-id="webadvanced" data-php="25000" data-coupon-eligible="true" onclick="toggleCalcItem(this)">
           <div class="calc-cb"></div>
           <div class="calc-item-info"><div class="calc-item-name">Multi-Page Advanced Website</div><div class="calc-item-desc">8–12 pages, custom layout, SQL database option</div></div>
           <div class="calc-item-price" data-php="25000"></div>
         </div>
-        <div class="calc-item" data-id="webmaint" data-php="18000" onclick="toggleCalcItem(this)">
+        <div class="calc-item" data-id="webmaint" data-php="18000" data-coupon-eligible="true" onclick="toggleCalcItem(this)">
           <div class="calc-cb"></div>
           <div class="calc-item-info"><div class="calc-item-name">Multi-Page + Maintenance (Basic)</div><div class="calc-item-desc">3–5 pages with ongoing monthly support, 1 email</div></div>
           <div class="calc-item-price" data-php="18000"></div>
@@ -623,10 +742,28 @@
           <span>📋 Your Quote</span>
           <button class="calc-quote-clear" onclick="clearCalc()">✕ Clear</button>
         </div>
+
         <div class="calc-line-items" id="calcLineItems">
           <div class="calc-empty" id="calcEmpty">Select services on the left to build your quote.</div>
         </div>
+
+        <!-- ── COUPON ZONE ── -->
+        <div class="calc-coupon-zone" id="calcCouponZone">
+          <div class="calc-coupon-label">🏷️ Promo / Coupon Code</div>
+          <div class="calc-coupon-note" id="couponEligibilityNote">Select a multi-page website package to unlock coupon discounts.</div>
+          <div class="calc-coupon-row">
+            <input type="text" class="calc-coupon-input" id="couponInput" placeholder="Enter code…" maxlength="20" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')applyCoupon()">
+            <button class="calc-coupon-apply" onclick="applyCoupon()">Apply</button>
+          </div>
+          <div class="calc-coupon-msg" id="couponMsg"></div>
+        </div>
+
         <div class="calc-total-bar">
+          <!-- Discount row — hidden until a coupon is applied -->
+          <div class="calc-discount-row" id="calcDiscountRow" style="display:none;">
+            <span class="calc-discount-label" id="calcDiscountLabel">Discount</span>
+            <span class="calc-discount-amount" id="calcDiscountAmount"></span>
+          </div>
           <div class="calc-total-row">
             <span class="calc-total-label">Estimated Total</span>
             <span class="calc-total-amount" id="calcTotal">—</span>
@@ -654,9 +791,11 @@
 </div>
 
 <script>
-// ── CURRENCY DATA ──────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
+// CURRENCY DATA
+// ══════════════════════════════════════════════════════════════════
 const PHP_RATE = 56.50;
-const rates = { USD:1, PHP:56.50, EUR:0.92, GBP:0.79, AUD:1.52, SGD:1.34, JPY:149.50 };
+const rates   = { USD:1, PHP:56.50, EUR:0.92, GBP:0.79, AUD:1.52, SGD:1.34, JPY:149.50 };
 const symbols = { USD:'$', PHP:'₱', EUR:'€', GBP:'£', AUD:'A$', SGD:'S$', JPY:'¥' };
 let cur = 'USD';
 
@@ -677,13 +816,114 @@ function setCurrency(c) {
 
 function renderPrices() {
   document.querySelectorAll('.pkg-price[data-php]').forEach(el => {
-    const php = parseInt(el.dataset.php);
-    el.innerHTML = phpToDisplay(php);
+    el.innerHTML = phpToDisplay(parseInt(el.dataset.php));
   });
 }
 
-// ── CALCULATOR STATE ──────────────────────────────────────────────────────
-const calcItems = {}; // id → { php, qty, name, desc }
+// ══════════════════════════════════════════════════════════════════
+// COUPON SYSTEM
+// ══════════════════════════════════════════════════════════════════
+/*
+  Rules:
+  - Applies ONLY to items with data-coupon-eligible="true" (multi-page packages)
+  - Max discount is 10% to protect margins
+  - Codes are one-time per session (tracked in appliedCode)
+  - Only one code active at a time
+*/
+const COUPON_CODES = {
+  'NGCS10':  { pct: 10, label: '10% Off Multi-Page' },   // 10% — max allowed
+  'LAUNCH8': { pct: 8,  label: '8% Launch Promo'    },   // 8%
+  'REFER5':  { pct: 5,  label: '5% Referral Reward' },   // 5%
+};
+const MAX_DISCOUNT_PCT = 10; // hard ceiling — never goes above this
+
+let appliedCoupon   = null; // { code, pct, label } or null
+let couponEligiblePHP = 0;  // PHP total of eligible items only
+
+function hasCouponEligibleItems() {
+  return Object.keys(calcItems).some(id => {
+    const el = document.querySelector(`[data-id="${id}"]`);
+    return el && el.dataset.couponEligible === 'true';
+  });
+}
+
+function getCouponEligibleTotal() {
+  let total = 0;
+  Object.keys(calcItems).forEach(id => {
+    const el = document.querySelector(`[data-id="${id}"]`);
+    if (el && el.dataset.couponEligible === 'true') {
+      total += calcItems[id].php * calcItems[id].qty;
+    }
+  });
+  return total;
+}
+
+function applyCoupon() {
+  const input = document.getElementById('couponInput');
+  const msg   = document.getElementById('couponMsg');
+  const code  = (input.value || '').trim().toUpperCase();
+
+  if (!code) {
+    showCouponMsg('Enter a coupon code first.', 'warn');
+    return;
+  }
+
+  if (!hasCouponEligibleItems()) {
+    showCouponMsg('Add a multi-page website package to use a coupon.', 'warn');
+    input.className = 'calc-coupon-input';
+    return;
+  }
+
+  if (!COUPON_CODES[code]) {
+    showCouponMsg('Invalid code. Please check and try again.', 'error');
+    input.className = 'calc-coupon-input invalid';
+    appliedCoupon = null;
+    renderQuote();
+    return;
+  }
+
+  const coupon = COUPON_CODES[code];
+  // Safety clamp — never exceed MAX_DISCOUNT_PCT regardless of what's in the object
+  const safePct = Math.min(coupon.pct, MAX_DISCOUNT_PCT);
+  appliedCoupon = { code, pct: safePct, label: coupon.label };
+
+  input.className = 'calc-coupon-input valid';
+  showCouponMsg(`✓ ${coupon.label} applied! (-${safePct}% on multi-page items)`, 'success');
+  renderQuote();
+}
+
+function removeCoupon() {
+  appliedCoupon = null;
+  const input = document.getElementById('couponInput');
+  if (input) { input.value = ''; input.className = 'calc-coupon-input'; }
+  showCouponMsg('', '');
+  renderQuote();
+}
+
+function showCouponMsg(text, type) {
+  const el = document.getElementById('couponMsg');
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'calc-coupon-msg' + (type ? ' ' + type : '');
+}
+
+function updateCouponEligibilityNote() {
+  const note = document.getElementById('couponEligibilityNote');
+  const input = document.getElementById('couponInput');
+  if (!note) return;
+  const eligible = hasCouponEligibleItems();
+  note.textContent = eligible
+    ? 'Coupon applies to multi-page website packages only 🏷️'
+    : 'Select a multi-page website package to unlock coupon discounts.';
+  if (input) input.disabled = !eligible;
+  // If coupon was applied but eligible items were all removed, reset
+  if (appliedCoupon && !eligible) { removeCoupon(); }
+}
+
+// ══════════════════════════════════════════════════════════════════
+// CALCULATOR STATE
+// ══════════════════════════════════════════════════════════════════
+const calcItems = {}; // id → { php, qty, name, desc, couponEligible }
 
 function toggleCalcItem(el) {
   const id = el.dataset.id;
@@ -691,36 +931,37 @@ function toggleCalcItem(el) {
     delete calcItems[id];
     el.classList.remove('selected');
   } else {
-    const php = parseInt(el.dataset.php);
-    const qty = parseInt(el.dataset.qty||1);
-    const name = el.querySelector('.calc-item-name').textContent;
+    const php  = parseInt(el.dataset.php);
+    const qty  = parseInt(el.dataset.qty || 1);
+    const name = el.querySelector('.calc-item-name').textContent.replace(' 🏷️','').trim();
     const desc = el.querySelector('.calc-item-desc').textContent;
-    calcItems[id] = { php, qty, name, desc };
+    const couponEligible = el.dataset.couponEligible === 'true';
+    calcItems[id] = { php, qty, name, desc, couponEligible };
     el.classList.add('selected');
   }
+  updateCouponEligibilityNote();
   renderCalcPrices();
   renderQuote();
 }
 
 function changeQty(id, delta) {
-  const input = document.getElementById('qty-'+id);
+  const input = document.getElementById('qty-' + id);
   if (!input) return;
-  let v = parseInt(input.value)||1;
+  let v = parseInt(input.value) || 1;
   v = Math.max(1, v + delta);
   input.value = v;
   updateQty(id, v);
 }
 
 function updateQty(id, val) {
-  const v = Math.max(1, parseInt(val)||1);
-  if (calcItems[id]) { calcItems[id].qty = v; }
-  // Update display price for per-unit items
+  const v = Math.max(1, parseInt(val) || 1);
   const el = document.querySelector(`[data-id="${id}"] .calc-item-price`);
-  if (el && el.dataset.base) {
-    calcItems[id] = calcItems[id] || { php: parseInt(el.dataset.base), qty: v, name: document.querySelector(`[data-id="${id}"] .calc-item-name`).textContent, desc: '' };
+  if (calcItems[id]) {
     calcItems[id].qty = v;
-    calcItems[id].php = parseInt(el.dataset.base);
+  } else if (el && el.dataset.base) {
+    // Item not yet selected — just update input
   }
+  if (calcItems[id]) calcItems[id].qty = v;
   renderCalcPrices();
   renderQuote();
 }
@@ -728,60 +969,82 @@ function updateQty(id, val) {
 function renderCalcPrices() {
   document.querySelectorAll('.calc-item-price[data-php]').forEach(el => {
     const php = parseInt(el.dataset.php);
-    if (el.dataset.base) {
-      // per-unit — show per-unit price label
-      el.textContent = phpToDisplay(php) + '/page';
-    } else {
-      el.textContent = phpToDisplay(php);
-    }
+    el.textContent = el.dataset.base
+      ? phpToDisplay(php) + '/page'
+      : phpToDisplay(php);
   });
 }
 
 function renderQuote() {
-  const container = document.getElementById('calcLineItems');
-  const empty = document.getElementById('calcEmpty');
-  const totalEl = document.getElementById('calcTotal');
-  const downpayEl = document.getElementById('calcDownpay');
-  const cta = document.getElementById('calcCta');
+  const container  = document.getElementById('calcLineItems');
+  const totalEl    = document.getElementById('calcTotal');
+  const downpayEl  = document.getElementById('calcDownpay');
+  const cta        = document.getElementById('calcCta');
+  const discRow    = document.getElementById('calcDiscountRow');
+  const discLabel  = document.getElementById('calcDiscountLabel');
+  const discAmt    = document.getElementById('calcDiscountAmount');
 
   const ids = Object.keys(calcItems);
 
   if (ids.length === 0) {
-    container.innerHTML = '<div class="calc-empty" id="calcEmpty">Select services on the left to build your quote.</div>';
+    container.innerHTML = '<div class="calc-empty">Select services on the left to build your quote.</div>';
     totalEl.textContent = '—';
     downpayEl.textContent = '';
+    discRow.style.display = 'none';
     cta.style.pointerEvents = 'none';
     cta.style.opacity = '0.35';
     return;
   }
 
-  let totalPHP = 0;
+  let subtotalPHP     = 0;
+  let eligiblePHP     = 0;
   let html = '';
 
   ids.forEach(id => {
-    const item = calcItems[id];
+    const item    = calcItems[id];
     const linePHP = item.php * item.qty;
-    totalPHP += linePHP;
+    subtotalPHP  += linePHP;
+    if (item.couponEligible) eligiblePHP += linePHP;
     const label = item.qty > 1 ? `${item.name} ×${item.qty}` : item.name;
+    const tag   = item.couponEligible ? ' <span style="opacity:0.55;font-size:0.6rem;">🏷️</span>' : '';
     html += `<div class="calc-line">
-      <span class="calc-line-name">${label}</span>
+      <span class="calc-line-name">${label}${tag}</span>
       <span class="calc-line-price">${phpToDisplay(linePHP)}</span>
       <span class="calc-line-remove" onclick="removeCalcItem('${id}')">✕</span>
     </div>`;
   });
 
   container.innerHTML = html;
-  totalEl.textContent = phpToDisplay(totalPHP);
-  const downpayPHP = totalPHP * 0.5;
+
+  // Apply coupon discount to eligible items only
+  let discountPHP = 0;
+  let finalPHP    = subtotalPHP;
+
+  if (appliedCoupon && eligiblePHP > 0) {
+    discountPHP = Math.round(eligiblePHP * (appliedCoupon.pct / 100));
+    finalPHP    = subtotalPHP - discountPHP;
+    discRow.style.display = 'flex';
+    discLabel.textContent = `${appliedCoupon.label} (−${appliedCoupon.pct}%)`;
+    discAmt.textContent   = '−' + phpToDisplay(discountPHP);
+  } else {
+    discRow.style.display = 'none';
+  }
+
+  totalEl.textContent = phpToDisplay(finalPHP);
+  const downpayPHP    = finalPHP * 0.5;
   downpayEl.textContent = `50% downpayment: ${phpToDisplay(downpayPHP)}`;
   cta.style.pointerEvents = '';
   cta.style.opacity = '1';
+
+  // Update coupon eligibility UI
+  updateCouponEligibilityNote();
 }
 
 function removeCalcItem(id) {
   const el = document.querySelector(`[data-id="${id}"]`);
   if (el) el.classList.remove('selected');
   delete calcItems[id];
+  updateCouponEligibilityNote();
   renderQuote();
 }
 
@@ -791,10 +1054,13 @@ function clearCalc() {
     if (el) el.classList.remove('selected');
   });
   for (const k in calcItems) delete calcItems[k];
+  removeCoupon();
   renderQuote();
 }
 
-// ── INIT ───────────────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════════════
 renderPrices();
 renderCalcPrices();
 </script>
