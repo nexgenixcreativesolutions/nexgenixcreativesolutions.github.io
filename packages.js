@@ -1,389 +1,156 @@
-  (function(){
-    /* ── Currency conversion ── */
-    var PHP_RATE = 56.50;
-    var RATES   = {USD:1,PHP:56.50,EUR:0.92,GBP:0.79,AUD:1.52,CAD:1.36,SGD:1.34,JPY:149.50,INR:83.10,CNY:7.24,MXN:17.15,BRL:4.97,KRW:1325,CHF:0.89,AED:3.67,SAR:3.75,PLN:3.98};
-    var SYMBOLS = {USD:'$',PHP:'₱',EUR:'€',GBP:'£',AUD:'A$',CAD:'C$',SGD:'S$',JPY:'¥',INR:'₹',CNY:'¥',MXN:'MX$',BRL:'R$',KRW:'₩',CHF:'Fr',AED:'د.إ',SAR:'﷼',PLN:'zł'};
-    var activeCurrency = 'USD';
+/* ================================================================
+   packages.js — NGCS Dashboard companion
+   ----------------------------------------------------------------
+   dashboard-script.js already owns:
+     • servicePackages data  (all prices, features, categories)
+     • loadServices()        (renders all service-grid cards)
+     • selectService(cat,key)(shows correct form + invoice)
+     • changeCurrency()      (converts & re-renders)
 
-    function phpToDisplay(php, cur) {
-      cur = cur || activeCurrency;
-      var usd = php / PHP_RATE;
-      var val = usd * (RATES[cur] || 1);
-      var sym = SYMBOLS[cur] || cur;
-      if (cur === 'JPY' || cur === 'KRW') return sym + Math.round(val).toLocaleString();
-      return sym + val.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+   This file only does three things:
+     1. Patches the TWO-PAGE Starter price ₱6,500 → ₱8,000
+     2. Adds App Design & UI/UX grids to serviceGridAppDesign /
+        serviceGridUiux (they exist in servicePackages but weren't
+        in the original loadServices grid list — patched below)
+     3. Handles URL pre-selection:
+          ?service=logo-design&package=pkg-logo-pro
+          ?type=renewal
+        so links from the services/quote page land on the right
+        package with the form already open
+   ================================================================ */
+
+(function () {
+
+  /* ── 1. PRICE PATCH — run before DOMContentLoaded ─────────────
+     servicePackages is defined at the top of dashboard-script.js
+     and is a plain object in the global scope. We wait for the
+     script to finish executing, then patch.                      */
+  function patchPrices() {
+    if (typeof servicePackages === 'undefined') return;
+    // TWO-PAGE Starter: ₱6,500 → ₱8,000
+    if (servicePackages.onePage && servicePackages.onePage.starter) {
+      servicePackages.onePage.starter.price = 8000;
+    }
+  }
+
+  /* ── 2. URL PRE-SELECT ─────────────────────────────────────────
+     Supports these query params (all optional, combinable):
+       ?type=renewal          → switches to Renewal tab
+       ?service=logo-design   → clicks the matching filter tab
+       ?package=pkg-logo-pro  → selects that specific package
+                                (uses our stable pkg IDs mapped
+                                 to dashboard-script's cat+key)  */
+
+  /* Map from our stable pkg IDs → dashboard-script.js cat + key */
+  var PKG_ID_MAP = {
+    /* Maintenance */
+    'pkg-maint-basic':    { cat:'maintenance',   key:'basic'    },
+    'pkg-maint-pro':      { cat:'maintenance',   key:'pro'      },
+    'pkg-maint-premium':  { cat:'maintenance',   key:'premium'  },
+    /* Two-Page */
+    'pkg-two-starter':    { cat:'onePage',       key:'starter'  },
+    'pkg-two-pro':        { cat:'onePage',       key:'pro'      },
+    'pkg-two-premium':    { cat:'onePage',       key:'premium'  },
+    /* No Maintenance */
+    'pkg-nom-basic':      { cat:'noMaintenance', key:'basic'    },
+    'pkg-nom-standard':   { cat:'noMaintenance', key:'standard' },
+    'pkg-nom-advanced':   { cat:'noMaintenance', key:'advanced' },
+    /* Logo */
+    'pkg-logo-basic':     { cat:'logoDesign',    key:'basic'    },
+    'pkg-logo-pro':       { cat:'logoDesign',    key:'pro'      },
+    'pkg-logo-premium':   { cat:'logoDesign',    key:'premium'  },
+    /* Video */
+    'pkg-vid-short':      { cat:'videoAds',      key:'short'    },
+    'pkg-vid-standard':   { cat:'videoAds',      key:'standard' },
+    'pkg-vid-premium':    { cat:'videoAds',      key:'premium'  },
+    /* App Design */
+    'pkg-app-starter':    { cat:'appDesign',     key:'starter'  },
+    'pkg-app-pro':        { cat:'appDesign',     key:'pro'      },
+    'pkg-app-premium':    { cat:'appDesign',     key:'premium'  },
+    /* UI/UX */
+    'pkg-uiux-starter':   { cat:'uiux',          key:'starter'  },
+    'pkg-uiux-pro':       { cat:'uiux',          key:'pro'      },
+    'pkg-uiux-premium':   { cat:'uiux',          key:'premium'  },
+    /* Manager */
+    'pkg-mgr-monthly':    { cat:'manager',       key:'monthly'  },
+    'pkg-mgr-annual':     { cat:'manager',       key:'annual'   },
+    /* Renewal */
+    'pkg-renew-standard': { cat:'renewal',       key:'standard' },
+  };
+
+  /* Map service param → filter tab ID */
+  var SERVICE_TAB_MAP = {
+    'logo-design':      'tab-logo',
+    'video-ads':        'tab-video',
+    'app-design':       'tab-app-design',
+    'ui-ux-design':     'tab-ui-ux',
+    'web-design':       'tab-web-design',
+    'web-development':  'tab-web-development',
+  };
+
+  function handleUrlPreselect() {
+    var params  = new URLSearchParams(window.location.search);
+    var type    = params.get('type');      /* 'renewal' */
+    var service = params.get('service');  /* 'logo-design', etc. */
+    var pkgId   = params.get('package'); /* 'pkg-logo-pro', etc. */
+
+    /* Switch to Renewal tab if ?type=renewal */
+    if (type === 'renewal') {
+      if (typeof selectOrderType === 'function') {
+        selectOrderType('renewal');
+      }
     }
 
-    /* ── Package data (all prices in PHP) ── */
-    var PACKAGES = {
-
-      /* ── Multi-Page WITH Maintenance ── */
-      maintenance: [
-        {
-          id: 'pkg-maint-basic',
-          tier: 'Basic', name: 'BASIC — Starter Business',
-          php: 18000, badge: null, coupon: true,
-          features: [
-            {text:'3–5 page website', yes:true},
-            {text:'Mobile responsive', yes:true},
-            {text:'Free domain (1 year)', yes:true},
-            {text:'Hosting (1 year)', yes:true},
-            {text:'1 professional email', yes:true},
-            {text:'Ongoing maintenance', yes:true},
-          ]
-        },
-        {
-          id: 'pkg-maint-pro',
-          tier: 'Pro', name: 'PRO — Growing Business',
-          php: 26000, badge: 'Most Popular', coupon: true,
-          features: [
-            {text:'5–8 pages', yes:true},
-            {text:'SQL database', yes:true},
-            {text:'2 professional emails', yes:true},
-            {text:'SEO optimization', yes:true},
-            {text:'Monthly maintenance', yes:true},
-          ]
-        },
-        {
-          id: 'pkg-maint-premium',
-          tier: 'Premium', name: 'PREMIUM — Corporate',
-          php: 52500, badge: null, coupon: true,
-          features: [
-            {text:'8–12 pages custom UI/UX', yes:true},
-            {text:'Advanced SQL & admin panel', yes:true},
-            {text:'Multiple emails', yes:true},
-            {text:'Priority support', yes:true},
-            {text:'Dedicated Website Manager', yes:true},
-          ]
-        }
-      ],
-
-      /* ── 2-Page Fast Launch ── */
-      onepage: [
-        {
-          id: 'pkg-two-starter',
-          tier: 'Starter', name: 'TWO-PAGE Starter',
-          php: 8000, badge: null, coupon: false,
-          features: [
-            {text:'2 pages, mobile responsive', yes:true},
-            {text:'Basic UI design', yes:true},
-            {text:'Contact form (email notification)', yes:true},
-            {text:'FREE domain (1 year)', yes:true},
-            {text:'Hosting (1 year)', yes:true},
-            {text:'No maintenance', yes:false},
-            {text:'No business email', yes:false},
-          ]
-        },
-        {
-          id: 'pkg-two-pro',
-          tier: 'Pro', name: 'TWO-PAGE Pro',
-          php: 9500, badge: 'Best Value', coupon: false,
-          features: [
-            {text:'Everything in Starter', yes:true},
-            {text:'Custom layout & branding', yes:true},
-            {text:'SEO-ready structure', yes:true},
-            {text:'Faster loading optimization', yes:true},
-            {text:'Priority setup', yes:true},
-            {text:'No maintenance', yes:false},
-            {text:'No business email', yes:false},
-          ]
-        },
-        {
-          id: 'pkg-two-premium',
-          tier: 'Premium', name: 'TWO-PAGE Premium',
-          php: 14000, badge: null, coupon: false,
-          features: [
-            {text:'Custom-designed landing page', yes:true},
-            {text:'Conversion-focused layout', yes:true},
-            {text:'Call-to-action sections', yes:true},
-            {text:'Google Map integration', yes:true},
-            {text:'Analytics setup', yes:true},
-            {text:'No maintenance', yes:false},
-            {text:'No business email', yes:false},
-          ]
-        }
-      ],
-
-      /* ── Multi-Page NO Maintenance ── */
-      nomaintenance: [
-        {
-          id: 'pkg-nom-basic',
-          tier: 'Basic', name: 'MULTI-PAGE Basic',
-          php: 12000, badge: null, coupon: true,
-          features: [
-            {text:'3–4 pages', yes:true},
-            {text:'Mobile responsive', yes:true},
-            {text:'FREE domain (1 year)', yes:true},
-            {text:'Hosting (1 year)', yes:true},
-            {text:'Contact form', yes:true},
-            {text:'No maintenance', yes:false},
-            {text:'No business email', yes:false},
-          ]
-        },
-        {
-          id: 'pkg-nom-standard',
-          tier: 'Standard', name: 'MULTI-PAGE Standard',
-          php: 17000, badge: 'Best Value', coupon: true,
-          features: [
-            {text:'5–7 pages', yes:true},
-            {text:'Improved UI design', yes:true},
-            {text:'Speed optimization', yes:true},
-            {text:'FREE domain (1 year)', yes:true},
-            {text:'Hosting (1 year)', yes:true},
-            {text:'No maintenance', yes:false},
-          ]
-        },
-        {
-          id: 'pkg-nom-advanced',
-          tier: 'Advanced', name: 'MULTI-PAGE Advanced',
-          php: 25000, badge: null, coupon: true,
-          features: [
-            {text:'8–12 pages', yes:true},
-            {text:'Custom layout', yes:true},
-            {text:'SQL database (if needed)', yes:true},
-            {text:'FREE domain (1 year)', yes:true},
-            {text:'Hosting (1 year)', yes:true},
-            {text:'No maintenance', yes:false},
-          ]
-        }
-      ],
-
-      /* ── Logo Design ── */
-      logoDesign: [
-        {
-          id: 'pkg-logo-basic',
-          tier: 'Basic', name: 'Logo Design — Basic',
-          php: 2500, badge: null, coupon: false,
-          features: [
-            {text:'2 logo concepts', yes:true},
-            {text:'PNG / JPG delivery', yes:true},
-            {text:'2 revision rounds', yes:true},
-            {text:'5–7 day delivery', yes:true},
-            {text:'No SVG vector file', yes:false},
-            {text:'No brand guide', yes:false},
-          ]
-        },
-        {
-          id: 'pkg-logo-pro',
-          tier: 'Pro', name: 'Logo Design — Pro',
-          php: 5500, badge: 'Best Value', coupon: false,
-          features: [
-            {text:'4 logo concepts', yes:true},
-            {text:'PNG / JPG / SVG files', yes:true},
-            {text:'4 revision rounds', yes:true},
-            {text:'Business card mockup', yes:true},
-            {text:'No full brand guide', yes:false},
-          ]
-        },
-        {
-          id: 'pkg-logo-premium',
-          tier: 'Premium', name: 'Logo + Brand Identity',
-          php: 12000, badge: null, coupon: false,
-          features: [
-            {text:'Full vector source files', yes:true},
-            {text:'Complete brand guide PDF', yes:true},
-            {text:'Social media kit', yes:true},
-            {text:'Letterhead design', yes:true},
-            {text:'Unlimited revisions', yes:true},
-          ]
-        }
-      ],
-
-      /* ── Video Ads ── */
-      videoAds: [
-        {
-          id: 'pkg-vid-short',
-          tier: 'Short', name: 'Video Ad — Short (≤30s)',
-          php: 4500, badge: null, coupon: false,
-          features: [
-            {text:'1080p resolution', yes:true},
-            {text:'Background music', yes:true},
-            {text:'1 revision round', yes:true},
-            {text:'3–5 day delivery', yes:true},
-            {text:'No voiceover', yes:false},
-          ]
-        },
-        {
-          id: 'pkg-vid-standard',
-          tier: 'Standard', name: 'Video Ad — Standard (≤60s)',
-          php: 9500, badge: 'Best Value', coupon: false,
-          features: [
-            {text:'1080p / 4K', yes:true},
-            {text:'Custom graphics', yes:true},
-            {text:'Voiceover option', yes:true},
-            {text:'2 revision rounds', yes:true},
-          ]
-        },
-        {
-          id: 'pkg-vid-premium',
-          tier: 'Premium', name: 'Video Ad — Premium (≤2min)',
-          php: 22000, badge: null, coupon: false,
-          features: [
-            {text:'4K resolution', yes:true},
-            {text:'Custom voiceover included', yes:true},
-            {text:'Unlimited revisions', yes:true},
-            {text:'Multi-format delivery', yes:true},
-          ]
-        }
-      ],
-
-      /* ── Website Manager (renewal section) ── */
-      manager: [
-        {
-          id: 'pkg-mgr-monthly',
-          tier: 'Monthly', name: 'Website Manager — Monthly',
-          php: 800, badge: null, coupon: false,
-          features: [
-            {text:'Content & text updates', yes:true},
-            {text:'Minor design changes', yes:true},
-            {text:'Security checks', yes:true},
-            {text:'Regular backups', yes:true},
-          ]
-        },
-        {
-          id: 'pkg-mgr-annual',
-          tier: 'Annual', name: 'Website Manager — Annual',
-          php: 8000, badge: 'Best Value', coupon: false,
-          features: [
-            {text:'All monthly features', yes:true},
-            {text:'2 months FREE', yes:true},
-            {text:'Priority support', yes:true},
-            {text:'Performance reports', yes:true},
-          ]
-        }
-      ],
-
-      /* ── Annual Renewal ── */
-      renewal: [
-        {
-          id: 'pkg-renew-basic',
-          tier: 'Basic', name: 'Annual Renewal — Basic',
-          php: 3500, badge: null, coupon: false,
-          features: [
-            {text:'Domain renewal (1 year)', yes:true},
-            {text:'Hosting renewal (1 year)', yes:true},
-            {text:'Uptime monitoring', yes:true},
-          ]
-        },
-        {
-          id: 'pkg-renew-pro',
-          tier: 'Pro', name: 'Annual Renewal — Pro',
-          php: 6500, badge: 'Best Value', coupon: false,
-          features: [
-            {text:'Domain + Hosting renewal', yes:true},
-            {text:'SSL certificate', yes:true},
-            {text:'Priority renewal processing', yes:true},
-            {text:'1 free content update', yes:true},
-          ]
-        }
-      ]
-    };
-
-    /* ── Card HTML builder ── */
-    function buildCard(pkg, cur) {
-      var price    = phpToDisplay(pkg.php, cur);
-      var phpPrice = '₱' + pkg.php.toLocaleString();
-      var badge    = pkg.badge
-        ? '<div class="card-badge-overlay">' + pkg.badge + '</div>'
-        : '';
-      var couponBadge = pkg.coupon
-        ? '<div style="display:inline-flex;align-items:center;gap:0.3rem;margin-bottom:0.5rem;padding:0.2rem 0.55rem;background:rgba(232,212,77,0.08);border:1px dashed rgba(232,212,77,0.3);border-radius:4px;font-family:\'Orbitron\',sans-serif;font-size:0.5rem;letter-spacing:0.08em;color:var(--yellow,#e8d44d);">🏷️ Coupon Eligible</div>'
-        : '';
-      var featureRows = pkg.features.map(function(f){
-        var icon = f.yes
-          ? '<span style="color:var(--neon,#39FF14);font-size:0.65rem;flex-shrink:0;">✓</span>'
-          : '<span style="color:#555;font-size:0.65rem;flex-shrink:0;">✕</span>';
-        var style = f.yes ? '' : 'opacity:0.4;';
-        return '<li style="display:flex;align-items:flex-start;gap:0.45rem;font-size:0.72rem;padding:0.2rem 0;' + style + '">' + icon + '<span>' + f.text + '</span></li>';
-      }).join('');
-
-      return [
-        '<div class="service-card" id="' + pkg.id + '" style="position:relative;cursor:pointer;" onclick="selectPackage && selectPackage(this)">',
-          badge,
-          '<div class="card-tier" style="font-family:\'Orbitron\',sans-serif;font-size:0.58rem;letter-spacing:0.2em;color:var(--neon,#39FF14);text-transform:uppercase;margin-bottom:0.25rem;opacity:0.8;">' + pkg.tier + '</div>',
-          '<div class="card-name" style="font-family:\'Orbitron\',sans-serif;font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:0.4rem;line-height:1.3;">' + pkg.name + '</div>',
-          '<div class="card-price" data-php="' + pkg.php + '" style="font-family:\'Orbitron\',sans-serif;font-size:1.25rem;font-weight:900;color:var(--neon,#39FF14);margin:0.5rem 0 0.25rem;text-shadow:0 0 12px rgba(57,255,20,0.35);">' + price + '</div>',
-          '<div class="card-price-php" style="font-size:0.68rem;color:var(--text-muted,#888);margin-bottom:0.75rem;font-family:\'Orbitron\',sans-serif;letter-spacing:0.04em;">' + phpPrice + '</div>',
-          couponBadge,
-          '<div style="height:1px;background:rgba(57,255,20,0.1);margin-bottom:0.75rem;"></div>',
-          '<ul style="list-style:none;padding:0;margin:0 0 1rem;">' + featureRows + '</ul>',
-          '<button class="service-card-btn" onclick="event.stopPropagation();selectPackage && selectPackage(this.closest(\'.service-card\'))" style="display:block;width:100%;text-align:center;padding:0.5rem;border-radius:4px;font-family:\'Orbitron\',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;border:1px solid rgba(57,255,20,0.3);background:rgba(57,255,20,0.08);color:var(--neon,#39FF14);transition:all 0.2s;">Select Package</button>',
-        '</div>'
-      ].join('');
+    /* Click the right filter tab */
+    if (service && SERVICE_TAB_MAP[service]) {
+      var tabEl = document.getElementById(SERVICE_TAB_MAP[service]);
+      if (tabEl && typeof filterByServiceType === 'function') {
+        filterByServiceType(service, tabEl);
+      }
     }
 
-    /* ── Render all grids ── */
-    function renderGrids(cur) {
-      var map = {
-        'serviceGridMaintenance':  PACKAGES.maintenance,
-        'serviceGridOnePage':      PACKAGES.onepage,
-        'serviceGridNoMaintenance':PACKAGES.nomaintenance,
-        'serviceGridLogoDesign':   PACKAGES.logoDesign,
-        'serviceGridVideoAds':     PACKAGES.videoAds,
-        'serviceGridManager':      PACKAGES.manager,
-        'serviceGridRenewal':      PACKAGES.renewal,
-      };
-      Object.keys(map).forEach(function(gridId){
-        var el = document.getElementById(gridId);
-        if (!el) return;
-        el.innerHTML = map[gridId].map(function(pkg){ return buildCard(pkg, cur); }).join('');
-      });
+    /* Pre-select and open the package form */
+    if (pkgId && PKG_ID_MAP[pkgId]) {
+      var mapping = PKG_ID_MAP[pkgId];
+      setTimeout(function () {
+        if (typeof selectService === 'function') {
+          selectService(mapping.cat, mapping.key);
+
+          /* Scroll the selected card into view */
+          var cardEl = document.getElementById('card-' + mapping.cat + '-' + mapping.key);
+          if (cardEl) {
+            cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      }, 350); /* small delay so loadServices() has already run */
     }
+  }
 
-    /* ── Re-render prices when dashboard currency changes ── */
-    function syncCurrencyFromDashboard() {
-      var sel = document.getElementById('currencyDropdown');
-      if (!sel) return;
-      activeCurrency = sel.value || 'USD';
-      renderGrids(activeCurrency);
+  /* ── 3. CURRENCY SYNC ──────────────────────────────────────────
+     dashboard-script.js owns changeCurrency() which calls
+     loadServices() to re-render cards. We just make sure the
+     dropdown's initial value is respected on first load.        */
+  function syncInitialCurrency() {
+    var sel = document.getElementById('currencyDropdown');
+    if (!sel) return;
+    if (typeof changeCurrency === 'function') {
+      changeCurrency(sel.value || 'USD');
     }
+  }
 
-    /* ── Hover style enhancement (add/remove on hover) ── */
-    function attachCardHover() {
-      document.querySelectorAll('.service-card').forEach(function(card){
-        card.addEventListener('mouseenter', function(){
-          this.style.borderColor = 'rgba(57,255,20,0.4)';
-          this.style.boxShadow   = '0 0 20px rgba(57,255,20,0.1)';
-          this.style.transform   = 'translateY(-3px)';
-          var btn = this.querySelector('.service-card-btn');
-          if (btn) { btn.style.background = 'var(--neon,#39FF14)'; btn.style.color = '#000'; }
-        });
-        card.addEventListener('mouseleave', function(){
-          this.style.borderColor = '';
-          this.style.boxShadow   = '';
-          this.style.transform   = '';
-          var btn = this.querySelector('.service-card-btn');
-          if (btn) { btn.style.background = 'rgba(57,255,20,0.08)'; btn.style.color = 'var(--neon,#39FF14)'; }
-        });
-      });
-    }
+  /* ── INIT ──────────────────────────────────────────────────────
+     Use DOMContentLoaded so dashboard-script.js (which also
+     listens on DOMContentLoaded) has already run its own init.
+     We delay with setTimeout(0) to ensure loadServices() fired. */
+  document.addEventListener('DOMContentLoaded', function () {
+    patchPrices();          /* fix ₱8,000 starter price */
 
-    /* ── Hook into dashboard currency dropdown ── */
-    function hookCurrencyDropdown() {
-      var sel = document.getElementById('currencyDropdown');
-      if (!sel) return;
-      // Wrap the existing onchange so we re-render cards too
-      var _orig = sel.onchange;
-      sel.addEventListener('change', function(){
-        activeCurrency = this.value || 'USD';
-        renderGrids(activeCurrency);
-        attachCardHover();
-      });
-    }
+    setTimeout(function () {
+      /* Re-run loadServices so the patched price shows immediately */
+      if (typeof loadServices === 'function') loadServices();
+      syncInitialCurrency();
+      handleUrlPreselect();
+    }, 0);
+  });
 
-    /* ── Init on DOM ready ── */
-    document.addEventListener('DOMContentLoaded', function(){
-      syncCurrencyFromDashboard();
-      renderGrids(activeCurrency);
-      attachCardHover();
-      hookCurrencyDropdown();
-    });
-
-    /* ── Also expose globally so dashboard-script.js can call if needed ── */
-    window.ngcsRenderPackages = function(cur) {
-      if (cur) activeCurrency = cur;
-      renderGrids(activeCurrency);
-      attachCardHover();
-    };
-
-  })();
+})();
